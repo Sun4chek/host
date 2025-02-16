@@ -1,6 +1,8 @@
 
 
-import asyncio
+
+
+import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
@@ -20,22 +22,31 @@ async def start_command(message: types.Message):
 @dp.message()
 async def handle_webapp_data(message: types.Message):
     try:
-        data = message.text  # Получаем JSON с WebApp
-        user_data = eval(data)  # Преобразуем в словарь (или используем json.loads())
+        if not message.text:
+            await message.answer("Ошибка: нет данных 😢")
+            return
+
+        print(f"🔍 Данные от WebApp: {message.text}")  # Логируем данные
+
+        user_data = json.loads(message.text)  # Безопасный разбор JSON
 
         response = (
             f"✅ Новая регистрация!\n\n"
-            f"👤 Имя: {user_data['name']}\n"
-            f"📧 Email: {user_data['email']}\n"
-            f"📱 Телефон: {user_data['phone']}"
+            f"👤 Имя: {user_data.get('name', 'Не указано')}\n"
+            f"📧 Email: {user_data.get('email', 'Не указано')}\n"
+            f"📱 Телефон: {user_data.get('phone', 'Не указано')}"
         )
 
         await message.answer(response)
+
+    except json.JSONDecodeError:
+        await message.answer("Ошибка: получены некорректные данные 😢")
     except Exception as e:
-        await message.answer("Ошибка обработки данных 😢")
+        await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
 
 async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+    import asyncio
     asyncio.run(main())

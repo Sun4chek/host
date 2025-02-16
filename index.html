@@ -39,15 +39,18 @@
         tg.expand(); // Разворачиваем WebApp
 
         function sendData() {
-            let userData = {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                phone: document.getElementById("phone").value
-            };
+        let userData = {
+            name: document.getElementById("name").value || "Не указано",
+            email: document.getElementById("email").value || "Не указано",
+        phone: document.getElementById("phone").value || "Не указано"
+    };
 
-            tg.sendData(JSON.stringify(userData)); // Отправляем JSON боту
-            tg.close(); // Закрываем WebApp
-        }
+    console.log("📤 Отправляем в Telegram:", JSON.stringify(userData)); // Логируем перед отправкой
+    tg.sendData(JSON.stringify(userData)); // Отправляем JSON
+    tg.close(); // Закрываем WebApp
+}
+
     </script>
 </body>
 </html>
+
