@@ -61,18 +61,52 @@
     <title>Меню ресторана</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .menu-item { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f8f8; }
+        h2 { color: #333; }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item img { width: 80px; height: 80px; border-radius: 8px; }
         .cart { margin-top: 20px; }
         .form-group { margin-bottom: 10px; }
+        button { padding: 10px; background: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h2>Меню ресторана</h2>
     <div id="menu">
-        <div class="menu-item">Бургер - 500₽ <button onclick="addToCart('Бургер', 500)">Добавить</button></div>
-        <div class="menu-item">Пицца - 800₽ <button onclick="addToCart('Пицца', 800)">Добавить</button></div>
-        <div class="menu-item">Салат - 300₽ <button onclick="addToCart('Салат', 300)">Добавить</button></div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvNpmF7sdcgDPe9geV14-GmbgtUvc3_Pjkgw&s" alt="Цезарь">
+            <span>Салат "Цезарь" - 350₽</span>
+            <button onclick="addToCart('Салат Цезарь', 350)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SKCCf0IoHCR9ZvoaZHS-q1Y6MnzW1xJmYQ&s" alt="Том Ям">
+            <span>Суп Том Ям - 400₽</span>
+            <button onclick="addToCart('Суп Том Ям', 400)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Vh_eG4QVtlH2V4tKzacXZveG4EGq6vOGDw&s" alt="Стейк Рибай">
+            <span>Стейк Рибай - 1200₽</span>
+            <button onclick="addToCart('Стейк Рибай', 1200)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://eda.ru/images/RecipePhoto/390x390/spagetti-karbonara-s-bekonom_15630_photo_905.jpg" alt="Паста Карбонара">
+            <span>Паста Карбонара - 500₽</span>
+            <button onclick="addToCart('Паста Карбонара', 500)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mGImt7kTJ8QNJoUCZbM_SnB8LSksUAjZIg&s" alt="Тирамису">
+            <span>Тирамису - 300₽</span>
+            <button onclick="addToCart('Тирамису', 300)">Добавить</button>
+        </div>
     </div>
 
     <h2>Корзина</h2>
@@ -166,4 +200,5 @@
     </script>
 </body>
 </html>
+
 
