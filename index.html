@@ -53,6 +53,156 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Меню ресторана</title>-->
+<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
+<!--    <style>-->
+<!--        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f8f8; }-->
+<!--        h2 { color: #333; }-->
+<!--        .menu-item {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            margin-bottom: 15px;-->
+<!--            background: #fff;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .menu-item img { width: 80px; height: 80px; border-radius: 8px; }-->
+<!--        .cart { margin-top: 20px; }-->
+<!--        .form-group { margin-bottom: 10px; }-->
+<!--        button { padding: 10px; background: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>Меню ресторана</h2>-->
+<!--    <div id="menu">-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvNpmF7sdcgDPe9geV14-GmbgtUvc3_Pjkgw&s" alt="Цезарь">-->
+<!--            <span>Салат "Цезарь" - 350₽</span>-->
+<!--            <button onclick="addToCart('Салат Цезарь', 350)">Добавить</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SKCCf0IoHCR9ZvoaZHS-q1Y6MnzW1xJmYQ&s" alt="Том Ям">-->
+<!--            <span>Суп Том Ям - 400₽</span>-->
+<!--            <button onclick="addToCart('Суп Том Ям', 400)">Добавить</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Vh_eG4QVtlH2V4tKzacXZveG4EGq6vOGDw&s" alt="Стейк Рибай">-->
+<!--            <span>Стейк Рибай - 1200₽</span>-->
+<!--            <button onclick="addToCart('Стейк Рибай', 1200)">Добавить</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://eda.ru/images/RecipePhoto/390x390/spagetti-karbonara-s-bekonom_15630_photo_905.jpg" alt="Паста Карбонара">-->
+<!--            <span>Паста Карбонара - 500₽</span>-->
+<!--            <button onclick="addToCart('Паста Карбонара', 500)">Добавить</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mGImt7kTJ8QNJoUCZbM_SnB8LSksUAjZIg&s" alt="Тирамису">-->
+<!--            <span>Тирамису - 300₽</span>-->
+<!--            <button onclick="addToCart('Тирамису', 300)">Добавить</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <h2>Корзина</h2>-->
+<!--    <div id="cart"></div>-->
+<!--    <p><strong>Итого:</strong> <span id="total">0</span>₽</p>-->
+
+<!--    <h2>Оформление заказа</h2>-->
+<!--    <div class="form-group">-->
+<!--        <label>Имя:</label>-->
+<!--        <input type="text" id="name">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label>Номер телефона:</label>-->
+<!--        <input type="tel" id="phone">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label>Тип заказа:</label>-->
+<!--        <select id="orderType" onchange="toggleRoomNumber()">-->
+<!--            <option value="Самовынос">Самовынос</option>-->
+<!--            <option value="Доставка в номер">Доставка в номер</option>-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <div class="form-group" id="roomNumberGroup" style="display:none;">-->
+<!--        <label>Номер комнаты:</label>-->
+<!--        <input type="text" id="roomNumber">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label>Способ оплаты:</label>-->
+<!--        <select id="paymentMethod">-->
+<!--            <option value="Карта">Карта</option>-->
+<!--            <option value="Наличные">Наличные</option>-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <button onclick="submitOrder()">Оформить заказ</button>-->
+
+<!--    <script>-->
+<!--        let cart = [];-->
+
+<!--        function addToCart(item, price) {-->
+<!--            cart.push({ item, price });-->
+<!--            updateCart();-->
+<!--        }-->
+
+<!--        function updateCart() {-->
+<!--            let cartDiv = document.getElementById("cart");-->
+<!--            let total = 0;-->
+<!--            cartDiv.innerHTML = "";-->
+<!--            cart.forEach((entry, index) => {-->
+<!--                total += entry.price;-->
+<!--                cartDiv.innerHTML += `<p>${entry.item} - ${entry.price}₽ <button onclick="removeFromCart(${index})">Удалить</button></p>`;-->
+<!--            });-->
+<!--            document.getElementById("total").innerText = total;-->
+<!--        }-->
+
+<!--        function removeFromCart(index) {-->
+<!--            cart.splice(index, 1);-->
+<!--            updateCart();-->
+<!--        }-->
+
+<!--        function toggleRoomNumber() {-->
+<!--            let orderType = document.getElementById("orderType").value;-->
+<!--            document.getElementById("roomNumberGroup").style.display = orderType === "Доставка в номер" ? "block" : "none";-->
+<!--        }-->
+
+<!--        function submitOrder() {-->
+<!--            let name = document.getElementById("name").value;-->
+<!--            let phone = document.getElementById("phone").value;-->
+<!--            let orderType = document.getElementById("orderType").value;-->
+<!--            let roomNumber = document.getElementById("roomNumber").value;-->
+<!--            let paymentMethod = document.getElementById("paymentMethod").value;-->
+
+<!--            if (!name || !phone || (orderType === "Доставка в номер" && !roomNumber)) {-->
+<!--                alert("Заполните все поля!");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            let order = {-->
+<!--                name,-->
+<!--                phone,-->
+<!--                orderType,-->
+<!--                roomNumber: orderType === "Доставка в номер" ? roomNumber : "Не указано",-->
+<!--                paymentMethod,-->
+<!--                cart,-->
+<!--                total: document.getElementById("total").innerText-->
+<!--            };-->
+
+<!--            console.log("📤 Отправка заказа в Telegram:", order);-->
+<!--            Telegram.WebApp.sendData(JSON.stringify(order));-->
+<!--            Telegram.WebApp.close();-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -63,7 +213,7 @@
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f8f8; }
         h2 { color: #333; }
-        .menu-item {
+        .menu-item, .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -73,80 +223,66 @@
             border-radius: 8px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .menu-item img { width: 80px; height: 80px; border-radius: 8px; }
-        .cart { margin-top: 20px; }
-        .form-group { margin-bottom: 10px; }
+        .menu-item img, .cart-item img { width: 80px; height: 80px; border-radius: 8px; }
+        .container { display: none; }
+        .active { display: block; }
         button { padding: 10px; background: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .nav-buttons { margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <h2>Меню ресторана</h2>
-    <div id="menu">
-        <div class="menu-item">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvNpmF7sdcgDPe9geV14-GmbgtUvc3_Pjkgw&s" alt="Цезарь">
-            <span>Салат "Цезарь" - 350₽</span>
-            <button onclick="addToCart('Салат Цезарь', 350)">Добавить</button>
-        </div>
-        <div class="menu-item">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SKCCf0IoHCR9ZvoaZHS-q1Y6MnzW1xJmYQ&s" alt="Том Ям">
-            <span>Суп Том Ям - 400₽</span>
-            <button onclick="addToCart('Суп Том Ям', 400)">Добавить</button>
-        </div>
-        <div class="menu-item">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Vh_eG4QVtlH2V4tKzacXZveG4EGq6vOGDw&s" alt="Стейк Рибай">
-            <span>Стейк Рибай - 1200₽</span>
-            <button onclick="addToCart('Стейк Рибай', 1200)">Добавить</button>
-        </div>
-        <div class="menu-item">
-            <img src="https://eda.ru/images/RecipePhoto/390x390/spagetti-karbonara-s-bekonom_15630_photo_905.jpg" alt="Паста Карбонара">
-            <span>Паста Карбонара - 500₽</span>
-            <button onclick="addToCart('Паста Карбонара', 500)">Добавить</button>
-        </div>
-        <div class="menu-item">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mGImt7kTJ8QNJoUCZbM_SnB8LSksUAjZIg&s" alt="Тирамису">
-            <span>Тирамису - 300₽</span>
-            <button onclick="addToCart('Тирамису', 300)">Добавить</button>
+    <div class="nav-buttons">
+        <button onclick="showScreen('menu-screen')">Меню</button>
+        <button onclick="showScreen('cart-screen')">Корзина</button>
+        <a href="https://buhtahotel.ru/" target="_blank"><button>Сайт отеля</button></a>
+    </div>
+
+    <div id="menu-screen" class="container active">
+        <h2>Меню ресторана</h2>
+        <div id="menu">
+            <div class="menu-item">
+                <img src="https://buhtahotel.ru/images/cesar.jpg" alt="Цезарь">
+                <span>Салат "Цезарь" - 350₽</span>
+                <button onclick="addToCart('Салат Цезарь', 350, 'https://buhtahotel.ru/images/cesar.jpg')">Добавить</button>
+            </div>
+            <div class="menu-item">
+                <img src="https://buhtahotel.ru/images/tom_yum.jpg" alt="Том Ям">
+                <span>Суп Том Ям - 400₽</span>
+                <button onclick="addToCart('Суп Том Ям', 400, 'https://buhtahotel.ru/images/tom_yum.jpg')">Добавить</button>
+            </div>
         </div>
     </div>
 
-    <h2>Корзина</h2>
-    <div id="cart"></div>
-    <p><strong>Итого:</strong> <span id="total">0</span>₽</p>
+    <div id="cart-screen" class="container">
+        <h2>Корзина</h2>
+        <div id="cart"></div>
+        <p><strong>Итого:</strong> <span id="total">0</span>₽</p>
+        <button onclick="showScreen('order-screen')">Оформить заказ</button>
+    </div>
 
-    <h2>Оформление заказа</h2>
-    <div class="form-group">
-        <label>Имя:</label>
-        <input type="text" id="name">
+    <div id="order-screen" class="container">
+        <h2>Оформление заказа</h2>
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text" id="name">
+        </div>
+        <div class="form-group">
+            <label>Номер телефона:</label>
+            <input type="tel" id="phone">
+        </div>
+        <button onclick="submitOrder()">Подтвердить заказ</button>
     </div>
-    <div class="form-group">
-        <label>Номер телефона:</label>
-        <input type="tel" id="phone">
-    </div>
-    <div class="form-group">
-        <label>Тип заказа:</label>
-        <select id="orderType" onchange="toggleRoomNumber()">
-            <option value="Самовынос">Самовынос</option>
-            <option value="Доставка в номер">Доставка в номер</option>
-        </select>
-    </div>
-    <div class="form-group" id="roomNumberGroup" style="display:none;">
-        <label>Номер комнаты:</label>
-        <input type="text" id="roomNumber">
-    </div>
-    <div class="form-group">
-        <label>Способ оплаты:</label>
-        <select id="paymentMethod">
-            <option value="Карта">Карта</option>
-            <option value="Наличные">Наличные</option>
-        </select>
-    </div>
-    <button onclick="submitOrder()">Оформить заказ</button>
 
     <script>
         let cart = [];
 
-        function addToCart(item, price) {
-            cart.push({ item, price });
+        function showScreen(screenId) {
+            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function addToCart(item, price, image) {
+            cart.push({ item, price, image });
             updateCart();
         }
 
@@ -156,7 +292,7 @@
             cartDiv.innerHTML = "";
             cart.forEach((entry, index) => {
                 total += entry.price;
-                cartDiv.innerHTML += `<p>${entry.item} - ${entry.price}₽ <button onclick="removeFromCart(${index})">Удалить</button></p>`;
+                cartDiv.innerHTML += `<div class='cart-item'><img src="${entry.image}" alt="${entry.item}"><span>${entry.item} - ${entry.price}₽</span> <button onclick="removeFromCart(${index})">Удалить</button></div>`;
             });
             document.getElementById("total").innerText = total;
         }
@@ -166,35 +302,17 @@
             updateCart();
         }
 
-        function toggleRoomNumber() {
-            let orderType = document.getElementById("orderType").value;
-            document.getElementById("roomNumberGroup").style.display = orderType === "Доставка в номер" ? "block" : "none";
-        }
-
         function submitOrder() {
             let name = document.getElementById("name").value;
             let phone = document.getElementById("phone").value;
-            let orderType = document.getElementById("orderType").value;
-            let roomNumber = document.getElementById("roomNumber").value;
-            let paymentMethod = document.getElementById("paymentMethod").value;
-
-            if (!name || !phone || (orderType === "Доставка в номер" && !roomNumber)) {
-                alert("Заполните все поля!");
+            if (!name || !phone || cart.length === 0) {
+                alert("Заполните все поля и добавьте товары в корзину!");
                 return;
             }
-
-            let order = {
-                name,
-                phone,
-                orderType,
-                roomNumber: orderType === "Доставка в номер" ? roomNumber : "Не указано",
-                paymentMethod,
-                cart,
-                total: document.getElementById("total").innerText
-            };
-
-            console.log("📤 Отправка заказа в Telegram:", order);
-            Telegram.WebApp.sendData(JSON.stringify(order));
+            let orderDetails = cart.map(entry => `${entry.item} - ${entry.price}₽`).join("\n");
+            let total = document.getElementById("total").innerText;
+            let orderMessage = `Новый заказ!\nИмя: ${name}\nТелефон: ${phone}\nЗаказ:\n${orderDetails}\nИтого: ${total}₽`;
+            Telegram.WebApp.sendData(orderMessage);
             Telegram.WebApp.close();
         }
     </script>
