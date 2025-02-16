@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            display: block;
+            width: 90%;
+            max-width: 300px;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    <input type="text" id="name" placeholder="Ваше имя" required>
+    <input type="email" id="email" placeholder="Ваш Email" required>
+    <input type="tel" id="phone" placeholder="Ваш телефон" required>
+    <button onclick="sendData()">Отправить</button>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Разворачиваем WebApp
+
+        function sendData() {
+            let userData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value
+            };
+
+            tg.sendData(JSON.stringify(userData)); // Отправляем JSON боту
+            tg.close(); // Закрываем WebApp
+        }
+    </script>
+</body>
+</html>
