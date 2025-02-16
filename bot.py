@@ -6,6 +6,7 @@ import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
+ADMIN_ID = "1948431948"
 bot = Bot('7723973774:AAHxO5XxnwbtJp7WQPs0JeQ0YVipgGe8IM8')
 dp = Dispatcher()
 
@@ -22,13 +23,13 @@ async def start_command(message: types.Message):
 @dp.message()
 async def handle_webapp_data(message: types.Message):
     try:
-        if not message.text:
-            await message.answer("Ошибка: нет данных 😢")
+        if not message.web_app_data:
+            await message.answer("Ошибка: WebApp не передал данные 😢")
             return
 
-        print(f"🔍 Данные от WebApp: {message.text}")  # Логируем данные
+        print(f"🔍 Данные от WebApp: {message.web_app_data.data}")  # Логируем данные
 
-        user_data = json.loads(message.text)  # Безопасный разбор JSON
+        user_data = json.loads(message.web_app_data.data)
 
         response = (
             f"✅ Новая регистрация!\n\n"
@@ -38,11 +39,13 @@ async def handle_webapp_data(message: types.Message):
         )
 
         await message.answer(response)
+        await bot.send_message(ADMIN_ID, f"📩 Новая регистрация:\n\n{response}")
 
     except json.JSONDecodeError:
         await message.answer("Ошибка: получены некорректные данные 😢")
     except Exception as e:
         await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
+
 
 async def main():
     await dp.start_polling(bot)
