@@ -1,208 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ru">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Регистрация</title>-->
-<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            font-family: Arial, sans-serif;-->
-<!--            text-align: center;-->
-<!--            padding: 20px;-->
-<!--        }-->
-<!--        input, button {-->
-<!--            display: block;-->
-<!--            width: 90%;-->
-<!--            max-width: 300px;-->
-<!--            margin: 10px auto;-->
-<!--            padding: 10px;-->
-<!--            font-size: 16px;-->
-<!--        }-->
-<!--        button {-->
-<!--            background-color: #0088cc;-->
-<!--            color: white;-->
-<!--            border: none;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <h1>Регистрация</h1>-->
-<!--    <input type="text" id="name" placeholder="Ваше имя" required>-->
-<!--    <input type="email" id="email" placeholder="Ваш Email" required>-->
-<!--    <input type="tel" id="phone" placeholder="Ваш телефон" required>-->
-<!--    <button onclick="sendData()">Отправить</button>-->
-
-<!--    <script>-->
-<!--        let tg = window.Telegram.WebApp;-->
-<!--        tg.expand(); // Разворачиваем WebApp-->
-
-<!--        function sendData() {-->
-<!--        let userData = {-->
-<!--            name: document.getElementById("name").value || "Не указано",-->
-<!--            email: document.getElementById("email").value || "Не указано",-->
-<!--        phone: document.getElementById("phone").value || "Не указано"-->
-<!--    };-->
-
-<!--    console.log("📤 Отправляем в Telegram:", JSON.stringify(userData)); // Логируем перед отправкой-->
-<!--    tg.sendData(JSON.stringify(userData)); // Отправляем JSON-->
-<!--    tg.close(); // Закрываем WebApp-->
-<!--}-->
-
-<!--    </script>-->
-<!--</body>-->
-<!--</html>-->
-<!--<!DOCTYPE html>-->
-<!--<html lang="ru">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Меню ресторана</title>-->
-<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
-<!--    <style>-->
-<!--        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f8f8; }-->
-<!--        h2 { color: #333; }-->
-<!--        .menu-item {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--            margin-bottom: 15px;-->
-<!--            background: #fff;-->
-<!--            padding: 10px;-->
-<!--            border-radius: 8px;-->
-<!--            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);-->
-<!--        }-->
-<!--        .menu-item img { width: 80px; height: 80px; border-radius: 8px; }-->
-<!--        .cart { margin-top: 20px; }-->
-<!--        .form-group { margin-bottom: 10px; }-->
-<!--        button { padding: 10px; background: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer; }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <h2>Меню ресторана</h2>-->
-<!--    <div id="menu">-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvNpmF7sdcgDPe9geV14-GmbgtUvc3_Pjkgw&s" alt="Цезарь">-->
-<!--            <span>Салат "Цезарь" - 350₽</span>-->
-<!--            <button onclick="addToCart('Салат Цезарь', 350)">Добавить</button>-->
-<!--        </div>-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4SKCCf0IoHCR9ZvoaZHS-q1Y6MnzW1xJmYQ&s" alt="Том Ям">-->
-<!--            <span>Суп Том Ям - 400₽</span>-->
-<!--            <button onclick="addToCart('Суп Том Ям', 400)">Добавить</button>-->
-<!--        </div>-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Vh_eG4QVtlH2V4tKzacXZveG4EGq6vOGDw&s" alt="Стейк Рибай">-->
-<!--            <span>Стейк Рибай - 1200₽</span>-->
-<!--            <button onclick="addToCart('Стейк Рибай', 1200)">Добавить</button>-->
-<!--        </div>-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://eda.ru/images/RecipePhoto/390x390/spagetti-karbonara-s-bekonom_15630_photo_905.jpg" alt="Паста Карбонара">-->
-<!--            <span>Паста Карбонара - 500₽</span>-->
-<!--            <button onclick="addToCart('Паста Карбонара', 500)">Добавить</button>-->
-<!--        </div>-->
-<!--        <div class="menu-item">-->
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mGImt7kTJ8QNJoUCZbM_SnB8LSksUAjZIg&s" alt="Тирамису">-->
-<!--            <span>Тирамису - 300₽</span>-->
-<!--            <button onclick="addToCart('Тирамису', 300)">Добавить</button>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <h2>Корзина</h2>-->
-<!--    <div id="cart"></div>-->
-<!--    <p><strong>Итого:</strong> <span id="total">0</span>₽</p>-->
-
-<!--    <h2>Оформление заказа</h2>-->
-<!--    <div class="form-group">-->
-<!--        <label>Имя:</label>-->
-<!--        <input type="text" id="name">-->
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <label>Номер телефона:</label>-->
-<!--        <input type="tel" id="phone">-->
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <label>Тип заказа:</label>-->
-<!--        <select id="orderType" onchange="toggleRoomNumber()">-->
-<!--            <option value="Самовынос">Самовынос</option>-->
-<!--            <option value="Доставка в номер">Доставка в номер</option>-->
-<!--        </select>-->
-<!--    </div>-->
-<!--    <div class="form-group" id="roomNumberGroup" style="display:none;">-->
-<!--        <label>Номер комнаты:</label>-->
-<!--        <input type="text" id="roomNumber">-->
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--        <label>Способ оплаты:</label>-->
-<!--        <select id="paymentMethod">-->
-<!--            <option value="Карта">Карта</option>-->
-<!--            <option value="Наличные">Наличные</option>-->
-<!--        </select>-->
-<!--    </div>-->
-<!--    <button onclick="submitOrder()">Оформить заказ</button>-->
-
-<!--    <script>-->
-<!--        let cart = [];-->
-
-<!--        function addToCart(item, price) {-->
-<!--            cart.push({ item, price });-->
-<!--            updateCart();-->
-<!--        }-->
-
-<!--        function updateCart() {-->
-<!--            let cartDiv = document.getElementById("cart");-->
-<!--            let total = 0;-->
-<!--            cartDiv.innerHTML = "";-->
-<!--            cart.forEach((entry, index) => {-->
-<!--                total += entry.price;-->
-<!--                cartDiv.innerHTML += `<p>${entry.item} - ${entry.price}₽ <button onclick="removeFromCart(${index})">Удалить</button></p>`;-->
-<!--            });-->
-<!--            document.getElementById("total").innerText = total;-->
-<!--        }-->
-
-<!--        function removeFromCart(index) {-->
-<!--            cart.splice(index, 1);-->
-<!--            updateCart();-->
-<!--        }-->
-
-<!--        function toggleRoomNumber() {-->
-<!--            let orderType = document.getElementById("orderType").value;-->
-<!--            document.getElementById("roomNumberGroup").style.display = orderType === "Доставка в номер" ? "block" : "none";-->
-<!--        }-->
-
-<!--        function submitOrder() {-->
-<!--            let name = document.getElementById("name").value;-->
-<!--            let phone = document.getElementById("phone").value;-->
-<!--            let orderType = document.getElementById("orderType").value;-->
-<!--            let roomNumber = document.getElementById("roomNumber").value;-->
-<!--            let paymentMethod = document.getElementById("paymentMethod").value;-->
-
-<!--            if (!name || !phone || (orderType === "Доставка в номер" && !roomNumber)) {-->
-<!--                alert("Заполните все поля!");-->
-<!--                return;-->
-<!--            }-->
-
-<!--            let order = {-->
-<!--                name,-->
-<!--                phone,-->
-<!--                orderType,-->
-<!--                roomNumber: orderType === "Доставка в номер" ? roomNumber : "Не указано",-->
-<!--                paymentMethod,-->
-<!--                cart,-->
-<!--                total: document.getElementById("total").innerText-->
-<!--            };-->
-
-<!--            console.log("📤 Отправка заказа в Telegram:", order);-->
-<!--            Telegram.WebApp.sendData(JSON.stringify(order));-->
-<!--            Telegram.WebApp.close();-->
-<!--        }-->
-<!--    </script>-->
-<!--</body>-->
-<!--</html>-->
-
-
-<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -244,31 +39,243 @@
             background-size: cover;
             cursor: pointer;
         }
+        .cart-counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ff6600;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .back-button {
+            display: block;
+            margin-bottom: 10px;
+            color: #ff6600;
+            cursor: pointer;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .add-to-cart {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="cart-icon" onclick="showScreen('cart-screen')"></div>
+    <div class="cart-icon" onclick="showScreen('cart-screen')">
+        <div id="cart-counter" class="cart-counter">0</div>
+    </div>
 
     <div id="menu-screen" class="container active">
         <h2>Выберите категорию</h2>
         <div class="category-grid">
-            <div class="category-item" style="background-image: url('data:image/jpeg;base64,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');" onclick="showScreen('soups-screen')">Первые блюда</div>
-            <div class="category-item" style="background-image: url('https://buhtahotel.ru/images/salads.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
-            <div class="category-item" style="background-image: url('https://buhtahotel.ru/images/seafood.jpg');" onclick="showScreen('seafood-screen')">Морепродукты</div>
-            <div class="category-item" style="background-image: url('https://buhtahotel.ru/images/main.jpg');" onclick="showScreen('main-screen')">Основные блюда</div>
-            <div class="category-item" style="background-image: url('https://buhtahotel.ru/images/pasta.jpg');" onclick="showScreen('pasta-screen')">Пасты</div>
-            <div class="category-item" style="background-image: url('https://buhtahotel.ru/images/grill.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
+            <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
+            <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
+            <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
+            <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>
+            <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>
+            <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
         </div>
     </div>
 
+    <div id="main-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Основные блюда</h2>
+        <div class="menu-item">
+            Сковорода куриная (360г) - 450₽
+            <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Куриная отбивная с помидорами и моцареллой (200г) - 400₽
+            <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Сковорода свиная (360г) - 530₽
+            <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Сковорода с морепродуктами (350г) - 980₽
+            <button class="add-to-cart" onclick="addToCart('Сковорода с морепродуктами', 980)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Микс колбасок с фирменным соусом и квашеной капустой (350/30/100г) - 800₽
+            <button class="add-to-cart" onclick="addToCart('Микс колбасок', 800)">Добавить</button>
+        </div>
+    </div>
+
+    <div id="soups-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Первые блюда</h2>
+        <div class="menu-item">
+            Борщ (350г) - 400₽
+            <button class="add-to-cart" onclick="addToCart('Борщ', 400)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Солянка (350г) - 450₽
+            <button class="add-to-cart" onclick="addToCart('Солянка', 450)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Суп лапша (300г) - 300₽
+            <button class="add-to-cart" onclick="addToCart('Суп лапша', 300)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Тыквенно-сырный крем суп с хрустящей форелью (350г) - 400₽
+            <button class="add-to-cart" onclick="addToCart('Тыквенно-сырный суп', 400)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Уха (350г) - 550₽
+            <button class="add-to-cart" onclick="addToCart('Уха', 550)">Добавить</button>
+        </div>
+    </div>
+
+    <div id="salads-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Салаты</h2>
+        <div class="menu-item">
+            Цезарь с курицей (250г) - 350₽
+            <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Греческий салат (300г) - 400₽
+            <button class="add-to-cart" onclick="addToCart('Греческий салат', 400)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Салат с креветками (300г) - 450₽
+            <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450)">Добавить</button>
+        </div>
+    </div>
+
+    <div id="seafood-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Морепродукты</h2>
+        <div class="menu-item">
+            Мидии в сливочном соусе (300г) - 600₽
+            <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Креветки гриль (250г) - 700₽
+            <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Кальмары в кляре (300г) - 550₽
+            <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550)">Добавить</button>
+        </div>
+    </div>
+
+    <div id="pasta-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Пасты</h2>
+        <div class="menu-item">
+            Паста со сливочным маслом (250г) - 330₽
+            <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Карбонара (300г) - 470₽
+            <button class="add-to-cart" onclick="addToCart('Карбонара', 470)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Болоньезе (300г) - 450₽
+            <button class="add-to-cart" onclick="addToCart('Болоньезе', 450)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Паста с морепродуктами (330г) - 750₽
+            <button class="add-to-cart" onclick="addToCart('Паста с морепродуктами', 750)">Добавить</button>
+        </div>
+    </div>
+
+    <div id="grill-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Мангал</h2>
+        <div class="menu-item">
+            Шашлык из свинины (300г) - 600₽
+            <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Шашлык из курицы (300г) - 500₽
+            <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500)">Добавить</button>
+        </div>
+        <div class="menu-item">
+            Шашлык из баранины (300г) - 800₽
+            <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800)">Добавить</button>
+        </div>
+    </div>
+
+    <!-- Раздел корзины -->
     <div id="cart-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
-        <div id="cart"></div>
-        <p><strong>Итого:</strong> <span id="total">0</span>₽</p>
-        <button onclick="showScreen('order-screen')">Оформить заказ</button>
+        <div id="cart-items"></div>
+        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
     </div>
 
     <script>
+        let cart = []; // Массив для хранения товаров в корзине
+
+        // Функция для добавления товара в корзину
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+            updateCartCounter();
+        }
+
+        // Функция для обновления отображения корзины
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            cartItems.innerHTML = ''; // Очищаем содержимое корзины
+            let total = 0;
+
+            // Добавляем каждый товар в корзину
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <span>${item.name} - ${item.price}₽</span>
+                    <button onclick="removeFromCart(${index})">Удалить</button>
+                `;
+                cartItems.appendChild(cartItem);
+                total += item.price;
+            });
+
+            // Обновляем итоговую сумму
+            totalPrice.textContent = total;
+        }
+
+        // Функция для удаления товара из корзины
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Удаляем товар из массива
+            updateCart(); // Обновляем отображение корзины
+            updateCartCounter(); // Обновляем счетчик
+        }
+
+        // Функция для обновления счетчика товаров в корзине
+        function updateCartCounter() {
+            const cartCounter = document.getElementById('cart-counter');
+            cartCounter.textContent = cart.length; // Устанавливаем количество товаров
+        }
+
+        // Функция для переключения экранов
         function showScreen(screenId) {
             document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -276,5 +283,3 @@
     </script>
 </body>
 </html>
-
-
