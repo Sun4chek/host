@@ -376,6 +376,33 @@
             saveCart();
             showScreen('menu-screen'); // Возвращаемся на главный экран
         }
+          // Собираем данные из формы
+           const lastName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(1)').value;
+           const firstName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(2)').value;
+           const phone = document.querySelector('#checkout-screen input[type="tel"]').value;
+           const paymentMethod = document.querySelector('#checkout-screen select').value;
+           const deliveryMethod = document.querySelector('#delivery-method').value;
+           const roomNumber = document.querySelector('#room-number-container input')?.value || 'Не указано';
+
+            // Формируем JSON-объект
+           const orderData = {
+                lastName,
+                firstName,
+                phone,
+                paymentMethod,
+                deliveryMethod,
+                roomNumber,
+                cart: cart.map(item => ({ name: item.name, price: item.price })),
+                total: document.getElementById('total-price').textContent
+           };
+
+            // Отправляем JSON-объект в Telegram-бот
+            if (window.Telegram && window.Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify(orderData));
+            } else {
+                alert('Ошибка: Telegram WebApp не доступен.');
+            }
+
 
         // Загрузка корзины при запуске приложения
         window.onload = loadCart;
