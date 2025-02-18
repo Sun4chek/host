@@ -245,7 +245,8 @@
         <h2>Корзина</h2>
         <div id="cart-items"></div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-        <button style="margin-top: 450px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
+        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
     </div>
 
     <!-- Раздел оформления заказа -->
@@ -276,11 +277,27 @@
     <script>
         let cart = []; // Массив для хранения товаров в корзине
 
+        // Загрузка корзины из localStorage при загрузке страницы
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+                updateCartCounter();
+            }
+        }
+
+        // Сохранение корзины в localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
         // Функция для добавления товара в корзину
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCart();
             updateCartCounter();
+            saveCart();
         }
 
         // Функция для обновления отображения корзины
@@ -308,9 +325,22 @@
 
         // Функция для удаления товара из корзины
         function removeFromCart(index) {
-            cart.splice(index, 1); // Удаляем товар из массива
-            updateCart(); // Обновляем отображение корзины
-            updateCartCounter(); // Обновляем счетчик
+            if (confirm('Вы уверены, что хотите удалить этот товар из корзины?')) {
+                cart.splice(index, 1);
+                updateCart();
+                updateCartCounter();
+                saveCart();
+            }
+        }
+
+        // Функция для очистки корзины
+        function clearCart() {
+            if (confirm('Вы уверены, что хотите очистить корзину?')) {
+                cart = [];
+                updateCart();
+                updateCartCounter();
+                saveCart();
+            }
         }
 
         // Функция для обновления счетчика товаров в корзине
@@ -343,8 +373,12 @@
             cart = []; // Очищаем корзину
             updateCart();
             updateCartCounter();
+            saveCart();
             showScreen('menu-screen'); // Возвращаемся на главный экран
         }
+
+        // Загрузка корзины при запуске приложения
+        window.onload = loadCart;
     </script>
 </body>
 </html>
