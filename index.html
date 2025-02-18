@@ -80,6 +80,24 @@
             margin-bottom: 10px;
             border-radius: 10px;
         }
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .checkout-form input, .checkout-form select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .checkout-form button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -222,49 +240,38 @@
     </div>
 
     <!-- Раздел корзины -->
-   <!-- Корзина -->
     <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-        <button onclick="showScreen('order-screen')">Оформить заказ</button>
+        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
     </div>
 
-    <!-- Оформление заказа -->
-    <div id="order-screen" class="container">
+    <!-- Раздел оформления заказа -->
+    <div id="checkout-screen" class="container">
         <span class="back-button" onclick="showScreen('cart-screen')">⬅ Назад</span>
         <h2>Оформление заказа</h2>
-        <form class="order-form" onsubmit="submitOrder(event)">
+        <form class="checkout-form" onsubmit="submitOrder(event)">
             <input type="text" placeholder="Фамилия" required>
             <input type="text" placeholder="Имя" required>
             <input type="tel" placeholder="Номер телефона" required>
-            <select id="payment-method" required>
-                <option value="">Выберите способ оплаты</option>
+            <select required>
+                <option value="" disabled selected>Способ оплаты</option>
                 <option value="cash">Наличные</option>
                 <option value="card">Карта</option>
             </select>
-            <select id="delivery-method" onchange="toggleRoomNumber()" required>
-                <option value="">Выберите способ получения</option>
+            <select id="delivery-method" required onchange="toggleRoomNumber()">
+                <option value="" disabled selected>Способ получения</option>
                 <option value="delivery">Доставка</option>
-                <option value="pickup">Самовывоз</option>
+                <option value="pickup">Самовынос</option>
             </select>
-            <div id="room-number" class="room-number">
+            <div id="room-number-container" style="display: none;">
                 <input type="text" placeholder="Номер комнаты">
             </div>
             <button type="submit">Подтвердить заказ</button>
         </form>
     </div>
-
-
-
-
-
-
-
-
-
-
 
     <script>
         let cart = []; // Массив для хранения товаров в корзине
@@ -318,35 +325,25 @@
             document.getElementById(screenId).classList.add('active');
         }
 
-      function toggleRoomNumber() {
-            const deliveryMethod = document.getElementById('delivery-method').value;
-            const roomNumber = document.getElementById('room-number');
-            if (deliveryMethod === 'delivery') {
-                roomNumber.style.display = 'block';
+        // Функция для отображения/скрытия поля ввода номера комнаты
+        function toggleRoomNumber() {
+            const deliveryMethod = document.getElementById('delivery-method');
+            const roomNumberContainer = document.getElementById('room-number-container');
+            if (deliveryMethod.value === 'delivery') {
+                roomNumberContainer.style.display = 'block';
             } else {
-                roomNumber.style.display = 'none';
+                roomNumberContainer.style.display = 'none';
             }
         }
 
         // Функция для отправки заказа
         function submitOrder(event) {
             event.preventDefault();
-            const formData = new FormData(event.target);
-            const order = {
-                lastName: formData.get('lastName'),
-                firstName: formData.get('firstName'),
-                phone: formData.get('phone'),
-                paymentMethod: formData.get('paymentMethod'),
-                deliveryMethod: formData.get('deliveryMethod'),
-                roomNumber: formData.get('roomNumber'),
-                items: cart
-            };
-            console.log('Заказ оформлен:', order);
             alert('Заказ успешно оформлен!');
             cart = []; // Очищаем корзину
             updateCart();
             updateCartCounter();
-            showScreen('menu-screen'); // Возвращаемся в меню
+            showScreen('menu-screen'); // Возвращаемся на главный экран
         }
     </script>
 </body>
