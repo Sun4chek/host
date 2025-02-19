@@ -28,42 +28,21 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
-        .category-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: inherit;
-            filter: blur(8px);
-            z-index: -1;
+        .category-item:hover {
+            transform: scale(1.05);
+            background-color: rgba(0, 0, 0, 0.7);
         }
-        .category-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.8) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            mask-image: linear-gradient(
-                to bottom,
-                transparent 0%,
-                black 20%,
-                black 80%,
-                transparent 100%
-            );
-            pointer-events: none;
+        .container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
-        .container { display: none; }
-        .active { display: block; }
+        .container.active {
+            display: block;
+            opacity: 1;
+        }
         .cart-icon {
             position: absolute;
             top: 20px;
@@ -73,6 +52,10 @@
             background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center;
             background-size: cover;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .cart-icon:hover {
+            transform: scale(1.1);
         }
         .cart-counter {
             position: absolute;
@@ -106,6 +89,11 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #e65c00;
+            transform: scale(1.1);
         }
         .cart-item {
             display: flex;
@@ -114,6 +102,11 @@
             background: white;
             margin-bottom: 10px;
             border-radius: 10px;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .cart-item.removing {
+            opacity: 0;
+            transform: translateX(-100%);
         }
         .checkout-form {
             display: flex;
@@ -133,6 +126,16 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #room-number-container {
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+        #room-number-container.visible {
+            opacity: 1;
+            max-height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -151,7 +154,6 @@
             <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
         </div>
     </div>
-
 
     <div id="main-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
@@ -313,16 +315,19 @@
     <script>
         let cart = []; // Массив для хранения товаров в корзине
 
-        // Инициализация Telegram WebApp
-        let tg = window.Telegram.WebApp;
-
-        // Функция для отправки данных в Telegram
-        function sendDataToTelegram(data) {
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(data));
-            } else {
-                console.error("Telegram WebApp не доступен.");
+        // Загрузка корзины из localStorage при загрузке страницы
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+                updateCartCounter();
             }
+        }
+
+        // Сохранение корзины в localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         // Функция для добавления товара в корзину
@@ -330,6 +335,7 @@
             cart.push({ name, price });
             updateCart();
             updateCartCounter();
+            saveCart();
         }
 
         // Функция для обновления отображения корзины
@@ -357,9 +363,22 @@
 
         // Функция для удаления товара из корзины
         function removeFromCart(index) {
-            cart.splice(index, 1); // Удаляем товар из массива
-            updateCart(); // Обновляем отображение корзины
-            updateCartCounter(); // Обновляем счетчик
+            if (confirm('Вы уверены, что хотите удалить этот товар из корзины?')) {
+                cart.splice(index, 1);
+                updateCart();
+                updateCartCounter();
+                saveCart();
+            }
+        }
+
+        // Функция для очистки корзины
+        function clearCart() {
+            if (confirm('Вы уверены, что хотите очистить корзину?')) {
+                cart = [];
+                updateCart();
+                updateCartCounter();
+                saveCart();
+            }
         }
 
         // Функция для обновления счетчика товаров в корзине
@@ -385,176 +404,19 @@
             }
         }
 
-        // Функция для оформления заказа
+        // Функция для отправки заказа
         function submitOrder(event) {
             event.preventDefault();
-
-            // Собираем данные из формы
-            const lastName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(1)').value;
-            const firstName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(2)').value;
-            const phone = document.querySelector('#checkout-screen input[type="tel"]').value;
-            const paymentMethod = document.querySelector('#checkout-screen select').value;
-            const deliveryMethod = document.querySelector('#delivery-method').value;
-            const roomNumber = document.querySelector('#room-number-container input')?.value || 'Не указано';
-
-            // Формируем JSON-объект
-            const orderData = {
-                lastName,
-                firstName,
-                phone,
-                paymentMethod,
-                deliveryMethod,
-                roomNumber,
-                cart: cart.map(item => ({ name: item.name, price: item.price })),
-                total: document.getElementById('total-price').textContent
-            };
-
-            // Отправляем JSON-объект в Telegram-бот
-            sendDataToTelegram(orderData);
-
-            // Очищаем корзину и возвращаемся на главный экран
             alert('Заказ успешно оформлен!');
-            cart = [];
+            cart = []; // Очищаем корзину
             updateCart();
             updateCartCounter();
-            showScreen('menu-screen');
+            saveCart();
+            showScreen('menu-screen'); // Возвращаемся на главный экран
         }
+
+        // Загрузка корзины при запуске приложения
+        window.onload = loadCart;
     </script>
 </body>
-</html>
-
-<!--    <script>-->
-<!--        let cart = []; // Массив для хранения товаров в корзине-->
-
-<!--        // Загрузка корзины из localStorage при загрузке страницы-->
-<!--        function loadCart() {-->
-<!--            const savedCart = localStorage.getItem('cart');-->
-<!--            if (savedCart) {-->
-<!--                cart = JSON.parse(savedCart);-->
-<!--                updateCart();-->
-<!--                updateCartCounter();-->
-<!--            }-->
-<!--        }-->
-
-<!--        // Сохранение корзины в localStorage-->
-<!--        function saveCart() {-->
-<!--            localStorage.setItem('cart', JSON.stringify(cart));-->
-<!--        }-->
-
-<!--        // Функция для добавления товара в корзину-->
-<!--        function addToCart(name, price) {-->
-<!--            cart.push({ name, price });-->
-<!--            updateCart();-->
-<!--            updateCartCounter();-->
-<!--            saveCart();-->
-<!--        }-->
-
-<!--        // Функция для обновления отображения корзины-->
-<!--        function updateCart() {-->
-<!--            const cartItems = document.getElementById('cart-items');-->
-<!--            const totalPrice = document.getElementById('total-price');-->
-<!--            cartItems.innerHTML = ''; // Очищаем содержимое корзины-->
-<!--            let total = 0;-->
-
-<!--            // Добавляем каждый товар в корзину-->
-<!--            cart.forEach((item, index) => {-->
-<!--                const cartItem = document.createElement('div');-->
-<!--                cartItem.className = 'cart-item';-->
-<!--                cartItem.innerHTML = `-->
-<!--                    <span>${item.name} - ${item.price}₽</span>-->
-<!--                    <button onclick="removeFromCart(${index})">Удалить</button>-->
-<!--                `;-->
-<!--                cartItems.appendChild(cartItem);-->
-<!--                total += item.price;-->
-<!--            });-->
-
-<!--            // Обновляем итоговую сумму-->
-<!--            totalPrice.textContent = total;-->
-<!--        }-->
-
-<!--        // Функция для удаления товара из корзины-->
-<!--        function removeFromCart(index) {-->
-<!--            if (confirm('Вы уверены, что хотите удалить этот товар из корзины?')) {-->
-<!--                cart.splice(index, 1);-->
-<!--                updateCart();-->
-<!--                updateCartCounter();-->
-<!--                saveCart();-->
-<!--            }-->
-<!--        }-->
-
-<!--        // Функция для очистки корзины-->
-<!--        function clearCart() {-->
-<!--            if (confirm('Вы уверены, что хотите очистить корзину?')) {-->
-<!--                cart = [];-->
-<!--                updateCart();-->
-<!--                updateCartCounter();-->
-<!--                saveCart();-->
-<!--            }-->
-<!--        }-->
-
-<!--        // Функция для обновления счетчика товаров в корзине-->
-<!--        function updateCartCounter() {-->
-<!--            const cartCounter = document.getElementById('cart-counter');-->
-<!--            cartCounter.textContent = cart.length; // Устанавливаем количество товаров-->
-<!--        }-->
-
-<!--        // Функция для переключения экранов-->
-<!--        function showScreen(screenId) {-->
-<!--            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));-->
-<!--            document.getElementById(screenId).classList.add('active');-->
-<!--        }-->
-
-<!--        // Функция для отображения/скрытия поля ввода номера комнаты-->
-<!--        function toggleRoomNumber() {-->
-<!--            const deliveryMethod = document.getElementById('delivery-method');-->
-<!--            const roomNumberContainer = document.getElementById('room-number-container');-->
-<!--            if (deliveryMethod.value === 'delivery') {-->
-<!--                roomNumberContainer.style.display = 'block';-->
-<!--            } else {-->
-<!--                roomNumberContainer.style.display = 'none';-->
-<!--            }-->
-<!--        }-->
-
-<!--        // Функция для отправки заказа-->
-<!--        function submitOrder(event) {-->
-<!--            event.preventDefault();-->
-<!--            alert('Заказ успешно оформлен!');-->
-<!--            cart = []; // Очищаем корзину-->
-<!--            updateCart();-->
-<!--            updateCartCounter();-->
-<!--            saveCart();-->
-<!--            showScreen('menu-screen'); // Возвращаемся на главный экран-->
-<!--        }-->
-<!--          // Собираем данные из формы-->
-<!--           const lastName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(1)').value;-->
-<!--           const firstName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(2)').value;-->
-<!--           const phone = document.querySelector('#checkout-screen input[type="tel"]').value;-->
-<!--           const paymentMethod = document.querySelector('#checkout-screen select').value;-->
-<!--           const deliveryMethod = document.querySelector('#delivery-method').value;-->
-<!--           const roomNumber = document.querySelector('#room-number-container input')?.value || 'Не указано';-->
-
-<!--            // Формируем JSON-объект-->
-<!--           const orderData = {-->
-<!--                lastName,-->
-<!--                firstName,-->
-<!--                phone,-->
-<!--                paymentMethod,-->
-<!--                deliveryMethod,-->
-<!--                roomNumber,-->
-<!--                cart: cart.map(item => ({ name: item.name, price: item.price })),-->
-<!--                total: document.getElementById('total-price').textContent-->
-<!--           };-->
-
-<!--            // Отправляем JSON-объект в Telegram-бот-->
-<!--            if (window.Telegram && window.Telegram.WebApp) {-->
-<!--                Telegram.WebApp.sendData(JSON.stringify(orderData));-->
-<!--            } else {-->
-<!--                alert('Ошибка: Telegram WebApp не доступен.');-->
-<!--            }-->
-
-
-<!--        // Загрузка корзины при запуске приложения-->
-<!--        window.onload = loadCart;-->
-<!--    </script>-->
-<!--</body>-->
-<!--</html>-->
+</html>.   
