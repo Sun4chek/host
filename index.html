@@ -7,7 +7,7 @@
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; position: relative; }
         body.light-theme { background-color: #f8f8f8; color: #333; }
-        body.dark-theme { background-color: #1e1e1e; color: #ffffff; }
+        body.dark-theme { background-color: #1e1e1e; color: #fff; }
         h2 { color: inherit; }
         .category-grid {
             display: grid;
@@ -81,7 +81,8 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background-color: #2ea6ff; /* Фиксированный цвет для уведомлений корзины */
+<!--            background-color: #2ea6ff; /* Фиксированный цвет для уведомлений корзины */-->
+            background-color: var(--button-color);
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -327,11 +328,13 @@
                 // Применяем цвета из themeParams
                 body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
                 body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
+                body.style.setProperty('--button-color', tg.themeParams.button_color || '#ff6600');
                 body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
 
                 // Обновляем цвет иконки корзины
                 const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';
                 body.style.setProperty('--icon-filter', iconFilter);
+
 
                 // Обновляем цвет текста в заголовке
                 const mainTitle = document.getElementById('main-title');
