@@ -1,4 +1,4 @@
- <html lang="ru">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
             gap: 10px;
             margin-bottom: 20px;
         }
-          .category-item {
+        .category-item {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,7 +31,6 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-
         }
         .category-item:hover {
             transform: scale(1.05);
@@ -55,7 +54,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-
             mask-image: linear-gradient(
                 to bottom,
                 transparent 0%,
@@ -83,7 +81,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background-color: #2ea6ff;
+            background-color: #2ea6ff; /* Фиксированный цвет для уведомлений корзины */
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -92,7 +90,7 @@
         .back-button {
             display: block;
             margin-bottom: 10px;
-            color:#2ea6ff;
+            color: #2ea6ff; /* Фиксированный цвет для стрелочки "Назад" */
             cursor: pointer;
         }
         .menu-item {
@@ -105,7 +103,7 @@
             border-radius: 10px;
         }
         .add-to-cart {
-            background-color:#2ea6ff; /* Цвет кнопки "Добавить в корзину" */
+            background-color: #2ea6ff; /* Фиксированный цвет для кнопки "Добавить в корзину" */
             color: white;
             border: none;
             padding: 5px 10px;
@@ -146,7 +144,7 @@
     </div>
 
     <div id="menu-screen" class="container active">
-        <h2>Выберите категорию</h2>
+        <h2 id="main-title">Выберите категорию</h2>
         <div class="category-grid">
             <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
             <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
@@ -156,9 +154,7 @@
             <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
         </div>
     </div>
-
-
-    <div id="main-screen" class="container">
+  <div id="main-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Основные блюда</h2>
         <div class="menu-item">
@@ -326,7 +322,7 @@
             if (tg.themeParams) {
                 // Применяем цвета из themeParams
                 body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
-                body.style.setProperty('--text-color', tg.themeParams.text_color || '#ffffff');
+                body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
                 body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
 
                 // Обновляем цвет иконки корзины
@@ -334,13 +330,17 @@
                 body.style.setProperty('--icon-filter', iconFilter);
 
                 // Обновляем цвет текста в заголовке
-               
+                const mainTitle = document.getElementById('main-title');
+                if (mainTitle) {
+                    mainTitle.style.color = tg.themeParams.text_color || '#000000';
+                }
             }
         }
 
         // Применяем тему при загрузке
         applyTheme();
 
+        // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
 
