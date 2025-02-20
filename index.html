@@ -7,7 +7,7 @@
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; position: relative; }
         body.light-theme { background-color: #f8f8f8; color: #333; }
-        body.dark-theme { background-color: #1e1e1e; color: #18222d; }
+        body.dark-theme { background-color: #1e1e1e; color: #ffffff; }
         h2 { color: inherit; }
         .category-grid {
             display: grid;
@@ -98,9 +98,10 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px;
-            background: white;
+            background: var(--background-color);
             margin-bottom: 10px;
             border-radius: 10px;
+            color: var(--text-color); /* Динамический цвет текста */
         }
         .add-to-cart {
             background-color: #2ea6ff; /* Фиксированный цвет для кнопки "Добавить в корзину" */
@@ -114,9 +115,10 @@
             display: flex;
             justify-content: space-between;
             padding: 10px;
-            background: white;
+            background: var(--background-color);
             margin-bottom: 10px;
             border-radius: 10px;
+            color: var(--text-color); /* Динамический цвет текста */
         }
         .checkout-form {
             display: flex;
@@ -126,7 +128,7 @@
         .checkout-form input, .checkout-form select {
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
         }
         .checkout-form button {
             background-color: #ff6600;
@@ -154,7 +156,7 @@
             <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
         </div>
     </div>
-  <div id="main-screen" class="container">
+<div id="main-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Основные блюда</h2>
         <div class="menu-item">
@@ -311,6 +313,8 @@
         </form>
     </div>
 
+    <!-- Остальные экраны и код JavaScript остаются без изменений -->
+
     <script>
         let cart = []; // Массив для хранения товаров в корзине
 
@@ -334,6 +338,11 @@
                 if (mainTitle) {
                     mainTitle.style.color = tg.themeParams.text_color || '#000000';
                 }
+
+                // Обновляем цвет текста на всех экранах
+                document.querySelectorAll('.menu-item, .cart-item').forEach(el => {
+                    el.style.color = tg.themeParams.text_color || '#000000';
+                });
             }
         }
 
@@ -343,8 +352,8 @@
         // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
-
-        // Функция для отправки данных в Telegram
+        // Остальной код JavaScript остается без изменений
+       // Функция для отправки данных в Telegram
         function sendDataToTelegram(data) {
             if (tg && tg.sendData) {
                 tg.sendData(JSON.stringify(data));
