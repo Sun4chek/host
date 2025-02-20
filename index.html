@@ -324,13 +324,11 @@
         function applyTheme() {
             const body = document.body;
             if (tg.themeParams) {
-                // Применяем цвета из themeParams
                 body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
                 body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
                 body.style.setProperty('--button-color', tg.themeParams.button_color || '#ff6600');
                 body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
-
-                // Обновляем цвет иконки корзины
+                      // Обновляем цвет иконки корзины
                 const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';
                 body.style.setProperty('--icon-filter', iconFilter);
 
