@@ -75,14 +75,13 @@
             background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center;
             background-size: cover;
             cursor: pointer;
-            filter: var(--icon-filter); /* Фильтр для иконки */
+            filter: var(--icon-filter); /* Фильтр для иконки, зависит от темы */
         }
-        .cart-counter {
+       .cart-counter {
             position: absolute;
             top: 15px;
             right: 15px;
-
-            background-color: var(--button-color);
+            background-color: #2ea6ff; /* Фиксированный синий цвет */
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -316,6 +315,10 @@
 
     <!-- Остальные экраны и код JavaScript остаются без изменений -->
 
+
+
+
+
      <script>
         let cart = []; // Массив для хранения товаров в корзине
 
@@ -323,18 +326,17 @@
         let tg = window.Telegram.WebApp;
 
         function applyTheme() {
-            const body = document.body;
-            if (tg.themeParams) {
-                // Применяем цвета из themeParams
-                body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
-                body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
-                body.style.setProperty('--button-color', tg.themeParams.button_color || '#2ea6ff');
-                body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
+        const body = document.body;
+        if (tg.themeParams) {
+            // Применяем цвета из themeParams
+            body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
+            body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
+            body.style.setProperty('--button-color', tg.themeParams.button_color || '#2ea6ff');
+            body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
 
                 // Обновляем цвет иконки корзины
                 const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';
                 body.style.setProperty('--icon-filter', iconFilter);
-
 
                 // Обновляем цвет текста в заголовке
                 const mainTitle = document.getElementById('main-title');
@@ -342,7 +344,7 @@
                     mainTitle.style.color = tg.themeParams.text_color || '#000000';
                 }
 
-                // Обновляем цвет текста на всех экранах
+            // Обновляем цвет текста на всех экранах
                 document.querySelectorAll('.menu-item, .cart-item').forEach(el => {
                     el.style.color = tg.themeParams.text_color || '#000000';
                 });
@@ -357,7 +359,7 @@
 
 
         // Остальной код JavaScript остается без изменений
-       // Функция для отправки данных в Telegram
+        // Функция для отправки данных в Telegram
         function sendDataToTelegram(data) {
             if (tg && tg.sendData) {
                 tg.sendData(JSON.stringify(data));
