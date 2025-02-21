@@ -1222,17 +1222,24 @@
             background-color: var(--background-color);
             display: flex;
             justify-content: space-around;
-            padding: 10px;
+            align-items: center;
+            padding: 15px 0;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
+            height: 70px; /* Увеличиваем высоту мини-бара */
         }
         .mini-bar button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 28px; /* Увеличиваем размер иконок */
             color: var(--text-color);
             transition: transform 0.2s ease;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
         .mini-bar button:hover {
             color: #2ea6ff;
@@ -1243,7 +1250,7 @@
         .mini-bar button.cart-button .cart-counter {
             position: absolute;
             top: -5px;
-            right: -5px;
+            right: 10px;
             background-color: #2ea6ff;
             color: white;
             border-radius: 50%;
@@ -1260,6 +1267,11 @@
             50% {
                 transform: scale(1.2);
             }
+        }
+        .mini-bar .separator {
+            width: 1px;
+            height: 40px;
+            background-color: var(--border-color);
         }
     </style>
 </head>
@@ -1553,7 +1565,9 @@
     <!-- Мини-бар -->
     <div class="mini-bar">
         <button onclick="showScreen('menu-screen')">🏠</button>
+        <div class="separator"></div>
         <button onclick="showScreen('menu-screen')">🍽️</button>
+        <div class="separator"></div>
         <button class="cart-button" onclick="showScreen('cart-screen')">
             🛒
             <div id="cart-counter" class="cart-counter">0</div>
