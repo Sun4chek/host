@@ -1189,62 +1189,74 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
-
-
-
-      .custom-alert {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: #4CAF50; /* Зелений колір для успіху */
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-100%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-}
-
-.custom-alert.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-100%);
-    }
-}
-
-.custom-alert.slide-in {
-    animation: slideDown 0.3s ease forwards;
-}
-
-.custom-alert.slide-out {
-    animation: slideUp 0.3s ease forwards;
-}
-
+        .custom-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background-color: #4CAF50; /* Зелений колір для успіху */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        .custom-alert.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-100%);
+            }
+        }
+        .custom-alert.slide-in {
+            animation: slideDown 0.3s ease forwards;
+        }
+        .custom-alert.slide-out {
+            animation: slideUp 0.3s ease forwards;
+        }
+        .mini-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .mini-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+        .mini-bar button:hover {
+            color: #2ea6ff;
+        }
     </style>
 </head>
 <body>
@@ -1538,6 +1550,13 @@
         </form>
     </div>
 
+    <!-- Мини-бар -->
+    <div class="mini-bar">
+        <button onclick="showScreen('menu-screen')">🏠</button>
+        <button onclick="showScreen('menu-screen')">🍽️</button>
+        <button onclick="showScreen('cart-screen')">🛒</button>
+    </div>
+
     <script>
         let cart = []; // Массив для хранения товаров в корзине
 
@@ -1605,6 +1624,9 @@
                 updateCart();
                 updateCartCounter();
                 button.classList.remove('clicked');
+
+                // Показываем кастомный алерт
+                showCustomAlert('Товар добавлен в корзину!');
             }, 300); // Время анимации
         }
 
@@ -1661,38 +1683,23 @@
             }
         }
 
-      function addToCart(name, price, button) {
-    // Добавляем класс для анимации
-    button.classList.add('clicked');
+        // Функция для показа кастомного алерта
+        function showCustomAlert(message) {
+            const alert = document.getElementById('custom-alert');
+            alert.textContent = message;
+            alert.classList.add('show', 'slide-in');
 
-    // Ждем завершения анимации
-    setTimeout(() => {
-        cart.push({ name, price });
-        updateCart();
-        updateCartCounter();
-        button.classList.remove('clicked');
+            // Сховати алерт через 3 секунди
+            setTimeout(() => {
+                alert.classList.remove('slide-in');
+                alert.classList.add('slide-out');
 
-        // Показываем кастомный алерт
-        showCustomAlert('Товар добавлен в корзину!');
-    }, 300); // Время анимации
-}
-
-function showCustomAlert(message) {
-    const alert = document.getElementById('custom-alert');
-    alert.textContent = message;
-    alert.classList.add('show', 'slide-in');
-
-    // Сховати алерт через 3 секунди
-    setTimeout(() => {
-        alert.classList.remove('slide-in');
-        alert.classList.add('slide-out');
-
-        // Повністю прибрати алерт після завершення анімації
-        setTimeout(() => {
-            alert.classList.remove('show', 'slide-out');
-        }, 300); // Час анімації slideOut
-    }, 1500); // Час відображення алерту
-}
+                // Повністю прибрати алерт після завершення анімації
+                setTimeout(() => {
+                    alert.classList.remove('show', 'slide-out');
+                }, 300); // Час анімації slideOut
+            }, 1500); // Час відображення алерту
+        }
 
         // Функция для оформления заказа
         function submitOrder(event) {
