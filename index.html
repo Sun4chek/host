@@ -1015,7 +1015,7 @@
             font-family: Arial, sans-serif;
             padding: 20px;
             margin: 0;
-            padding-bottom: 80px; /* Отступ для мини-бара */
+            padding-bottom: 50px; /* Отступ для мини-бара */
         }
         body.light-theme {
             background-color: #f8f8f8;
@@ -1243,16 +1243,16 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 15px 0;
+            padding: 5px 0;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            height: 30px;
+            height: 30px; /* Высота мини-бара */
         }
         .mini-bar button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 28px;
+            font-size: 20px; /* Уменьшен размер иконок */
             color: var(--text-color);
             transition: transform 0.2s ease;
             flex: 1;
@@ -1290,7 +1290,7 @@
         }
         .mini-bar .separator {
             width: 1px;
-            height: 40px;
+            height: 20px;
             background-color: var(--border-color);
         }
     </style>
@@ -1555,18 +1555,18 @@
         <div id="cart-items"></div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
         <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="scrollToBottom()">Оформить заказ</button>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
     </div>
 
     <!-- Раздел оформления заказа -->
     <div id="checkout-screen" class="container">
         <span class="back-button" onclick="showScreen('cart-screen')">⬅ Назад</span>
         <h2>Оформление заказа</h2>
-        <form class="checkout-form" onsubmit="submitOrder(event)">
-            <input type="text" placeholder="Фамилия" required>
-            <input type="text" placeholder="Имя" required>
-            <input type="tel" placeholder="Номер телефона" required>
-            <select required>
+        <form id="checkout-form" class="checkout-form">
+            <input type="text" id="last-name" placeholder="Фамилия" required>
+            <input type="text" id="first-name" placeholder="Имя" required>
+            <input type="tel" id="phone" placeholder="Номер телефона" required>
+            <select id="payment-method" required>
                 <option value="" disabled selected>Способ оплаты</option>
                 <option value="cash">Наличные</option>
                 <option value="card">Карта</option>
@@ -1577,7 +1577,7 @@
                 <option value="pickup">Самовынос</option>
             </select>
             <div id="room-number-container" style="display: none;">
-                <input type="text" placeholder="Номер комнаты">
+                <input type="text" id="room-number" placeholder="Номер комнаты">
             </div>
             <button type="submit">Подтвердить заказ</button>
         </form>
@@ -1744,25 +1744,30 @@
             }, 1500); // Час відображення алерту
         }
 
-        // Функция для прокрутки вниз
-        function scrollToBottom() {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth' // Плавная прокрутка
-            });
+        // Функция для очистки корзины
+        function clearCart() {
+            cart = []; // Очищаем массив корзины
+            updateCart(); // Обновляем отображение корзины
+            updateCartCounter(); // Обновляем счетчик
         }
 
         // Функция для оформления заказа
         function submitOrder(event) {
-            event.preventDefault();
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
 
             // Собираем данные из формы
-            const lastName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(1)').value;
-            const firstName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(2)').value;
-            const phone = document.querySelector('#checkout-screen input[type="tel"]').value;
-            const paymentMethod = document.querySelector('#checkout-screen select').value;
-            const deliveryMethod = document.querySelector('#delivery-method').value;
-            const roomNumber = document.querySelector('#room-number-container input')?.value || 'Не указано';
+            const lastName = document.getElementById('last-name').value;
+            const firstName = document.getElementById('first-name').value;
+            const phone = document.getElementById('phone').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const deliveryMethod = document.getElementById('delivery-method').value;
+            const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
+
+            // Проверяем, что все обязательные поля заполнены
+            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
+                alert('Пожалуйста, заполните все обязательные поля.');
+                return;
+            }
 
             // Формируем JSON-объект
             const orderData = {
@@ -1786,6 +1791,9 @@
             updateCartCounter();
             showScreen('menu-screen');
         }
+
+        // Назначаем обработчик события submit на форму
+        document.getElementById('checkout-form').addEventListener('submit', submitOrder);
     </script>
 </body>
 </html>
