@@ -466,6 +466,544 @@
 <!--</body>-->
 <!--</html>-->
 
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Меню ресторана</title>-->
+<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
+<!--    <style>-->
+<!--        body { font-family: Arial, sans-serif; padding: 20px; position: relative; }-->
+<!--        body.light-theme { background-color: #f8f8f8; color: #333; }-->
+<!--        body.dark-theme { background-color: #1e1e1e; color: #fff; }-->
+<!--        h2 { color: inherit; }-->
+<!--        .category-grid {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(2, 1fr);-->
+<!--            gap: 10px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+<!--        .category-item {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            height: 120px;-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            color: white;-->
+<!--            font-size: 20px;-->
+<!--            font-weight: bold;-->
+<!--            border-radius: 10px;-->
+<!--            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);-->
+<!--            cursor: pointer;-->
+<!--            position: relative;-->
+<!--            overflow: hidden;-->
+<!--            transition: transform 0.2s ease, box-shadow 0.2s ease;-->
+<!--        }-->
+<!--        .category-item:hover {-->
+<!--            transform: scale(1.05);-->
+<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);-->
+<!--        }-->
+<!--        .category-item::before {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            right: 0;-->
+<!--            bottom: 0;-->
+<!--            background: inherit;-->
+<!--            filter: blur(8px);-->
+<!--            z-index: -1;-->
+<!--        }-->
+<!--        .category-item::after {-->
+<!--            content: '';-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            right: 0;-->
+<!--            bottom: 0;-->
+<!--            mask-image: linear-gradient(-->
+<!--                to bottom,-->
+<!--                transparent 0%,-->
+<!--                black 20%,-->
+<!--                black 80%,-->
+<!--                transparent 100%-->
+<!--            );-->
+<!--            pointer-events: none;-->
+<!--        }-->
+<!--        .container { display: none; opacity: 0; transition: opacity 0.3s ease; }-->
+<!--        .container.active { display: block; opacity: 1; }-->
+<!--        .active { display: block; }-->
+<!--        .cart-icon {-->
+<!--            position: absolute;-->
+<!--            top: 20px;-->
+<!--            right: 20px;-->
+<!--            width: 40px;-->
+<!--            height: 40px;-->
+<!--            background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center;-->
+<!--            background-size: cover;-->
+<!--            cursor: pointer;-->
+<!--            filter: var(&#45;&#45;icon-filter); /* Фильтр для иконки, зависит от темы */-->
+<!--        }-->
+<!--        .cart-counter {-->
+<!--            position: absolute;-->
+<!--            top: 15px;-->
+<!--            right: 15px;-->
+<!--            background-color: #2ea6ff; /* Фиксированный синий цвет */-->
+<!--            color: white;-->
+<!--            border-radius: 50%;-->
+<!--            padding: 2px 6px;-->
+<!--            font-size: 12px;-->
+<!--        }-->
+<!--        .back-button {-->
+<!--            display: block;-->
+<!--            margin-bottom: 10px;-->
+<!--            color: #2ea6ff; /* Фиксированный цвет для стрелочки "Назад" */-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .menu-item {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            padding: 10px;-->
+<!--            background: var(&#45;&#45;background-color);-->
+<!--            margin-bottom: 10px;-->
+<!--            border-radius: 10px;-->
+<!--            color: var(&#45;&#45;text-color); /* Динамический цвет текста */-->
+<!--        }-->
+<!--        .menu-item img {-->
+<!--            width: 100px;-->
+<!--            height: 100px;-->
+<!--            object-fit: cover;-->
+<!--            border-radius: 10px;-->
+<!--            margin-right: 15px;-->
+<!--        }-->
+<!--        .menu-item .info {-->
+<!--            flex: 1;-->
+<!--        }-->
+<!--        .menu-item h3 {-->
+<!--            margin: 0;-->
+<!--            font-size: 18px;-->
+<!--        }-->
+<!--        .menu-item p {-->
+<!--            margin: 5px 0;-->
+<!--            font-size: 14px;-->
+<!--            color: #666;-->
+<!--        }-->
+<!--        .add-to-cart {-->
+<!--            background-color: #2ea6ff; /* Фиксированный цвет для кнопки "Добавить в корзину" */-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 5px 10px;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .cart-item {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            padding: 10px;-->
+<!--            background: var(&#45;&#45;background-color);-->
+<!--            margin-bottom: 10px;-->
+<!--            border-radius: 10px;-->
+<!--            color: var(&#45;&#45;text-color); /* Динамический цвет текста */-->
+<!--        }-->
+<!--        .checkout-form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 10px;-->
+<!--        }-->
+<!--        .checkout-form input, .checkout-form select {-->
+<!--            padding: 10px;-->
+<!--            border-radius: 5px;-->
+<!--            border: 1px solid var(&#45;&#45;border-color);-->
+<!--        }-->
+<!--        .checkout-form button {-->
+<!--            background-color: #ff6600;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="cart-icon" onclick="showScreen('cart-screen')">-->
+<!--        <div id="cart-counter" class="cart-counter">0</div>-->
+<!--    </div>-->
+
+<!--    <div id="menu-screen" class="container active">-->
+<!--        <h2 id="main-title">Выберите категорию</h2>-->
+<!--        <div class="category-grid">-->
+<!--            <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>-->
+<!--            <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>-->
+<!--            <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>-->
+<!--            <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>-->
+<!--            <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>-->
+<!--            <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Основные блюда &ndash;&gt;-->
+<!--    <div id="main-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Основные блюда</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Сковорода куриная">-->
+<!--            <div class="info">-->
+<!--                <h3>Сковорода куриная</h3>-->
+<!--                <p>360г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450)">Добавить - 450₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">-->
+<!--            <div class="info">-->
+<!--                <h3>Куриная отбивная</h3>-->
+<!--                <p>200г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400)">Добавить - 400₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">-->
+<!--            <div class="info">-->
+<!--                <h3>Сковорода свиная</h3>-->
+<!--                <p>360г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530)">Добавить - 530₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Супы &ndash;&gt;-->
+<!--    <div id="soups-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Первые блюда</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Борщ">-->
+<!--            <div class="info">-->
+<!--                <h3>Борщ</h3>-->
+<!--                <p>350г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Борщ', 400)">Добавить - 400₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Солянка">-->
+<!--            <div class="info">-->
+<!--                <h3>Солянка</h3>-->
+<!--                <p>350г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Солянка', 450)">Добавить - 450₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Суп лапша">-->
+<!--            <div class="info">-->
+<!--                <h3>Суп лапша</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Суп лапша', 300)">Добавить - 300₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Салаты &ndash;&gt;-->
+<!--    <div id="salads-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Салаты</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Цезарь с курицей">-->
+<!--            <div class="info">-->
+<!--                <h3>Цезарь с курицей</h3>-->
+<!--                <p>250г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350)">Добавить - 350₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Греческий салат">-->
+<!--            <div class="info">-->
+<!--                <h3>Греческий салат</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Греческий салат', 400)">Добавить - 400₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Салат с креветками">-->
+<!--            <div class="info">-->
+<!--                <h3>Салат с креветками</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450)">Добавить - 450₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Морепродукты &ndash;&gt;-->
+<!--    <div id="seafood-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Морепродукты</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Мидии в сливочном соусе">-->
+<!--            <div class="info">-->
+<!--                <h3>Мидии в сливочном соусе</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600)">Добавить - 600₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Креветки гриль">-->
+<!--            <div class="info">-->
+<!--                <h3>Креветки гриль</h3>-->
+<!--                <p>250г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700)">Добавить - 700₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Кальмары в кляре">-->
+<!--            <div class="info">-->
+<!--                <h3>Кальмары в кляре</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550)">Добавить - 550₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Пасты &ndash;&gt;-->
+<!--    <div id="pasta-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Пасты</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Паста со сливочным маслом">-->
+<!--            <div class="info">-->
+<!--                <h3>Паста со сливочным маслом</h3>-->
+<!--                <p>250г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330)">Добавить - 330₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Карбонара">-->
+<!--            <div class="info">-->
+<!--                <h3>Карбонара</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Карбонара', 470)">Добавить - 470₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Болоньезе">-->
+<!--            <div class="info">-->
+<!--                <h3>Болоньезе</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Болоньезе', 450)">Добавить - 450₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Мангал &ndash;&gt;-->
+<!--    <div id="grill-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Мангал</h2>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Шашлык из свинины">-->
+<!--            <div class="info">-->
+<!--                <h3>Шашлык из свинины</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600)">Добавить - 600₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">-->
+<!--            <div class="info">-->
+<!--                <h3>Шашлык из курицы</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500)">Добавить - 500₽</button>-->
+<!--        </div>-->
+<!--        <div class="menu-item">-->
+<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Шашлык из баранины">-->
+<!--            <div class="info">-->
+<!--                <h3>Шашлык из баранины</h3>-->
+<!--                <p>300г</p>-->
+<!--            </div>-->
+<!--            <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800)">Добавить - 800₽</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Раздел корзины &ndash;&gt;-->
+<!--    <div id="cart-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>-->
+<!--        <h2>Корзина</h2>-->
+<!--        <div id="cart-items"></div>-->
+<!--        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>-->
+<!--        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>-->
+<!--        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Раздел оформления заказа &ndash;&gt;-->
+<!--    <div id="checkout-screen" class="container">-->
+<!--        <span class="back-button" onclick="showScreen('cart-screen')">⬅ Назад</span>-->
+<!--        <h2>Оформление заказа</h2>-->
+<!--        <form class="checkout-form" onsubmit="submitOrder(event)">-->
+<!--            <input type="text" placeholder="Фамилия" required>-->
+<!--            <input type="text" placeholder="Имя" required>-->
+<!--            <input type="tel" placeholder="Номер телефона" required>-->
+<!--            <select required>-->
+<!--                <option value="" disabled selected>Способ оплаты</option>-->
+<!--                <option value="cash">Наличные</option>-->
+<!--                <option value="card">Карта</option>-->
+<!--            </select>-->
+<!--            <select id="delivery-method" required onchange="toggleRoomNumber()">-->
+<!--                <option value="" disabled selected>Способ получения</option>-->
+<!--                <option value="delivery">Доставка</option>-->
+<!--                <option value="pickup">Самовынос</option>-->
+<!--            </select>-->
+<!--            <div id="room-number-container" style="display: none;">-->
+<!--                <input type="text" placeholder="Номер комнаты">-->
+<!--            </div>-->
+<!--            <button type="submit">Подтвердить заказ</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        let cart = []; // Массив для хранения товаров в корзине-->
+
+<!--        // Инициализация Telegram WebApp-->
+<!--        let tg = window.Telegram.WebApp;-->
+
+<!--        function applyTheme() {-->
+<!--            const body = document.body;-->
+<!--            if (tg.themeParams) {-->
+<!--                // Применяем цвета из themeParams-->
+<!--                body.style.setProperty('&#45;&#45;background-color', tg.themeParams.bg_color || '#ffffff');-->
+<!--                body.style.setProperty('&#45;&#45;text-color', tg.themeParams.text_color || '#000000');-->
+<!--                body.style.setProperty('&#45;&#45;button-color', tg.themeParams.button_color || '#2ea6ff');-->
+<!--                body.style.setProperty('&#45;&#45;border-color', tg.themeParams.hint_color || '#cccccc');-->
+
+<!--                // Обновляем цвет иконки корзины-->
+<!--                const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';-->
+<!--                body.style.setProperty('&#45;&#45;icon-filter', iconFilter);-->
+
+<!--                // Обновляем цвет текста в заголовке-->
+<!--                const mainTitle = document.getElementById('main-title');-->
+<!--                if (mainTitle) {-->
+<!--                    mainTitle.style.color = tg.themeParams.text_color || '#000000';-->
+<!--                }-->
+
+<!--                // Обновляем цвет текста на всех экранах-->
+<!--                document.querySelectorAll('.menu-item, .cart-item').forEach(el => {-->
+<!--                    el.style.color = tg.themeParams.text_color || '#000000';-->
+<!--                });-->
+<!--            }-->
+<!--        }-->
+
+<!--        // Применяем тему при загрузке-->
+<!--        applyTheme();-->
+
+<!--        // Обработчик смены темы-->
+<!--        tg.onEvent('themeChanged', applyTheme);-->
+
+<!--        // Функция для отправки данных в Telegram-->
+<!--        function sendDataToTelegram(data) {-->
+<!--            if (tg && tg.sendData) {-->
+<!--                tg.sendData(JSON.stringify(data));-->
+<!--            } else {-->
+<!--                console.error("Telegram WebApp не доступен.");-->
+<!--            }-->
+<!--        }-->
+
+<!--        // Функция для добавления товара в корзину-->
+<!--        function addToCart(name, price) {-->
+<!--            cart.push({ name, price });-->
+<!--            updateCart();-->
+<!--            updateCartCounter();-->
+<!--        }-->
+
+<!--        // Функция для обновления отображения корзины-->
+<!--        function updateCart() {-->
+<!--            const cartItems = document.getElementById('cart-items');-->
+<!--            const totalPrice = document.getElementById('total-price');-->
+<!--            cartItems.innerHTML = ''; // Очищаем содержимое корзины-->
+<!--            let total = 0;-->
+
+<!--            // Добавляем каждый товар в корзину-->
+<!--            cart.forEach((item, index) => {-->
+<!--                const cartItem = document.createElement('div');-->
+<!--                cartItem.className = 'cart-item';-->
+<!--                cartItem.innerHTML = `-->
+<!--                    <span>${item.name} - ${item.price}₽</span>-->
+<!--                    <button onclick="removeFromCart(${index})">Удалить</button>-->
+<!--                `;-->
+<!--                cartItems.appendChild(cartItem);-->
+<!--                total += item.price;-->
+<!--            });-->
+
+<!--            // Обновляем итоговую сумму-->
+<!--            totalPrice.textContent = total;-->
+<!--        }-->
+
+<!--        // Функция для удаления товара из корзины-->
+<!--        function removeFromCart(index) {-->
+<!--            cart.splice(index, 1); // Удаляем товар из массива-->
+<!--            updateCart(); // Обновляем отображение корзины-->
+<!--            updateCartCounter(); // Обновляем счетчик-->
+<!--        }-->
+
+<!--        // Функция для обновления счетчика товаров в корзине-->
+<!--        function updateCartCounter() {-->
+<!--            const cartCounter = document.getElementById('cart-counter');-->
+<!--            cartCounter.textContent = cart.length; // Устанавливаем количество товаров-->
+<!--        }-->
+
+<!--        // Функция для переключения экранов-->
+<!--        function showScreen(screenId) {-->
+<!--            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));-->
+<!--            document.getElementById(screenId).classList.add('active');-->
+<!--        }-->
+
+<!--        // Функция для отображения/скрытия поля ввода номера комнаты-->
+<!--        function toggleRoomNumber() {-->
+<!--            const deliveryMethod = document.getElementById('delivery-method');-->
+<!--            const roomNumberContainer = document.getElementById('room-number-container');-->
+<!--            if (deliveryMethod.value === 'delivery') {-->
+<!--                roomNumberContainer.style.display = 'block';-->
+<!--            } else {-->
+<!--                roomNumberContainer.style.display = 'none';-->
+<!--            }-->
+<!--        }-->
+
+<!--        // Функция для оформления заказа-->
+<!--        function submitOrder(event) {-->
+<!--            event.preventDefault();-->
+
+<!--            // Собираем данные из формы-->
+<!--            const lastName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(1)').value;-->
+<!--            const firstName = document.querySelector('#checkout-screen input[type="text"]:nth-of-type(2)').value;-->
+<!--            const phone = document.querySelector('#checkout-screen input[type="tel"]').value;-->
+<!--            const paymentMethod = document.querySelector('#checkout-screen select').value;-->
+<!--            const deliveryMethod = document.querySelector('#delivery-method').value;-->
+<!--            const roomNumber = document.querySelector('#room-number-container input')?.value || 'Не указано';-->
+
+<!--            // Формируем JSON-объект-->
+<!--            const orderData = {-->
+<!--                lastName,-->
+<!--                firstName,-->
+<!--                phone,-->
+<!--                paymentMethod,-->
+<!--                deliveryMethod,-->
+<!--                roomNumber,-->
+<!--                cart: cart.map(item => ({ name: item.name, price: item.price })),-->
+<!--                total: document.getElementById('total-price').textContent-->
+<!--            };-->
+
+<!--            // Отправляем JSON-объект в Telegram-бот-->
+<!--            sendDataToTelegram(orderData);-->
+
+<!--            // Очищаем корзину и возвращаемся на главный экран-->
+<!--            alert('Заказ успешно оформлен!');-->
+<!--            cart = [];-->
+<!--            updateCart();-->
+<!--            updateCartCounter();-->
+<!--            showScreen('menu-screen');-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -580,6 +1118,7 @@
         }
         .menu-item .info {
             flex: 1;
+            margin-right: 15px;
         }
         .menu-item h3 {
             margin: 0;
@@ -590,13 +1129,21 @@
             font-size: 14px;
             color: #666;
         }
+        .menu-item .price {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: right;
+        }
         .add-to-cart {
             background-color: #2ea6ff; /* Фиксированный цвет для кнопки "Добавить в корзину" */
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            width: 100px; /* Фиксированная ширина кнопки */
+            text-align: center;
         }
         .cart-item {
             display: flex;
@@ -654,7 +1201,10 @@
                 <h3>Сковорода куриная</h3>
                 <p>360г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450)">Добавить - 450₽</button>
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">
@@ -662,7 +1212,10 @@
                 <h3>Куриная отбивная</h3>
                 <p>200г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400)">Добавить - 400₽</button>
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">
@@ -670,7 +1223,10 @@
                 <h3>Сковорода свиная</h3>
                 <p>360г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530)">Добавить - 530₽</button>
+            <div class="price-and-button">
+                <div class="price">530₽</div>
+                <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530)">Добавить</button>
+            </div>
         </div>
     </div>
 
@@ -684,7 +1240,10 @@
                 <h3>Борщ</h3>
                 <p>350г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Борщ', 400)">Добавить - 400₽</button>
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Борщ', 400)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Солянка">
@@ -692,7 +1251,10 @@
                 <h3>Солянка</h3>
                 <p>350г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Солянка', 450)">Добавить - 450₽</button>
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Солянка', 450)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Суп лапша">
@@ -700,7 +1262,10 @@
                 <h3>Суп лапша</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Суп лапша', 300)">Добавить - 300₽</button>
+            <div class="price-and-button">
+                <div class="price">300₽</div>
+                <button class="add-to-cart" onclick="addToCart('Суп лапша', 300)">Добавить</button>
+            </div>
         </div>
     </div>
 
@@ -714,7 +1279,10 @@
                 <h3>Цезарь с курицей</h3>
                 <p>250г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350)">Добавить - 350₽</button>
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Греческий салат">
@@ -722,7 +1290,10 @@
                 <h3>Греческий салат</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Греческий салат', 400)">Добавить - 400₽</button>
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Греческий салат', 400)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Салат с креветками">
@@ -730,7 +1301,10 @@
                 <h3>Салат с креветками</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450)">Добавить - 450₽</button>
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450)">Добавить</button>
+            </div>
         </div>
     </div>
 
@@ -744,7 +1318,10 @@
                 <h3>Мидии в сливочном соусе</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600)">Добавить - 600₽</button>
+            <div class="price-and-button">
+                <div class="price">600₽</div>
+                <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Креветки гриль">
@@ -752,7 +1329,10 @@
                 <h3>Креветки гриль</h3>
                 <p>250г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700)">Добавить - 700₽</button>
+            <div class="price-and-button">
+                <div class="price">700₽</div>
+                <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Кальмары в кляре">
@@ -760,7 +1340,10 @@
                 <h3>Кальмары в кляре</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550)">Добавить - 550₽</button>
+            <div class="price-and-button">
+                <div class="price">550₽</div>
+                <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550)">Добавить</button>
+            </div>
         </div>
     </div>
 
@@ -774,7 +1357,10 @@
                 <h3>Паста со сливочным маслом</h3>
                 <p>250г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330)">Добавить - 330₽</button>
+            <div class="price-and-button">
+                <div class="price">330₽</div>
+                <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Карбонара">
@@ -782,7 +1368,10 @@
                 <h3>Карбонара</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Карбонара', 470)">Добавить - 470₽</button>
+            <div class="price-and-button">
+                <div class="price">470₽</div>
+                <button class="add-to-cart" onclick="addToCart('Карбонара', 470)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Болоньезе">
@@ -790,7 +1379,10 @@
                 <h3>Болоньезе</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Болоньезе', 450)">Добавить - 450₽</button>
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Болоньезе', 450)">Добавить</button>
+            </div>
         </div>
     </div>
 
@@ -804,7 +1396,10 @@
                 <h3>Шашлык из свинины</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600)">Добавить - 600₽</button>
+            <div class="price-and-button">
+                <div class="price">600₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">
@@ -812,7 +1407,10 @@
                 <h3>Шашлык из курицы</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500)">Добавить - 500₽</button>
+            <div class="price-and-button">
+                <div class="price">500₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500)">Добавить</button>
+            </div>
         </div>
         <div class="menu-item">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Шашлык из баранины">
@@ -820,7 +1418,10 @@
                 <h3>Шашлык из баранины</h3>
                 <p>300г</p>
             </div>
-            <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800)">Добавить - 800₽</button>
+            <div class="price-and-button">
+                <div class="price">800₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800)">Добавить</button>
+            </div>
         </div>
     </div>
 
