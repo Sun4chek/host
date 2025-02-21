@@ -1003,7 +1003,6 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -1145,6 +1144,23 @@
             cursor: pointer;
             width: 100px; /* Фиксированная ширина кнопки */
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .add-to-cart::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center;
+            background-size: cover;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
+        }
+        .add-to-cart.clicked::after {
+            transform: translate(-50%, -50%) scale(1);
         }
         .cart-item {
             display: flex;
@@ -1204,7 +1220,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1215,7 +1231,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1226,7 +1242,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">530₽</div>
-                <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1243,7 +1259,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Борщ', 400)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Борщ', 400, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1254,7 +1270,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Солянка', 450)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Солянка', 450, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1265,7 +1281,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">300₽</div>
-                <button class="add-to-cart" onclick="addToCart('Суп лапша', 300)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Суп лапша', 300, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1282,7 +1298,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">350₽</div>
-                <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1293,7 +1309,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Греческий салат', 400)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Греческий салат', 400, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1304,7 +1320,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1321,7 +1337,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">600₽</div>
-                <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1332,7 +1348,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">700₽</div>
-                <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1343,7 +1359,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">550₽</div>
-                <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1360,7 +1376,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">330₽</div>
-                <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1371,7 +1387,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">470₽</div>
-                <button class="add-to-cart" onclick="addToCart('Карбонара', 470)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Карбонара', 470, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1382,7 +1398,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Болоньезе', 450)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Болоньезе', 450, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1399,7 +1415,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">600₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1410,7 +1426,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">500₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500, this)">Добавить</button>
             </div>
         </div>
         <div class="menu-item">
@@ -1421,7 +1437,7 @@
             </div>
             <div class="price-and-button">
                 <div class="price">800₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800)">Добавить</button>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -1517,11 +1533,18 @@
             }
         }
 
-        // Функция для добавления товара в корзину
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCart();
-            updateCartCounter();
+        // Функция для добавления товара в корзину с анимацией
+        function addToCart(name, price, button) {
+            // Добавляем класс для анимации
+            button.classList.add('clicked');
+
+            // Ждем завершения анимации
+            setTimeout(() => {
+                cart.push({ name, price });
+                updateCart();
+                updateCartCounter();
+                button.classList.remove('clicked');
+            }, 300); // Время анимации
         }
 
         // Функция для обновления отображения корзины
