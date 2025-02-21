@@ -1104,10 +1104,11 @@
             display: flex;
             align-items: center;
             padding: 10px;
-            background: var(--background-color);
             margin-bottom: 10px;
             border-radius: 10px;
             color: var(--text-color); /* Динамический цвет текста */
+            background-color: var(--item-bg-color); /* Фон для элемента меню */
+            transition: background-color 0.3s ease;
         }
         .menu-item img {
             width: 100px;
@@ -1127,7 +1128,7 @@
         .menu-item p {
             margin: 5px 0;
             font-size: 14px;
-            color: #666;
+            color: var(--secondary-text-color); /* Вторичный цвет текста */
         }
         .menu-item .price {
             font-size: 16px;
@@ -1474,6 +1475,15 @@
                 body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
                 body.style.setProperty('--button-color', tg.themeParams.button_color || '#2ea6ff');
                 body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
+
+                // Устанавливаем цвет фона для элементов меню
+                if (tg.colorScheme === 'light') {
+                    body.style.setProperty('--item-bg-color', '#f4f4f4'); // Светлая тема
+                    body.style.setProperty('--secondary-text-color', '#666'); // Вторичный текст
+                } else {
+                    body.style.setProperty('--item-bg-color', '#213040'); // Темная тема
+                    body.style.setProperty('--secondary-text-color', '#aaa'); // Вторичный текст
+                }
 
                 // Обновляем цвет иконки корзины
                 const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';
