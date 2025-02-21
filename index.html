@@ -1003,7 +1003,7 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -1011,11 +1011,12 @@
     <title>Меню ресторана</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* Основные стили */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             margin: 0;
-            padding-bottom: 50px; /* Отступ для мини-бара */
+            padding-bottom: 100px; /* Отступ для мини-бара */
         }
         body.light-theme {
             background-color: #f8f8f8;
@@ -1028,6 +1029,8 @@
         h2 {
             color: inherit;
         }
+
+        /* Сетка категорий */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1055,33 +1058,8 @@
             transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .category-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: inherit;
-            filter: blur(8px);
-            z-index: -1;
-        }
-        .category-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            mask-image: linear-gradient(
-                to bottom,
-                transparent 0%,
-                black 20%,
-                black 80%,
-                transparent 100%
-            );
-            pointer-events: none;
-        }
+
+        /* Контейнеры экранов */
         .container {
             display: none;
             opacity: 0;
@@ -1091,12 +1069,16 @@
             display: block;
             opacity: 1;
         }
+
+        /* Кнопка "Назад" */
         .back-button {
             display: block;
             margin-bottom: 10px;
             color: #2ea6ff;
             cursor: pointer;
         }
+
+        /* Элементы меню */
         .menu-item {
             display: flex;
             align-items: center;
@@ -1133,6 +1115,8 @@
             margin-bottom: 10px;
             text-align: right;
         }
+
+        /* Кнопка "Добавить в корзину" */
         .add-to-cart {
             background-color: #2ea6ff;
             color: white;
@@ -1160,34 +1144,61 @@
         .add-to-cart.clicked::after {
             transform: translate(-50%, -50%) scale(1);
         }
-        .cart-item {
+
+        /* Мини-бар */
+        .mini-bar {
+            position: fixed;
+            bottom: 20px; /* Выше нижней шторки */
+            left: 10px;
+            right: 10px;
+            background-color: var(--background-color);
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            align-items: center;
             padding: 10px;
-            background: var(--background-color);
-            margin-bottom: 10px;
-            border-radius: 10px;
-            color: var(--text-color);
-        }
-        .checkout-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .checkout-form input,
-        .checkout-form select {
-            padding: 10px;
-            border-radius: 5px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
             border: 1px solid var(--border-color);
         }
-        .checkout-form button {
-            background-color: #ff6600;
-            color: white;
+        .mini-bar button {
+            background: none;
             border: none;
-            padding: 10px;
-            border-radius: 5px;
             cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
         }
+        .mini-bar button:hover {
+            color: #2ea6ff;
+        }
+        .mini-bar button .icon {
+            width: 24px;
+            height: 24px;
+            filter: var(--icon-filter);
+        }
+        .mini-bar button.cart-button {
+            position: relative;
+        }
+        .mini-bar button.cart-button .cart-counter {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #2ea6ff;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .mini-bar button.cart-button.animate {
+            animation: bounce 0.5s ease;
+        }
+
+        /* Кастомный алерт */
         .custom-alert {
             position: fixed;
             top: 0;
@@ -1212,74 +1223,8 @@
             visibility: visible;
             transform: translateY(0);
         }
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(0);
-            }
-            to {
-                transform: translateY(-100%);
-            }
-        }
-        .custom-alert.slide-in {
-            animation: slideDown 0.3s ease forwards;
-        }
-        .custom-alert.slide-out {
-            animation: slideUp 0.3s ease forwards;
-        }
-        .mini-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--background-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 5px 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            height: 35px; /* Высота мини-бара */
-        }
-        .mini-bar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px; /* Уменьшен размер иконок */
-            color: var(--text-color);
-            transition: transform 0.2s ease;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        .mini-bar button:hover {
-            color: #2ea6ff;
-        }
-        .mini-bar button.cart-button {
-            position: relative;
-        }
-        .mini-bar button.cart-button .cart-counter {
-            position: absolute;
-            top: -5px;
-            right: 10px;
-            background-color: #2ea6ff;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-        .mini-bar button.cart-button.animate {
-            animation: bounce 0.5s ease;
-        }
+
+        /* Анимации */
         @keyframes bounce {
             0%, 100% {
                 transform: scale(1);
@@ -1288,10 +1233,28 @@
                 transform: scale(1.2);
             }
         }
-        .mini-bar .separator {
-            width: 1px;
-            height: 20px;
-            background-color: var(--border-color);
+
+        /* Стили для формы оформления заказа */
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .checkout-form input,
+        .checkout-form select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .checkout-form button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -1585,12 +1548,17 @@
 
     <!-- Мини-бар -->
     <div class="mini-bar">
-        <button onclick="showScreen('menu-screen')">🏠</button>
-        <div class="separator"></div>
-        <button onclick="showScreen('menu-screen')">🍽️</button>
-        <div class="separator"></div>
+        <button onclick="showScreen('menu-screen')">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Главная" class="icon">
+            <span>Главная</span>
+        </button>
+        <button onclick="showScreen('menu-screen')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Меню" class="icon">
+            <span>Меню</span>
+        </button>
         <button class="cart-button" onclick="showScreen('cart-screen')">
-            🛒
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Корзина" class="icon">
+            <span>Корзина</span>
             <div id="cart-counter" class="cart-counter">0</div>
         </button>
     </div>
@@ -1601,38 +1569,15 @@
         // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
 
+        // Применение темы
         function applyTheme() {
             const body = document.body;
             if (tg.themeParams) {
-                // Применяем цвета из themeParams
                 body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
                 body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
-                body.style.setProperty('--button-color', tg.themeParams.button_color || '#2ea6ff');
-                body.style.setProperty('--border-color', tg.themeParams.hint_color || '#cccccc');
-
-                // Устанавливаем цвет фона для элементов меню
-                if (tg.colorScheme === 'light') {
-                    body.style.setProperty('--item-bg-color', '#f4f4f4'); // Светлая тема
-                    body.style.setProperty('--secondary-text-color', '#666'); // Вторичный текст
-                } else {
-                    body.style.setProperty('--item-bg-color', '#213040'); // Темная тема
-                    body.style.setProperty('--secondary-text-color', '#aaa'); // Вторичный текст
-                }
-
-                // Обновляем цвет иконки корзины
-                const iconFilter = tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)';
-                body.style.setProperty('--icon-filter', iconFilter);
-
-                // Обновляем цвет текста в заголовке
-                const mainTitle = document.getElementById('main-title');
-                if (mainTitle) {
-                    mainTitle.style.color = tg.themeParams.text_color || '#000000';
-                }
-
-                // Обновляем цвет текста на всех экранах
-                document.querySelectorAll('.menu-item, .cart-item').forEach(el => {
-                    el.style.color = tg.themeParams.text_color || '#000000';
-                });
+                body.style.setProperty('--item-bg-color', tg.colorScheme === 'light' ? '#f4f4f4' : '#213040');
+                body.style.setProperty('--secondary-text-color', tg.colorScheme === 'light' ? '#666' : '#aaa');
+                body.style.setProperty('--icon-filter', tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)');
             }
         }
 
@@ -1642,35 +1587,21 @@
         // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
-        // Функция для отправки данных в Telegram
-        function sendDataToTelegram(data) {
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(data));
-            } else {
-                console.error("Telegram WebApp не доступен.");
-            }
-        }
-
-        // Функция для добавления товара в корзину с анимацией
+        // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
-            // Добавляем класс для анимации
+            cart.push({ name, price });
+            updateCart();
+            updateCartCounter();
             button.classList.add('clicked');
+            setTimeout(() => button.classList.remove('clicked'), 300);
 
-            // Ждем завершения анимации
-            setTimeout(() => {
-                cart.push({ name, price });
-                updateCart();
-                updateCartCounter();
-                button.classList.remove('clicked');
+            // Анимация кнопки корзины
+            const cartButton = document.querySelector('.mini-bar .cart-button');
+            cartButton.classList.add('animate');
+            setTimeout(() => cartButton.classList.remove('animate'), 500);
 
-                // Анимация кнопки корзины
-                const cartButton = document.querySelector('.mini-bar .cart-button');
-                cartButton.classList.add('animate');
-                setTimeout(() => cartButton.classList.remove('animate'), 500);
-
-                // Показываем кастомный алерт
-                showCustomAlert('Товар добавлен в корзину!');
-            }, 300); // Время анимации
+            // Показываем кастомный алерт
+            showCustomAlert('Товар добавлен в корзину!');
         }
 
         // Функция для обновления отображения корзины
@@ -1713,6 +1644,9 @@
         function showScreen(screenId) {
             document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            if (screenId === 'cart-screen') {
+                updateCart(); // Обновляем корзину при открытии
+            }
         }
 
         // Функция для отображения/скрытия поля ввода номера комнаты
@@ -1730,32 +1664,25 @@
         function showCustomAlert(message) {
             const alert = document.getElementById('custom-alert');
             alert.textContent = message;
-            alert.classList.add('show', 'slide-in');
+            alert.classList.add('show');
 
-            // Сховати алерт через 3 секунди
+            // Скрываем алерт через 1.5 секунды
             setTimeout(() => {
-                alert.classList.remove('slide-in');
-                alert.classList.add('slide-out');
-
-                // Повністю прибрати алерт після завершення анімації
-                setTimeout(() => {
-                    alert.classList.remove('show', 'slide-out');
-                }, 300); // Час анімації slideOut
-            }, 1500); // Час відображення алерту
+                alert.classList.remove('show');
+            }, 1500);
         }
 
         // Функция для очистки корзины
         function clearCart() {
-            cart = []; // Очищаем массив корзины
-            updateCart(); // Обновляем отображение корзины
-            updateCartCounter(); // Обновляем счетчик
+            cart = [];
+            updateCart();
+            updateCartCounter();
         }
 
         // Функция для оформления заказа
         function submitOrder(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение формы
+            event.preventDefault();
 
-            // Собираем данные из формы
             const lastName = document.getElementById('last-name').value;
             const firstName = document.getElementById('first-name').value;
             const phone = document.getElementById('phone').value;
@@ -1763,13 +1690,11 @@
             const deliveryMethod = document.getElementById('delivery-method').value;
             const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
 
-            // Проверяем, что все обязательные поля заполнены
             if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
                 alert('Пожалуйста, заполните все обязательные поля.');
                 return;
             }
 
-            // Формируем JSON-объект
             const orderData = {
                 lastName,
                 firstName,
@@ -1781,14 +1706,13 @@
                 total: document.getElementById('total-price').textContent
             };
 
-            // Отправляем JSON-объект в Telegram-бот
-            sendDataToTelegram(orderData);
+            // Отправляем данные в Telegram-бот
+            if (tg && tg.sendData) {
+                tg.sendData(JSON.stringify(orderData));
+            }
 
-            // Очищаем корзину и возвращаемся на главный экран
             alert('Заказ успешно оформлен!');
-            cart = [];
-            updateCart();
-            updateCartCounter();
+            clearCart();
             showScreen('menu-screen');
         }
 
