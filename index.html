@@ -507,6 +507,7 @@
     </div>
 
     <!-- Раздел корзины -->
+   <!-- Раздел корзины -->
     <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
@@ -586,9 +587,14 @@
         // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
-        // Функция для добавления товара в корзину
+          // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
-            cart.push({ name, price });
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1; // Увеличиваем количество, если товар уже в корзине
+            } else {
+                cart.push({ name, price, quantity: 1 }); // Добавляем новый товар
+            }
             updateCart();
             updateCartCounter();
             button.classList.add('clicked');
@@ -613,17 +619,37 @@
             // Добавляем каждый товар в корзину
             cart.forEach((item, index) => {
                 const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
+                cartItem.className = 'menu-item';
                 cartItem.innerHTML = `
-                    <span>${item.name} - ${item.price}₽</span>
-                    <button onclick="removeFromCart(${index})">Удалить</button>
+                    <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
+                    <div class="info">
+                        <h3>${item.name}</h3>
+                        <p>${item.price}₽ за шт.</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button onclick="changeQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, 1)">+</button>
+                    </div>
+                    <button class="remove-button" onclick="removeFromCart(${index})">Удалить</button>
                 `;
                 cartItems.appendChild(cartItem);
-                total += item.price;
+                total += item.price * item.quantity;
             });
 
             // Обновляем итоговую сумму
             totalPrice.textContent = total;
+        }
+
+        // Функция для изменения количества товара
+        function changeQuantity(index, delta) {
+            const item = cart[index];
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart.splice(index, 1); // Удаляем товар, если количество стало 0
+            }
+            updateCart();
+            updateCartCounter();
         }
 
         // Функция для удаления товара из корзины
@@ -636,8 +662,25 @@
         // Функция для обновления счетчика товаров в корзине
         function updateCartCounter() {
             const cartCounter = document.getElementById('cart-counter');
-            cartCounter.textContent = cart.length; // Устанавливаем количество товаров
+            cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
         // Функция для переключения экранов
         function showScreen(screenId) {
