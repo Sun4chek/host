@@ -251,6 +251,41 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* Стили для счетчика и кнопок + и - */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #2ea6ff;
+            color: white;
+            border: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .quantity-controls button:hover {
+            background-color: #1e8fd1;
+        }
+        .quantity-controls button:active {
+            transform: scale(0.9);
+        }
+        .quantity-controls span {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -508,7 +543,7 @@
 
     <!-- Раздел корзины -->
    <!-- Раздел корзины -->
-    <div id="cart-screen" class="container">
+        <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
@@ -588,6 +623,7 @@
         tg.onEvent('themeChanged', applyTheme);
 
           // Функция для добавления товара в корзину
+        // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
@@ -627,11 +663,10 @@
                         <p>${item.price}₽ за шт.</p>
                     </div>
                     <div class="quantity-controls">
-                        <button onclick="changeQuantity(${index}, -1)">-</button>
+                        <button onclick="changeQuantity(${index}, -1)">−</button>
                         <span>${item.quantity}</span>
                         <button onclick="changeQuantity(${index}, 1)">+</button>
                     </div>
-                    <button class="remove-button" onclick="removeFromCart(${index})">Удалить</button>
                 `;
                 cartItems.appendChild(cartItem);
                 total += item.price * item.quantity;
@@ -641,7 +676,8 @@
             totalPrice.textContent = total;
         }
 
-        // Функция для изменения количества товара
+
+     // Функция для изменения количества товара
         function changeQuantity(index, delta) {
             const item = cart[index];
             item.quantity += delta;
@@ -659,7 +695,7 @@
             updateCartCounter(); // Обновляем счетчик
         }
 
-        // Функция для обновления счетчика товаров в корзине
+      // Функция для обновления счетчика товаров в корзине
         function updateCartCounter() {
             const cartCounter = document.getElementById('cart-counter');
             cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
@@ -680,7 +716,7 @@
 
 
 
-      
+
 
         // Функция для переключения экранов
         function showScreen(screenId) {
