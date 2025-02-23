@@ -1,5 +1,5 @@
 
-    <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -8,22 +8,35 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         /* Основные стили */
+        :root {
+            --background-color: #f8f8f8;
+            --text-color: #333;
+            --secondary-text-color: #666;
+            --item-bg-color: #ffffff;
+            --border-color: #ddd;
+            --icon-filter: invert(0);
+        }
+
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             margin: 0;
             padding-bottom: 100px; /* Отступ для мини-бара */
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
-        body.light-theme {
-            background-color: #f8f8f8;
-            color: #333;
-        }
+
         body.dark-theme {
-            background-color: #1e1e1e;
-            color: #fff;
+            --background-color: #1e1e1e;
+            --text-color: #ffffff;
+            --secondary-text-color: #aaa;
+            --item-bg-color: #213040;
+            --border-color: #444;
+            --icon-filter: invert(1);
         }
+
         h2 {
-            color: inherit;
+            color: var(--text-color);
         }
 
         /* Сетка категорий */
@@ -99,6 +112,7 @@
         .menu-item h3 {
             margin: 0;
             font-size: 18px;
+            color: var(--text-color);
         }
         .menu-item p {
             margin: 5px 0;
@@ -110,6 +124,7 @@
             font-weight: bold;
             margin-bottom: 10px;
             text-align: right;
+            color: var(--text-color);
         }
 
         /* Кнопка "Добавить в корзину" */
@@ -283,9 +298,9 @@
             font-size: 16px;
             font-weight: bold;
             padding: 5px 10px;
-            background-color: #f0f0f0;
+            background-color: var(--item-bg-color);
             border-radius: 5px;
-            color: #333;
+            color: var(--text-color);
         }
 
         /* Иконки для кнопок + и - */
@@ -613,15 +628,13 @@
         tg.expand();
 
 
-        // Применение темы
+      // Применение темы
         function applyTheme() {
             const body = document.body;
-            if (tg.themeParams) {
-                body.style.setProperty('--background-color', tg.themeParams.bg_color || '#ffffff');
-                body.style.setProperty('--text-color', tg.themeParams.text_color || '#000000');
-                body.style.setProperty('--item-bg-color', tg.colorScheme === 'light' ? '#f4f4f4' : '#213040');
-                body.style.setProperty('--secondary-text-color', tg.colorScheme === 'light' ? '#666' : '#aaa');
-                body.style.setProperty('--icon-filter', tg.themeParams.text_color === '#ffffff' ? 'invert(1)' : 'invert(0)');
+            if (tg.colorScheme === 'dark') {
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
             }
         }
 
@@ -709,23 +722,6 @@
             const cartCounter = document.getElementById('cart-counter');
             cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Функция для переключения экранов
         function showScreen(screenId) {
