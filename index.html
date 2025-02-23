@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -286,8 +287,16 @@
             border-radius: 5px;
             color: #333;
         }
+
+        /* Иконки для кнопок + и - */
+        .quantity-controls button svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
     </style>
 </head>
+
 <body>
     <!-- Кастомный алерт -->
     <div id="custom-alert" class="custom-alert">
@@ -541,9 +550,7 @@
         </div>
     </div>
 
-    <!-- Раздел корзины -->
-   <!-- Раздел корзины -->
-        <div id="cart-screen" class="container">
+    <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
@@ -601,6 +608,7 @@
         let tg = window.Telegram.WebApp;
 
          // Развернуть приложение на весь экран
+        tg.enableClosingConfirmation();
         tg.expand();
 
 
