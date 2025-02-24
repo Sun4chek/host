@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -89,7 +89,7 @@
         /* Элементы меню */
         .menu-item {
             display: flex;
-            align-items: stretch; /* Растягиваем элементы по высоте */
+            align-items: flex-start; /* Выравниваем элементы по верхнему краю */
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 10px;
@@ -97,12 +97,12 @@
             background-color: var(--item-bg-color);
             transition: background-color 0.3s ease;
             overflow: hidden;
-            height: 120px; /* Фиксированная высота для всех элементов */
+            height: 100px; /* Уменьшаем высоту */
         }
 
         .menu-item img {
-            width: 120px; /* Фиксированная ширина картинки */
-            height: 100%; /* Картинка на всю высоту блока */
+            width: 80px; /* Уменьшаем ширину картинки */
+            height: 80px; /* Уменьшаем высоту картинки */
             object-fit: cover; /* Сохраняем пропорции картинки */
             border-radius: 10px;
             margin-right: 15px;
@@ -113,14 +113,14 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Центрируем текст по вертикали */
+            justify-content: flex-start; /* Выравниваем текст по верхнему краю */
             margin-right: 15px;
             overflow: hidden;
         }
 
         .menu-item h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 16px; /* Уменьшаем размер шрифта */
             color: var(--text-color);
             white-space: nowrap;
             overflow: hidden;
@@ -139,8 +139,8 @@
         .menu-item .price-and-button {
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Выравниваем кнопку и цену по правому краю */
-            justify-content: center; /* Центрируем по вертикали */
+            align-items: flex-end; /* Выравниваем по правому краю */
+            justify-content: flex-start; /* Выравниваем по верхнему краю */
             gap: 10px; /* Расстояние между ценой и кнопкой */
         }
 
@@ -153,7 +153,7 @@
 
         .add-to-cart {
             width: 100px;
-            padding: 10px;
+            padding: 8px; /* Уменьшаем отступы */
             text-align: center;
             background-color: #2ea6ff;
             color: white;
@@ -162,6 +162,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             flex-shrink: 0;
+            font-size: 14px; /* Уменьшаем размер шрифта */
         }
 
         .add-to-cart:hover {
