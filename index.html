@@ -1,5 +1,4 @@
-
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -309,10 +308,42 @@
             height: 16px;
             fill: white;
         }
+
+        /* Стили для экрана загрузки */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Убедитесь, что экран загрузки поверх всего */
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #loading-screen img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Экран загрузки -->
+    <div id="loading-screen">
+        <img src="https://buhta-hotel.ru/path/to/your/image.jpg" alt="Загрузка...">
+    </div>
+
     <!-- Кастомный алерт -->
     <div id="custom-alert" class="custom-alert">
         Товар добавлен в корзину!
@@ -328,6 +359,7 @@
             <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>
             <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>
             <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
+            <div class="category-item" style="background-image: url('https://example.com/bar.jpg');" onclick="showScreen('bar-screen')">Бар</div>
         </div>
     </div>
 
@@ -565,6 +597,164 @@
         </div>
     </div>
 
+    <!-- Бар -->
+    <div id="bar-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <h2>Бар</h2>
+        <div class="category-grid">
+            <div class="category-item" style="background-image: url('https://example.com/alcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>
+            <div class="category-item" style="background-image: url('https://example.com/drinks.jpg');" onclick="showScreen('drinks-screen')">Напитки</div>
+        </div>
+    </div>
+
+    <!-- Алкоголь -->
+    <div id="alcohol-screen" class="container">
+        <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
+        <h2>Алкоголь</h2>
+        <!-- Добавьте позиции алкоголя здесь -->
+    </div>
+
+    <!-- Напитки -->
+    <div id="drinks-screen" class="container">
+        <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
+        <h2>Напитки</h2>
+        <div class="menu-item">
+            <img src="https://example.com/borjomi.jpg" alt="Borjomi">
+            <div class="info">
+                <h3>Borjomi 0.5 л</h3>
+                <p>Минеральная вода</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">800₽</div>
+                <button class="add-to-cart" onclick="addToCart('Borjomi 0.5 л', 800, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/crimean-water.jpg" alt="Крымская вода">
+            <div class="info">
+                <h3>Вода "Крымская" (стекло)</h3>
+                <p>Газ/сл.газ 0.5 л</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">800₽</div>
+                <button class="add-to-cart" onclick="addToCart('Вода Крымская (стекло)', 800, this)">Добавить </button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/cola.jpg" alt="Кола">
+            <div class="info">
+                <h3>Кола (стекло) 0.33 л</h3>
+                <p>Газированный напиток</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">500₽</div>
+                <button class="add-to-cart" onclick="addToCart('Кола (стекло) 0.33 л', 500, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/juice.jpg" alt="Сок">
+            <div class="info">
+                <h3>Сок в ассортименте</h3>
+                <p>200 мл / 1 л</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">80₽ / 400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Сок в ассортименте', 80, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/mors.jpg" alt="Морс">
+            <div class="info">
+                <h3>Морс черная смородина</h3>
+                <p>200 мл / 1 л</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">80₽ / 400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Морс черная смородина', 80, this)">Добавить</button>
+            </div>
+        </div>
+        <h3>Чай</h3>
+        <div class="menu-item">
+            <img src="https://example.com/tea.jpg" alt="Чай">
+            <div class="info">
+                <h3>Чай черный/зеленый</h3>
+                <p>250 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick="addToCart('Чай черный/зеленый', 350, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/milk-oolong.jpg" alt="Молочный улунг">
+            <div class="info">
+                <h3>Молочный улунг</h3>
+                <p>250 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick="addToCart('Молочный улунг', 350, this)">Добавить</button>
+            </div>
+        </div>
+        <h3>Кофе</h3>
+        <div class="menu-item">
+            <img src="https://example.com/espresso.jpg" alt="Эспрессо">
+            <div class="info">
+                <h3>Эспрессо</h3>
+                <p>30 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">150₽</div>
+                <button class="add-to-cart" onclick="addToCart('Эспрессо', 150, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/americano.jpg" alt="Американо">
+            <div class="info">
+                <h3>Американо</h3>
+                <p>120 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">150₽</div>
+                <button class="add-to-cart" onclick="addToCart('Американо', 150, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/americano-milk.jpg" alt="Американо с молоком">
+            <div class="info">
+                <h3>Американо с молоком</h3>
+                <p>150 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">200₽</div>
+                <button class="add-to-cart" onclick="addToCart('Американо с молоком', 200, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/cappuccino.jpg" alt="Капучино">
+            <div class="info">
+                <h3>Капучино</h3>
+                <p>200 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">200₽</div>
+                <button class="add-to-cart" onclick="addToCart('Капучино', 200, this)">Добавить</button>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://example.com/latte.jpg" alt="Латте">
+            <div class="info">
+                <h3>Латте</h3>
+                <p>250 мл</p>
+            </div>
+            <div class="price-and-button">
+                <div class="price">250₽</div>
+                <button class="add-to-cart" onclick="addToCart('Латте', 250, this)">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Корзина -->
     <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
@@ -622,13 +812,12 @@
         // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
 
-         // Развернуть приложение на весь экран
+        // Развернуть приложение на весь экран
         tg.enableClosingConfirmation();
         tg.disableVerticalSwipes();
         tg.expand();
 
-
-      // Применение темы
+        // Применение темы
         function applyTheme() {
             const body = document.body;
             if (tg.colorScheme === 'dark') {
@@ -644,7 +833,19 @@
         // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
-          // Функция для добавления товара в корзину
+        // Показываем экран загрузки при запуске приложения
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.style.display = 'flex';
+
+        // Имитация загрузки (можно заменить на реальную загрузку данных)
+        setTimeout(() => {
+            // Скрываем экран загрузки
+            loadingScreen.classList.add('hide');
+
+            // Показываем основной контент
+            document.getElementById('menu-screen').classList.add('active');
+        }, 3000); // Задержка в 3 секунды (можно изменить)
+
         // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
             const existingItem = cart.find(item => item.name === name);
@@ -698,8 +899,7 @@
             totalPrice.textContent = total;
         }
 
-
-     // Функция для изменения количества товара
+        // Функция для изменения количества товара
         function changeQuantity(index, delta) {
             const item = cart[index];
             item.quantity += delta;
@@ -717,7 +917,7 @@
             updateCartCounter(); // Обновляем счетчик
         }
 
-      // Функция для обновления счетчика товаров в корзине
+        // Функция для обновления счетчика товаров в корзине
         function updateCartCounter() {
             const cartCounter = document.getElementById('cart-counter');
             cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
