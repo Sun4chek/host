@@ -96,6 +96,7 @@
             color: var(--text-color);
             background-color: var(--item-bg-color);
             transition: background-color 0.3s ease;
+            overflow: hidden; /* Текст и кнопки не выходят за пределы блока */
         }
         .menu-item img {
             width: 100px;
@@ -103,20 +104,28 @@
             object-fit: cover;
             border-radius: 10px;
             margin-right: 15px;
+            flex-shrink: 0; /* Изображение не сжимается */
         }
         .menu-item .info {
             flex: 1;
             margin-right: 15px;
+            overflow: hidden; /* Текст не выходит за пределы блока */
         }
         .menu-item h3 {
             margin: 0;
             font-size: 18px;
             color: var(--text-color);
+            white-space: nowrap; /* Текст не переносится */
+            overflow: hidden; /* Текст обрезается, если не помещается */
+            text-overflow: ellipsis; /* Добавляем многоточие, если текст обрезается */
         }
         .menu-item p {
             margin: 5px 0;
             font-size: 14px;
             color: var(--secondary-text-color);
+            white-space: nowrap; /* Текст не переносится */
+            overflow: hidden; /* Текст обрезается, если не помещается */
+            text-overflow: ellipsis; /* Добавляем многоточие, если текст обрезается */
         }
         .menu-item .price {
             font-size: 16px;
@@ -124,35 +133,26 @@
             margin-bottom: 10px;
             text-align: right;
             color: var(--text-color);
+            white-space: nowrap; /* Текст не переносится */
+            overflow: hidden; /* Текст обрезается, если не помещается */
+            text-overflow: ellipsis; /* Добавляем многоточие, если текст обрезается */
         }
 
         /* Кнопка "Добавить в корзину" */
         .add-to-cart {
+            width: 100px;
+            padding: 10px;
+            text-align: center;
             background-color: #2ea6ff;
             color: white;
             border: none;
-            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            width: 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0; /* Кнопка не сжимается */
         }
-        .add-to-cart::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center;
-            background-size: cover;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.3s ease;
-        }
-        .add-to-cart.clicked::after {
-            transform: translate(-50%, -50%) scale(1);
+        .add-to-cart:hover {
+            background-color: #1e8fd1;
         }
 
         /* Мини-бар */
@@ -336,37 +336,28 @@
             border-radius: 10px;
         }
 
-        /* Стили для кнопок с двумя вариантами */
-        .price-and-button {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .add-to-cart {
-            width: 120px;
-            padding: 10px;
-            text-align: center;
-            background-color: #2ea6ff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .add-to-cart:hover {
-            background-color: #1e8fd1;
-        }
-
+        /* Адаптация для мобильных устройств */
         @media (max-width: 480px) {
+            .menu-item {
+                flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+            }
+
+            .menu-item img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .menu-item .info {
+                flex-basis: 60%; /* Уменьшаем ширину блока с информацией */
+            }
+
             .price-and-button {
-                gap: 5px;
+                flex-basis: 100%; /* Кнопки занимают всю ширину на мобильных устройствах */
+                align-items: center; /* Центрируем кнопки */
             }
 
             .add-to-cart {
-                width: 100px;
+                width: 80px; /* Уменьшаем ширину кнопок на мобильных устройствах */
                 padding: 8px;
                 font-size: 14px;
             }
