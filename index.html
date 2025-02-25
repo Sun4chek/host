@@ -89,7 +89,7 @@
         /* Элементы меню */
         .menu-item {
             display: flex;
-            align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+            align-items: flex-start;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 10px;
@@ -97,30 +97,31 @@
             background-color: var(--item-bg-color);
             transition: background-color 0.3s ease;
             overflow: hidden;
-            height: 100px; /* Уменьшаем высоту */
+            height: 100px;
+            position: relative; /* Для позиционирования price-and-button */
         }
 
         .menu-item img {
-            width: 80px; /* Уменьшаем ширину картинки */
-            height: 80px; /* Уменьшаем высоту картинки */
-            object-fit: cover; /* Сохраняем пропорции картинки */
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
             border-radius: 10px;
             margin-right: 15px;
-            flex-shrink: 0; /* Картинка не сжимается */
+            flex-shrink: 0;
         }
 
         .menu-item .info {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Выравниваем текст по верхнему краю */
+            justify-content: flex-start;
             margin-right: 15px;
             overflow: hidden;
         }
 
         .menu-item h3 {
             margin: 0;
-            font-size: 16px; /* Уменьшаем размер шрифта */
+            font-size: 16px;
             color: var(--text-color);
             white-space: nowrap;
             overflow: hidden;
@@ -136,15 +137,17 @@
             text-overflow: ellipsis;
         }
 
-        .menu-item .price-and-button {
+        .price-and-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Выравниваем по правому краю */
-            justify-content: flex-start; /* Выравниваем по верхнему краю */
-            gap: 10px; /* Расстояние между ценой и кнопкой */
+            align-items: flex-end;
+            gap: 5px;
         }
 
-        .menu-item .price {
+        .price {
             font-size: 16px;
             font-weight: bold;
             color: var(--text-color);
@@ -153,7 +156,7 @@
 
         .add-to-cart {
             width: 100px;
-            padding: 8px; /* Уменьшаем отступы */
+            padding: 8px;
             text-align: center;
             background-color: #2ea6ff;
             color: white;
@@ -162,7 +165,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             flex-shrink: 0;
-            font-size: 14px; /* Уменьшаем размер шрифта */
+            font-size: 14px;
         }
 
         .add-to-cart:hover {
@@ -172,10 +175,10 @@
         /* Мини-бар */
         .mini-bar {
             position: fixed;
-            bottom: 20px; /* Выше нижней шторки */
+            bottom: 20px;
             left: 10px;
             right: 10px;
-            background-color: var(--item-bg-color); /* Используем цвет фона блюд */
+            background-color: var(--item-bg-color);
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -189,7 +192,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--text-color); /* Используем цвет текста блюд */
+            color: var(--text-color);
             transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -334,7 +337,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10000; /* Убедитесь, что экран загрузки поверх всего */
+            z-index: 10000;
             opacity: 1;
             transition: opacity 0.5s ease;
         }
@@ -353,7 +356,7 @@
         /* Адаптация для мобильных устройств */
         @media (max-width: 480px) {
             .menu-item {
-                flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+                flex-wrap: wrap;
             }
 
             .menu-item img {
@@ -362,16 +365,16 @@
             }
 
             .menu-item .info {
-                flex-basis: 60%; /* Уменьшаем ширину блока с информацией */
+                flex-basis: 60%;
             }
 
             .price-and-button {
-                flex-basis: 100%; /* Кнопки занимают всю ширину на мобильных устройствах */
-                align-items: center; /* Центрируем кнопки */
+                flex-basis: 100%;
+                align-items: center;
             }
 
             .add-to-cart {
-                width: 80px; /* Уменьшаем ширину кнопок на мобильных устройствах */
+                width: 80px;
                 padding: 8px;
                 font-size: 14px;
             }
@@ -408,36 +411,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Основные блюда</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Сковорода куриная">
             <div class="info">
                 <h3>Сковорода куриная</h3>
                 <p>360г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Сковорода куриная', 450, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">
             <div class="info">
                 <h3>Куриная отбивная</h3>
                 <p>200г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Куриная отбивная', 400, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">530₽</div>
+                <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">
             <div class="info">
                 <h3>Сковорода свиная</h3>
                 <p>360г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">530₽</div>
-                <button class="add-to-cart" onclick="addToCart('Сковорода свиная', 530, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -447,36 +450,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Первые блюда</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Борщ', 400, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Борщ">
             <div class="info">
                 <h3>Борщ</h3>
                 <p>350г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Борщ', 400, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Солянка', 450, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Солянка">
             <div class="info">
                 <h3>Солянка</h3>
                 <p>350г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Солянка', 450, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">300₽</div>
+                <button class="add-to-cart" onclick="addToCart('Суп лапша', 300, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Суп лапша">
             <div class="info">
                 <h3>Суп лапша</h3>
                 <p>300г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">300₽</div>
-                <button class="add-to-cart" onclick="addToCart('Суп лапша', 300, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -486,36 +489,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Салаты</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Цезарь с курицей">
             <div class="info">
                 <h3>Цезарь с курицей</h3>
                 <p>250г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">350₽</div>
-                <button class="add-to-cart" onclick="addToCart('Цезарь с курицей', 350, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">400₽</div>
+                <button class="add-to-cart" onclick="addToCart('Греческий салат', 400, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Греческий салат">
             <div class="info">
                 <h3>Греческий салат</h3>
                 <p>300г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">400₽</div>
-                <button class="add-to-cart" onclick="addToCart('Греческий салат', 400, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Салат с креветками">
             <div class="info">
                 <h3>Салат с креветками</h3>
                 <p>300г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Салат с креветками', 450, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -525,36 +528,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Морепродукты</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">600₽</div>
+                <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Мидии в сливочном соусе">
             <div class="info">
                 <h3>Мидии в сливочном соусе</h3>
                 <p>300г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">600₽</div>
-                <button class="add-to-cart" onclick="addToCart('Мидии в сливочном соусе', 600, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">700₽</div>
+                <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Креветки гриль">
             <div class="info">
                 <h3>Креветки гриль</h3>
                 <p>250г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">700₽</div>
-                <button class="add-to-cart" onclick="addToCart('Креветки гриль', 700, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">550₽</div>
+                <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Кальмары в кляре">
             <div class="info">
                 <h3>Кальмары в кляре</h3>
                 <p>300г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">550₽</div>
-                <button class="add-to-cart" onclick="addToCart('Кальмары в кляре', 550, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -564,36 +567,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Пасты</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">330₽</div>
+                <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Паста со сливочным маслом">
             <div class="info">
                 <h3>Паста со сливочным маслом</h3>
                 <p>250г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">330₽</div>
-                <button class="add-to-cart" onclick="addToCart('Паста со сливочным маслом', 330, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">470₽</div>
+                <button class="add-to-cart" onclick="addToCart('Карбонара', 470, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Карбонара">
             <div class="info">
                 <h3>Карбонара</h3>
                 <p>300г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">470₽</div>
-                <button class="add-to-cart" onclick="addToCart('Карбонара', 470, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">450₽</div>
+                <button class="add-to-cart" onclick="addToCart('Болоньезе', 450, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Болоньезе">
             <div class="info">
                 <h3>Болоньезе</h3>
                 <p>300г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">450₽</div>
-                <button class="add-to-cart" onclick="addToCart('Болоньезе', 450, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -603,36 +606,36 @@
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Мангал</h2>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">600₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600, this)">Добавить</button>
+            </div>
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Шашлык из свинины">
             <div class="info">
                 <h3>Шашлык из свинины</h3>
                 <p>300г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">600₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из свинины', 600, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">500₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500, this)">Добавить</button>
+            </div>
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">
             <div class="info">
                 <h3>Шашлык из курицы</h3>
                 <p>300г</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">500₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из курицы', 500, this)">Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">800₽</div>
+                <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800, this)">Добавить</button>
+            </div>
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Шашлык из баранины">
             <div class="info">
                 <h3>Шашлык из баранины</h3>
                 <p>300г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">800₽</div>
-                <button class="add-to-cart" onclick="addToCart('Шашлык из баранины', 800, this)">Добавить</button>
             </div>
         </div>
     </div>
@@ -655,143 +658,143 @@
         <!-- Безалкогольные напитки -->
         <h3>Безалкогольные напитки</h3>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">1800₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Borjomi" (стекло)`, 1800, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/borjomi.jpg" alt="Borjomi">
             <div class="info">
                 <h3>"Borjomi" (стекло)</h3>
                 <p>0,5 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">1800₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Borjomi" (стекло)`, 1800, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2100₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Вода "Крымская" (стекло)`, 2100, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/krymskaya-voda.jpg" alt="Вода Крымская">
             <div class="info">
                 <h3>Вода "Крымская" (стекло)</h3>
                 <p>0,5 л (газ./сл. газ)</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">2100₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Вода "Крымская" (стекло)`, 2100, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">1700₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Кола" (стекло)`, 1700, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/cola.jpg" alt="Кола">
             <div class="info">
                 <h3>"Кола" (стекло)</h3>
                 <p>0,33 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">1700₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Кола" (стекло)`, 1700, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
-            <img src="https://example.com/sok.jpg" alt="Сок в ассортименте">
-            <div class="info">
-                <h3>Сок в ассортименте</h3>
-                <p>200 г / 1 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">80₽ / 400₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Сок в ассортименте (200 г)`, 80, this)'>200 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Сок в ассортименте (1 л)`, 400, this)'>1 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/mors.jpg" alt="Морс черная смородина">
+            <img src="https://example.com/sok.jpg" alt="Сок в ассортименте">
             <div class="info">
-                <h3>Морс черная смородина</h3>
+                <h3>Сок в ассортименте</h3>
                 <p>200 г / 1 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">80₽ / 400₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Морс черная смородина (200 г)`, 80, this)'>200 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Морс черная смородина (1 л)`, 400, this)'>1 л</button>
+            </div>
+            <img src="https://example.com/mors.jpg" alt="Морс черная смородина">
+            <div class="info">
+                <h3>Морс черная смородина</h3>
+                <p>200 г / 1 л</p>
             </div>
         </div>
 
         <!-- Чай -->
         <h3>Чай</h3>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Чай черный/зеленый (0,250 л)`, 350, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/black-tea.jpg" alt="Чай черный/зеленый">
             <div class="info">
                 <h3>Чай черный/зеленый</h3>
                 <p>0,250 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">350₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Чай черный/зеленый (0,250 л)`, 350, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">350₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Молочный Улунг (0,250 л)`, 350, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/milk-oolong.jpg" alt="Молочный Улунг">
             <div class="info">
                 <h3>Молочный Улунг</h3>
                 <p>0,250 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">350₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Молочный Улунг (0,250 л)`, 350, this)'>Добавить</button>
             </div>
         </div>
 
         <!-- Кофе -->
         <h3>Кофе</h3>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">150₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Эспрессо`, 150, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/espresso.jpg" alt="Эспрессо">
             <div class="info">
                 <h3>Эспрессо</h3>
                 <p>30 мл</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">150₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Эспрессо`, 150, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">150₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Американо`, 150, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/americano.jpg" alt="Американо">
             <div class="info">
                 <h3>Американо</h3>
                 <p>120 мл</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">150₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Американо`, 150, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">200₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Американо с молоком`, 200, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/americano-milk.jpg" alt="Американо с молоком">
             <div class="info">
                 <h3>Американо с молоком</h3>
                 <p>150 мл</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">200₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Американо с молоком`, 200, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">200₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Капучино`, 200, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/cappuccino.jpg" alt="Капучино">
             <div class="info">
                 <h3>Капучино</h3>
                 <p>150 мл</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">200₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Капучино`, 200, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">250₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Латте`, 250, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/latte.jpg" alt="Латте">
             <div class="info">
                 <h3>Латте</h3>
                 <p>250 мл</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">250₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Латте`, 250, this)'>Добавить</button>
             </div>
         </div>
     </div>
@@ -804,488 +807,488 @@
         <!-- Коньяк -->
         <h3>Коньяк</h3>
         <div class="menu-item">
-            <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
-            <div class="info">
-                <h3>Арарат 3 года</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">290₽ / 4060₽</div>
                 <button class="add-to-cart" onclick="addToCart('Арарат 3 года (50 г)', 290, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Арарат 3 года (0,7 л)', 4060, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/ararat-5.jpg" alt="Арарат 5 лет">
+            <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
             <div class="info">
-                <h3>Арарат 5 лет</h3>
+                <h3>Арарат 3 года</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">345₽ / 4830₽</div>
                 <button class="add-to-cart" onclick="addToCart('Арарат 5 лет (50 г)', 345, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Арарат 5 лет (0,7 л)', 4830, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/ararat-5.jpg" alt="Арарат 5 лет">
+            <div class="info">
+                <h3>Арарат 5 лет</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Бренди -->
         <h3>Бренди</h3>
         <div class="menu-item">
-            <img src="https://example.com/koktebel-5.jpg" alt="Коктебель резерв 5 лет">
-            <div class="info">
-                <h3>Коктебель резерв 5 лет</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">220₽ / 2200₽</div>
                 <button class="add-to-cart" onclick="addToCart('Коктебель резерв 5 лет (50 г)', 220, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Коктебель резерв 5 лет (0,7 л)', 2200, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/koktebel-7.jpg" alt="Коктебель резерв 7 лет">
+            <img src="https://example.com/koktebel-5.jpg" alt="Коктебель резерв 5 лет">
             <div class="info">
-                <h3>Коктебель резерв 7 лет</h3>
+                <h3>Коктебель резерв 5 лет</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">320₽ / 3200₽</div>
                 <button class="add-to-cart" onclick="addToCart('Коктебель резерв 7 лет (50 г)', 320, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Коктебель резерв 7 лет (0,7 л)', 3200, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/makedonskiy-3.jpg" alt="Македонский 3 года">
+            <img src="https://example.com/koktebel-7.jpg" alt="Коктебель резерв 7 лет">
             <div class="info">
-                <h3>Македонский 3 года</h3>
+                <h3>Коктебель резерв 7 лет</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">200₽ / 2000₽</div>
                 <button class="add-to-cart" onclick="addToCart('Македонский 3 года (50 г)', 200, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Македонский 3 года (0,7 л)', 2000, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/lezginka-6.jpg" alt="Лезгинка 6 лет">
+            <img src="https://example.com/makedonskiy-3.jpg" alt="Македонский 3 года">
             <div class="info">
-                <h3>Лезгинка 6 лет</h3>
+                <h3>Македонский 3 года</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">220₽ / 2200₽</div>
                 <button class="add-to-cart" onclick="addToCart('Лезгинка 6 лет (50 г)', 220, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Лезгинка 6 лет (0,7 л)', 2200, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/stareyshina.jpg" alt="Старейшина Ecological 7 лет">
+            <img src="https://example.com/lezginka-6.jpg" alt="Лезгинка 6 лет">
             <div class="info">
-                <h3>Старейшина Ecological 7 лет</h3>
+                <h3>Лезгинка 6 лет</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">220₽ / 2200₽</div>
                 <button class="add-to-cart" onclick="addToCart('Старейшина Ecological 7 лет (50 г)', 220, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Старейшина Ecological 7 лет (0,7 л)', 2200, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/stareyshina.jpg" alt="Старейшина Ecological 7 лет">
+            <div class="info">
+                <h3>Старейшина Ecological 7 лет</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Виски -->
         <h3>Виски</h3>
         <div class="menu-item">
-            <img src="https://example.com/jameson.jpg" alt="Jameson">
-            <div class="info">
-                <h3>Jameson</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">350₽ / 7000₽</div>
                 <button class="add-to-cart" onclick="addToCart('Jameson (50 г)', 350, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Jameson (0,7 л)', 7000, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/ballantines.jpg" alt="Ballantine's">
+            <img src="https://example.com/jameson.jpg" alt="Jameson">
             <div class="info">
-                <h3>Ballantine's</h3>
+                <h3>Jameson</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">300₽ / 6000₽</div>
                 <button class="add-to-cart" onclick="addToCart('Ballantine\'s (50 г)', 300, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Ballantine\'s (0,7 л)', 6000, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/chivas.jpg" alt="Chivas Regal">
+            <img src="https://example.com/ballantines.jpg" alt="Ballantine's">
             <div class="info">
-                <h3>Chivas Regal</h3>
+                <h3>Ballantine's</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">630₽ / 12500₽</div>
                 <button class="add-to-cart" onclick="addToCart('Chivas Regal (50 г)', 630, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Chivas Regal (0,7 л)', 12500, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/chivas.jpg" alt="Chivas Regal">
+            <div class="info">
+                <h3>Chivas Regal</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Ром -->
         <h3>Ром</h3>
         <div class="menu-item">
-            <img src="https://example.com/havana-club.jpg" alt="Havana Club">
-            <div class="info">
-                <h3>Havana Club</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">290₽ / 5800₽</div>
                 <button class="add-to-cart" onclick="addToCart('Havana Club (50 г)', 290, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Havana Club (0,7 л)', 5800, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/captain-morgan.jpg" alt="Captain Morgan">
+            <img src="https://example.com/havana-club.jpg" alt="Havana Club">
             <div class="info">
-                <h3>Captain Morgan</h3>
+                <h3>Havana Club</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">250₽ / 3500₽</div>
                 <button class="add-to-cart" onclick="addToCart('Captain Morgan (50 г)', 250, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Captain Morgan (0,7 л)', 3500, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/captain-morgan.jpg" alt="Captain Morgan">
+            <div class="info">
+                <h3>Captain Morgan</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Джин -->
         <h3>Джин</h3>
         <div class="menu-item">
-            <img src="https://example.com/beefeater.jpg" alt="Beefeater">
-            <div class="info">
-                <h3>Beefeater</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">320₽ / 6400₽</div>
                 <button class="add-to-cart" onclick="addToCart('Beefeater (50 г)', 320, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Beefeater (0,7 л)', 6400, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/beefeater.jpg" alt="Beefeater">
+            <div class="info">
+                <h3>Beefeater</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Текила -->
         <h3>Текила</h3>
         <div class="menu-item">
-            <img src="https://example.com/olmeca.jpg" alt="Olmeca Blanco">
-            <div class="info">
-                <h3>Olmeca Blanco</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">500₽ / 7000₽</div>
                 <button class="add-to-cart" onclick="addToCart('Olmeca Blanco (50 г)', 500, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Olmeca Blanco (0,7 л)', 7000, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/olmeca.jpg" alt="Olmeca Blanco">
+            <div class="info">
+                <h3>Olmeca Blanco</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Водка -->
         <h3>Водка</h3>
         <div class="menu-item">
-            <img src="https://example.com/organic-vodka.jpg" alt="Organic Vodka">
-            <div class="info">
-                <h3>Organic Vodka</h3>
-                <p>50 г / 0,7 л</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">400₽ / 5600₽</div>
                 <button class="add-to-cart" onclick="addToCart('Organic Vodka (50 г)', 400, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Organic Vodka (0,7 л)', 5600, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/chistye-rosy.jpg" alt="Чистые росы пшеничная">
+            <img src="https://example.com/organic-vodka.jpg" alt="Organic Vodka">
             <div class="info">
-                <h3>Чистые росы пшеничная</h3>
+                <h3>Organic Vodka</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">400₽ / 5600₽</div>
                 <button class="add-to-cart" onclick="addToCart('Чистые росы пшеничная (50 г)', 400, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Чистые росы пшеничная (0,7 л)', 5600, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/carskaya.jpg" alt="Царская золотая">
+            <img src="https://example.com/chistye-rosy.jpg" alt="Чистые росы пшеничная">
             <div class="info">
-                <h3>Царская золотая</h3>
+                <h3>Чистые росы пшеничная</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">150₽ / 2100₽</div>
                 <button class="add-to-cart" onclick="addToCart('Царская золотая (50 г)', 150, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Царская золотая (0,7 л)', 2100, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/hanskaya.jpg" alt="Ханская">
+            <img src="https://example.com/carskaya.jpg" alt="Царская золотая">
             <div class="info">
-                <h3>Ханская</h3>
+                <h3>Царская золотая</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">120₽ / 1200₽</div>
                 <button class="add-to-cart" onclick="addToCart('Ханская (50 г)', 120, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Ханская (0,7 л)', 1200, this)">0,7 л</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/medoff.jpg" alt="Medoff">
+            <img src="https://example.com/hanskaya.jpg" alt="Ханская">
             <div class="info">
-                <h3>Medoff</h3>
+                <h3>Ханская</h3>
                 <p>50 г / 0,7 л</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">100₽ / 1000₽</div>
                 <button class="add-to-cart" onclick="addToCart('Medoff (50 г)', 100, this)">50 г</button>
                 <button class="add-to-cart" onclick="addToCart('Medoff (0,7 л)', 1000, this)">0,7 л</button>
+            </div>
+            <img src="https://example.com/medoff.jpg" alt="Medoff">
+            <div class="info">
+                <h3>Medoff</h3>
+                <p>50 г / 0,7 л</p>
             </div>
         </div>
 
         <!-- Игристое вино и шампанское -->
         <h3>Игристое вино и шампанское</h3>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">4200₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Проссеко "Чинзано" (бутылка)`, 4200, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/prosecco-chinzano.jpg" alt="Проссеко Чинзано">
             <div class="info">
                 <h3>Проссеко "Чинзано"</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">4200₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Проссеко "Чинзано" (бутылка)`, 4200, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2600₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Prosecco Don Treviso (бутылка)`, 2600, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/prosecco-don-treviso.jpg" alt="Prosecco Don Treviso">
             <div class="info">
                 <h3>Prosecco Don Treviso</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">2600₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Prosecco Don Treviso (бутылка)`, 2600, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2200₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Новый свет" коллекционное брют белое (бутылка)`, 2200, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/noviy-svet-brut.jpg" alt="Новый свет коллекционное брют белое">
             <div class="info">
                 <h3>"Новый свет" коллекционное брют белое</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">2200₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Новый свет" коллекционное брют белое (бутылка)`, 2200, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2000₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Новый свет" белое полусладкое (бутылка)`, 2000, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/noviy-svet-polusladkoe.jpg" alt="Новый свет белое полусладкое">
             <div class="info">
                 <h3>"Новый свет" белое полусладкое</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">2000₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Новый свет" белое полусладкое (бутылка)`, 2000, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">1450₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" брют белое (бутылка)`, 1450, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/zolotaya-balka-brut.jpg" alt="Золотая балка брют белое">
             <div class="info">
                 <h3>"Золотая балка" брют белое</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">1450₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" брют белое (бутылка)`, 1450, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">1450₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" Frizzante розовое (бутылка)`, 1450, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/zolotaya-balka-frizzante.jpg" alt="Золотая балка Frizzante розовое">
             <div class="info">
                 <h3>"Золотая балка" Frizzante розовое</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">1450₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" Frizzante розовое (бутылка)`, 1450, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">1450₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" Moscato белое (бутылка)`, 1450, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/zolotaya-balka-moscato.jpg" alt="Золотая балка Moscato белое">
             <div class="info">
                 <h3>"Золотая балка" Moscato белое</h3>
                 <p>Бутылка</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">1450₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Золотая балка" Moscato белое (бутылка)`, 1450, this)'>Добавить</button>
             </div>
         </div>
 
         <!-- Вина Esse -->
         <h3>Вина Esse</h3>
         <div class="menu-item">
-            <img src="https://example.com/esse-sovinon-blanc.jpg" alt="Совиньен Блан">
-            <div class="info">
-                <h3>Совиньен Блан</h3>
-                <p>150 г / Бутылка</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">320₽ / 1600₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Совиньен Блан (150 г)`, 320, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Совиньен Блан (бутылка)`, 1600, this)'>Бутылка</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/esse-cabernet.jpg" alt="Каберне отборное">
+            <img src="https://example.com/esse-sovinon-blanc.jpg" alt="Совиньен Блан">
             <div class="info">
-                <h3>Каберне отборное</h3>
+                <h3>Совиньен Блан</h3>
                 <p>150 г / Бутылка</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">320₽ / 1600₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Каберне отборное (150 г)`, 320, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Каберне отборное (бутылка)`, 1600, this)'>Бутылка</button>
             </div>
+            <img src="https://example.com/esse-cabernet.jpg" alt="Каберне отборное">
+            <div class="info">
+                <h3>Каберне отборное</h3>
+                <p>150 г / Бутылка</p>
+            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2300₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Гевюрцтраминер (бутылка)`, 2300, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/esse-gewurztraminer.jpg" alt="Гевюрцтраминер">
             <div class="info">
                 <h3>Гевюрцтраминер</h3>
                 <p>Бутылка</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">2300₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Гевюрцтраминер (бутылка)`, 2300, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">2300₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Каберне Фран (бутылка)`, 2300, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/esse-cabernet-franc.jpg" alt="Каберне Фран">
             <div class="info">
                 <h3>Каберне Фран</h3>
                 <p>Бутылка</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">2300₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Каберне Фран (бутылка)`, 2300, this)'>Добавить</button>
             </div>
         </div>
 
         <!-- Вина ALMA VALLEY -->
         <h3>Вина ALMA VALLEY</h3>
         <div class="menu-item">
-            <img src="https://example.com/alma-sovinon.jpg" alt="Совиньон белое сухое">
-            <div class="info">
-                <h3>"Совиньон" белое сухое</h3>
-                <p>150 г / Бутылка</p>
-            </div>
             <div class="price-and-button">
                 <div class="price">320₽ / 1600₽</div>
                 <button class="add-to-cart" onclick='addToCart(`"Совиньон" белое сухое (150 г)`, 320, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`"Совиньон" белое сухое (бутылка)`, 1600, this)'>Бутылка</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/alma-pino-noir.jpg" alt="Пино Нуар белое полусухое">
+            <img src="https://example.com/alma-sovinon.jpg" alt="Совиньон белое сухое">
             <div class="info">
-                <h3>"Пино Нуар" белое полусухое</h3>
+                <h3>"Совиньон" белое сухое</h3>
                 <p>150 г / Бутылка</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">300₽ / 1500₽</div>
                 <button class="add-to-cart" onclick='addToCart(`"Пино Нуар" белое полусухое (150 г)`, 300, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`"Пино Нуар" белое полусухое (бутылка)`, 1500, this)'>Бутылка</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/alma-vesennee.jpg" alt="Весеннее белое полусладкое">
+            <img src="https://example.com/alma-pino-noir.jpg" alt="Пино Нуар белое полусухое">
             <div class="info">
-                <h3>"Весеннее" белое полусладкое</h3>
+                <h3>"Пино Нуар" белое полусухое</h3>
                 <p>150 г / Бутылка</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">320₽ / 1600₽</div>
                 <button class="add-to-cart" onclick='addToCart(`"Весеннее" белое полусладкое (150 г)`, 320, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`"Весеннее" белое полусладкое (бутылка)`, 1600, this)'>Бутылка</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/alma-cabernet.jpg" alt="Каберне Совиньон красное сухое">
+            <img src="https://example.com/alma-vesennee.jpg" alt="Весеннее белое полусладкое">
             <div class="info">
-                <h3>Каберне "Совиньон" красное сухое</h3>
+                <h3>"Весеннее" белое полусладкое</h3>
                 <p>150 г / Бутылка</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">360₽ / 1800₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Каберне "Совиньон" красное сухое (150 г)`, 360, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Каберне "Совиньон" красное сухое (бутылка)`, 1800, this)'>Бутылка</button>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://example.com/alma-zimnee.jpg" alt="Зимнее полусладкое красное">
+            <img src="https://example.com/alma-cabernet.jpg" alt="Каберне Совиньон красное сухое">
             <div class="info">
-                <h3>"Зимнее" полусладкое красное</h3>
+                <h3>Каберне "Совиньон" красное сухое</h3>
                 <p>150 г / Бутылка</p>
             </div>
+        </div>
+        <div class="menu-item">
             <div class="price-and-button">
                 <div class="price">320₽ / 1600₽</div>
                 <button class="add-to-cart" onclick='addToCart(`"Зимнее" полусладкое красное (150 г)`, 320, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`"Зимнее" полусладкое красное (бутылка)`, 1600, this)'>Бутылка</button>
+            </div>
+            <img src="https://example.com/alma-zimnee.jpg" alt="Зимнее полусладкое красное">
+            <div class="info">
+                <h3>"Зимнее" полусладкое красное</h3>
+                <p>150 г / Бутылка</p>
             </div>
         </div>
 
         <!-- Пиво бутылочное -->
         <h3>Пиво бутылочное</h3>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">180₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Крымская Ривьера" светлое (0,450 л)`, 180, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/krymskaya-riviera.jpg" alt="Крымская Ривьера светлое">
             <div class="info">
                 <h3>"Крымская Ривьера" светлое</h3>
                 <p>0,450 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">180₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Крымская Ривьера" светлое (0,450 л)`, 180, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">180₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Белая скала" светлое н/ф (0,450 л)`, 180, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/belaya-skala.jpg" alt="Белая скала светлое н/ф">
             <div class="info">
                 <h3>"Белая скала" светлое н/ф</h3>
                 <p>0,450 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">180₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Белая скала" светлое н/ф (0,450 л)`, 180, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">180₽</div>
+                <button class="add-to-cart" onclick='addToCart(`"Черное гора" темное (0,450 л)`, 180, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/chernaya-gora.jpg" alt="Черное гора темное">
             <div class="info">
                 <h3>"Черное гора" темное</h3>
                 <p>0,450 л</p>
             </div>
-            <div class="price-and-button">
-                <div class="price">180₽</div>
-                <button class="add-to-cart" onclick='addToCart(`"Черное гора" темное (0,450 л)`, 180, this)'>Добавить</button>
-            </div>
         </div>
         <div class="menu-item">
+            <div class="price-and-button">
+                <div class="price">200₽</div>
+                <button class="add-to-cart" onclick='addToCart(`Крымское безалкогольное (0,440 л)`, 200, this)'>Добавить</button>
+            </div>
             <img src="https://example.com/krymskoe-bezalkogolnoe.jpg" alt="Крымское безалкогольное">
             <div class="info">
                 <h3>Крымское безалкогольное</h3>
                 <p>0,440 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">200₽</div>
-                <button class="add-to-cart" onclick='addToCart(`Крымское безалкогольное (0,440 л)`, 200, this)'>Добавить</button>
             </div>
         </div>
     </div>
