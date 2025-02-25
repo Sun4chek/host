@@ -155,59 +155,79 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* Мини-бар */
-        .mini-bar {
-            position: fixed;
-            bottom: 20px; /* Выше нижней шторки */
-            left: 10px;
-            right: 10px;
-            background-color: var(--item-bg-color); /* Используем цвет фона блюд */
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            border: 1px solid var(--border-color);
-        }
-        .mini-bar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-color); /* Используем цвет текста блюд */
-            transition: transform 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
-        }
-        .mini-bar button:hover {
-            color: #2ea6ff;
-        }
-        .mini-bar button .icon {
-            width: 24px;
-            height: 24px;
-            filter: var(--icon-filter);
-        }
-        .mini-bar button.cart-button {
-            position: relative;
-        }
-        .mini-bar button.cart-button .cart-counter {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #2ea6ff;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-        .mini-bar button.cart-button.animate {
-            animation: bounce 0.5s ease;
-        }
+   /* Стили для мини-бара */
+.mini-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+    background-color: var(--item-bg-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
 
+.mini-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;
+}
+
+.mini-bar button:hover {
+    color: #2ea6ff;
+    background-color: rgba(46, 166, 255, 0.1);
+}
+
+.mini-bar button.active {
+    background-color: rgba(46, 166, 255, 0.2);
+    color: #2ea6ff;
+}
+
+.mini-bar button .icon {
+    width: 24px;
+    height: 24px;
+    filter: var(--icon-filter);
+    transition: transform 0.2s ease;
+}
+
+.mini-bar button:hover .icon {
+    transform: scale(1.1);
+}
+
+.mini-bar button.cart-button {
+    position: relative;
+}
+
+.mini-bar button.cart-button .cart-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #2ea6ff;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.mini-bar button.cart-button.animate {
+    animation: bounce 0.5s ease;
+}
         /* Кастомный алерт */
         .custom-alert {
             position: fixed;
@@ -1320,22 +1340,22 @@
         </form>
     </div>
 
-    <!-- Мини-бар -->
-    <div class="mini-bar">
-        <button onclick="showScreen('menu-screen')">
-            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Главная" class="icon">
-            <span>Главная</span>
-        </button>
-        <button onclick="showScreen('menu-screen')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Меню" class="icon">
-            <span>Меню</span>
-        </button>
-        <button class="cart-button" onclick="showScreen('cart-screen')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Корзина" class="icon">
-            <span>Корзина</span>
-            <div id="cart-counter" class="cart-counter">0</div>
-        </button>
-    </div>
+ <div class="mini-bar">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <button onclick="showScreen('menu-screen')" id="home-button">
+        <span class="material-symbols-outlined icon">home</span>
+        <span>Главная</span>
+    </button>
+    <button onclick="showScreen('menu-screen')" id="menu-button">
+        <span class="material-symbols-outlined icon">menu_book</span>
+        <span>Меню</span>
+    </button>
+    <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
+        <span class="material-symbols-outlined icon">shopping_cart</span>
+        <span>Корзина</span>
+        <div id="cart-counter" class="cart-counter">0</div>
+    </button>
+</div>
 
     <script>
         let cart = []; // Массив для хранения товаров в корзине
@@ -1454,14 +1474,30 @@
             cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
         }
 
-        // Функция для переключения экранов
-        function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            if (screenId === 'cart-screen') {
-                updateCart(); // Обновляем корзину при открытии
-            }
-        }
+ function showScreen(screenId) {
+    // Скрываем все экраны
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+
+    // Показываем выбранный экран
+    document.getElementById(screenId).classList.add('active');
+
+    // Убираем выделение со всех кнопок мультибара
+    document.querySelectorAll('.mini-bar button').forEach(button => button.classList.remove('active'));
+
+    // Выделяем активную кнопку
+    if (screenId === 'menu-screen') {
+        document.getElementById('home-button').classList.add('active');
+    } else if (screenId === 'cart-screen') {
+        document.getElementById('cart-button').classList.add('active');
+    } else {
+        document.getElementById('menu-button').classList.add('active');
+    }
+
+    // Обновляем корзину при открытии
+    if (screenId === 'cart-screen') {
+        updateCart();
+    }
+}
 
         // Функция для отображения/скрытия поля ввода номера комнаты
         function toggleRoomNumber() {
@@ -1534,4 +1570,4 @@
         document.getElementById('checkout-form').addEventListener('submit', submitOrder);
     </script>
 </body>
-</html>
+</html>. 
