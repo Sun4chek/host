@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -329,18 +329,17 @@
             fill: white;
         }
 
-        /* Стили для экрана загрузки */
-        #loading-screen {
+      #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--background-color);
+            background-color: #f8f8f8;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10000; /* Убедитесь, что экран загрузки поверх всего */
+            z-index: 10000;
             opacity: 1;
             transition: opacity 0.5s ease;
         }
@@ -350,10 +349,10 @@
             visibility: hidden;
         }
 
-        #loading-screen img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 10px;
+       #loading-screen img {
+            width: 100%; /* Занимает 100% ширины экрана */
+            height: 100%; /* Занимает 100% высоты экрана */
+            object-fit: cover; /* Сохраняет пропорции и заполняет весь экран */
         }
 
         /* Стили для кнопок с двумя вариантами */
