@@ -1493,14 +1493,13 @@
         </form>
     </div>
 
-    <!-- Мини-бар -->
-    <div class="mini-bar">
+        <div class="mini-bar">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <button onclick="showScreen('menu-screen')" id="home-button">
             <span class="material-symbols-outlined icon">home</span>
             <span>Главная</span>
         </button>
-        <button onclick="showScreen('menu-screen')" id="menu-button">
+        <button onclick="scrollToCategories()" id="menu-button">
             <span class="material-symbols-outlined icon">menu_book</span>
             <span>Меню</span>
         </button>
@@ -1550,6 +1549,15 @@
             // Показываем основной контент
             document.getElementById('menu-screen').classList.add('active');
         }, 3000); // Задержка в 3 секунды (можно изменить)
+
+        function scrollToCategories() {
+            const categoryGrid = document.getElementById('category-grid');
+            if (categoryGrid) {
+                categoryGrid.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+
 
         // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
