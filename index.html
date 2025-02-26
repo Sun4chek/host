@@ -34,27 +34,35 @@
             --icon-filter: invert(1);
         }
 
-        #header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: transparent; /* Убираем фон */
-            border-bottom: none; /* Убираем границу */
-        }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
 
-        .logo {
-            flex: 0 0 45%; /* Логотип занимает чуть меньше половины экрана */
-            max-width: 45%;
-        }
+
+
+
+      #header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px; /* Уменьшаем общий отступ */
+    margin-bottom: 10px; /* Уменьшаем отступ снизу */
+    background-color: transparent;
+    border-bottom: none;
+}
+
+    .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0; /* Убираем внутренние отступы */
+    margin-bottom: 10px; /* Уменьшаем отступ снизу */
+}
+
+    .logo {
+    flex: 0 0 45%;
+    max-width: 45%;
+    margin: 0; /* Убираем отступы */
+}
 
         .logo img {
             width: 100%;
@@ -66,12 +74,12 @@
             transform: scale(1.1);
         }
 
-        .working-hours {
-            text-align: right;
-            font-size: 16px; /* Уменьшаем размер текста */
-            color: var(--secondary-text-color); /* Используем переменную для цвета */
-            margin-top: 0;
-        }
+    .working-hours {
+    text-align: right;
+    font-size: 14px; /* Уменьшаем размер текста */
+    color: var(--secondary-text-color);
+    margin: 0; /* Убираем отступы */
+}
 
         .working-hours p {
             margin: 8px 0;
@@ -82,21 +90,29 @@
             color: #2ea6ff; /* Цвет при наведении */
         }
 
-        .divider {
-            width: 70%;
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 10px auto;
-            opacity: 0.5;
-        }
 
-        .social-links {
-            display: flex;
-            justify-content: space-between; /* Равномерное распределение по ширине */
-            gap: 10px; /* Отступ между ссылками */
-            width: 100%; /* Занимает всю ширину контейнера */
-            margin-top: 10px;
-        }
+
+
+
+
+  .divider {
+    width: 70%;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 5px auto; /* Уменьшаем отступы */
+    opacity: 0.5;
+}
+
+
+
+
+   .social-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px; /* Уменьшаем отступы между иконками */
+    width: 100%;
+    margin: 5px 0; /* Уменьшаем отступы сверху и снизу */
+}
 
         .social-link {
             flex: 1; /* Каждая ссылка занимает равное пространство */
@@ -117,6 +133,10 @@
             opacity: 0.8;
         }
 
+
+
+
+
         @media (max-width: 768px) {
             .social-link img {
                 width: 24px; /* Уменьшаем размер иконок на мобильных */
@@ -127,6 +147,10 @@
                 gap: 5px; /* Уменьшаем отступы на мобильных */
             }
         }
+
+
+
+
 
         /* Остальные стили */
         h2 {
@@ -396,6 +420,10 @@
             cursor: pointer;
         }
 
+
+
+
+
         /* Стили для контейнера с рамкой */
         .header-widget-container {
             padding: 20px;
@@ -407,10 +435,11 @@
         }
 
         /* Стили для виджета */
-        .header-widget {
-            display: flex;
-            gap: 20px;
-        }
+    .header-widget {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px; /* Уменьшаем отступ сверху */
+}
 
         /* Фотогалерея */
         .gallery {
@@ -496,6 +525,9 @@
             transform: rotate(90deg); /* Поворачиваем стрелочку вниз */
         }
 
+.gallery, .about-us {
+    margin: 0; /* Убираем отступы */
+}
         /* Адаптация для мобильных устройств */
         @media (max-width: 768px) {
             .header-widget {
