@@ -441,57 +441,57 @@
     display: block; /* Показываем активное изображение */
 }
 
-/* Раздел "О нас" с рамкой */
 .about-us {
-    flex: 1;
-    padding: 20px;
-    border-radius: 10px;
     border: 2px solid var(--border-color);
+    border-radius: 10px;
     background-color: var(--item-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex; /* Делаем блок flex-контейнером */
-    flex-direction: column; /* Выстраиваем содержимое в колонку */
-    justify-content: center; /* Выравниваем по вертикали по центру */
-    align-items: center; /* Выравниваем по горизонтали по центру */
-    text-align: center; /* Выравниваем текст по центру */
+    padding: 15px;
+    margin-top: 20px;
+    overflow: hidden; /* Скрываем содержимое при сворачивании */
+    transition: all 0.5s ease; /* Анимация для изменения размера рамки */
 }
 
-.about-us h2 {
-    margin-top: 0;
-    color: var(--text-color);
+.about-us-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Курсор в виде указателя */
+}
+
+.about-us-header h2 {
+    margin: 0;
     font-size: 24px;
-    text-align: center; /* Выравниваем заголовок по центру */
+    color: var(--text-color);
 }
 
-.about-us p {
+.about-us-header .arrow {
+    font-size: 24px;
+    transition: transform 0.3s ease; /* Анимация стрелочки */
+}
+
+.about-us-content {
+    max-height: 0; /* Начальная высота (свернуто) */
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease; /* Анимация раскрытия */
+    padding: 0 15px; /* Отступы для текста */
+}
+
+.about-us-content p {
+    margin: 10px 0;
     color: var(--secondary-text-color);
-    line-height: 1.6;
     font-size: 16px;
-    text-align: center; /* Выравниваем текст по центру */
+    line-height: 1.6;
 }
 
-/* Адаптация для мобильных устройств */
-@media (max-width: 768px) {
-    .header-widget {
-        flex-direction: column; /* Вертикальное расположение */
-        gap: 10px; /* Уменьшаем отступы */
-    }
+/* Класс для развернутого состояния */
+.about-us.expanded .about-us-content {
+    max-height: 500px; /* Максимальная высота (можно увеличить) */
+    padding: 15px; /* Отступы при раскрытии */
+}
 
-    .gallery {
-        width: 100%; /* Фотогалерея занимает всю ширину */
-    }
-
-    .about-us {
-        padding: 10px; /* Уменьшаем отступы */
-    }
-
-    .about-us h2 {
-        font-size: 20px; /* Уменьшаем размер шрифта заголовка */
-    }
-
-    .about-us p {
-        font-size: 14px; /* Уменьшаем размер шрифта текста */
-    }
+.about-us.expanded .arrow {
+    transform: rotate(90deg); /* Поворачиваем стрелочку вниз */
 }
 
         /* Стили для счетчика и кнопок + и - */
@@ -669,12 +669,21 @@
 
         <!-- Раздел "О нас" -->
      <div class="about-us">
-    <h2>О нас</h2>
-    <p>
-        Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
-        Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
-        Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
-    </p>
+    <div class="about-us-header" onclick="toggleAboutUs()">
+        <h2>О нас</h2>
+        <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
+    </div>
+    <div class="about-us-content">
+        <p>
+            Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
+            Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
+            Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
+        </p>
+        <p>
+            Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.
+            Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.
+        </p>
+    </div>
 </div>
     </div>
 </div>
@@ -1757,6 +1766,11 @@ function showImage(index) {
     images.forEach((img, i) => {
         img.classList.toggle('active', i === index);
     });
+}
+
+function toggleAboutUs() {
+    const aboutUs = document.querySelector('.about-us');
+    aboutUs.classList.toggle('expanded'); // Добавляем/убираем класс expanded
 }
 
 function nextImage() {
