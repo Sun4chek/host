@@ -559,7 +559,7 @@
         </div>
 
         <h2 id="main-title">Выберите категорию</h2>
-        <div class="category-grid">
+         <div class="category-grid" id="category-grid">
             <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
             <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
             <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
@@ -1550,7 +1550,11 @@
             document.getElementById('menu-screen').classList.add('active');
         }, 3000); // Задержка в 3 секунды (можно изменить)
 
-        function scrollToCategories() {
+      function scrollToCategories() {
+            // Показываем главный экран
+            showScreen('menu-screen');
+
+            // Прокручиваем до сетки категорий
             const categoryGrid = document.getElementById('category-grid');
             if (categoryGrid) {
                 categoryGrid.scrollIntoView({ behavior: 'smooth' });
