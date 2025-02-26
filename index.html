@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -38,8 +40,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px; /* Уменьшаем общий отступ */
-            margin-bottom: 10px; /* Уменьшаем отступ снизу */
+            padding: 10px;
+            margin-bottom: 10px;
             background-color: transparent;
             border-bottom: none;
         }
@@ -49,14 +51,14 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 0; /* Убираем внутренние отступы */
-            margin-bottom: 10px; /* Уменьшаем отступ снизу */
+            padding: 0;
+            margin-bottom: 10px;
         }
 
         .logo {
             flex: 0 0 45%;
             max-width: 45%;
-            margin: 0; /* Убираем отступы */
+            margin: 0;
         }
 
         .logo img {
@@ -71,9 +73,9 @@
 
         .working-hours {
             text-align: right;
-            font-size: 14px; /* Уменьшаем размер текста */
+            font-size: 14px;
             color: var(--secondary-text-color);
-            margin: 0; /* Убираем отступы */
+            margin: 0;
         }
 
         .working-hours p {
@@ -82,35 +84,35 @@
         }
 
         .working-hours p:hover {
-            color: #2ea6ff; /* Цвет при наведении */
+            color: #2ea6ff;
         }
 
         .divider {
             width: 70%;
             height: 1px;
             background-color: var(--border-color);
-            margin: 5px auto; /* Уменьшаем отступы */
+            margin: 5px auto;
             opacity: 0.5;
         }
 
         .social-links {
             display: flex;
             justify-content: space-between;
-            gap: 5px; /* Уменьшаем отступы между иконками */
+            gap: 5px;
             width: 100%;
-            margin: 5px 0; /* Уменьшаем отступы сверху и снизу */
+            margin: 5px 0;
         }
 
         .social-link {
-            flex: 1; /* Каждая ссылка занимает равное пространство */
+            flex: 1;
             display: flex;
-            justify-content: center; /* Центрируем содержимое ссылки */
-            align-items: center; /* Центрируем по вертикали */
+            justify-content: center;
+            align-items: center;
         }
 
         .social-link img {
-            width: 32px; /* Фиксированная ширина иконки */
-            height: 32px; /* Фиксированная высота иконки */
+            width: 32px;
+            height: 32px;
             filter: var(--icon-filter);
             transition: transform 0.2s ease, opacity 0.2s ease;
         }
@@ -122,12 +124,12 @@
 
         @media (max-width: 768px) {
             .social-link img {
-                width: 24px; /* Уменьшаем размер иконок на мобильных */
+                width: 24px;
                 height: 24px;
             }
 
             .social-links {
-                gap: 5px; /* Уменьшаем отступы на мобильных */
+                gap: 5px;
             }
         }
 
@@ -303,7 +305,7 @@
         .mini-bar button .icon {
             width: 24px;
             height: 24px;
-            filter: var(--icon-filter); /* Применяем фильтр для иконок */
+            filter: var(--icon-filter);
             transition: transform 0.2s ease;
         }
 
