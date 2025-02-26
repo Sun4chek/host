@@ -90,42 +90,43 @@
             margin: 10px auto;
             opacity: 0.5;
         }
+.social-links {
+    display: flex;
+    justify-content: space-between; /* Равномерное распределение по ширине */
+    gap: 10px; /* Отступ между ссылками */
+    width: 100%; /* Занимает всю ширину контейнера */
+    margin-top: 10px;
+}
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            margin-top: 10px;
-        }
+.social-link {
+    flex: 1; /* Каждая ссылка занимает равное пространство */
+    display: flex;
+    justify-content: center; /* Центрируем содержимое ссылки */
+    align-items: center; /* Центрируем по вертикали */
+}
 
-        .social-link img {
-            width: 32px;
-            height: 32px;
-            filter: var(--icon-filter);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
+.social-link img {
+    width: 32px; /* Фиксированная ширина иконки */
+    height: 32px; /* Фиксированная высота иконки */
+    filter: var(--icon-filter);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-        .social-link:hover img {
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
+.social-link:hover img {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
 
-        @media (max-width: 768px) {
-            .logo {
-                flex: 0 0 40%; /* На мобильных логотип занимает 40% */
-                max-width: 40%;
-            }
+      @media (max-width: 768px) {
+    .social-link img {
+        width: 24px; /* Уменьшаем размер иконок на мобильных */
+        height: 24px;
+    }
 
-            .working-hours {
-                font-size: 14px; /* Еще меньше на мобильных */
-            }
-
-            .social-link img {
-                width: 24px;
-                height: 24px;
-            }
-        }
+    .social-links {
+        gap: 5px; /* Уменьшаем отступы на мобильных */
+    }
+}
 
         /* Остальные стили */
         h2 {
@@ -417,21 +418,27 @@
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+    height: 300px; /* Фиксированная высота */
+    width: 100%; /* Фиксированная ширина */
 }
 
 .gallery-images {
     display: flex;
     transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%; /* Занимает всю высоту и ширину контейнера */
 }
 
 .gallery-images img {
     width: 100%;
-    display: none;
+    height: 100%;
+    object-fit: cover; /* Сохраняет пропорции и заполняет весь контейнер */
+    display: none; /* Скрываем все изображения по умолчанию */
     border-radius: 10px;
 }
 
 .gallery-images img.active {
-    display: block;
+    display: block; /* Показываем активное изображение */
 }
 
 /* Раздел "О нас" с рамкой */
@@ -439,21 +446,28 @@
     flex: 1;
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid var(--border-color); /* Рамка, которая меняется в зависимости от темы */
-    background-color: var(--item-bg-color); /* Фон, который меняется в зависимости от темы */
+    border: 2px solid var(--border-color);
+    background-color: var(--item-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex; /* Делаем блок flex-контейнером */
+    flex-direction: column; /* Выстраиваем содержимое в колонку */
+    justify-content: center; /* Выравниваем по вертикали по центру */
+    align-items: center; /* Выравниваем по горизонтали по центру */
+    text-align: center; /* Выравниваем текст по центру */
 }
 
 .about-us h2 {
     margin-top: 0;
     color: var(--text-color);
-    font-size: 24px; /* Размер шрифта заголовка */
+    font-size: 24px;
+    text-align: center; /* Выравниваем заголовок по центру */
 }
 
 .about-us p {
     color: var(--secondary-text-color);
     line-height: 1.6;
-    font-size: 16px; /* Размер шрифта текста */
+    font-size: 16px;
+    text-align: center; /* Выравниваем текст по центру */
 }
 
 /* Адаптация для мобильных устройств */
@@ -655,13 +669,13 @@
 
         <!-- Раздел "О нас" -->
      <div class="about-us">
-            <h2>О нас</h2>
-            <p>
-                Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
-                Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
-                Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
-            </p>
-        </div>
+    <h2>О нас</h2>
+    <p>
+        Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
+        Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
+        Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
+    </p>
+</div>
     </div>
 </div>
 
