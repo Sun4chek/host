@@ -34,97 +34,97 @@
             --icon-filter: invert(1);
         }
 
-#header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: var(--item-bg-color);
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 20px;
-}
+        #header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: transparent; /* Убираем фон */
+            border-bottom: none; /* Убираем границу */
+        }
 
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-.logo {
-    flex: 0 0 45%; /* Логотип занимает чуть меньше половины экрана */
-    max-width: 45%;
-}
+        .logo {
+            flex: 0 0 45%; /* Логотип занимает чуть меньше половины экрана */
+            max-width: 45%;
+        }
 
-.logo img {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
-}
+        .logo img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
 
-.logo img:hover {
-    transform: scale(1.1);
-}
+        .logo img:hover {
+            transform: scale(1.1);
+        }
 
-.working-hours {
-    text-align: right;
-    font-size: 28px;
-    color: var(--secondary-text-color);
-    margin-top: 0;
-}
+        .working-hours {
+            text-align: right;
+            font-size: 16px; /* Уменьшаем размер текста */
+            color: var(--secondary-text-color); /* Используем переменную для цвета */
+            margin-top: 0;
+        }
 
-.working-hours p {
-    margin: 8px 0;
-    transition: color 0.3s ease;
-}
+        .working-hours p {
+            margin: 8px 0;
+            transition: color 0.3s ease;
+        }
 
-.working-hours p:hover {
-    color: #2ea6ff;
-}
+        .working-hours p:hover {
+            color: #2ea6ff; /* Цвет при наведении */
+        }
 
-.divider {
-    width: 70%;
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 10px auto;
-    opacity: 0.5;
-}
+        .divider {
+            width: 70%;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 10px auto;
+            opacity: 0.5;
+        }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-    margin-top: 10px;
-}
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin-top: 10px;
+        }
 
-.social-link img {
-    width: 32px;
-    height: 32px;
-    filter: var(--icon-filter);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
+        .social-link img {
+            width: 32px;
+            height: 32px;
+            filter: var(--icon-filter);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
 
-.social-link:hover img {
-    transform: scale(1.1);
-    opacity: 0.8;
-}
+        .social-link:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
 
-@media (max-width: 768px) {
-    .logo {
-        flex: 0 0 40%; /* На мобильных логотип занимает 40% */
-        max-width: 40%;
-    }
+        @media (max-width: 768px) {
+            .logo {
+                flex: 0 0 40%; /* На мобильных логотип занимает 40% */
+                max-width: 40%;
+            }
 
-    .working-hours {
-        font-size: 20px;
-    }
+            .working-hours {
+                font-size: 14px; /* Еще меньше на мобильных */
+            }
 
-    .social-link img {
-        width: 24px;
-        height: 24px;
-    }
-}
+            .social-link img {
+                width: 24px;
+                height: 24px;
+            }
+        }
 
         /* Остальные стили */
         h2 {
@@ -504,8 +504,6 @@
     </style>
 </head>
 <body>
-
-
     <!-- Экран загрузки -->
     <div id="loading-screen">
         <img src="https://i.ibb.co/TfR8BgV/first-screen.png" alt="Загру">
@@ -517,63 +515,61 @@
     </div>
 
     <!-- Главный экран -->
-    <!-- Главный экран -->
-<div id="menu-screen" class="container active">
-    <!-- Заголовок -->
-<div id="header">
-    <!-- Логотип и часы работы -->
-    <div class="header-top">
-        <div class="logo">
-            <img src="https://example.com/logo.png" alt="Логотип ресторана">
+    <div id="menu-screen" class="container active">
+        <!-- Заголовок -->
+        <div id="header">
+            <!-- Логотип и часы работы -->
+            <div class="header-top">
+                <div class="logo">
+                    <img src="https://example.com/logo.png" alt="Логотип ресторана">
+                </div>
+                <div class="working-hours">
+                    <p>Часы работы: 10:00 - 22:00</p>
+                    <p>График: Ежедневно</p>
+                </div>
+            </div>
+
+            <!-- Разделительная черта -->
+            <div class="divider"></div>
+
+            <!-- Соцсети -->
+            <div class="social-links">
+                <a href="tel:+71234567890" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
+                </a>
+                <a href="mailto:info@restaurant.com" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Почта">
+                </a>
+                <a href="https://t.me/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Телеграм">
+                </a>
+                <a href="https://wa.me/71234567890" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+                </a>
+                <a href="https://vk.com/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="ВКонтакте">
+                </a>
+                <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Яндекс Карты">
+                </a>
+            </div>
+
+            <!-- Вторая разделительная черта -->
+            <div class="divider"></div>
         </div>
-        <div class="working-hours">
-            <p>Часы работы: 10:00 - 22:00</p>
-            <p>График: Ежедневно</p>
+
+        <h2 id="main-title">Выберите категорию</h2>
+        <div class="category-grid">
+            <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
+            <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
+            <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
+            <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>
+            <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>
+            <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
+            <div class="category-item" style="background-image: url('https://example.com/bar.jpg');" onclick="showScreen('bar-screen')">Бар</div>
         </div>
     </div>
 
-    <!-- Разделительная черта -->
-    <div class="divider"></div>
-
-    <!-- Соцсети -->
-    <div class="social-links">
-        <a href="tel:+71234567890" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
-        </a>
-        <a href="mailto:info@restaurant.com" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Почта">
-        </a>
-        <a href="https://t.me/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Телеграм">
-        </a>
-        <a href="https://wa.me/71234567890" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
-        </a>
-        <a href="https://vk.com/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="ВКонтакте">
-        </a>
-        <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Яндекс Карты">
-        </a>
-    </div>
-
-    <!-- Вторая разделительная черта -->
-    <div class="divider"></div>
-
-    <!-- Здесь будет дополнительный блок -->
-</div>
-
-    <h2 id="main-title">Выберите категорию</h2>
-    <div class="category-grid">
-        <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
-        <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
-        <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
-        <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>
-        <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>
-        <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
-        <div class="category-item" style="background-image: url('https://example.com/bar.jpg');" onclick="showScreen('bar-screen')">Бар</div>
-    </div>
-</div>
     <!-- Основные блюда -->
     <div id="main-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
