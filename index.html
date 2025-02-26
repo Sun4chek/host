@@ -496,26 +496,37 @@
 
 /* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
-    .header-widget {
-        flex-direction: column; /* Вертикальное расположение */
-        gap: 0px; /* Уменьшаем отступы */
+    .gallery {
+        width: 100%;
+        height: auto;
     }
 
-    .gallery {
-        height: 250px; /* Уменьшаем высоту фотогалереи для мобильных */
+    .gallery-images img {
         width: 100%;
+        height: auto;
     }
 
     .about-us {
-        padding: 0px; /* Уменьшаем отступы */
+        width: 100%;
+        margin-top: 10px;
     }
 
     .about-us-header h2 {
-        font-size: 20px; /* Уменьшаем размер шрифта заголовка */
+        font-size: 18px;
+    }
+
+    .about-us-content {
+        padding: 10px;
     }
 
     .about-us-content p {
-        font-size: 14px; /* Уменьшаем размер шрифта текста */
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .about-us.expanded .about-us-content p {
+        font-size: 14px;
+        line-height: 1.6;
     }
 }
 
