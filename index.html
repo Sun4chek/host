@@ -411,22 +411,21 @@
     display: flex;
     gap: 20px;
 }
-
 /* Фотогалерея */
 .gallery {
     flex: 1;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    height: 300px; /* Фиксированная высота */
-    width: 100%; /* Фиксированная ширина */
+    height: 200px; /* Фиксированная высота для мобильных */
+    width: 100%; /* Занимает всю ширину */
 }
 
 .gallery-images {
     display: flex;
     transition: transform 0.5s ease;
     width: 100%;
-    height: 100%; /* Занимает всю высоту и ширину контейнера */
+    height: 100%;
 }
 
 .gallery-images img {
@@ -441,14 +440,16 @@
     display: block; /* Показываем активное изображение */
 }
 
+/* Блок "О нас" */
 .about-us {
-    border: 2px solid var(--border-color);
+    flex: 1;
+    padding: 15px;
     border-radius: 10px;
+    border: 2px solid var(--border-color);
     background-color: var(--item-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
     margin-top: 20px;
-    overflow: hidden; /* Скрываем содержимое при сворачивании */
+    overflow: hidden;
     transition: all 0.5s ease; /* Анимация для изменения размера рамки */
 }
 
@@ -456,35 +457,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer; /* Курсор в виде указателя */
+    cursor: pointer;
 }
 
 .about-us-header h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 20px; /* Уменьшаем размер шрифта для мобильных */
     color: var(--text-color);
 }
 
 .about-us-header .arrow {
-    font-size: 24px;
-    transition: transform 0.3s ease; /* Анимация стрелочки */
+    font-size: 20px;
+    transition: transform 0.3s ease;
 }
 
 .about-us-content {
-    max-height: 0; /* Начальная высота (свернуто) */
+    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease, padding 0.5s ease; /* Анимация раскрытия */
-    padding: 0 15px; /* Отступы для текста */
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0 15px;
 }
 
 .about-us-content p {
     margin: 10px 0;
     color: var(--secondary-text-color);
-    font-size: 16px;
+    font-size: 14px; /* Уменьшаем размер шрифта для мобильных */
     line-height: 1.6;
 }
 
-/* Класс для развернутого состояния */
 .about-us.expanded .about-us-content {
     max-height: 500px; /* Максимальная высота (можно увеличить) */
     padding: 15px; /* Отступы при раскрытии */
@@ -492,6 +492,30 @@
 
 .about-us.expanded .arrow {
     transform: rotate(90deg); /* Поворачиваем стрелочку вниз */
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .header-widget {
+        flex-direction: column; /* Вертикальное расположение */
+        gap: 10px; /* Уменьшаем отступы */
+    }
+
+    .gallery {
+        height: 150px; /* Уменьшаем высоту фотогалереи для мобильных */
+    }
+
+    .about-us {
+        padding: 10px; /* Уменьшаем отступы */
+    }
+
+    .about-us-header h2 {
+        font-size: 18px; /* Уменьшаем размер шрифта заголовка */
+    }
+
+    .about-us-content p {
+        font-size: 12px; /* Уменьшаем размер шрифта текста */
+    }
 }
 
         /* Стили для счетчика и кнопок + и - */
@@ -658,34 +682,35 @@
 
     <!-- Динамическая фотогалерея и раздел "О нас" -->
     <div class="header-widget">
-        <!-- Фотогалерея -->
-        <div class="gallery">
-            <div class="gallery-images">
-                <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
-                <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
-                <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
-            </div>
+    <!-- Фотогалерея -->
+    <div class="gallery">
+        <div class="gallery-images">
+            <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
+            <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
+            <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
         </div>
-
-        <!-- Раздел "О нас" -->
-     <div class="about-us">
-    <div class="about-us-header" onclick="toggleAboutUs()">
-        <h2>О нас</h2>
-        <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
     </div>
-    <div class="about-us-content">
-        <p>
-            Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
-            Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
-            Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
-        </p>
-        <p>
-            Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.
-            Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.
-        </p>
+
+    <!-- Раздел "О нас" -->
+    <div class="about-us">
+        <div class="about-us-header" onclick="toggleAboutUs()">
+            <h2>О нас</h2>
+            <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
+        </div>
+        <div class="about-us-content">
+            <p>
+                Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
+                Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
+                Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
+            </p>
+            <p>
+                Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.
+                Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.
+            </p>
+        </div>
     </div>
 </div>
-    </div>
+
 </div>
 
         <h2 id="main-title">Выберите категорию</h2>
@@ -1691,7 +1716,30 @@
             }
         }
 
+// Логика для фотогалереи
+let currentIndex = 0;
+const images = document.querySelectorAll('.gallery-images img');
+const totalImages = images.length;
 
+function showImage(index) {
+    images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+    });
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+}
+
+// Автоматическое переключение каждые 5 секунд
+setInterval(nextImage, 5000);
+
+// Логика для блока "О нас"
+function toggleAboutUs() {
+    const aboutUs = document.querySelector('.about-us');
+    aboutUs.classList.toggle('expanded');
+}
 
         // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
@@ -1757,29 +1805,7 @@
             updateCartCounter();
         }
 
-      // Логика для фотогалереи
-let currentIndex = 0;
-const images = document.querySelectorAll('.gallery-images img');
-const totalImages = images.length;
 
-function showImage(index) {
-    images.forEach((img, i) => {
-        img.classList.toggle('active', i === index);
-    });
-}
-
-function toggleAboutUs() {
-    const aboutUs = document.querySelector('.about-us');
-    aboutUs.classList.toggle('expanded'); // Добавляем/убираем класс expanded
-}
-
-function nextImage() {
-    currentIndex = (currentIndex + 1) % totalImages;
-    showImage(currentIndex);
-}
-
-// Автоматическое переключение каждые 5 секунд
-setInterval(nextImage, 5000);
 
 
 
