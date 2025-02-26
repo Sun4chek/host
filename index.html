@@ -7,7 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         /* Основные стили */
-           :root {
+        :root {
             --background-color: #f8f8f8;
             --text-color: #333;
             --secondary-text-color: #666;
@@ -259,96 +259,78 @@
         }
 
         /* Стили для мини-бара */
+        .mini-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 10px;
+            right: 10px;
+            background-color: var(--item-bg-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
 
-        /* Стили для мини-бара */
-.mini-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 10px;
-    right: 10px;
-    background-color: var(--item-bg-color);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border: 1px solid var(--border-color);
-    transition: background-color 0.3s ease;
-}
+        .mini-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.2s ease, color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 10px;
+            flex: 1;
+        }
 
-.mini-bar button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    transition: transform 0.2s ease, color 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 10px;
-    flex: 1;
-}
+        .mini-bar button:hover {
+            color: #2ea6ff;
+            background-color: rgba(46, 166, 255, 0.1);
+        }
 
-.mini-bar button:hover {
-    color: #2ea6ff; /* Синий цвет при наведении */
-    background-color: rgba(46, 166, 255, 0.1); /* Светло-синий фон при наведении */
-}
+        .mini-bar button.active {
+            background-color: rgba(46, 166, 255, 0.2);
+            color: #2ea6ff;
+        }
 
-.mini-bar button.active {
-    background-color: rgba(46, 166, 255, 0.2); /* Светло-синий фон для активной кнопки */
-    color: #2ea6ff; /* Синий цвет для активной кнопки */
-}
+        .mini-bar button .icon {
+            width: 24px;
+            height: 24px;
+            filter: var(--icon-filter); /* Применяем фильтр для иконок */
+            transition: transform 0.2s ease;
+        }
 
-.mini-bar button .icon {
-    width: 24px;
-    height: 24px;
-    filter: var(--icon-filter); /* Применяем фильтр для иконок */
-    transition: transform 0.2s ease;
-}
+        .mini-bar button:hover .icon {
+            transform: scale(1.1);
+        }
 
-.mini-bar button:hover .icon {
-    transform: scale(1.1);
-}
+        .mini-bar button.cart-button {
+            position: relative;
+        }
 
-.mini-bar button.cart-button {
-    position: relative;
-}
+        .mini-bar button.cart-button .cart-counter {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #2ea6ff;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
 
-.mini-bar button.cart-button .cart-counter {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #2ea6ff; /* Синий цвет для счетчика */
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-}
-
-.mini-bar button.cart-button.animate {
-    animation: bounce 0.5s ease;
-}
-
-/* Темная тема для мини-бара */
-body.dark-theme .mini-bar button .icon {
-    filter: invert(1); /* Белые иконки в темной теме */
-}
-
-body.dark-theme .mini-bar button:hover {
-    color: #2ea6ff; /* Синий цвет при наведении в темной теме */
-    background-color: rgba(46, 166, 255, 0.1); /* Светло-синий фон при наведении в темной теме */
-}
-
-body.dark-theme .mini-bar button.active {
-    background-color: rgba(46, 166, 255, 0.2); /* Светло-синий фон для активной кнопки в темной теме */
-    color: #2ea6ff; /* Синий цвет для активной кнопки в темной теме */
-}
-
+        .mini-bar button.cart-button.animate {
+            animation: bounce 0.5s ease;
+        }
 
         /* Кастомный алерт */
         .custom-alert {
@@ -1509,7 +1491,8 @@ body.dark-theme .mini-bar button.active {
             <button type="submit">Подтвердить заказ</button>
         </form>
     </div>
- <!-- Мини-бар -->
+
+    <!-- Мини-бар -->
     <div class="mini-bar">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <button onclick="showScreen('menu-screen')" id="home-button">
