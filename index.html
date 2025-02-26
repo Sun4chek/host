@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +60,6 @@
             width: 100%;
             height: auto;
             transition: transform 0.3s ease;
-
         }
 
         .logo img:hover {
@@ -90,43 +89,44 @@
             margin: 10px auto;
             opacity: 0.5;
         }
-.social-links {
-    display: flex;
-    justify-content: space-between; /* Равномерное распределение по ширине */
-    gap: 10px; /* Отступ между ссылками */
-    width: 100%; /* Занимает всю ширину контейнера */
-    margin-top: 10px;
-}
 
-.social-link {
-    flex: 1; /* Каждая ссылка занимает равное пространство */
-    display: flex;
-    justify-content: center; /* Центрируем содержимое ссылки */
-    align-items: center; /* Центрируем по вертикали */
-}
+        .social-links {
+            display: flex;
+            justify-content: space-between; /* Равномерное распределение по ширине */
+            gap: 10px; /* Отступ между ссылками */
+            width: 100%; /* Занимает всю ширину контейнера */
+            margin-top: 10px;
+        }
 
-.social-link img {
-    width: 32px; /* Фиксированная ширина иконки */
-    height: 32px; /* Фиксированная высота иконки */
-    filter: var(--icon-filter);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
+        .social-link {
+            flex: 1; /* Каждая ссылка занимает равное пространство */
+            display: flex;
+            justify-content: center; /* Центрируем содержимое ссылки */
+            align-items: center; /* Центрируем по вертикали */
+        }
 
-.social-link:hover img {
-    transform: scale(1.1);
-    opacity: 0.8;
-}
+        .social-link img {
+            width: 32px; /* Фиксированная ширина иконки */
+            height: 32px; /* Фиксированная высота иконки */
+            filter: var(--icon-filter);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
 
-      @media (max-width: 768px) {
-    .social-link img {
-        width: 24px; /* Уменьшаем размер иконок на мобильных */
-        height: 24px;
-    }
+        .social-link:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
 
-    .social-links {
-        gap: 5px; /* Уменьшаем отступы на мобильных */
-    }
-}
+        @media (max-width: 768px) {
+            .social-link img {
+                width: 24px; /* Уменьшаем размер иконок на мобильных */
+                height: 24px;
+            }
+
+            .social-links {
+                gap: 5px; /* Уменьшаем отступы на мобильных */
+            }
+        }
 
         /* Остальные стили */
         h2 {
@@ -396,140 +396,140 @@
             cursor: pointer;
         }
 
-/* Стили для контейнера с рамкой */
-.header-widget-container {
-    padding: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    background-color: var(--item-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
+        /* Стили для контейнера с рамкой */
+        .header-widget-container {
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--item-bg-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
 
-/* Стили для виджета */
-.header-widget {
-    display: flex;
-    gap: 20px;
-}
-/* Фотогалерея */
-.gallery {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    height: 200px; /* Фиксированная высота для мобильных */
-    width: 100%; /* Занимает всю ширину */
-}
+        /* Стили для виджета */
+        .header-widget {
+            display: flex;
+            gap: 20px;
+        }
 
-.gallery-images {
-    display: flex;
-    transition: transform 0.5s ease;
-    width: 100%;
-    height: 100%;
-}
+        /* Фотогалерея */
+        .gallery {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 200px; /* Фиксированная высота для мобильных */
+            width: calc(50% - 10px); /* Ширина равна двум элементам из сетки категорий */
+        }
 
-.gallery-images img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Сохраняет пропорции и заполняет весь контейнер */
-    display: none; /* Скрываем все изображения по умолчанию */
-    border-radius: 10px;
-}
+        .gallery-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+        }
 
-.gallery-images img.active {
-    display: block; /* Показываем активное изображение */
-}
+        .gallery-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Сохраняет пропорции и заполняет весь контейнер */
+            display: none; /* Скрываем все изображения по умолчанию */
+            border-radius: 10px;
+        }
 
-/* Блок "О нас" */
-.about-us {
-    flex: 1;
-    padding: 15px;
-    border-radius: 10px;
-    border: 2px solid var(--border-color);
-    background-color: var(--item-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    overflow: hidden;
-    transition: all 0.5s ease; /* Анимация для изменения размера рамки */
-}
+        .gallery-images img.active {
+            display: block; /* Показываем активное изображение */
+        }
 
-.about-us-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
+        /* Блок "О нас" */
+        .about-us {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            background-color: var(--item-bg-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease; /* Анимация для изменения размера рамки */
+            width: calc(50% - 10px); /* Ширина равна двум элементам из сетки категорий */
+        }
 
-.about-us-header h2 {
-    margin: 0;
-    font-size: 20px; /* Уменьшаем размер шрифта для мобильных */
-    color: var(--text-color);
-}
+        .about-us-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
 
-.about-us-header .arrow {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-}
+        .about-us-header h2 {
+            margin: 0;
+            font-size: 20px; /* Уменьшаем размер шрифта для мобильных */
+            color: var(--text-color);
+        }
 
-.about-us-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, padding 0.5s ease;
-    padding: 0 15px;
-}
+        .about-us-header .arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
 
-.about-us-content p {
-    margin: 10px 0;
-    color: var(--secondary-text-color);
-    font-size: 14px; /* Уменьшаем размер шрифта для мобильных */
-    line-height: 1.6;
-}
+        .about-us-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding: 0 15px;
+        }
 
-.about-us.expanded .about-us-content {
-    max-height: 500px; /* Максимальная высота (можно увеличить) */
-    padding: 10px; /* Отступы при раскрытии */
-}
+        .about-us-content p {
+            margin: 10px 0;
+            color: var(--secondary-text-color);
+            font-size: 14px; /* Уменьшаем размер шрифта для мобильных */
+            line-height: 1.6;
+        }
 
-.about-us.expanded .arrow {
-    transform: rotate(90deg); /* Поворачиваем стрелочку вниз */
-}
+        .about-us.expanded .about-us-content {
+            max-height: 500px; /* Максимальная высота (можно увеличить) */
+            padding: 10px; /* Отступы при раскрытии */
+        }
 
-/* Адаптация для мобильных устройств */
-/* Адаптация для мобильных устройств */
-@media (max-width: 768px) {
-    .header-widget {
-        flex-direction: column; /* Блоки будут располагаться вертикально */
-        gap: 20px; /* Отступ между блоками */
-        width: 100%; /* Занимает всю ширину экрана */
-        max-width: 100%; /* Ограничиваем максимальную ширину */
-        margin: 0 auto; /* Центрируем блок */
-        padding: 0 5px; /* Уменьшаем отступы по бокам */
-    }
+        .about-us.expanded .arrow {
+            transform: rotate(90deg); /* Поворачиваем стрелочку вниз */
+        }
 
-    .gallery {
-        width: 100%; /* Галерея занимает всю ширину экрана */
-        height: 200px; /* Фиксированная высота для мобильных */
-        margin: 0 auto; /* Центрируем галерею */
-        padding: 0; /* Убираем внутренние отступы */
-    }
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .header-widget {
+                flex-direction: column; /* Блоки будут располагаться вертикально */
+                gap: 20px; /* Отступ между блоками */
+                width: 100%; /* Занимает всю ширину экрана */
+                max-width: 100%; /* Ограничиваем максимальную ширину */
+                margin: 0 auto; /* Центрируем блок */
+                padding: 0 5px; /* Уменьшаем отступы по бокам */
+            }
 
-    .about-us {
-        width: 100%; /* Блок "О нас" занимает всю ширину экрана */
-        margin: 0 auto; /* Центрируем блок */
-        padding: 0 10px; /* Уменьшаем отступы по бокам */
-    }
+            .gallery {
+                width: 100%; /* Галерея занимает всю ширину экрана */
+                height: 200px; /* Фиксированная высота для мобильных */
+                margin: 0 auto; /* Центрируем галерею */
+                padding: 0; /* Убираем внутренние отступы */
+            }
 
-    .about-us-header h2 {
-        font-size: 18px; /* Размер шрифта заголовка */
-    }
+            .about-us {
+                width: 100%; /* Блок "О нас" занимает всю ширину экрана */
+                margin: 0 auto; /* Центрируем блок */
+                padding: 0 10px; /* Уменьшаем отступы по бокам */
+            }
 
-    .about-us-content p {
-        font-size: 14px; /* Размер шрифта текста */
-        line-height: 1.5; /* Межстрочный интервал */
-        width: 100%; /* Текст занимает всю ширину блока */
-    }
-}
+            .about-us-header h2 {
+                font-size: 18px; /* Размер шрифта заголовка */
+            }
 
+            .about-us-content p {
+                font-size: 14px; /* Размер шрифта текста */
+                line-height: 1.5; /* Межстрочный интервал */
+                width: 100%; /* Текст занимает всю ширину блока */
+            }
+        }
 
         /* Стили для счетчика и кнопок + и - */
         .quantity-controls {
@@ -653,81 +653,80 @@
     <!-- Главный экран -->
     <div id="menu-screen" class="container active">
         <!-- Заголовок -->
-       <div id="header">
-    <!-- Логотип и часы работы -->
-    <div class="header-top">
-        <div class="logo">
-            <img src="images/logo.png" alt="Логотип ресторана">
+        <div id="header">
+            <!-- Логотип и часы работы -->
+            <div class="header-top">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Логотип ресторана">
+                </div>
+                <div class="working-hours">
+                    <p>Часы работы: 10:00 - 12:00</p>
+                    <p>График: Ежедневно</p>
+                </div>
+            </div>
+
+            <!-- Разделительная черта -->
+            <div class="divider"></div>
+
+            <!-- Соцсети -->
+            <div class="social-links">
+                <a href="tel:+71234567890" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
+                </a>
+                <a href="mailto:info@restaurant.com" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Почта">
+                </a>
+                <a href="https://t.me/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Телеграм">
+                </a>
+                <a href="https://wa.me/71234567890" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+                </a>
+                <a href="https://vk.com/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="ВКонтакте">
+                </a>
+                <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Яндекс Карты">
+                </a>
+            </div>
+
+            <!-- Вторая разделительная черта -->
+            <div class="divider"></div>
+
+            <!-- Динамическая фотогалерея и раздел "О нас" -->
+            <div class="header-widget">
+                <!-- Фотогалерея -->
+                <div class="gallery">
+                    <div class="gallery-images">
+                        <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
+                        <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
+                        <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
+                    </div>
+                </div>
+
+                <!-- Раздел "О нас" -->
+                <div class="about-us">
+                    <div class="about-us-header" onclick="toggleAboutUs()">
+                        <h2>О нас</h2>
+                        <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
+                    </div>
+                    <div class="about-us-content">
+                        <p>
+                            Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
+                            Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
+                            Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
+                        </p>
+                        <p>
+                            Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.
+                            Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="working-hours">
-            <p>Часы работы: 10:00 - 12:00</p>
-            <p>График: Ежедневно</p>
-        </div>
-    </div>
-
-    <!-- Разделительная черта -->
-    <div class="divider"></div>
-
-    <!-- Соцсети -->
-    <div class="social-links">
-        <a href="tel:+71234567890" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
-        </a>
-        <a href="mailto:info@restaurant.com" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Почта">
-        </a>
-        <a href="https://t.me/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Телеграм">
-        </a>
-        <a href="https://wa.me/71234567890" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
-        </a>
-        <a href="https://vk.com/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="ВКонтакте">
-        </a>
-        <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
-            <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Яндекс Карты">
-        </a>
-    </div>
-
-    <!-- Вторая разделительная черта -->
-    <div class="divider"></div>
-
-    <!-- Динамическая фотогалерея и раздел "О нас" -->
-    <div class="header-widget">
-    <!-- Фотогалерея -->
-    <div class="gallery">
-        <div class="gallery-images">
-            <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
-            <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
-            <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
-        </div>
-    </div>
-
-    <!-- Раздел "О нас" -->
-    <div class="about-us">
-        <div class="about-us-header" onclick="toggleAboutUs()">
-            <h2>О нас</h2>
-            <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
-        </div>
-        <div class="about-us-content">
-            <p>
-                Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.
-                Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.
-                Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.
-            </p>
-            <p>
-                Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.
-                Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.
-            </p>
-        </div>
-    </div>
-</div>
-
-</div>
 
         <h2 id="main-title">Выберите категорию</h2>
-         <div class="category-grid" id="category-grid">
+        <div class="category-grid" id="category-grid">
             <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>
             <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>
             <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
@@ -776,7 +775,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Супы -->
     <div id="soups-screen" class="container">
@@ -1661,7 +1659,7 @@
         </form>
     </div>
 
-        <div class="mini-bar">
+    <div class="mini-bar">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <button onclick="showScreen('menu-screen')" id="home-button">
             <span class="material-symbols-outlined icon">home</span>
@@ -1718,7 +1716,7 @@
             document.getElementById('menu-screen').classList.add('active');
         }, 3000); // Задержка в 3 секунды (можно изменить)
 
-      function scrollToCategories() {
+        function scrollToCategories() {
             // Показываем главный экран
             showScreen('menu-screen');
 
@@ -1729,30 +1727,30 @@
             }
         }
 
-// Логика для фотогалереи
-let currentIndex = 0;
-const images = document.querySelectorAll('.gallery-images img');
-const totalImages = images.length;
+        // Логика для фотогалереи
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.gallery-images img');
+        const totalImages = images.length;
 
-function showImage(index) {
-    images.forEach((img, i) => {
-        img.classList.toggle('active', i === index);
-    });
-}
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
 
-function nextImage() {
-    currentIndex = (currentIndex + 1) % totalImages;
-    showImage(currentIndex);
-}
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % totalImages;
+            showImage(currentIndex);
+        }
 
-// Автоматическое переключение каждые 5 секунд
-setInterval(nextImage, 5000);
+        // Автоматическое переключение каждые 5 секунд
+        setInterval(nextImage, 5000);
 
-// Логика для блока "О нас"
-function toggleAboutUs() {
-    const aboutUs = document.querySelector('.about-us');
-    aboutUs.classList.toggle('expanded');
-}
+        // Логика для блока "О нас"
+        function toggleAboutUs() {
+            const aboutUs = document.querySelector('.about-us');
+            aboutUs.classList.toggle('expanded');
+        }
 
         // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
@@ -1817,10 +1815,6 @@ function toggleAboutUs() {
             updateCart();
             updateCartCounter();
         }
-
-
-
-
 
         // Функция для удаления товара из корзины
         function removeFromCart(index) {
