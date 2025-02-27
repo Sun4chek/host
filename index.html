@@ -1776,12 +1776,24 @@ function updateArrowIcons() {
     const arrows = document.querySelectorAll('.arrow-icon');
     const isDarkTheme = document.body.classList.contains('dark-theme');
     arrows.forEach(arrow => {
-        arrow.src = isDarkTheme ? 'images/arrow-dark.png' : 'images/arrow-light.png';
+        arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png'; // Поменяли местами
     });
 }
 
+function applyTheme() {
+    const body = document.body;
+    if (tg.colorScheme === 'dark') {
+        body.classList.add('dark-theme');
+    } else {
+        body.classList.remove('dark-theme');
+    }
+}
+
+// Инициализация при загрузке
 applyTheme();
 updateArrowIcons();
+
+// Реакция на смену темы
 tg.onEvent('themeChanged', () => {
     applyTheme();
     updateArrowIcons();
