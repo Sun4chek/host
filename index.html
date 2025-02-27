@@ -296,54 +296,27 @@
     cursor: pointer;
     padding: 5px;
     margin-bottom: 10px;
-    color: #2ea6ff; /* Цвет стрелки */
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease; /* Плавный эффект при наведении */
 }
 
 .back-button:hover {
-    color: #1e8fd1; /* Цвет при наведении */
+    opacity: 0.8; /* Эффект затемнения при наведении */
 }
 
-.custom-arrow {
-    display: inline-block;
-    width: 18px; /* Ширина стрелки */
-    height: 18px; /* Высота стрелки */
-    position: relative;
+.arrow-icon {
+    width: 24px; /* Настройте размер стрелки */
+    height: 24px; /* Настройте размер стрелки */
+    vertical-align: middle;
 }
 
-/* Верхняя линия стрелки */
-.custom-arrow::before {
-    content: '';
-    position: absolute;
-    width: 12px; /* Длина линии */
-    height: 2px; /* Толщина линии */
-    background-color: currentColor; /* Наследует цвет от .back-button */
-    top: 4px; /* Смещение вверх от центра */
-    left: 6px; /* Смещение вправо, чтобы наконечник был слева */
-    transform: rotate(45deg); /* Поворот для верхней части */
-    transform-origin: left; /* Точка поворота — левая часть линии */
+/* Светлая тема — используем arrow-light.png */
+body:not(.dark-theme) .arrow-icon {
+    content: url('images/arrow-light.png');
 }
 
-/* Нижняя линия стрелки */
-.custom-arrow::after {
-    content: '';
-    position: absolute;
-    width: 12px; /* Длина линии */
-    height: 2px; /* Толщина линии */
-    background-color: currentColor;
-    bottom: 4px; /* Смещение вниз от центра */
-    left: 6px; /* Смещение вправо, чтобы наконечник был слева */
-    transform: rotate(-45deg); /* Поворот для нижней части */
-    transform-origin: left; /* Точка поворота — левая часть линии */
-}
-
-/* Адаптация для темной темы */
-body.dark-theme .back-button {
-    color: #2ea6ff; /* Голубой цвет стрелки в темной теме */
-}
-
-body.dark-theme .back-button:hover {
-    color: #1e8fd1;
+/* Темная тема — используем arrow-dark.png */
+body.dark-theme .arrow-icon {
+    content: url('images/arrow-dark.png');
 }
 
         .menu-item {
@@ -838,7 +811,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="main-screen" class="container">
-       <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+      <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Основные блюда</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Сковорода куриная">
@@ -876,7 +851,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="soups-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Первые блюда</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Борщ">
@@ -914,7 +891,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="salads-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Салаты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Цезарь с курицей">
@@ -952,7 +931,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="seafood-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Морепродукты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Мидии в сливочном соусе">
@@ -990,7 +971,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="pasta-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Пасты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Паста со сливочным маслом">
@@ -1028,7 +1011,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="grill-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Мангал</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Шашлык из свинины">
@@ -1066,7 +1051,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="bar-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Бар</h2>
         <div class="category-grid">
             <div class="category-item" style="background-image: url('https://example.com/alcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>
@@ -1075,7 +1062,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="drinks-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Напитки</h2>
         <h3>Безалкогольные напитки</h3>
         <div class="menu-item">
@@ -1219,7 +1208,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="alcohol-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Алкоголь</h2>
         <h3>Коньяк</h3>
         <div class="menu-item">
@@ -1700,7 +1691,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="cart-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+        <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
@@ -1709,7 +1702,9 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="checkout-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
+       <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
         <h2>Оформление заказа</h2>
         <form id="checkout-form" class="checkout-form">
             <input type="text" id="last-name" placeholder="Фамилия" required>
@@ -1777,7 +1772,23 @@ body:not(.dark-theme) .mini-bar button .icon {
             document.getElementById('menu-screen').classList.add('active');
         }, 3000);
 
+// Функция для переключения стрелок в зависимости от темы
+function updateArrowIcons() {
+    const arrows = document.querySelectorAll('.arrow-icon');
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    arrows.forEach(arrow => {
+        arrow.src = isDarkTheme ? 'images/arrow-dark.png' : 'images/arrow-light.png';
+    });
+}
 
+// Применяем тему при загрузке
+updateArrowIcons();
+
+// Обновляем стрелки при смене темы через Telegram Web App
+tg.onEvent('themeChanged', () => {
+    applyTheme(); // Ваша существующая функция
+    updateArrowIcons(); // Обновляем стрелки
+});
 
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-images img');
