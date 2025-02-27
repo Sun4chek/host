@@ -292,12 +292,52 @@
             opacity: 1;
         }
 
-        .back-button {
-            display: block;
-            margin-bottom: 10px;
-            color: #2ea6ff;
-            cursor: pointer;
-        }
+      .back-button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 10px;
+    color: #2ea6ff; /* Цвет стрелки */
+    transition: color 0.2s ease;
+}
+
+.custom-arrow {
+    display: inline-block;
+    width: 14px; /* Ширина стрелки */
+    height: 14px; /* Высота стрелки */
+    position: relative;
+    transform: rotate(45deg); /* Поворот для создания стрелки влево */
+}
+.custom-arrow::before,
+.custom-arrow::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor; /* Наследует цвет от .back-button */
+    transition: background-color 0.2s ease;
+}
+
+.custom-arrow::before {
+    width: 100%;
+    height: 2px; /* Толщина линии */
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.custom-arrow::after {
+    width: 2px; /* Толщина линии */
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+body.dark-theme .back-button {
+    color: #2ea6ff; /* Голубой цвет стрелки в темной теме */
+}
+
+body.dark-theme .back-button:hover {
+    color: #1e8fd1;
+}
 
         .menu-item {
             display: flex;
@@ -791,7 +831,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="main-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+       <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Основные блюда</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Сковорода куриная">
@@ -829,7 +869,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="soups-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Первые блюда</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Борщ">
@@ -867,7 +907,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="salads-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Салаты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Цезарь с курицей">
@@ -905,7 +945,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="seafood-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Морепродукты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Мидии в сливочном соусе">
@@ -943,7 +983,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="pasta-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Пасты</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Паста со сливочным маслом">
@@ -981,7 +1021,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="grill-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Мангал</h2>
         <div class="menu-item">
             <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Шашлык из свинины">
@@ -1019,7 +1059,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="bar-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Бар</h2>
         <div class="category-grid">
             <div class="category-item" style="background-image: url('https://example.com/alcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>
@@ -1028,7 +1068,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="drinks-screen" class="container">
-        <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Напитки</h2>
         <h3>Безалкогольные напитки</h3>
         <div class="menu-item">
@@ -1172,7 +1212,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="alcohol-screen" class="container">
-        <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Алкоголь</h2>
         <h3>Коньяк</h3>
         <div class="menu-item">
@@ -1653,7 +1693,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="cart-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
@@ -1662,7 +1702,7 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <div id="checkout-screen" class="container">
-        <span class="back-button" onclick="showScreen('cart-screen')">⬅ Назад</span>
+        <span class="back-button" onclick="showScreen('menu-screen')"><span class="custom-arrow"></span></span>
         <h2>Оформление заказа</h2>
         <form id="checkout-form" class="checkout-form">
             <input type="text" id="last-name" placeholder="Фамилия" required>
