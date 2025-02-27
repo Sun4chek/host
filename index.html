@@ -53,6 +53,7 @@
             width: 100%;
             padding: 0;
             margin-bottom: 10px;
+            position: relative;
         }
 
       .logo {
@@ -77,20 +78,22 @@
             transform: scale(1.1);
         }
 
-        .working-hours {
-            text-align: right;
-            font-size: 14px;
-            color: var(--secondary-text-color);
-            margin: 0;
-            padding: 0;
-            align-self: flex-end; /* Располагаем справа */
-            margin-right: 10px; /* Отступ справа */
-        }
+      .working-hours {
+    position: absolute; /* Делаем часы работы абсолютно позиционированными */
+    top: 10px; /* Поднимаем выше, регулируйте значение по необходимости */
+    right: 10px; /* Сохраняем отступ справа */
+    text-align: right;
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    margin: 0;
+    padding: 0;
+    z-index: 1; /* Устанавливаем поверх логотипа */
+}
 
-        .working-hours p {
-            margin: 8px 0;
-            transition: color 0.3s ease;
-        }
+.working-hours p {
+    margin: 8px 0;
+    transition: color 0.3s ease;
+}
 
         .working-hours p:hover {
             color: #2ea6ff;
