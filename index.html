@@ -55,20 +55,23 @@
             margin-bottom: 10px;
         }
 
-        .logo {
-            width: 100%; /* Растягиваем на всю доступную ширину контейнера */
-            max-width: 400px; /* Ограничиваем максимальную ширину */
-            margin: 0 auto 10px; /* Центрируем с отступом снизу */
-            padding: 0;
-            box-sizing: border-box; /* Учитываем padding и border в общей ширине */
-        }
+      .logo {
+    width: 100%; /* Растягиваем на всю ширину контейнера */
+    max-width: 400px; /* Ограничиваем максимальную ширину */
+    margin: 0 auto 10px; /* Центрируем с отступом снизу */
+    padding: 0;
+    box-sizing: border-box; /* Учитываем padding и border в общей ширине */
+    overflow: hidden; /* Убираем возможный overflow */
+}
 
         .logo img {
-            width: 150%; /* Изображение занимает всю ширину контейнера .logo */
-            height: 200px;
-            max-width: 100%; /* Убеждаемся, что изображение не выходит за пределы контейнера */
-            transition: transform 0.3s ease;
-        }
+    width: 150%; /* Увеличиваем ширину изображения больше контейнера */
+    height: 200px;
+    max-width: none; /* Убираем ограничение максимальной ширины */
+    transform: translateX(-15%); /* Смещаем изображение влево за границы экрана */
+    object-fit: cover; /* Обеспечиваем, чтобы изображение корректно обрезалось */
+    transition: transform 0.3s ease;
+}
 
         .logo img:hover {
             transform: scale(1.1);
