@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-<!DOCTYPE html>
-<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -36,33 +34,33 @@
             --icon-filter: invert(1);
         }
 
+        /* Стили для header */
         #header {
             display: flex;
             flex-direction: column;
-            align-items: end;
-<!--            padding: 0px;-->
-<!--            padding-left: 0px;-->
-<!--            padding-right: 6px;-->
-<!--            padding-top: 0px;-->
+            align-items: center; /* Центрируем по горизонтали */
             margin-bottom: 10px;
             background-color: transparent;
             border-bottom: none;
             justify-content: center;
+            width: 100%; /* Убираем боковые отступы, растягиваем на всю ширину */
+            padding: 0; /* Убираем внутренние отступы */
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
-            padding: 0;
+            width: 100%; /* Растягиваем на всю ширину контейнера */
+            padding: 0; /* Убираем внутренние отступы */
             margin-bottom: 10px;
         }
 
         .logo {
             flex: 0 0 45%;
             max-width: 45%;
-            margin: 0;
+            margin: 0; /* Убираем отступы */
+            padding: 0; /* Убираем внутренние отступы */
         }
 
         .logo img {
@@ -79,7 +77,8 @@
             text-align: right;
             font-size: 14px;
             color: var(--secondary-text-color);
-            margin: 0;
+            margin: 0; /* Убираем отступы */
+            padding: 0; /* Убираем внутренние отступы */
         }
 
         .working-hours p {
@@ -103,8 +102,9 @@
             display: flex;
             justify-content: space-between;
             gap: 5px;
-            width: 100%;
+            width: 100%; /* Растягиваем на всю ширину */
             margin: 5px 0;
+            padding: 0; /* Убираем внутренние отступы */
         }
 
         .social-link {
@@ -112,6 +112,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 0; /* Убираем внутренние отступы */
         }
 
         .social-link img {
@@ -126,12 +127,106 @@
             opacity: 0.8;
         }
 
+        .header-widget {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%; /* Растягиваем на всю ширину */
+            max-width: 800px;
+            margin: 20px 0 0 0; /* Убираем боковые отступы, оставляем верхний */
+            padding: 0; /* Убираем внутренние отступы */
+        }
+
+        .gallery {
+            width: 100%; /* Растягиваем на всю ширину */
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 0; /* Убираем отступы */
+            padding: 0; /* Убираем внутренние отступы */
+        }
+
+        .gallery-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .gallery-images img.active {
+            display: block;
+        }
+
+        .about-us {
+            width: 100%; /* Растягиваем на всю ширину */
+            padding: 15px 0; /* Убираем боковые отступы, оставляем вертикальные */
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            background-color: var(--item-bg-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .about-us-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 0 15px; /* Добавляем внутренние отступы только по бокам для контента */
+        }
+
+        .about-us-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        .about-us-header .arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .about-us-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding: 0 15px; /* Устанавливаем боковые отступы только для контента */
+        }
+
+        .about-us-content p {
+            margin: 10px 0;
+            color: var(--secondary-text-color);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .about-us.expanded .about-us-content {
+            max-height: 500px;
+            padding: 10px 15px; /* В развернутом виде добавляем вертикальные отступы */
+        }
+
+        .about-us.expanded .arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Остальные стили */
         @media (max-width: 768px) {
             .social-link img {
                 width: 24px;
                 height: 24px;
             }
-
             .social-links {
                 gap: 5px;
             }
@@ -395,139 +490,6 @@
             cursor: pointer;
         }
 
-        .header-widget-container {
-            padding: 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background-color: var(--item-bg-color);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .header-widget {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .gallery {
-            width: 100%;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .gallery-images {
-            display: flex;
-            transition: transform 0.5s ease;
-            width: 100%;
-            height: 100%;
-        }
-
-        .gallery-images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-            border-radius: 10px;
-        }
-
-        .gallery-images img.active {
-            display: block;
-        }
-
-        .about-us {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: 2px solid var(--border-color);
-    background-color: var(--item-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-.about-us-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.about-us-header h2 {
-    margin: 0;
-    font-size: 20px;
-    color: var(--text-color);
-}
-
-        .about-us-header .arrow {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-}
-
-.about-us-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, padding 0.5s ease;
-    padding: 0 15px;
-}
-
-.about-us-content p {
-    margin: 10px 0;
-    color: var(--secondary-text-color);
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.about-us.expanded .about-us-content {
-    max-height: 500px;
-    padding: 10px;
-}
-
-.about-us.expanded .arrow {
-    transform: rotate(90deg);
-}
-
-        @media (max-width: 768px) {
-            .header-widget {
-                flex-direction: column;
-                gap: 20px;
-                width: 100%;
-                max-width: 100%;
-                margin: 0 auto;
-                padding: 0 5px;
-            }
-
-            .gallery {
-                width: 100%;
-                height: 200px;
-                margin: 0 auto;
-                padding: 0;
-            }
-
-            .about-us {
-<!--                width: 100%;-->
-<!--                margin: 0 auto;-->
-<!--                padding: 0 10px;-->
-            }
-
-            .about-us-header h2 {
-                font-size: 18px;
-            }
-
-            .about-us-content p {
-                font-size: 14px;
-                line-height: 1.5;
-                width: 100%;
-            }
-        }
-
         .quantity-controls {
             display: flex;
             align-items: center;
@@ -621,10 +583,92 @@
             background-color: #1e8fd1;
         }
 
+        /* Адаптация для мобильных устройств (до 480px) */
         @media (max-width: 480px) {
+            #header {
+                margin-bottom: 5px; /* Уменьшаем нижний отступ */
+            }
+
+            .header-top {
+                flex-direction: column; /* Столбец для логотипа и часов работы */
+                align-items: center;
+                margin-bottom: 5px;
+            }
+
+            .logo {
+                flex: 0 0 100%; /* Логотип занимает всю ширину */
+                max-width: 70%; /* Уменьшаем максимальную ширину логотипа */
+                margin-bottom: 10px; /* Добавляем отступ снизу */
+            }
+
+            .working-hours {
+                text-align: center; /* Центрируем текст */
+                font-size: 12px; /* Уменьшаем шрифт */
+            }
+
+            .working-hours p {
+                margin: 5px 0; /* Уменьшаем отступы */
+            }
+
+            .divider {
+                width: 90%; /* Увеличиваем ширину разделителя */
+            }
+
+            .social-links {
+                gap: 2px; /* Уменьшаем расстояние между иконками */
+                flex-wrap: wrap; /* Разрешаем перенос иконок */
+                justify-content: center; /* Центрируем иконки */
+            }
+
+            .social-link img {
+                width: 24px; /* Уменьшаем размер иконок */
+                height: 24px;
+            }
+
+            .header-widget {
+                gap: 15px; /* Уменьшаем расстояние между элементами */
+                margin-top: 10px; /* Уменьшаем верхний отступ */
+                max-width: 100%; /* Убираем ограничение ширины */
+            }
+
+            .gallery {
+                height: 150px; /* Уменьшаем высоту галереи */
+            }
+
+            .about-us {
+                margin-top: 15px; /* Уменьшаем верхний отступ */
+                padding: 10px 0; /* Уменьшаем вертикальные отступы */
+            }
+
+            .about-us-header {
+                padding: 0 10px; /* Уменьшаем боковые отступы */
+            }
+
+            .about-us-header h2 {
+                font-size: 18px; /* Уменьшаем размер заголовка */
+            }
+
+            .about-us-header .arrow {
+                font-size: 18px; /* Уменьшаем размер стрелки */
+            }
+
+            .about-us-content {
+                padding: 0 10px; /* Уменьшаем боковые отступы */
+            }
+
+            .about-us.expanded .about-us-content {
+                padding: 8px 10px; /* Уменьшаем вертикальные отступы в развернутом виде */
+            }
+
+            .about-us-content p {
+                font-size: 13px; /* Уменьшаем шрифт текста */
+                line-height: 1.5;
+            }
+
             .price-and-button {
                 gap: 5px;
             }
+
             .add-to-cart {
                 width: 100px;
                 padding: 8px;
