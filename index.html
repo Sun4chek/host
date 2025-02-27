@@ -296,28 +296,20 @@
     cursor: pointer;
     padding: 5px;
     margin-bottom: 10px;
-    transition: opacity 0.2s ease; /* Плавный эффект при наведении */
+    transition: opacity 0.2s ease;
 }
 
 .back-button:hover {
-    opacity: 0.8; /* Эффект затемнения при наведении */
+    opacity: 0.8;
 }
 
 .arrow-icon {
-    width: 24px; /* Настройте размер стрелки */
-    height: 24px; /* Настройте размер стрелки */
+    width: 24px; /* Настройте под размер ваших изображений */
+    height: 24px;
     vertical-align: middle;
 }
 
-/* Светлая тема — используем arrow-light.png */
-body:not(.dark-theme) .arrow-icon {
-    content: url('images/arrow-light.png');
-}
 
-/* Темная тема — используем arrow-dark.png */
-body.dark-theme .arrow-icon {
-    content: url('images/arrow-dark.png');
-}
 
         .menu-item {
             display: flex;
@@ -1745,40 +1737,12 @@ body:not(.dark-theme) .mini-bar button .icon {
     </div>
 
     <script>
-        let cart = [];
-        let tg = window.Telegram.WebApp;
+let cart = [];
+let tg = window.Telegram.WebApp;
 
-        tg.enableClosingConfirmation();
-        tg.disableVerticalSwipes();
-        tg.expand();
-
-        function applyTheme() {
-            const body = document.body;
-            if (tg.colorScheme === 'dark') {
-                body.classList.add('dark-theme');
-            } else {
-                body.classList.remove('dark-theme');
-            }
-        }
-
-        applyTheme();
-        tg.onEvent('themeChanged', applyTheme);
-
-        const loadingScreen = document.getElementById('loading-screen');
-        loadingScreen.style.display = 'flex';
-
-        setTimeout(() => {
-            loadingScreen.classList.add('hide');
-            document.getElementById('menu-screen').classList.add('active');
-        }, 3000);
-
-function updateArrowIcons() {
-    const arrows = document.querySelectorAll('.arrow-icon');
-    const isDarkTheme = document.body.classList.contains('dark-theme');
-    arrows.forEach(arrow => {
-        arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png'; // Поменяли местами
-    });
-}
+tg.enableClosingConfirmation();
+tg.disableVerticalSwipes();
+tg.expand();
 
 function applyTheme() {
     const body = document.body;
@@ -1787,17 +1751,32 @@ function applyTheme() {
     } else {
         body.classList.remove('dark-theme');
     }
+    updateArrowIcons(); // Обновляем стрелки сразу после применения темы
+}
+
+function updateArrowIcons() {
+    const arrows = document.querySelectorAll('.arrow-icon');
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    arrows.forEach(arrow => {
+        arrow.src = isDarkTheme ? 'images/arrow-dark.png' : 'images/arrow-light.png';
+    });
 }
 
 // Инициализация при загрузке
 applyTheme();
-updateArrowIcons();
 
 // Реакция на смену темы
-tg.onEvent('themeChanged', () => {
-    applyTheme();
-    updateArrowIcons();
-});
+tg.onEvent('themeChanged', applyTheme);
+
+const loadingScreen = document.getElementById('loading-screen');
+loadingScreen.style.display = 'flex';
+
+setTimeout(() => {
+    loadingScreen.classList.add('hide');
+    document.getElementById('menu-screen').classList.add('active');
+}, 3000);
+
+// Остальной код остаётся без изменений
 
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-images img');
