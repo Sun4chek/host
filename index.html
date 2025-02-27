@@ -373,7 +373,7 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-      .mini-bar {
+ .mini-bar {
     position: fixed;
     bottom: 20px;
     left: 10px;
@@ -394,7 +394,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--text-color); /* Цвет текста наследуется из темы */
     transition: color 0.2s ease, background-color 0.2s ease;
     display: flex;
     flex-direction: column;
@@ -407,7 +407,7 @@
 }
 
 .mini-bar button:hover {
-    color: #2ea6ff;
+    color: #2ea6ff; /* При наведении голубой цвет */
     background-color: rgba(46, 166, 255, 0.1);
 }
 
@@ -420,21 +420,20 @@
     width: 24px;
     height: 24px;
     transition: transform 0.2s ease;
+    color: var(--text-color); /* Иконки наследуют цвет текста из темы */
 }
 
-/* Иконки в светлой теме - черные */
+/* В светлой теме иконки черные */
 body:not(.dark-theme) .mini-bar button .icon {
-    filter: invert(0); /* Черные иконки */
+    color: #333; /* Черный цвет для иконок в светлой теме */
 }
 
-/* Иконки в темной теме - белые */
-body.dark-theme .mini-bar button .icon {
-    filter: invert(1); /* Белые иконки */
-}
+/* В темной теме иконки белые изначально благодаря --text-color (#ffffff) */
+/* Здесь ничего дополнительно не нужно, так как цвет уже унаследован */
 
-/* Иконки в активной кнопке для обеих тем - белые */
+/* Иконки и текст в активной кнопке - белые для обеих тем */
 .mini-bar button.active .icon {
-    filter: invert(1); /* Белые иконки при активации */
+    color: #ffffff; /* Белый цвет иконок при активации */
 }
 
 .mini-bar button:hover .icon {
