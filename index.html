@@ -307,61 +307,34 @@
 
 .custom-arrow {
     display: inline-block;
-    width: 14px; /* Ширина стрелки */
-    height: 10px; /* Высота стрелки */
+    width: 16px; /* Ширина стрелки */
+    height: 16px; /* Высота стрелки */
     position: relative;
 }
 
-/* Горизонтальная линия стрелки */
+/* Верхняя линия стрелки (часть знака "<") */
 .custom-arrow::before {
     content: '';
     position: absolute;
-    width: 100%;
+    width: 16px; /* Длина линии */
     height: 2px; /* Толщина линии */
     background-color: currentColor; /* Наследует цвет от .back-button */
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    transition: background-color 0.2s ease;
-}
-
-/* Наконечник стрелки (верхняя часть) */
-.custom-arrow::after {
-    content: '';
-    position: absolute;
-    width: 6px; /* Длина наконечника */
-    height: 2px; /* Толщина линии */
-    background-color: currentColor;
     top: 2px; /* Смещение вверх */
     left: 0;
-    transform: rotate(45deg); /* Поворот для верхнего угла */
+    transform: rotate(45deg); /* Поворот для верхней части */
     transform-origin: left;
 }
 
-/* Добавляем нижнюю часть наконечника */
-.custom-arrow {
-    /* Для нижней части используем дополнительный псевдоэлемент через ::before и ::after */
-}
-
-/* Добавим нижнюю часть наконечника через дополнительный стиль */
-.custom-arrow {
-    position: relative;
-}
-
-.custom-arrow::before {
-    /* Горизонтальная линия уже определена выше */
-}
-
+/* Нижняя линия стрелки (часть знака "<") */
 .custom-arrow::after {
-    /* Переопределяем ::after для нижней части наконечника */
     content: '';
     position: absolute;
-    width: 6px; /* Длина наконечника */
+    width: 16px; /* Длина линии */
     height: 2px; /* Толщина линии */
     background-color: currentColor;
     bottom: 2px; /* Смещение вниз */
     left: 0;
-    transform: rotate(-45deg); /* Поворот для нижнего угла */
+    transform: rotate(-45deg); /* Поворот для нижней части */
     transform-origin: left;
 }
 
