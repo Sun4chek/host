@@ -373,89 +373,95 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        .mini-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            right: 10px;
-            background-color: var(--item-bg-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
-        }
+      .mini-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+    background-color: var(--item-bg-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
 
-        .mini-bar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: color 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 10px;
-            flex: 1;
-        }
+.mini-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;
+}
 
-        .mini-bar button:hover {
-            color: #2ea6ff;
-            background-color: rgba(46, 166, 255, 0.1);
-        }
+.mini-bar button:hover {
+    color: #2ea6ff;
+    background-color: rgba(46, 166, 255, 0.1);
+}
 
-        .mini-bar button.active {
-            background-color: rgba(46, 166, 255, 0.2);
-            color: #2ea6ff;
-        }
+.mini-bar button.active {
+    background-color: #2ea6ff; /* Синий фон при активации */
+    color: white; /* Белый текст при активации */
+}
 
-        .mini-bar button .icon {
-            width: 24px;
-            height: 24px;
-            transition: filter 0.2s ease, transform 0.2s ease;
-        }
+.mini-bar button .icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
 
-        body:not(.dark-theme) .mini-bar button .icon {
-            filter: invert(0);
-        }
+/* Иконки в светлой теме - черные */
+body:not(.dark-theme) .mini-bar button .icon {
+    filter: invert(0); /* Черные иконки */
+}
 
-        body.dark-theme .mini-bar button .icon {
-            filter: invert(1);
-        }
+/* Иконки в темной теме - белые */
+body.dark-theme .mini-bar button .icon {
+    filter: invert(1); /* Белые иконки */
+}
 
-        body.dark-theme .mini-bar button.active .icon {
-            filter: invert(49%) sepia(99%) saturate(1352%) hue-rotate(179deg) brightness(95%) contrast(101%);
-        }
+/* Иконки в активной кнопке для обеих тем - белые */
+.mini-bar button.active .icon {
+    filter: invert(1); /* Белые иконки при активации */
+}
 
-        .mini-bar button:hover .icon {
-            transform: scale(1.1);
-        }
+.mini-bar button:hover .icon {
+    transform: scale(1.1);
+}
 
-        .mini-bar button.cart-button {
-            position: relative;
-        }
+.mini-bar button.cart-button {
+    position: relative;
+}
 
-        .mini-bar button.cart-button .cart-counter {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #2ea6ff;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
+.mini-bar button.cart-button .cart-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #2ea6ff;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
 
-        .mini-bar button.cart-button.animate {
-            animation: bounce 0.5s ease;
-        }
+.mini-bar button.cart-button.animate {
+    animation: bounce 0.5s ease;
+}
+
+
+
 
         .custom-alert {
             position: fixed;
@@ -1725,13 +1731,7 @@
             document.getElementById('menu-screen').classList.add('active');
         }, 3000);
 
-        function scrollToCategories() {
-            showScreen('menu-screen');
-            const categoryGrid = document.getElementById('category-grid');
-            if (categoryGrid) {
-                categoryGrid.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+
 
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-images img');
@@ -1817,21 +1817,85 @@
             cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
         }
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+        window.addEventListener('scroll', () => {
+    const categoryGrid = document.getElementById('category-grid');
+    const menuScreen = document.getElementById('menu-screen');
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
 
-            document.querySelectorAll('.mini-bar button').forEach(button => button.classList.remove('active'));
+    if (menuScreen.classList.contains('active')) {
+        const rect = categoryGrid.getBoundingClientRect();
+        const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
 
-            if (screenId === 'menu-screen') {
-                document.getElementById('home-button').classList.add('active');
-            } else if (screenId === 'cart-screen') {
-                document.getElementById('cart-button').classList.add('active');
-                updateCart();
-            } else {
-                document.getElementById('menu-button').classList.add('active');
-            }
+        if (isCategoriesVisible) {
+            homeButton.classList.remove('active');
+            menuButton.classList.add('active');
+            cartButton.classList.remove('active');
+        } else {
+            homeButton.classList.add('active');
+            menuButton.classList.remove('active');
+            cartButton.classList.remove('active');
         }
+    }
+});
+
+     // Обновленная функция showScreen
+function showScreen(screenId) {
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
+
+    // Сбрасываем все активные состояния
+    homeButton.classList.remove('active');
+    menuButton.classList.remove('active');
+    cartButton.classList.remove('active');
+
+    // Устанавливаем активное состояние в зависимости от экрана
+    if (screenId === 'menu-screen') {
+        homeButton.classList.add('active');
+    } else if (screenId === 'cart-screen') {
+        cartButton.classList.add('active');
+        updateCart();
+    } else {
+        menuButton.classList.add('active');
+    }
+
+    // Если переходим на menu-screen, проверяем положение категорий
+    if (screenId === 'menu-screen') {
+        const categoryGrid = document.getElementById('category-grid');
+        const rect = categoryGrid.getBoundingClientRect();
+        const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
+        if (isCategoriesVisible) {
+            homeButton.classList.remove('active');
+            menuButton.classList.add('active');
+        }
+    }
+}
+
+// Обновленная функция scrollToCategories
+function scrollToCategories() {
+    showScreen('menu-screen');
+    const categoryGrid = document.getElementById('category-grid');
+    if (categoryGrid) {
+        categoryGrid.scrollIntoView({ behavior: 'smooth' });
+        // Принудительно активируем кнопку меню после прокрутки
+        setTimeout(() => {
+            document.getElementById('home-button').classList.remove('active');
+            document.getElementById('menu-button').classList.add('active');
+            document.getElementById('cart-button').classList.remove('active');
+        }, 300); // Небольшая задержка для завершения анимации прокрутки
+    }
+}
+
+
+
+
+
+
 
         function toggleRoomNumber() {
             const deliveryMethod = document.getElementById('delivery-method');
