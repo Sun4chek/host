@@ -292,7 +292,7 @@
             opacity: 1;
         }
 
-      .back-button {
+.back-button {
     display: inline-block;
     cursor: pointer;
     padding: 5px;
@@ -301,36 +301,71 @@
     transition: color 0.2s ease;
 }
 
+.back-button:hover {
+    color: #1e8fd1; /* Цвет при наведении */
+}
+
 .custom-arrow {
     display: inline-block;
     width: 14px; /* Ширина стрелки */
-    height: 14px; /* Высота стрелки */
+    height: 10px; /* Высота стрелки */
     position: relative;
-    transform: rotate(45deg); /* Поворот для создания стрелки влево */
-}
-.custom-arrow::before,
-.custom-arrow::after {
-    content: '';
-    position: absolute;
-    background-color: currentColor; /* Наследует цвет от .back-button */
-    transition: background-color 0.2s ease;
 }
 
+/* Горизонтальная линия стрелки */
 .custom-arrow::before {
+    content: '';
+    position: absolute;
     width: 100%;
     height: 2px; /* Толщина линии */
+    background-color: currentColor; /* Наследует цвет от .back-button */
     top: 50%;
     left: 0;
     transform: translateY(-50%);
+    transition: background-color 0.2s ease;
+}
+
+/* Наконечник стрелки (верхняя часть) */
+.custom-arrow::after {
+    content: '';
+    position: absolute;
+    width: 6px; /* Длина наконечника */
+    height: 2px; /* Толщина линии */
+    background-color: currentColor;
+    top: 2px; /* Смещение вверх */
+    left: 0;
+    transform: rotate(45deg); /* Поворот для верхнего угла */
+    transform-origin: left;
+}
+
+/* Добавляем нижнюю часть наконечника */
+.custom-arrow {
+    /* Для нижней части используем дополнительный псевдоэлемент через ::before и ::after */
+}
+
+/* Добавим нижнюю часть наконечника через дополнительный стиль */
+.custom-arrow {
+    position: relative;
+}
+
+.custom-arrow::before {
+    /* Горизонтальная линия уже определена выше */
 }
 
 .custom-arrow::after {
-    width: 2px; /* Толщина линии */
-    height: 100%;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    /* Переопределяем ::after для нижней части наконечника */
+    content: '';
+    position: absolute;
+    width: 6px; /* Длина наконечника */
+    height: 2px; /* Толщина линии */
+    background-color: currentColor;
+    bottom: 2px; /* Смещение вниз */
+    left: 0;
+    transform: rotate(-45deg); /* Поворот для нижнего угла */
+    transform-origin: left;
 }
+
+/* Адаптация для темной темы */
 body.dark-theme .back-button {
     color: #2ea6ff; /* Голубой цвет стрелки в темной теме */
 }
@@ -338,6 +373,8 @@ body.dark-theme .back-button {
 body.dark-theme .back-button:hover {
     color: #1e8fd1;
 }
+
+
 
         .menu-item {
             display: flex;
