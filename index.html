@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family:"Roboto", sans-serif;
+            font-family:"Montserrat", sans-serif;;
             padding: 20px;
             margin: 0;
             padding-bottom: 100px; /* Отступ для мини-бара */
@@ -56,14 +56,18 @@
             position: relative;
         }
 
-      .logo {
+
+.logo {
     width: 100%; /* Растягиваем на всю ширину контейнера */
     max-width: 400px; /* Ограничиваем максимальную ширину */
-    margin: 0 auto 10px; /* Центрируем с отступом снизу */
+    margin: -50px auto 10px; /* Сдвигаем вверх на 50px, сохраняем отступ снизу */
     padding: 0;
     box-sizing: border-box; /* Учитываем padding и border в общей ширине */
     overflow: hidden; /* Убираем возможный overflow */
 }
+
+
+
 
         .logo img {
     width: 110%; /* Увеличиваем ширину изображения больше контейнера */
@@ -607,8 +611,10 @@
             .logo {
                 width: 90%; /* Увеличиваем для мобильных */
                 max-width: 500px;
+                margin: -30px auto 8px; /* Меньший сдвиг вверх на мобильных, например, 30px */
                 margin-bottom: 8px;
             }
+           
 
             .working-hours {
                 font-size: 12px;
