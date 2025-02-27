@@ -291,7 +291,6 @@
             display: block;
             opacity: 1;
         }
-
 .back-button {
     display: inline-block;
     cursor: pointer;
@@ -307,35 +306,35 @@
 
 .custom-arrow {
     display: inline-block;
-    width: 16px; /* Ширина стрелки */
-    height: 16px; /* Высота стрелки */
+    width: 18px; /* Ширина стрелки */
+    height: 18px; /* Высота стрелки */
     position: relative;
 }
 
-/* Верхняя линия стрелки (часть знака "<") */
+/* Верхняя линия стрелки */
 .custom-arrow::before {
     content: '';
     position: absolute;
-    width: 16px; /* Длина линии */
+    width: 12px; /* Длина линии */
     height: 2px; /* Толщина линии */
     background-color: currentColor; /* Наследует цвет от .back-button */
-    top: 2px; /* Смещение вверх */
-    left: 0;
+    top: 4px; /* Смещение вверх от центра */
+    left: 6px; /* Смещение вправо, чтобы наконечник был слева */
     transform: rotate(45deg); /* Поворот для верхней части */
-    transform-origin: left;
+    transform-origin: left; /* Точка поворота — левая часть линии */
 }
 
-/* Нижняя линия стрелки (часть знака "<") */
+/* Нижняя линия стрелки */
 .custom-arrow::after {
     content: '';
     position: absolute;
-    width: 16px; /* Длина линии */
+    width: 12px; /* Длина линии */
     height: 2px; /* Толщина линии */
     background-color: currentColor;
-    bottom: 2px; /* Смещение вниз */
-    left: 0;
+    bottom: 4px; /* Смещение вниз от центра */
+    left: 6px; /* Смещение вправо, чтобы наконечник был слева */
     transform: rotate(-45deg); /* Поворот для нижней части */
-    transform-origin: left;
+    transform-origin: left; /* Точка поворота — левая часть линии */
 }
 
 /* Адаптация для темной темы */
@@ -346,8 +345,6 @@ body.dark-theme .back-button {
 body.dark-theme .back-button:hover {
     color: #1e8fd1;
 }
-
-
 
         .menu-item {
             display: flex;
