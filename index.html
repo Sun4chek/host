@@ -6,14 +6,12 @@
     <title>Меню ресторана</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Основные стили */
         :root {
             --background-color: #f8f8f8;
             --text-color: #333;
             --secondary-text-color: #666;
             --item-bg-color: #ffffff;
             --border-color: #ddd;
-            --icon-filter: invert(0); /* Чёрные иконки в светлой теме */
         }
 
         body {
@@ -31,10 +29,8 @@
             --secondary-text-color: #aaa;
             --item-bg-color: #213040;
             --border-color: #444;
-            --icon-filter: invert(1); /* Белые иконки в тёмной теме */
         }
 
-        /* Стили для header */
         #header {
             display: flex;
             flex-direction: column;
@@ -131,8 +127,15 @@
         .social-link img {
             width: 32px;
             height: 32px;
-            filter: var(--icon-filter);
             transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        body:not(.dark-theme) .social-link img {
+            filter: invert(0);
+        }
+
+        body.dark-theme .social-link img {
+            filter: invert(1);
         }
 
         .social-link:hover img {
@@ -234,7 +237,6 @@
             transform: rotate(90deg);
         }
 
-        /* Остальные стили */
         @media (max-width: 768px) {
             .social-link img {
                 width: 24px;
@@ -417,22 +419,19 @@
         .mini-bar button .icon {
             width: 24px;
             height: 24px;
-            transition: transform 0.2s ease, filter 0.2s ease;
+            transition: filter 0.2s ease, transform 0.2s ease;
         }
 
-        /* Иконки в светлой теме */
-        .mini-bar button .icon {
-            filter: invert(0); /* Чёрные иконки */
+        body:not(.dark-theme) .mini-bar button .icon {
+            filter: invert(0);
         }
 
-        /* Иконки в тёмной теме */
         body.dark-theme .mini-bar button .icon {
-            filter: invert(1); /* Белые иконки */
+            filter: invert(1);
         }
 
-        /* Активные иконки в тёмной теме */
         body.dark-theme .mini-bar button.active .icon {
-            filter: invert(49%) sepia(99%) saturate(1352%) hue-rotate(179deg) brightness(95%) contrast(101%); /* Синий (#2ea6ff) */
+            filter: invert(49%) sepia(99%) saturate(1352%) hue-rotate(179deg) brightness(95%) contrast(101%);
         }
 
         .mini-bar button:hover .icon {
@@ -606,7 +605,6 @@
             background-color: #1e8fd1;
         }
 
-        /* Адаптация для мобильных устройств (до 480px) */
         @media (max-width: 480px) {
             #header {
                 margin-bottom: 5px;
@@ -701,21 +699,16 @@
     </style>
 </head>
 <body>
-    <!-- Экран загрузки -->
     <div id="loading-screen">
         <img src="https://i.ibb.co/TfR8BgV/first-screen.png" alt="Загру">
     </div>
 
-    <!-- Кастомный алерт -->
     <div id="custom-alert" class="custom-alert">
         Товар добавлен в корзину!
     </div>
 
-    <!-- Главный экран -->
     <div id="menu-screen" class="container active">
-        <!-- Заголовок -->
         <div id="header">
-            <!-- Логотип и часы работы -->
             <div class="header-top">
                 <div class="logo">
                     <img src="images/logo1.png" alt="Логотип ресторана">
@@ -726,10 +719,8 @@
                 </div>
             </div>
 
-            <!-- Разделительная черта -->
             <div class="divider"></div>
 
-            <!-- Соцсети -->
             <div class="social-links">
                 <a href="tel:+71234567890" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
@@ -751,12 +742,9 @@
                 </a>
             </div>
 
-            <!-- Вторая разделительная черта -->
             <div class="divider"></div>
 
-            <!-- Динамическая фотогалерея и раздел "О нас" -->
             <div class="header-widget">
-                <!-- Фотогалерея -->
                 <div class="gallery">
                     <div class="gallery-images">
                         <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
@@ -765,7 +753,6 @@
                     </div>
                 </div>
 
-                <!-- Раздел "О нас" -->
                 <div class="about-us">
                     <div class="about-us-header" onclick="toggleAboutUs()">
                         <h2>О нас</h2>
@@ -798,7 +785,6 @@
         </div>
     </div>
 
-    <!-- Основные блюда -->
     <div id="main-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Основные блюда</h2>
@@ -837,7 +823,6 @@
         </div>
     </div>
 
-    <!-- Супы -->
     <div id="soups-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Первые блюда</h2>
@@ -876,7 +861,6 @@
         </div>
     </div>
 
-    <!-- Салаты -->
     <div id="salads-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Салаты</h2>
@@ -915,7 +899,6 @@
         </div>
     </div>
 
-    <!-- Морепродукты -->
     <div id="seafood-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Морепродукты</h2>
@@ -954,7 +937,6 @@
         </div>
     </div>
 
-    <!-- Пасты -->
     <div id="pasta-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Пасты</h2>
@@ -993,7 +975,6 @@
         </div>
     </div>
 
-    <!-- Мангал -->
     <div id="grill-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Мангал</h2>
@@ -1032,7 +1013,6 @@
         </div>
     </div>
 
-    <!-- Бар -->
     <div id="bar-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Бар</h2>
@@ -1042,12 +1022,9 @@
         </div>
     </div>
 
-    <!-- Напитки -->
     <div id="drinks-screen" class="container">
         <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
         <h2>Напитки</h2>
-
-        <!-- Безалкогольные напитки -->
         <h3>Безалкогольные напитки</h3>
         <div class="menu-item">
             <img src="https://example.com/borjomi.jpg" alt="Borjomi">
@@ -1107,7 +1084,6 @@
             </div>
         </div>
 
-        <!-- Чай -->
         <h3>Чай</h3>
         <div class="menu-item">
             <img src="https://example.com/black-tea.jpg" alt="Чай черный/зеленый">
@@ -1132,7 +1108,6 @@
             </div>
         </div>
 
-        <!-- Кофе -->
         <h3>Кофе</h3>
         <div class="menu-item">
             <img src="https://example.com/espresso.jpg" alt="Эспрессо">
@@ -1191,12 +1166,9 @@
         </div>
     </div>
 
-    <!-- Алкоголь -->
     <div id="alcohol-screen" class="container">
         <span class="back-button" onclick="showScreen('bar-screen')">⬅ Назад</span>
         <h2>Алкоголь</h2>
-
-        <!-- Коньяк -->
         <h3>Коньяк</h3>
         <div class="menu-item">
             <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
@@ -1223,7 +1195,6 @@
             </div>
         </div>
 
-        <!-- Бренди -->
         <h3>Бренди</h3>
         <div class="menu-item">
             <img src="https://example.com/koktebel-5.jpg" alt="Коктебель резерв 5 лет">
@@ -1286,7 +1257,6 @@
             </div>
         </div>
 
-        <!-- Виски -->
         <h3>Виски</h3>
         <div class="menu-item">
             <img src="https://example.com/jameson.jpg" alt="Jameson">
@@ -1325,7 +1295,6 @@
             </div>
         </div>
 
-        <!-- Ром -->
         <h3>Ром</h3>
         <div class="menu-item">
             <img src="https://example.com/havana-club.jpg" alt="Havana Club">
@@ -1352,7 +1321,6 @@
             </div>
         </div>
 
-        <!-- Джин -->
         <h3>Джин</h3>
         <div class="menu-item">
             <img src="https://example.com/beefeater.jpg" alt="Beefeater">
@@ -1367,7 +1335,6 @@
             </div>
         </div>
 
-        <!-- Текила -->
         <h3>Текила</h3>
         <div class="menu-item">
             <img src="https://example.com/olmeca.jpg" alt="Olmeca Blanco">
@@ -1382,7 +1349,6 @@
             </div>
         </div>
 
-        <!-- Водка -->
         <h3>Водка</h3>
         <div class="menu-item">
             <img src="https://example.com/organic-vodka.jpg" alt="Organic Vodka">
@@ -1445,7 +1411,6 @@
             </div>
         </div>
 
-        <!-- Игристое вино и шампанское -->
         <h3>Игристое вино и шампанское</h3>
         <div class="menu-item">
             <img src="https://example.com/prosecco-chinzano.jpg" alt="Проссеко Чинзано">
@@ -1525,7 +1490,6 @@
             </div>
         </div>
 
-        <!-- Вина Esse -->
         <h3>Вина Esse</h3>
         <div class="menu-item">
             <img src="https://example.com/esse-sovinon-blanc.jpg" alt="Совиньен Блан">
@@ -1574,7 +1538,6 @@
             </div>
         </div>
 
-        <!-- Вина ALMA VALLEY -->
         <h3>Вина ALMA VALLEY</h3>
         <div class="menu-item">
             <img src="https://example.com/alma-sovinon.jpg" alt="Совиньон белое сухое">
@@ -1619,7 +1582,7 @@
                 <p>150 г / Бутылка</p>
             </div>
             <div class="price-and-button">
-                <div class="price">360₽ / 1800₽</div>
+                               <div class="price">360₽ / 1800₽</div>
                 <button class="add-to-cart" onclick='addToCart(`Каберне "Совиньон" красное сухое (150 г)`, 360, this)'>150 г</button>
                 <button class="add-to-cart" onclick='addToCart(`Каберне "Совиньон" красное сухое (бутылка)`, 1800, this)'>Бутылка</button>
             </div>
@@ -1637,7 +1600,6 @@
             </div>
         </div>
 
-        <!-- Пиво бутылочное -->
         <h3>Пиво бутылочное</h3>
         <div class="menu-item">
             <img src="https://example.com/krymskaya-riviera.jpg" alt="Крымская Ривьера светлое">
@@ -1685,7 +1647,6 @@
         </div>
     </div>
 
-    <!-- Корзина -->
     <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">⬅ Назад</span>
         <h2>Корзина</h2>
@@ -1695,7 +1656,6 @@
         <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
     </div>
 
-    <!-- Раздел оформления заказа -->
     <div id="checkout-screen" class="container">
         <span class="back-button" onclick="showScreen('cart-screen')">⬅ Назад</span>
         <h2>Оформление заказа</h2>
@@ -1739,7 +1699,6 @@
 
     <script>
         let cart = [];
-
         let tg = window.Telegram.WebApp;
 
         tg.enableClosingConfirmation();
