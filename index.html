@@ -769,7 +769,7 @@
                 <div class="about-us">
                     <div class="about-us-header" onclick="toggleAboutUs()">
                         <h2>О нас</h2>
-                        <span class="arrow">&#9654;</span> <!-- Стрелочка вправо (по умолчанию) -->
+                        <span class="arrow">▶</span>
                     </div>
                     <div class="about-us-content">
                         <p>
@@ -1738,17 +1738,14 @@
     </div>
 
     <script>
-        let cart = []; // Массив для хранения товаров в корзине
+        let cart = [];
 
-        // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
 
-        // Развернуть приложение на весь экран
         tg.enableClosingConfirmation();
         tg.disableVerticalSwipes();
         tg.expand();
 
-        // Применение темы
         function applyTheme() {
             const body = document.body;
             if (tg.colorScheme === 'dark') {
@@ -1758,37 +1755,25 @@
             }
         }
 
-        // Применяем тему при загрузке
         applyTheme();
-
-        // Обработчик смены темы
         tg.onEvent('themeChanged', applyTheme);
 
-        // Показываем экран загрузки при запуске приложения
         const loadingScreen = document.getElementById('loading-screen');
         loadingScreen.style.display = 'flex';
 
-        // Имитация загрузки (можно заменить на реальную загрузку данных)
         setTimeout(() => {
-            // Скрываем экран загрузки
             loadingScreen.classList.add('hide');
-
-            // Показываем основной контент
             document.getElementById('menu-screen').classList.add('active');
-        }, 3000); // Задержка в 3 секунды (можно изменить)
+        }, 3000);
 
         function scrollToCategories() {
-            // Показываем главный экран
             showScreen('menu-screen');
-
-            // Прокручиваем до сетки категорий
             const categoryGrid = document.getElementById('category-grid');
             if (categoryGrid) {
                 categoryGrid.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Логика для фотогалереи
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-images img');
         const totalImages = images.length;
@@ -1804,45 +1789,38 @@
             showImage(currentIndex);
         }
 
-        // Автоматическое переключение каждые 5 секунд
         setInterval(nextImage, 5000);
 
-        // Логика для блока "О нас"
         function toggleAboutUs() {
             const aboutUs = document.querySelector('.about-us');
             aboutUs.classList.toggle('expanded');
         }
 
-        // Функция для добавления товара в корзину
         function addToCart(name, price, button) {
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
-                existingItem.quantity += 1; // Увеличиваем количество, если товар уже в корзине
+                existingItem.quantity += 1;
             } else {
-                cart.push({ name, price, quantity: 1 }); // Добавляем новый товар
+                cart.push({ name, price, quantity: 1 });
             }
             updateCart();
             updateCartCounter();
             button.classList.add('clicked');
             setTimeout(() => button.classList.remove('clicked'), 300);
 
-            // Анимация кнопки корзины
             const cartButton = document.querySelector('.mini-bar .cart-button');
             cartButton.classList.add('animate');
             setTimeout(() => cartButton.classList.remove('animate'), 500);
 
-            // Показываем кастомный алерт
             showCustomAlert('Товар добавлен в корзину!');
         }
 
-        // Функция для обновления отображения корзины
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             const totalPrice = document.getElementById('total-price');
-            cartItems.innerHTML = ''; // Очищаем содержимое корзины
+            cartItems.innerHTML = '';
             let total = 0;
 
-            // Добавляем каждый товар в корзину
             cart.forEach((item, index) => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'menu-item';
@@ -1862,60 +1840,40 @@
                 total += item.price * item.quantity;
             });
 
-            // Обновляем итоговую сумму
             totalPrice.textContent = total;
         }
 
-        // Функция для изменения количества товара
         function changeQuantity(index, delta) {
             const item = cart[index];
             item.quantity += delta;
             if (item.quantity <= 0) {
-                cart.splice(index, 1); // Удаляем товар, если количество стало 0
+                cart.splice(index, 1);
             }
             updateCart();
             updateCartCounter();
         }
 
-        // Функция для удаления товара из корзины
-        function removeFromCart(index) {
-            cart.splice(index, 1); // Удаляем товар из массива
-            updateCart(); // Обновляем отображение корзины
-            updateCartCounter(); // Обновляем счетчик
-        }
-
-        // Функция для обновления счетчика товаров в корзине
         function updateCartCounter() {
             const cartCounter = document.getElementById('cart-counter');
-            cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Суммируем количество всех товаров
+            cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
         }
 
         function showScreen(screenId) {
-            // Скрываем все экраны
             document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-
-            // Показываем выбранный экран
             document.getElementById(screenId).classList.add('active');
 
-            // Убираем выделение со всех кнопок мультибара
             document.querySelectorAll('.mini-bar button').forEach(button => button.classList.remove('active'));
 
-            // Выделяем активную кнопку
             if (screenId === 'menu-screen') {
                 document.getElementById('home-button').classList.add('active');
             } else if (screenId === 'cart-screen') {
                 document.getElementById('cart-button').classList.add('active');
+                updateCart();
             } else {
                 document.getElementById('menu-button').classList.add('active');
             }
-
-            // Обновляем корзину при открытии
-            if (screenId === 'cart-screen') {
-                updateCart();
-            }
         }
 
-        // Функция для отображения/скрытия поля ввода номера комнаты
         function toggleRoomNumber() {
             const deliveryMethod = document.getElementById('delivery-method');
             const roomNumberContainer = document.getElementById('room-number-container');
@@ -1926,26 +1884,19 @@
             }
         }
 
-        // Функция для показа кастомного алерта
         function showCustomAlert(message) {
             const alert = document.getElementById('custom-alert');
             alert.textContent = message;
             alert.classList.add('show');
-
-            // Скрываем алерт через 1.5 секунды
-            setTimeout(() => {
-                alert.classList.remove('show');
-            }, 1500);
+            setTimeout(() => alert.classList.remove('show'), 1500);
         }
 
-        // Функция для очистки корзины
         function clearCart() {
             cart = [];
             updateCart();
             updateCartCounter();
         }
 
-        // Функция для оформления заказа
         function submitOrder(event) {
             event.preventDefault();
 
@@ -1972,7 +1923,6 @@
                 total: document.getElementById('total-price').textContent
             };
 
-            // Отправляем данные в Telegram-бот
             if (tg && tg.sendData) {
                 tg.sendData(JSON.stringify(orderData));
             }
@@ -1982,7 +1932,6 @@
             showScreen('menu-screen');
         }
 
-        // Назначаем обработчик события submit на форму
         document.getElementById('checkout-form').addEventListener('submit', submitOrder);
     </script>
 </body>
