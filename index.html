@@ -1772,23 +1772,7 @@ body:not(.dark-theme) .mini-bar button .icon {
             document.getElementById('menu-screen').classList.add('active');
         }, 3000);
 
-// Функция для переключения стрелок в зависимости от темы
-function updateArrowIcons() {
-    const arrows = document.querySelectorAll('.arrow-icon');
-    const isDarkTheme = document.body.classList.contains('dark-theme');
-    arrows.forEach(arrow => {
-        arrow.src = isDarkTheme ? 'images/arrow-dark.png' : 'images/arrow-light.png';
-    });
-}
 
-// Применяем тему при загрузке
-updateArrowIcons();
-
-// Обновляем стрелки при смене темы через Telegram Web App
-tg.onEvent('themeChanged', () => {
-    applyTheme(); // Ваша существующая функция
-    updateArrowIcons(); // Обновляем стрелки
-});
 
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-images img');
