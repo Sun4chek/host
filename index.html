@@ -13,14 +13,14 @@
             --secondary-text-color: #666;
             --item-bg-color: #ffffff;
             --border-color: #ddd;
-            --icon-filter: invert(0);
+            --icon-filter: invert(0); /* Чёрные иконки в светлой теме */
         }
 
         body {
-            font-family:"Montserrat", sans-serif;;
+            font-family: "Montserrat", sans-serif;
             padding: 20px;
             margin: 0;
-            padding-bottom: 100px; /* Отступ для мини-бара */
+            padding-bottom: 100px;
             background-color: var(--background-color);
             color: var(--text-color);
         }
@@ -31,7 +31,7 @@
             --secondary-text-color: #aaa;
             --item-bg-color: #213040;
             --border-color: #444;
-            --icon-filter: invert(1);
+            --icon-filter: invert(1); /* Белые иконки в тёмной теме */
         }
 
         /* Стили для header */
@@ -48,7 +48,7 @@
 
         .header-top {
             display: flex;
-            flex-direction: column; /* Вертикальное расположение */
+            flex-direction: column;
             align-items: center;
             width: 100%;
             padding: 0;
@@ -56,52 +56,48 @@
             position: relative;
         }
 
-
-.logo {
-    width: 100%; /* Растягиваем на всю ширину контейнера */
-    max-width: 400px; /* Ограничиваем максимальную ширину */
-    margin: -70px auto 10px; /* Сдвигаем вверх на 50px, сохраняем отступ снизу */
-    padding: 0;
-    box-sizing: border-box; /* Учитываем padding и border в общей ширине */
-    overflow: hidden; /* Убираем возможный overflow */
-}
-
-
-
-
-        .logo img {
-    width: 110%; /* Увеличиваем ширину изображения больше контейнера */
-    height: 250px;
-    max-width: none; /* Убираем ограничение максимальной ширины */
-    transform: translateX(-5%); /* Смещаем изображение влево за границы экрана */
-<!--    object-fit: cover; /* Обеспечиваем, чтобы изображение корректно обрезалось */-->
-    transition: transform 0.3s ease;
-}
-
-        .logo img:hover {
-            transform: scale(1.1);
+        .logo {
+            width: 100%;
+            max-width: 400px;
+            margin: -70px auto 10px;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
-      .working-hours {
-    position: absolute; /* Делаем часы работы абсолютно позиционированными */
-    top: 160px; /* Поднимаем выше, регулируйте значение по необходимости */
-    right: 5px; /* Сохраняем отступ справа */
-    text-align: right;
-    font-size: 14px;
-    color: var(--secondary-text-color);
-    margin: 0;
-    padding: 0;
-    z-index: 1; /* Устанавливаем поверх логотипа */
-}
+        .logo img {
+            width: 110%;
+            height: 250px;
+            max-width: none;
+            transform: translateX(-5%);
+            transition: transform 0.3s ease;
+        }
 
-.working-hours p {
-    margin: 8px 0;
-    transition: color 0.3s ease;
-}
-.working-hours .schedule {
-    font-weight: bold; /* Делаем текст жирным */
-    color: var(--text-color); /* Используем цвет основного текста, зависящий от темы */
-}
+        .logo img:hover {
+            transform: translateX(-5%) scale(1.1);
+        }
+
+        .working-hours {
+            position: absolute;
+            top: 160px;
+            right: 5px;
+            text-align: right;
+            font-size: 14px;
+            color: var(--secondary-text-color);
+            margin: 0;
+            padding: 0;
+            z-index: 1;
+        }
+
+        .working-hours p {
+            margin: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .working-hours .schedule {
+            font-weight: bold;
+            color: var(--text-color);
+        }
 
         .working-hours p:hover {
             color: #2ea6ff;
@@ -344,9 +340,6 @@
             text-align: right;
             color: var(--text-color);
         }
-        body.dark-theme .mini-bar button.active .icon {
-    filter: invert(49%) sepia(99%) saturate(1352%) hue-rotate(179deg) brightness(95%) contrast(101%); /* Примерный синий цвет (#2ea6ff) */
-}
 
         .add-to-cart {
             background-color: #2ea6ff;
@@ -400,7 +393,7 @@
             border: none;
             cursor: pointer;
             color: var(--text-color);
-            transition: transform 0.2s ease, color 0.2s ease;
+            transition: color 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -424,8 +417,22 @@
         .mini-bar button .icon {
             width: 24px;
             height: 24px;
-            filter: var(--icon-filter);
-            transition: transform 0.2s ease , filter 0.2s ease;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        /* Иконки в светлой теме */
+        .mini-bar button .icon {
+            filter: invert(0); /* Чёрные иконки */
+        }
+
+        /* Иконки в тёмной теме */
+        body.dark-theme .mini-bar button .icon {
+            filter: invert(1); /* Белые иконки */
+        }
+
+        /* Активные иконки в тёмной теме */
+        body.dark-theme .mini-bar button.active .icon {
+            filter: invert(49%) sepia(99%) saturate(1352%) hue-rotate(179deg) brightness(95%) contrast(101%); /* Синий (#2ea6ff) */
         }
 
         .mini-bar button:hover .icon {
@@ -478,12 +485,8 @@
         }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         .checkout-form {
@@ -616,12 +619,10 @@
             }
 
             .logo {
-                width: 90%; /* Увеличиваем для мобильных */
+                width: 90%;
                 max-width: 500px;
-                margin: -30px auto 8px; /* Меньший сдвиг вверх на мобильных, например, 30px */
-                margin-bottom: 8px;
+                margin: -30px auto 8px;
             }
-
 
             .working-hours {
                 font-size: 14px;
