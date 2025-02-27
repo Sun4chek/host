@@ -38,29 +38,28 @@
         #header {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Центрируем по горизонтали */
+            align-items: center;
             margin-bottom: 10px;
             background-color: transparent;
             border-bottom: none;
-            justify-content: center;
-            width: 100%; /* Убираем боковые отступы, растягиваем на всю ширину */
-            padding: 0; /* Убираем внутренние отступы */
+            width: 100%;
+            padding: 0;
         }
 
         .header-top {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; /* Вертикальное расположение */
             align-items: center;
-            width: 100%; /* Растягиваем на всю ширину контейнера */
-            padding: 0; /* Убираем внутренние отступы */
+            width: 100%;
+            padding: 0;
             margin-bottom: 10px;
         }
 
         .logo {
-            flex: 0 0 45%;
-            max-width: 85%;
-            margin: 0; /* Убираем отступы */
-            padding: 0; /* Убираем внутренние отступы */
+            width: 80%; /* Увеличиваем ширину логотипа */
+            max-width: 400px; /* Максимальная ширина */
+            margin: 0 auto 10px; /* Центрируем с отступом снизу */
+            padding: 0;
         }
 
         .logo img {
@@ -77,8 +76,10 @@
             text-align: right;
             font-size: 14px;
             color: var(--secondary-text-color);
-            margin: 0; /* Убираем отступы */
-            padding: 0; /* Убираем внутренние отступы */
+            margin: 0;
+            padding: 0;
+            align-self: flex-end; /* Располагаем справа */
+            margin-right: 10px; /* Отступ справа */
         }
 
         .working-hours p {
@@ -102,9 +103,9 @@
             display: flex;
             justify-content: space-between;
             gap: 5px;
-            width: 100%; /* Растягиваем на всю ширину */
+            width: 100%;
             margin: 5px 0;
-            padding: 0; /* Убираем внутренние отступы */
+            padding: 0;
         }
 
         .social-link {
@@ -112,7 +113,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0; /* Убираем внутренние отступы */
+            padding: 0;
         }
 
         .social-link img {
@@ -132,20 +133,20 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            width: 100%; /* Растягиваем на всю ширину */
+            width: 100%;
             max-width: 800px;
-            margin: 20px 0 0 0; /* Убираем боковые отступы, оставляем верхний */
-            padding: 0; /* Убираем внутренние отступы */
+            margin: 20px 0 0 0;
+            padding: 0;
         }
 
         .gallery {
-            width: 100%; /* Растягиваем на всю ширину */
+            width: 100%;
             height: 200px;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
-            margin: 0; /* Убираем отступы */
-            padding: 0; /* Убираем внутренние отступы */
+            margin: 0;
+            padding: 0;
         }
 
         .gallery-images {
@@ -168,8 +169,8 @@
         }
 
         .about-us {
-            width: 100%; /* Растягиваем на всю ширину */
-            padding: 15px 0; /* Убираем боковые отступы, оставляем вертикальные */
+            width: 100%;
+            padding: 15px 0;
             border-radius: 10px;
             border: 2px solid var(--border-color);
             background-color: var(--item-bg-color);
@@ -184,7 +185,7 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            padding: 0 15px; /* Добавляем внутренние отступы только по бокам для контента */
+            padding: 0 15px;
         }
 
         .about-us-header h2 {
@@ -202,7 +203,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease, padding 0.5s ease;
-            padding: 0 15px; /* Устанавливаем боковые отступы только для контента */
+            padding: 0 15px;
         }
 
         .about-us-content p {
@@ -214,7 +215,7 @@
 
         .about-us.expanded .about-us-content {
             max-height: 500px;
-            padding: 10px 15px; /* В развернутом виде добавляем вертикальные отступы */
+            padding: 10px 15px;
         }
 
         .about-us.expanded .arrow {
@@ -586,82 +587,82 @@
         /* Адаптация для мобильных устройств (до 480px) */
         @media (max-width: 480px) {
             #header {
-                margin-bottom: 5px; /* Уменьшаем нижний отступ */
+                margin-bottom: 5px;
             }
 
             .header-top {
-                flex-direction: column; /* Столбец для логотипа и часов работы */
+                flex-direction: column;
                 align-items: center;
                 margin-bottom: 5px;
             }
 
             .logo {
-                flex: 0 0 100%; /* Логотип занимает всю ширину */
-                max-width: 70%; /* Уменьшаем максимальную ширину логотипа */
-                margin-bottom: 10px; /* Добавляем отступ снизу */
+                width: 90%; /* Увеличиваем для мобильных */
+                max-width: 300px;
+                margin-bottom: 8px;
             }
 
             .working-hours {
-                text-align: center; /* Центрируем текст */
-                font-size: 12px; /* Уменьшаем шрифт */
+                font-size: 12px;
+                margin-right: 5px;
             }
 
             .working-hours p {
-                margin: 5px 0; /* Уменьшаем отступы */
+                margin: 5px 0;
             }
 
             .divider {
-                width: 90%; /* Увеличиваем ширину разделителя */
+                width: 90%;
             }
 
             .social-links {
-                gap: 2px; /* Уменьшаем расстояние между иконками */
-                flex-wrap: wrap; /* Разрешаем перенос иконок */
-                justify-content: center; /* Центрируем иконки */
+                gap: 2px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .social-link img {
-                width: 24px; /* Уменьшаем размер иконок */
+                width: 24px;
                 height: 24px;
             }
 
             .header-widget {
-                gap: 15px; /* Уменьшаем расстояние между элементами */
-                margin-top: 10px; /* Уменьшаем верхний отступ */
-                max-width: 100%; /* Убираем ограничение ширины */
+                gap: 15px;
+                margin-top: 10px;
+                max-width: 100%;
             }
 
             .gallery {
-                height: 150px; /* Уменьшаем высоту галереи */
+                height: 150px;
             }
 
             .about-us {
-                margin-top: 15px; /* Уменьшаем верхний отступ */
-                padding: 10px 0; /* Уменьшаем вертикальные отступы */
+                margin-top: 15px;
+                padding: 10px 0;
             }
 
             .about-us-header {
-                padding: 0 10px; /* Уменьшаем боковые отступы */
+                padding: 0 10px;
             }
 
             .about-us-header h2 {
-                font-size: 18px; /* Уменьшаем размер заголовка */
+                font-size: 18px;
             }
 
             .about-us-header .arrow {
-                font-size: 18px; /* Уменьшаем размер стрелки */
+                font-size: 18px;
             }
 
             .about-us-content {
-                padding: 0 10px; /* Уменьшаем боковые отступы */
+                padding: 0 10px;
             }
 
             .about-us.expanded .about-us-content {
-                padding: 8px 10px; /* Уменьшаем вертикальные отступы в развернутом виде */
+                padding: 8px 10px;
             }
 
             .about-us-content p {
-                font-size: 13px; /* Уменьшаем шрифт текста */
+                font-size: 13px;
                 line-height: 1.5;
             }
 
