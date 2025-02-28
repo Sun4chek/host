@@ -199,6 +199,19 @@
             transition: all 0.5s ease;
         }
 
+    .about-us-header .custom-arrow-about {
+    width: 20px; /* Настройте под размер ваших изображений */
+    height: 20px;
+    vertical-align: middle;
+    transition: transform 0.3s ease; /* Плавный поворот */
+}
+
+.about-us.expanded .custom-arrow-about {
+    transform: rotate(90deg); /* Поворот на 90° вниз */
+}
+
+
+
         .about-us-header {
             display: flex;
             justify-content: space-between;
@@ -777,7 +790,7 @@ body:not(.dark-theme) .mini-bar button .icon {
                 <div class="about-us">
                     <div class="about-us-header" onclick="toggleAboutUs()">
                         <h2>О нас</h2>
-                        <span class="arrow">▶</span>
+                        <img class="custom-arrow-about" src="images/arrow-right-light.png" alt="Стрелка">
                     </div>
                     <div class="about-us-content">
                         <p>
@@ -1755,7 +1768,8 @@ function applyTheme() {
     } else {
         body.classList.remove('dark-theme');
     }
-    updateArrowIcons(); // Обновляем стрелки сразу после применения темы
+    updateArrowIcons(); // Обновляем стрелки "Назад"
+    updateAboutUsArrow(); // Обновляем стрелку "О нас"
 }
 
 function updateArrowIcons() {
@@ -1764,6 +1778,18 @@ function updateArrowIcons() {
     arrows.forEach(arrow => {
         arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png';
     });
+}
+
+function updateAboutUsArrow() {
+    const arrow = document.querySelector('.custom-arrow-about');
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    arrow.src = isDarkTheme ? 'images/arrow-right-dark.png' : 'images/arrow-right-light.png';
+}
+
+function toggleAboutUs() {
+    const aboutUs = document.querySelector('.about-us');
+    aboutUs.classList.toggle('expanded');
+    // Не нужно менять src, только поворот через CSS
 }
 
 // Инициализация при загрузке
@@ -1780,6 +1806,7 @@ setTimeout(() => {
     document.getElementById('menu-screen').classList.add('active');
 }, 3000);
 
+// Остальной код остаётся без изменений
 // Остальной код остаётся без изменений
 
         let currentIndex = 0;
