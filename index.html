@@ -155,33 +155,37 @@
         }
 
         .gallery {
-            width: 100%;
-            height: 450px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            margin: 0;
-            padding: 0;
-        }
+    width: 100%;
+    height: 450px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+}
 
-        .gallery-images {
-            display: flex;
-            transition: transform 0.5s ease;
-            width: 100%;
-            height: 100%;
-        }
+.gallery-images {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative; /* Для позиционирования изображений */
+}
 
-        .gallery-images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-            border-radius: 10px;
-        }
+.gallery-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    position: absolute; /* Абсолютное позиционирование для наложения */
+    top: 0;
+    left: 0;
+    opacity: 0; /* Скрываем по умолчанию */
+    transition: opacity 0.5s ease-in-out; /* Плавный переход для opacity */
+}
 
-        .gallery-images img.active {
-            display: block;
-        }
+.gallery-images img.active {
+    opacity: 1; /* Показываем активное изображение */
+}
 
         .about-us {
             width: 100%;
@@ -1779,21 +1783,21 @@ setTimeout(() => {
 // Остальной код остаётся без изменений
 
         let currentIndex = 0;
-        const images = document.querySelectorAll('.gallery-images img');
-        const totalImages = images.length;
+const images = document.querySelectorAll('.gallery-images img');
+const totalImages = images.length;
 
-        function showImage(index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
-        }
+function showImage(index) {
+    images.forEach((img, i) => {
+        img.classList.toggle('active', i === index); // Переключаем класс active только для текущего изображения
+    });
+}
 
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % totalImages;
-            showImage(currentIndex);
-        }
+function nextImage() {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+}
 
-        setInterval(nextImage, 5000);
+setInterval(nextImage, 5000);
 
         function toggleAboutUs() {
             const aboutUs = document.querySelector('.about-us');
