@@ -176,17 +176,15 @@
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
-    position: absolute;
+    position: absolute; /* Абсолютное позиционирование для наложения */
     top: 0;
     left: 0;
-    opacity: 0;
-    transform: scale(1.1); /* Немного увеличено по умолчанию */
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Переход для opacity и scale */
+    opacity: 0; /* Скрываем по умолчанию */
+    transition: opacity 0.5s ease-in-out; /* Плавный переход для opacity */
 }
 
 .gallery-images img.active {
-    opacity: 1;
-    transform: scale(1); /* Нормальный размер для активного */
+    opacity: 1; /* Показываем активное изображение */
 }
 
         .about-us {
