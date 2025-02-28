@@ -1906,22 +1906,13 @@ function showScreen(screenId) {
     // Устанавливаем активное состояние в зависимости от экрана
     if (screenId === 'menu-screen') {
         homeButton.classList.add('active');
+        // Прокручиваем к началу страницы
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (screenId === 'cart-screen') {
         cartButton.classList.add('active');
         updateCart();
     } else {
         menuButton.classList.add('active');
-    }
-
-    // Если переходим на menu-screen, проверяем положение категорий
-    if (screenId === 'menu-screen') {
-        const categoryGrid = document.getElementById('category-grid');
-        const rect = categoryGrid.getBoundingClientRect();
-        const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
-        if (isCategoriesVisible) {
-            homeButton.classList.remove('active');
-            menuButton.classList.add('active');
-        }
     }
 }
 
