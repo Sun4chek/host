@@ -3337,12 +3337,14 @@
 
             document.getElementById('modal').classList.add('active');
             document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
         }
 
         function closeModal() {
             document.getElementById('modal').style.bottom = '-100%';
             document.getElementById('modal').classList.remove('active');
             document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = ''; // Разблокируем прокрутку
             setTimeout(() => {
                 modal.style.removeProperty('bottom');
             }, 300);
