@@ -2614,7 +2614,7 @@
 
         .modal {
             position: fixed;
-            bottom: -80%;
+            bottom: -100%;
             left: 0;
             right: 0;
             background-color: var(--item-bg-color);
@@ -3340,8 +3340,12 @@
         }
 
         function closeModal() {
+            document.getElementById('modal').style.bottom = '-100%';
             document.getElementById('modal').classList.remove('active');
             document.getElementById('modal-overlay').classList.remove('active');
+            setTimeout(() => {
+                modal.style.removeProperty('bottom');
+            }, 300);
         }
 
         function changeModalQuantity(delta) {
@@ -3556,6 +3560,7 @@
         modal.addEventListener('touchend', () => {
             const diff = touchCurrentY - touchStartY;
             if (diff > 100) {
+                modal.style.transition = 'bottom 0.3s ease';
                 closeModal();
             } else {
                 modal.style.bottom = '0';
