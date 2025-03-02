@@ -2614,14 +2614,14 @@
 
         .modal {
             position: fixed;
-            bottom: -100%;
+            bottom: -80%;
             left: 0;
             right: 0;
             background-color: var(--item-bg-color);
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
-            max-height: 80vh;
+            height: 80vh;
             overflow-y: auto;
             transition: bottom 0.3s ease;
             z-index: 2000;
@@ -2636,6 +2636,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            height: 100%;
         }
 
         .modal-image {
@@ -2645,10 +2646,36 @@
             border-radius: 10px;
         }
 
+        .modal-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-title-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .modal-info h3 {
             margin: 0;
             font-size: 22px;
             color: var(--text-color);
+        }
+
+        .modal-info .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-color);
+            background-color: rgba(46, 166, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        body.dark-theme .modal-info .price {
+            background-color: rgba(46, 166, 255, 0.2);
         }
 
         .modal-info p {
@@ -2662,6 +2689,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
+            margin-top: auto;
         }
 
         .modal-overlay {
@@ -3103,7 +3131,7 @@
         </span>
         <h2>Напитки</h2>
         <h3>Безалкогольные напитки</h3>
-        <div class="menu-item" onclick="openModal('\Borjomi\ (стекло)', 1800, '0,5 л', 'https://example.com/borjomi.jpg')">
+        <div class="menu-item" onclick="openModal('\"Borjomi\" (стекло)', 1800, '0,5 л', 'https://example.com/borjomi.jpg')">
             <img src="https://example.com/borjomi.jpg" alt="Borjomi">
             <div class="info">
                 <h3>"Borjomi" (стекло)</h3>
@@ -3113,7 +3141,7 @@
                 <div class="price">1800₽</div>
             </div>
         </div>
-        <div class="menu-item" onclick="openModal('Вода \Крымская\ (стекло)', 2100, '0,5 л', 'https://example.com/krymskaya-voda.jpg')">
+        <div class="menu-item" onclick="openModal('Вода \"Крымская\" (стекло)', 2100, '0,5 л', 'https://example.com/krymskaya-voda.jpg')">
             <img src="https://example.com/krymskaya-voda.jpg" alt="Вода Крымская">
             <div class="info">
                 <h3>Вода "Крымская" (стекло)</h3>
@@ -3123,7 +3151,7 @@
                 <div class="price">2100₽</div>
             </div>
         </div>
-        <div class="menu-item" onclick="openModal('\Кола\ (стекло)', 1700, '0,33 л', 'https://example.com/cola.jpg')">
+        <div class="menu-item" onclick="openModal('\"Кола\" (стекло)', 1700, '0,33 л', 'https://example.com/cola.jpg')">
             <img src="https://example.com/cola.jpg" alt="Кола">
             <div class="info">
                 <h3>"Кола" (стекло)</h3>
@@ -3133,7 +3161,6 @@
                 <div class="price">1700₽</div>
             </div>
         </div>
-        <!-- Другие напитки аналогично -->
     </div>
 
     <div id="alcohol-screen" class="container">
@@ -3152,7 +3179,6 @@
                 <div class="price">290₽</div>
             </div>
         </div>
-        <!-- Другие алкогольные напитки аналогично -->
     </div>
 
     <div id="cart-screen" class="container">
@@ -3197,12 +3223,14 @@
         <div class="modal-content">
             <img id="modal-image" class="modal-image" src="" alt="">
             <div class="modal-info">
-                <h3 id="modal-title"></h3>
+                <div class="modal-title-price">
+                    <h3 id="modal-title"></h3>
+                    <div class="price" id="modal-price"></div>
+                </div>
                 <p id="modal-weight"></p>
                 <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>
             </div>
             <div class="modal-controls">
-                <div class="price" id="modal-price"></div>
                 <div class="quantity-controls">
                     <button onclick="changeModalQuantity(-1)">−</button>
                     <span id="modal-quantity">1</span>
@@ -3507,6 +3535,32 @@
         }
 
         document.getElementById('checkout-form').addEventListener('submit', submitOrder);
+
+        // Обработка свайпа для модального окна
+        const modal = document.getElementById('modal');
+        let touchStartY = 0;
+        let touchCurrentY = 0;
+
+        modal.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        modal.addEventListener('touchmove', (e) => {
+            touchCurrentY = e.touches[0].clientY;
+            const diff = touchCurrentY - touchStartY;
+            if (diff > 0) {
+                modal.style.bottom = `-${diff}px`;
+            }
+        });
+
+        modal.addEventListener('touchend', () => {
+            const diff = touchCurrentY - touchStartY;
+            if (diff > 100) {
+                closeModal();
+            } else {
+                modal.style.bottom = '0';
+            }
+        });
     </script>
 </body>
 </html>
