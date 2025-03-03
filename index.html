@@ -2027,6 +2027,7 @@
 <!--</body>-->
 <!--</html>-->
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2276,6 +2277,12 @@
 
         .gallery-nav button:hover {
             background: rgba(255, 255, 255, 1);
+        }
+
+        @media (max-width: 480px) {
+            .gallery-nav {
+                display: none;
+            }
         }
 
         .close-gallery {
@@ -3452,6 +3459,27 @@
         }
 
         document.querySelector('.gallery').addEventListener('click', openGallery);
+
+        const galleryScreen = document.getElementById('gallery-screen');
+        let touchStartX = 0;
+        let touchCurrentX = 0;
+
+        galleryScreen.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        galleryScreen.addEventListener('touchmove', (e) => {
+            touchCurrentX = e.touches[0].clientX;
+        });
+
+        galleryScreen.addEventListener('touchend', () => {
+            const diff = touchStartX - touchCurrentX;
+            if (diff > 50) {
+                nextGalleryImage();
+            } else if (diff < -50) {
+                prevGalleryImage();
+            }
+        });
 
         function openModal(name, price, weight, image) {
             currentItem = { name, price, weight, image };
