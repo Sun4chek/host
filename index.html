@@ -2095,11 +2095,6 @@
             height: 250px;
             max-width: none;
             transform: translateX(-5%);
-            transition: transform 0.3s ease;
-        }
-
-        .logo img:hover {
-            transform: translateX(-5%) scale(1.1);
         }
 
         .working-hours {
@@ -2191,6 +2186,7 @@
             border-radius: 10px;
             margin: 0;
             padding: 0;
+            cursor: pointer;
         }
 
         .gallery-images {
@@ -2214,6 +2210,90 @@
 
         .gallery-images img.active {
             opacity: 1;
+        }
+
+        #gallery-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gallery-screen.active {
+            display: flex;
+        }
+
+        .gallery-fullscreen {
+            width: 90%;
+            height: 80%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-fullscreen img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .gallery-fullscreen img.active {
+            opacity: 1;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .gallery-nav button {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .gallery-nav button:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .close-gallery {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .close-gallery:hover {
+            background: rgba(255, 255, 255, 1);
         }
 
         .about-us {
@@ -3094,7 +3174,7 @@
             </div>
         </div>
         <div class="menu-item" onclick="openModal('Шашлык из курицы', 500, '300г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">
-            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskий.jpg" alt="Шашлык из курицы">
+            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">
             <div class="info">
                 <h3>Шашлык из курицы</h3>
                 <p>300г</p>
@@ -3219,6 +3299,19 @@
         </form>
     </div>
 
+    <div id="gallery-screen" class="container">
+        <button class="close-gallery" onclick="closeGallery()">×</button>
+        <div class="gallery-fullscreen">
+            <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
+            <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
+            <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
+        </div>
+        <div class="gallery-nav">
+            <button onclick="prevGalleryImage()">◄</button>
+            <button onclick="nextGalleryImage()">►</button>
+        </div>
+    </div>
+
     <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -3325,6 +3418,40 @@
         }
 
         setInterval(nextImage, 5000);
+
+        let galleryIndex = 0;
+        const galleryImages = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
+        const totalGalleryImages = galleryImages.length;
+
+        function showGalleryImage(index) {
+            galleryImages.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function openGallery() {
+            document.getElementById('gallery-screen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            galleryIndex = currentIndex;
+            showGalleryImage(galleryIndex);
+        }
+
+        function closeGallery() {
+            document.getElementById('gallery-screen').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function nextGalleryImage() {
+            galleryIndex = (galleryIndex + 1) % totalGalleryImages;
+            showGalleryImage(galleryIndex);
+        }
+
+        function prevGalleryImage() {
+            galleryIndex = (galleryIndex - 1 + totalGalleryImages) % totalGalleryImages;
+            showGalleryImage(galleryIndex);
+        }
+
+        document.querySelector('.gallery').addEventListener('click', openGallery);
 
         function openModal(name, price, weight, image) {
             currentItem = { name, price, weight, image };
