@@ -2155,14 +2155,6 @@
             transition: transform 0.2s ease, opacity 0.2s ease;
         }
 
-        body:not(.dark-theme) .social-link img {
-            filter: invert(0);
-        }
-
-        body.dark-theme .social-link img {
-            filter: invert(1);
-        }
-
         .social-link:hover img {
             transform: scale(1.1);
             opacity: 0.8;
@@ -2573,7 +2565,7 @@
 
         .mini-bar button.cart-button .cart-counter {
             position: absolute;
-            top: -10px;
+            top: -2px;
             right: -12px;
             background-color: #ff0000;
             color: white;
@@ -2927,19 +2919,19 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
                 </a>
                 <a href="mailto:info@restaurant.com" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Почта">
+                    <img src="images/email-icon.png" alt="Почта">
                 </a>
                 <a href="https://t.me/restaurant" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Телеграм">
+                    <img src="images/telegram-icon.png" alt="Телеграм">
                 </a>
                 <a href="https://wa.me/71234567890" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+                    <img src="images/whatsapp-icon.png" alt="WhatsApp">
                 </a>
                 <a href="https://vk.com/restaurant" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="ВКонтакте">
+                    <img src="images/vk-icon.png" alt="ВКонтакте">
                 </a>
                 <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Яндекс Карты">
+                    <img src="images/yandex-maps-icon.png" alt="Яндекс Карты">
                 </a>
             </div>
 
@@ -3706,7 +3698,6 @@
 
         document.getElementById('checkout-form').addEventListener('submit', submitOrder);
 
-        // Обработка свайпа для модального окна
         const modal = document.getElementById('modal');
         let touchStartY = 0;
         let touchCurrentY = 0;
