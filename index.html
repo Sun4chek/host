@@ -2557,7 +2557,6 @@
         .quantity-controls button {
             width: 30px;
             height: 30px;
-            border-radius: 50%;
             background-color: #2ea6ff;
             color: white;
             border: none;
@@ -2567,6 +2566,7 @@
             justify-content: center;
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease;
+            border-radius: 5px;
         }
 
         .quantity-controls button:hover {
@@ -3337,14 +3337,14 @@
 
             document.getElementById('modal').classList.add('active');
             document.getElementById('modal-overlay').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('modal').style.bottom = '-100%';
             document.getElementById('modal').classList.remove('active');
             document.getElementById('modal-overlay').classList.remove('active');
-            document.body.style.overflow = ''; // Разблокируем прокрутку
+            document.body.style.overflow = '';
             setTimeout(() => {
                 modal.style.removeProperty('bottom');
             }, 300);
