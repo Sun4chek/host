@@ -2145,7 +2145,7 @@
             justify-content: center;
             align-items: center;
             padding: 0;
-            cursor: pointer; /* Указывает, что элемент кликабелен */
+            cursor: pointer;
         }
 
         .social-link img {
@@ -2159,13 +2159,12 @@
             opacity: 0.8;
         }
 
-        /* Стили для иконки телефона */
         #phone-icon {
-            filter: none; /* По умолчанию для светлой темы */
+            filter: none;
         }
 
         body.dark-theme #phone-icon {
-            filter: invert(1); /* Инверсия для тёмной темы (чёрная → белая) */
+            filter: invert(1);
         }
 
         .header-widget {
@@ -2941,7 +2940,7 @@
                 <a href="https://yandex.ru/maps/-/CHBmA00V" class="social-link">
                     <img src="images/yandex-maps-icon.png" alt="Яндекс Карты">
                 </a>
-                <a href="https://buhtahotel.ru" class="social-link">
+                <a href="https://buhtahotel.ru" class="social-link" target="_blank" onclick="openWebsite()">
                     <img src="images/website-icon.png" alt="Сайт">
                 </a>
             </div>
@@ -3410,13 +3409,41 @@
             aboutUs.classList.toggle('expanded');
         }
 
-        // Функция для открытия телефона
+        // Функция для открытия телефона с подтверждением
         function openPhone() {
-            const phoneNumber = "tel:+79786910329";
-            if (tg && tg.openLink) {
-                tg.openLink(phoneNumber); // Открывает приложение телефона через Telegram API
+            if (tg && tg.showPopup) {
+                tg.showPopup({
+                    title: 'Позвонить',
+                    message: 'Вы хотите позвонить на номер +79786910329?',
+                    buttons: [
+                        { id: 'call', type: 'default', text: 'Позвонить' },
+                        { type: 'cancel', text: 'Отмена' }
+                    ]
+                }, (buttonId) => {
+                    if (buttonId === 'call') {
+                        window.location.href = 'tel:+79786910329'; // Открывает приложение телефона
+                    }
+                });
             } else {
-                window.location.href = phoneNumber; // Резервный вариант для стандартного поведения
+                // Резервный вариант для не-Telegram окружения
+                if (confirm('Вы хотите позвонить на номер +79786910329?')) {
+                    window.location.href = 'tel:+79786910329';
+                }
+            }
+        }
+
+        // Функция для открытия сайта
+        function openWebsite() {
+            if (tg && tg.openLink) {
+                tg.openLink('https://buhtahotel.ru');
+                // Включаем кнопку "Назад" в Telegram
+                tg.BackButton.show();
+                tg.BackButton.onClick(() => {
+                    tg.BackButton.hide();
+                    showScreen('menu-screen'); // Возвращаемся на главный экран
+                });
+            } else {
+                window.open('https://buhtahotel.ru', '_blank');
             }
         }
 
