@@ -2026,6 +2026,7 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2567,7 +2568,7 @@
         .mini-bar button img.icon {
             width: 24px;
             height: 24px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         body:not(.dark-theme) .mini-bar button img.icon {
@@ -2575,11 +2576,11 @@
         }
 
         body.dark-theme .mini-bar button img.icon {
-            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .mini-bar button.active img.icon {
-            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .mini-bar button:hover img.icon {
@@ -2591,7 +2592,7 @@
         }
 
         body.dark-theme .mini-bar button:hover img.icon {
-            filter: brightness(5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) brightness(0.8) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .mini-bar button.cart-button {
@@ -3854,7 +3855,7 @@
             touchStartY = e.touches[0].clientY;
         });
 
-        modal.addEventListener('touchmove', (e) => {
+               modal.addEventListener('touchmove', (e) => {
             touchCurrentY = e.touches[0].clientY;
             const diff = touchCurrentY - touchStartY;
             if (diff > 0) {
