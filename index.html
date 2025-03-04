@@ -3410,46 +3410,54 @@
         }
 
         function openPhone() {
+            console.log('1. Функция openPhone запущена');
             const phoneNumber = '+79787845742';
-            console.log('Открываем телефон');
-            if (tg && tg.showPopup) {
-                console.log('Показываем popup в Telegram');
-                tg.showPopup({
-                    title: 'Позвонить',
-                    message: `Вы хотите позвонить на номер ${phoneNumber}?`,
-                    buttons: [
-                        { id: 'call', type: 'default', text: 'Позвонить' },
-                        { type: 'cancel', text: 'Отмена' }
-                    ]
-                }, (buttonId) => {
-                    console.log('Выбран buttonId:', buttonId);
-                    if (buttonId === 'call') {
-                        console.log('Попытка открыть телефон через tg.openTelegramLink');
-                        if (tg.openTelegramLink) {
-                            tg.openTelegramLink(`tg://resolve?phone=${phoneNumber}`);
-                            console.log('tg.openTelegramLink вызван');
-                        } else {
-                            console.log('tg.openTelegramLink недоступен, пробуем tel:');
-                            const link = document.createElement('a');
-                            link.href = `tel:${phoneNumber}`;
-                            link.style.display = 'none';
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                            console.log('Ссылка tel: кликнута');
+            if (tg) {
+                console.log('2. Telegram WebApp обнаружен');
+                if (tg.showPopup) {
+                    console.log('3. Показываем popup');
+                    tg.showPopup({
+                        title: 'Позвонить',
+                        message: `Вы хотите позвонить на номер ${phoneNumber}?`,
+                        buttons: [
+                            { id: 'call', type: 'default', text: 'Позвонить' },
+                            { type: 'cancel', text: 'Отмена' }
+                        ]
+                    }, (buttonId) => {
+                        console.log('4. Пользователь выбрал:', buttonId);
+                        if (buttonId === 'call') {
+                            console.log('5. Попытка открыть телефон');
+                            if (tg.openTelegramLink) {
+                                console.log('6. Используем tg.openTelegramLink');
+                                tg.openTelegramLink(`tg://resolve?phone=${phoneNumber}`);
+                                console.log('7. tg.openTelegramLink выполнен');
+                            } else {
+                                console.log('6. tg.openTelegramLink недоступен, пробуем tel:');
+                                const link = document.createElement('a');
+                                link.href = `tel:${phoneNumber}`;
+                                link.style.display = 'none';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                console.log('7. Ссылка tel: кликнута');
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    console.log('3. tg.showPopup недоступен, показываем alert');
+                    alert('Ошибка: Telegram API не поддерживает всплывающие окна.');
+                }
             } else {
-                console.log('Не в Telegram, резервный вариант');
+                console.log('2. Telegram WebApp не обнаружен, резервный вариант');
                 if (confirm(`Вы хотите позвонить на номер ${phoneNumber}?`)) {
                     window.location.href = `tel:${phoneNumber}`;
-                    console.log('window.location.href выполнен');
+                    console.log('3. window.location.href выполнен');
                 }
             }
         }
 
         function openWebsite() {
+            console.log('Открываем сайт');
             if (tg && tg.openLink) {
                 tg.openLink('https://buhtahotel.ru');
                 tg.BackButton.show();
