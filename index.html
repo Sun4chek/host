@@ -2160,6 +2160,15 @@
             opacity: 0.8;
         }
 
+        /* Стили для иконки телефона */
+        #phone-icon {
+            filter: none; /* По умолчанию для светлой темы */
+        }
+
+        body.dark-theme #phone-icon {
+            filter: invert(1); /* Инверсия для тёмной темы (чёрная → белая) */
+        }
+
         .header-widget {
             display: flex;
             flex-direction: column;
@@ -2565,7 +2574,7 @@
 
         .mini-bar button.cart-button .cart-counter {
             position: absolute;
-            top: -2px;
+            top: -10px;
             right: -12px;
             background-color: #ff0000;
             color: white;
@@ -2916,7 +2925,7 @@
 
             <div class="social-links">
                 <a href="tel:+71234567890" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
+                    <img id="phone-icon" src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
                 </a>
                 <a href="mailto:info@restaurant.com" class="social-link">
                     <img src="images/email-icon.png" alt="Почта">
@@ -2932,6 +2941,9 @@
                 </a>
                 <a href="https://yandex.ru/maps/org/restaurant" class="social-link">
                     <img src="images/yandex-maps-icon.png" alt="Яндекс Карты">
+                </a>
+                <a href="https://restaurant.com" class="social-link">
+                    <img src="images/website-icon.png" alt="Сайт">
                 </a>
             </div>
 
