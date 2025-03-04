@@ -3415,19 +3415,19 @@ function openPhone() {
     if (tg && tg.showPopup) {
         tg.showPopup({
             title: 'Позвонить',
-            message: 'Вы хотите позвонить на номер +79785791270?',
+            message: 'Вы хотите позвонить на номер +79787845742?',
             buttons: [
                 { id: 'call', type: 'default', text: 'Позвонить' },
                 { type: 'cancel', text: 'Отмена' }
             ]
         }, (buttonId) => {
             if (buttonId === 'call') {
-                tg.openTelegramLink('tg://resolve?phone=+79785791270');
+                tg.openTelegramLink('tg://resolve?phone=++79787845742');
             }
         });
     } else {
-        if (confirm('Вы хотите позвонить на номер +79785791270?')) {
-            window.location.href = 'tel:+79785791270';
+        if (confirm('Вы хотите позвонить на номер +79787845742?')) {
+            window.location.href = 'tel:+79787845742';
         }
     }
 }
