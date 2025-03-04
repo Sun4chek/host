@@ -2552,6 +2552,10 @@
             color: #333;
         }
 
+        body.dark-theme .mini-bar button .material-symbols-outlined.icon {
+            color: #ffffff;
+        }
+
         .mini-bar button.active .material-symbols-outlined.icon {
             color: #ffffff;
         }
@@ -2564,11 +2568,14 @@
             width: 24px;
             height: 24px;
             transition: transform 0.2s ease;
-            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); /* Утолщение контуров */
         }
 
         body:not(.dark-theme) .mini-bar button img.icon {
             filter: brightness(0.2) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        body.dark-theme .mini-bar button img.icon {
+            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .mini-bar button.active img.icon {
@@ -2577,11 +2584,10 @@
 
         .mini-bar button:hover img.icon {
             transform: scale(1.1);
-            filter: brightness(0.5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
-        body.dark-theme .mini-bar button img.icon {
-            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        body:not(.dark-theme) .mini-bar button:hover img.icon {
+            filter: brightness(0.5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         body.dark-theme .mini-bar button:hover img.icon {
@@ -2843,7 +2849,6 @@
             background-color: #1e8fd1;
         }
 
-        /* Стили для пустой корзины */
         .empty-cart {
             display: none;
             flex-direction: column;
@@ -2864,7 +2869,7 @@
             width: 150px;
             height: 150px;
             animation: emptyCartShake 1.5s infinite ease-in-out;
-            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); /* Утолщение контуров */
+            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .empty-cart p {
@@ -3066,7 +3071,7 @@
                 <h3>Сковорода куриная</h3>
                 <p>360г</p>
             </div>
-                <div class="price-and-button">
+            <div class="price-and-button">
                 <div class="price">450₽</div>
             </div>
         </div>
@@ -3867,7 +3872,6 @@
             }
         });
 
-        // Инициализация корзины при загрузке
         updateCart();
     </script>
 </body>
