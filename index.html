@@ -2026,9 +2026,6 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
-
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2544,23 +2541,51 @@
             color: white;
         }
 
-        .mini-bar button .icon {
+        .mini-bar button .material-symbols-outlined.icon {
             width: 24px;
             height: 24px;
             transition: transform 0.2s ease;
             color: var(--text-color);
         }
 
-        body:not(.dark-theme) .mini-bar button .icon {
+        body:not(.dark-theme) .mini-bar button .material-symbols-outlined.icon {
             color: #333;
         }
 
-        .mini-bar button.active .icon {
+        .mini-bar button.active .material-symbols-outlined.icon {
             color: #ffffff;
         }
 
-        .mini-bar button:hover .icon {
+        .mini-bar button:hover .material-symbols-outlined.icon {
             transform: scale(1.1);
+        }
+
+        .mini-bar button img.icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.2s ease;
+            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); /* Утолщение контуров */
+        }
+
+        body:not(.dark-theme) .mini-bar button img.icon {
+            filter: brightness(0.2) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        .mini-bar button.active img.icon {
+            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        .mini-bar button:hover img.icon {
+            transform: scale(1.1);
+            filter: brightness(0.5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        body.dark-theme .mini-bar button img.icon {
+            filter: brightness(10) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        body.dark-theme .mini-bar button:hover img.icon {
+            filter: brightness(5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .mini-bar button.cart-button {
@@ -2818,6 +2843,45 @@
             background-color: #1e8fd1;
         }
 
+        /* Стили для пустой корзины */
+        .empty-cart {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 50vh;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .empty-cart.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .empty-cart img {
+            width: 150px;
+            height: 150px;
+            animation: emptyCartShake 1.5s infinite ease-in-out;
+            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); /* Утолщение контуров */
+        }
+
+        .empty-cart p {
+            margin-top: 20px;
+            font-size: 18px;
+            color: var(--secondary-text-color);
+        }
+
+        @keyframes emptyCartShake {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(20deg); }
+            40% { transform: rotate(-20deg); }
+            60% { transform: rotate(10deg); }
+            80% { transform: rotate(-10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
         @media (max-width: 480px) {
             #header {
                 margin-bottom: 5px;
@@ -3002,10 +3066,11 @@
                 <h3>Сковорода куриная</h3>
                 <p>360г</p>
             </div>
-            <div class="price-and-button">
+                <div class="price-and-button">
                 <div class="price">450₽</div>
             </div>
         </div>
+
         <div class="menu-item" onclick="openModal('Куриная отбивная', 400, '200г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">
             <div class="info">
@@ -3286,6 +3351,10 @@
         </span>
         <h2>Корзина</h2>
         <div id="cart-items"></div>
+        <div class="empty-cart" id="empty-cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
+            <p>Корзина пока пустая</p>
+        </div>
         <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
         <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
         <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
@@ -3365,7 +3434,7 @@
         </button>
         <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
             <div class="cart-icon-wrapper">
-                <span class="material-symbols-outlined icon">shopping_cart</span>
+                <img class="icon" src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Корзина">
                 <div id="cart-counter" class="cart-counter">0</div>
             </div>
             <span>Корзина</span>
@@ -3418,7 +3487,6 @@
                     .then(() => console.log('Номер скопирован в буфер обмена'))
                     .catch(err => console.error('Ошибка копирования:', err));
             } else {
-                // Резервный метод для старых устройств
                 const textarea = document.createElement('textarea');
                 textarea.value = phoneNumber;
                 document.body.appendChild(textarea);
@@ -3606,27 +3674,35 @@
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             const totalPrice = document.getElementById('total-price');
+            const emptyCart = document.getElementById('empty-cart');
             cartItems.innerHTML = '';
             let total = 0;
 
-            cart.forEach((item, index) => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'menu-item';
-                cartItem.innerHTML = `
-                    <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
-                    <div class="info">
-                        <h3>${item.name}</h3>
-                        <p>${item.price}₽ за шт.</p>
-                    </div>
-                    <div class="quantity-controls">
-                        <button onclick="changeQuantity(${index}, -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, 1)">+</button>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
-                total += item.price * item.quantity;
-            });
+            if (cart.length === 0) {
+                emptyCart.classList.add('active');
+                cartItems.style.display = 'none';
+            } else {
+                emptyCart.classList.remove('active');
+                cartItems.style.display = 'block';
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'menu-item';
+                    cartItem.innerHTML = `
+                        <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
+                        <div class="info">
+                            <h3>${item.name}</h3>
+                            <p>${item.price}₽ за шт.</p>
+                        </div>
+                        <div class="quantity-controls">
+                            <button onclick="changeQuantity(${index}, -1)">−</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)">+</button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                    total += item.price * item.quantity;
+                });
+            }
 
             totalPrice.textContent = total;
         }
@@ -3790,6 +3866,9 @@
                 modal.style.bottom = '0';
             }
         });
+
+        // Инициализация корзины при загрузке
+        updateCart();
     </script>
 </body>
 </html>
