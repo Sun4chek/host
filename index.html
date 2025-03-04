@@ -2026,6 +2026,9 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -3409,55 +3412,48 @@
             aboutUs.classList.toggle('expanded');
         }
 
-        function openPhone() {
-            console.log('1. Функция openPhone запущена');
-            const phoneNumber = '+79787845742';
-            if (tg) {
-                console.log('2. Telegram WebApp обнаружен');
-                if (tg.showPopup) {
-                    console.log('3. Показываем popup');
-                    tg.showPopup({
-                        title: 'Позвонить',
-                        message: `Вы хотите позвонить на номер ${phoneNumber}?`,
-                        buttons: [
-                            { id: 'call', type: 'default', text: 'Позвонить' },
-                            { type: 'cancel', text: 'Отмена' }
-                        ]
-                    }, (buttonId) => {
-                        console.log('4. Пользователь выбрал:', buttonId);
-                        if (buttonId === 'call') {
-                            console.log('5. Попытка открыть телефон');
-                            if (tg.openTelegramLink) {
-                                console.log('6. Используем tg.openTelegramLink');
-                                tg.openTelegramLink(`tg://resolve?phone=${phoneNumber}`);
-                                console.log('7. tg.openTelegramLink выполнен');
-                            } else {
-                                console.log('6. tg.openTelegramLink недоступен, пробуем tel:');
-                                const link = document.createElement('a');
-                                link.href = `tel:${phoneNumber}`;
-                                link.style.display = 'none';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                console.log('7. Ссылка tel: кликнута');
-                            }
-                        }
-                    });
-                } else {
-                    console.log('3. tg.showPopup недоступен, показываем alert');
-                    alert('Ошибка: Telegram API не поддерживает всплывающие окна.');
-                }
+        function copyPhoneNumber(phoneNumber) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(phoneNumber)
+                    .then(() => console.log('Номер скопирован в буфер обмена'))
+                    .catch(err => console.error('Ошибка копирования:', err));
             } else {
-                console.log('2. Telegram WebApp не обнаружен, резервный вариант');
-                if (confirm(`Вы хотите позвонить на номер ${phoneNumber}?`)) {
-                    window.location.href = `tel:${phoneNumber}`;
-                    console.log('3. window.location.href выполнен');
-                }
+                // Резервный метод для старых устройств
+                const textarea = document.createElement('textarea');
+                textarea.value = phoneNumber;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                console.log('Номер скопирован через резервный метод');
+            }
+        }
+
+        function openPhone() {
+            const phoneNumber = '+79785791270';
+            if (tg && tg.showPopup) {
+                tg.showPopup({
+                    title: 'Номер телефона',
+                    message: `Скопируйте номер для звонка: ${phoneNumber}`,
+                    buttons: [
+                        { id: 'copy', type: 'default', text: 'Скопировать' },
+                        { type: 'cancel', text: 'Отмена' }
+                    ]
+                }, (buttonId) => {
+                    if (buttonId === 'copy') {
+                        copyPhoneNumber(phoneNumber);
+                        tg.showPopup({
+                            message: 'Номер скопирован! Вставьте его в приложение телефона.'
+                        });
+                    }
+                });
+            } else {
+                copyPhoneNumber(phoneNumber);
+                alert(`Номер ${phoneNumber} скопирован! Вставьте его в приложение телефона.`);
             }
         }
 
         function openWebsite() {
-            console.log('Открываем сайт');
             if (tg && tg.openLink) {
                 tg.openLink('https://buhtahotel.ru');
                 tg.BackButton.show();
