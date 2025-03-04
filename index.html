@@ -2572,15 +2572,15 @@
         }
 
         body:not(.dark-theme) .mini-bar button img.icon {
-            filter: brightness(0.2) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: brightness(0.2) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
         }
 
         body.dark-theme .mini-bar button img.icon {
-            filter: invert(1) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
         }
 
         .mini-bar button.active img.icon {
-            filter: invert(1) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
         }
 
         .mini-bar button:hover img.icon {
@@ -2588,11 +2588,11 @@
         }
 
         body:not(.dark-theme) .mini-bar button:hover img.icon {
-            filter: brightness(0.5) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: brightness(0.5) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
         }
 
         body.dark-theme .mini-bar button:hover img.icon {
-            filter: invert(1) brightness(0.8) contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+            filter: invert(1) brightness(0.8) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
         }
 
         .mini-bar button.cart-button {
@@ -3086,7 +3086,7 @@
             <div class="price-and-button">
                 <div class="price">400₽</div>
             </div>
-        </div>
+                  </div>
         <div class="menu-item" onclick="openModal('Сковорода свиная', 530, '360г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">
             <div class="info">
@@ -3782,7 +3782,7 @@
                 setTimeout(() => {
                     document.getElementById('home-button').classList.remove('active');
                     document.getElementById('menu-button').classList.add('active');
-                    document.getElementById('cart-button').classList.remove('active');
+                                       document.getElementById('cart-button').classList.remove('active');
                 }, 300);
             }
         }
@@ -3855,7 +3855,7 @@
             touchStartY = e.touches[0].clientY;
         });
 
-               modal.addEventListener('touchmove', (e) => {
+        modal.addEventListener('touchmove', (e) => {
             touchCurrentY = e.touches[0].clientY;
             const diff = touchCurrentY - touchStartY;
             if (diff > 0) {
