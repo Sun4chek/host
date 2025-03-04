@@ -2026,8 +2026,6 @@
 <!--    </script>-->
 <!--</body>-->
 <!--</html>-->
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2147,6 +2145,7 @@
             justify-content: center;
             align-items: center;
             padding: 0;
+            cursor: pointer; /* Указывает, что элемент кликабелен */
         }
 
         .social-link img {
@@ -2924,9 +2923,9 @@
             <div class="divider"></div>
 
             <div class="social-links">
-                <a href="tel:+79786910329" class="social-link">
+                <div id="phone-link" class="social-link" onclick="openPhone()">
                     <img id="phone-icon" src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">
-                </a>
+                </div>
                 <a href="mailto:info@restaurant.com" class="social-link">
                     <img src="images/email-icon.png" alt="Почта">
                 </a>
@@ -3409,6 +3408,16 @@
         function toggleAboutUs() {
             const aboutUs = document.querySelector('.about-us');
             aboutUs.classList.toggle('expanded');
+        }
+
+        // Функция для открытия телефона
+        function openPhone() {
+            const phoneNumber = "tel:+79786910329";
+            if (tg && tg.openLink) {
+                tg.openLink(phoneNumber); // Открывает приложение телефона через Telegram API
+            } else {
+                window.location.href = phoneNumber; // Резервный вариант для стандартного поведения
+            }
         }
 
         applyTheme();
