@@ -3410,10 +3410,9 @@
         }
 
         // Функция для открытия телефона с подтверждением
-       function openPhone() {
 
+function openPhone() {
     if (tg && tg.showPopup) {
-        console.log('Показываем popup');
         tg.showPopup({
             title: 'Позвонить',
             message: 'Вы хотите позвонить на номер +79785791270?',
@@ -3422,20 +3421,11 @@
                 { type: 'cancel', text: 'Отмена' }
             ]
         }, (buttonId) => {
-            console.log('Выбран buttonId:', buttonId);
             if (buttonId === 'call') {
-                console.log('Попытка открыть tel:+79785791270');
-                const link = document.createElement('a');
-                link.href = 'tel:+79785791270';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                console.log('Ссылка кликнута');
+                tg.openTelegramLink('tg://resolve?phone=+79785791270');
             }
         });
     } else {
-        console.log('Резервный вариант');
         if (confirm('Вы хотите позвонить на номер +79785791270?')) {
             window.location.href = 'tel:+79785791270';
         }
