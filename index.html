@@ -3410,27 +3410,36 @@
         }
 
         // Функция для открытия телефона с подтверждением
-        function openPhone() {
-            if (tg && tg.showPopup) {
-                tg.showPopup({
-                    title: 'Позвонить',
-                    message: 'Вы хотите позвонить на номер +79785791270?',
-                    buttons: [
-                        { id: 'call', type: 'default', text: 'Позвонить' },
-                        { type: 'cancel', text: 'Отмена' }
-                    ]
-                }, (buttonId) => {
-                    if (buttonId === 'call') {
-                        window.location.href = 'tel:+79785791270'; // Открывает приложение телефона
-                    }
-                });
-            } else {
-                // Резервный вариант для не-Telegram окружения
-                if (confirm('Вы хотите позвонить на номер +79785791270?')) {
-                    window.location.href = 'tel:+79785791270';
-                }
+       function openPhone() {
+    if (tg && tg.showPopup) {
+        console.log('Показываем popup');
+        tg.showPopup({
+            title: 'Позвонить',
+            message: 'Вы хотите позвонить на номер +79786910329?',
+            buttons: [
+                { id: 'call', type: 'default', text: 'Позвонить' },
+                { type: 'cancel', text: 'Отмена' }
+            ]
+        }, (buttonId) => {
+            console.log('Выбран buttonId:', buttonId);
+            if (buttonId === 'call') {
+                console.log('Попытка открыть tel:+79786910329');
+                const link = document.createElement('a');
+                link.href = 'tel:+79786910329';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log('Ссылка кликнута');
             }
+        });
+    } else {
+        console.log('Резервный вариант');
+        if (confirm('Вы хотите позвонить на номер +79786910329?')) {
+            window.location.href = 'tel:+79786910329';
         }
+    }
+}
 
         // Функция для открытия сайта
         function openWebsite() {
