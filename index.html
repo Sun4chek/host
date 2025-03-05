@@ -2059,6 +2059,56 @@
             --border-color: #444;
         }
 
+        /* Стили для анимации корзины в светлой теме */
+        body:not(.dark-theme) .empty-cart img {
+            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+        }
+
+        body:not(.dark-theme) .empty-cart p {
+            color: #333; /* Тёмный текст в светлой теме */
+        }
+
+        /* Стили для анимации корзины в тёмной теме */
+        body.dark-theme .empty-cart img {
+            filter: invert(1) contrast(1.2) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.5));
+        }
+
+        body.dark-theme .empty-cart p {
+            color: #ffffff; /* Белый текст в тёмной теме */
+        }
+
+        /* Анимация для светлой темы */
+        body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
+            animation: bounceLight 0.5s ease;
+            color: #333; /* Тёмный цвет иконки в светлой теме */
+        }
+
+        /* Анимация для тёмной темы */
+        body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
+            animation: bounceDark 0.5s ease;
+            color: #ffffff; /* Белый цвет иконки в тёмной теме */
+        }
+
+        @keyframes bounceLight {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes bounceDark {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+                filter: brightness(1.5);
+            }
+        }
+
+        /* Остальные стили */
         #header {
             display: flex;
             flex-direction: column;
@@ -2585,35 +2635,6 @@
             font-size: 12px;
         }
 
-        /* Анимация для светлой темы */
-        body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
-            animation: bounceLight 0.5s ease;
-        }
-
-        @keyframes bounceLight {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-
-        /* Анимация для тёмной темы */
-        body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
-            animation: bounceDark 0.5s ease;
-        }
-
-        @keyframes bounceDark {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-                filter: brightness(1.5);
-            }
-        }
-
         .custom-alert {
             position: fixed;
             top: 0;
@@ -2859,13 +2880,11 @@
             width: 150px;
             height: 150px;
             animation: emptyCartShake 1.5s infinite ease-in-out;
-            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
         }
 
         .empty-cart p {
             margin-top: 20px;
             font-size: 18px;
-            color: var(--secondary-text-color);
         }
 
         @keyframes emptyCartShake {
