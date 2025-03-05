@@ -2565,36 +2565,6 @@
             transform: scale(1.1);
         }
 
-        .mini-bar button img.icon {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.2s ease, filter 0.2s ease;
-        }
-
-        body:not(.dark-theme) .mini-bar button img.icon {
-            filter: brightness(0.2) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
-        }
-
-        body.dark-theme .mini-bar button img.icon {
-            filter: invert(1) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
-        }
-
-        .mini-bar button.active img.icon {
-            filter: invert(1) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
-        }
-
-        .mini-bar button:hover img.icon {
-            transform: scale(1.1);
-        }
-
-        body:not(.dark-theme) .mini-bar button:hover img.icon {
-            filter: brightness(0.5) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
-        }
-
-        body.dark-theme .mini-bar button:hover img.icon {
-            filter: invert(1) brightness(0.8) contrast(1.2) drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
-        }
-
         .mini-bar button.cart-button {
             position: relative;
         }
@@ -2609,7 +2579,7 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #ff0000;
+            background-color: #2ea6ff; /* Синий цвет, как в предоставленном коде */
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -3086,7 +3056,7 @@
             <div class="price-and-button">
                 <div class="price">400₽</div>
             </div>
-                  </div>
+        </div>
         <div class="menu-item" onclick="openModal('Сковорода свиная', 530, '360г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">
             <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">
             <div class="info">
@@ -3440,7 +3410,7 @@
         </button>
         <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
             <div class="cart-icon-wrapper">
-                <img class="icon" src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Корзина">
+                <span class="material-symbols-outlined icon">shopping_cart</span>
                 <div id="cart-counter" class="cart-counter">0</div>
             </div>
             <span>Корзина</span>
@@ -3782,7 +3752,7 @@
                 setTimeout(() => {
                     document.getElementById('home-button').classList.remove('active');
                     document.getElementById('menu-button').classList.add('active');
-                                       document.getElementById('cart-button').classList.remove('active');
+                    document.getElementById('cart-button').classList.remove('active');
                 }, 300);
             }
         }
@@ -3832,8 +3802,7 @@
                 paymentMethod,
                 deliveryMethod,
                 roomNumber,
-                cart: cart.map(item => ({ name: item.name, price: item.price })),
-                total: document.getElementById('total-price').textContent
+                cart: cart.map(item => ({ name: item.name, price: item.price })),                total: document.getElementById('total-price').textContent
             };
 
             if (tg && tg.sendData) {
