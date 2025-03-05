@@ -3442,17 +3442,16 @@
 
     <script>
         let cart = [];
-        let tg = window.Telegram.WebApp;
+        let tg = window.Telegram.WebApp || { colorScheme: 'light' }; // Для теста вне Telegram
         let modalQuantity = 1;
         let currentItem = null;
 
-        tg.enableClosingConfirmation();
-        tg.disableVerticalSwipes();
-        tg.expand();
-
+        // Применение темы с отладкой
         function applyTheme() {
             const body = document.body;
-            if (tg.colorScheme === 'dark') {
+            const isDark = tg.colorScheme === 'dark';
+            console.log('Применяем тему:', tg.colorScheme);
+            if (isDark) {
                 body.classList.add('dark-theme');
             } else {
                 body.classList.remove('dark-theme');
@@ -3533,8 +3532,19 @@
             }
         }
 
+        // Инициализация Telegram WebApp
+        if (tg.enableClosingConfirmation) {
+            tg.enableClosingConfirmation();
+            tg.disableVerticalSwipes();
+            tg.expand();
+        }
+
         applyTheme();
-        tg.onEvent('themeChanged', applyTheme);
+        if (tg.onEvent) {
+            tg.onEvent('themeChanged', applyTheme);
+        } else {
+            console.warn('Тестирование вне Telegram, тема фиксирована');
+        }
 
         const loadingScreen = document.getElementById('loading-screen');
         loadingScreen.style.display = 'flex';
@@ -3663,8 +3673,12 @@
             updateCartCounter();
 
             const cartButton = document.querySelector('.mini-bar .cart-button');
+            console.log('Добавляем товар в корзину, тема:', tg.colorScheme);
             cartButton.classList.add('animate');
-            setTimeout(() => cartButton.classList.remove('animate'), 500);
+            setTimeout(() => {
+                cartButton.classList.remove('animate');
+                console.log('Анимация завершена');
+            }, 500);
 
             showCustomAlert('Товар добавлен в корзину!');
             closeModal();
