@@ -2547,7 +2547,7 @@
             transition: transform 0.2s ease;
         }
 
-        /* Цвет иконки в зависимости от темы */
+        /* Цвет иконки в мини-баре */
         body:not(.dark-theme) .mini-bar button .material-symbols-outlined.icon {
             color: #333 !important;
         }
@@ -2593,11 +2593,9 @@
         @keyframes bounceLight {
             0%, 100% {
                 transform: scale(1);
-                color: #333;
             }
             50% {
                 transform: scale(1.2);
-                color: #000;
             }
         }
 
@@ -2609,11 +2607,9 @@
         @keyframes bounceDark {
             0%, 100% {
                 transform: scale(1);
-                color: #ffffff;
             }
             50% {
                 transform: scale(1.2);
-                color: #ffffff;
                 filter: brightness(1.5);
             }
         }
