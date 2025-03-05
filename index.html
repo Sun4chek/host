@@ -2579,15 +2579,45 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #2ea6ff; /* Синий цвет, как в предоставленном коде */
+            background-color: #2ea6ff;
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
             font-size: 12px;
         }
 
-        .mini-bar button.cart-button.animate {
-            animation: bounce 0.5s ease;
+        /* Анимация для светлой темы */
+        body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
+            animation: bounceLight 0.5s ease;
+        }
+
+        @keyframes bounceLight {
+            0%, 100% {
+                transform: scale(1);
+                color: #333; /* Тёмный цвет в светлой теме */
+            }
+            50% {
+                transform: scale(1.2);
+                color: #000; /* Более насыщенный тёмный во время анимации */
+                filter: brightness(1.2); /* Лёгкое усиление для эффекта */
+            }
+        }
+
+        /* Анимация для тёмной темы */
+        body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
+            animation: bounceDark 0.5s ease;
+        }
+
+        @keyframes bounceDark {
+            0%, 100% {
+                transform: scale(1);
+                color: #ffffff; /* Белый цвет в тёмной теме */
+            }
+            50% {
+                transform: scale(1.2);
+                color: #ffffff; /* Остаётся белым */
+                filter: brightness(1.5); /* Усиление яркости для эффекта свечения */
+            }
         }
 
         .custom-alert {
@@ -2614,11 +2644,6 @@
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
         }
 
         .checkout-form {
@@ -3046,7 +3071,6 @@
                 <div class="price">450₽</div>
             </div>
         </div>
-
         <div class="menu-item" onclick="openModal('Куриная отбивная', 400, '200г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">
             <div class="info">
@@ -3321,528 +3345,529 @@
         </div>
     </div>
 
-    <div id="cart-screen" class="container">
-        <span class="back-button" onclick="showScreen('menu-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Корзина</h2>
-        <div id="cart-items"></div>
-        <div class="empty-cart" id="empty-cart">
-            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
-            <p>Корзина пока пустая</p>
+   <div id="cart-screen" class="container">
+    <span class="back-button" onclick="showScreen('menu-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Корзина</h2>
+    <div id="cart-items"></div>
+    <div class="empty-cart" id="empty-cart">
+        <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
+        <p>Корзина пока пустая</p>
+    </div>
+    <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
+    <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+    <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
+</div>
+
+<div id="checkout-screen" class="container">
+    <span class="back-button" onclick="showScreen('cart-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Оформление заказа</h2>
+    <form id="checkout-form" class="checkout-form">
+        <input type="text" id="last-name" placeholder="Фамилия" required>
+        <input type="text" id="first-name" placeholder="Имя" required>
+        <input type="tel" id="phone" placeholder="Номер телефона" required>
+        <select id="payment-method" required>
+            <option value="" disabled selected>Способ оплаты</option>
+            <option value="cash">Наличные</option>
+            <option value="card">Карта</option>
+        </select>
+        <select id="delivery-method" required onchange="toggleRoomNumber()">
+            <option value="" disabled selected>Способ получения</option>
+            <option value="delivery">Доставка</option>
+            <option value="pickup">Самовынос</option>
+        </select>
+        <div id="room-number-container" style="display: none;">
+            <input type="text" id="room-number" placeholder="Номер комнаты">
         </div>
-        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
-    </div>
+        <button type="submit">Подтвердить заказ</button>
+    </form>
+</div>
 
-    <div id="checkout-screen" class="container">
-        <span class="back-button" onclick="showScreen('cart-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Оформление заказа</h2>
-        <form id="checkout-form" class="checkout-form">
-            <input type="text" id="last-name" placeholder="Фамилия" required>
-            <input type="text" id="first-name" placeholder="Имя" required>
-            <input type="tel" id="phone" placeholder="Номер телефона" required>
-            <select id="payment-method" required>
-                <option value="" disabled selected>Способ оплаты</option>
-                <option value="cash">Наличные</option>
-                <option value="card">Карта</option>
-            </select>
-            <select id="delivery-method" required onchange="toggleRoomNumber()">
-                <option value="" disabled selected>Способ получения</option>
-                <option value="delivery">Доставка</option>
-                <option value="pickup">Самовынос</option>
-            </select>
-            <div id="room-number-container" style="display: none;">
-                <input type="text" id="room-number" placeholder="Номер комнаты">
+<div id="gallery-screen" class="container">
+    <button class="close-gallery" onclick="closeGallery()">×</button>
+    <div class="gallery-fullscreen">
+        <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
+        <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
+        <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
+    </div>
+    <div class="gallery-nav">
+        <button onclick="prevGalleryImage()">◄</button>
+        <button onclick="nextGalleryImage()">►</button>
+    </div>
+</div>
+
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <img id="modal-image" class="modal-image" src="" alt="">
+        <div class="modal-info">
+            <div class="modal-title-price">
+                <h3 id="modal-title"></h3>
+                <div class="price" id="modal-price"></div>
             </div>
-            <button type="submit">Подтвердить заказ</button>
-        </form>
-    </div>
-
-    <div id="gallery-screen" class="container">
-        <button class="close-gallery" onclick="closeGallery()">×</button>
-        <div class="gallery-fullscreen">
-            <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
-            <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
-            <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
+            <p id="modal-weight"></p>
+            <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>
         </div>
-        <div class="gallery-nav">
-            <button onclick="prevGalleryImage()">◄</button>
-            <button onclick="nextGalleryImage()">►</button>
+        <div class="modal-controls">
+            <div class="quantity-controls">
+                <button onclick="changeModalQuantity(-1)">−</button>
+                <span id="modal-quantity">1</span>
+                <button onclick="changeModalQuantity(1)">+</button>
+            </div>
+            <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal()">Добавить в корзину</button>
         </div>
     </div>
+</div>
 
-    <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <img id="modal-image" class="modal-image" src="" alt="">
-            <div class="modal-info">
-                <div class="modal-title-price">
-                    <h3 id="modal-title"></h3>
-                    <div class="price" id="modal-price"></div>
-                </div>
-                <p id="modal-weight"></p>
-                <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>
-            </div>
-            <div class="modal-controls">
-                <div class="quantity-controls">
-                    <button onclick="changeModalQuantity(-1)">−</button>
-                    <span id="modal-quantity">1</span>
-                    <button onclick="changeModalQuantity(1)">+</button>
-                </div>
-                <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal()">Добавить в корзину</button>
-            </div>
+<div class="mini-bar">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <button onclick="showScreen('menu-screen')" id="home-button">
+        <span class="material-symbols-outlined icon">home</span>
+        <span>Главная</span>
+    </button>
+    <button onclick="scrollToCategories()" id="menu-button">
+        <span class="material-symbols-outlined icon">menu_book</span>
+        <span>Меню</span>
+    </button>
+    <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
+        <div class="cart-icon-wrapper">
+            <span class="material-symbols-outlined icon">shopping_cart</span>
+            <div id="cart-counter" class="cart-counter">0</div>
         </div>
-    </div>
+        <span>Корзина</span>
+    </button>
+</div>
 
-    <div class="mini-bar">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <button onclick="showScreen('menu-screen')" id="home-button">
-            <span class="material-symbols-outlined icon">home</span>
-            <span>Главная</span>
-        </button>
-        <button onclick="scrollToCategories()" id="menu-button">
-            <span class="material-symbols-outlined icon">menu_book</span>
-            <span>Меню</span>
-        </button>
-        <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
-            <div class="cart-icon-wrapper">
-                <span class="material-symbols-outlined icon">shopping_cart</span>
-                <div id="cart-counter" class="cart-counter">0</div>
-            </div>
-            <span>Корзина</span>
-        </button>
-    </div>
+<script>
+    let cart = [];
+    let tg = window.Telegram.WebApp;
+    let modalQuantity = 1;
+    let currentItem = null;
 
-    <script>
-        let cart = [];
-        let tg = window.Telegram.WebApp;
-        let modalQuantity = 1;
-        let currentItem = null;
+    tg.enableClosingConfirmation();
+    tg.disableVerticalSwipes();
+    tg.expand();
 
-        tg.enableClosingConfirmation();
-        tg.disableVerticalSwipes();
-        tg.expand();
-
-        function applyTheme() {
-            const body = document.body;
-            if (tg.colorScheme === 'dark') {
-                body.classList.add('dark-theme');
-            } else {
-                body.classList.remove('dark-theme');
-            }
-            updateArrowIcons();
-            updateAboutUsArrow();
+    function applyTheme() {
+        const body = document.body;
+        if (tg.colorScheme === 'dark') {
+            body.classList.add('dark-theme');
+        } else {
+            body.classList.remove('dark-theme');
         }
+        updateArrowIcons();
+        updateAboutUsArrow();
+    }
 
-        function updateArrowIcons() {
-            const arrows = document.querySelectorAll('.arrow-icon');
-            const isDarkTheme = document.body.classList.contains('dark-theme');
-            arrows.forEach(arrow => {
-                arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png';
-            });
-        }
-
-        function updateAboutUsArrow() {
-            const arrow = document.querySelector('.custom-arrow-about');
-            const isDarkTheme = document.body.classList.contains('dark-theme');
-            arrow.src = isDarkTheme ? 'images/arrow-right-dark.png' : 'images/arrow-right-light.png';
-        }
-
-        function toggleAboutUs() {
-            const aboutUs = document.querySelector('.about-us');
-            aboutUs.classList.toggle('expanded');
-        }
-
-        function copyPhoneNumber(phoneNumber) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(phoneNumber)
-                    .then(() => console.log('Номер скопирован в буфер обмена'))
-                    .catch(err => console.error('Ошибка копирования:', err));
-            } else {
-                const textarea = document.createElement('textarea');
-                textarea.value = phoneNumber;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                console.log('Номер скопирован через резервный метод');
-            }
-        }
-
-        function openPhone() {
-            const phoneNumber = '+79785791270';
-            if (tg && tg.showPopup) {
-                tg.showPopup({
-                    title: 'Номер телефона',
-                    message: `Скопируйте номер для звонка: ${phoneNumber}`,
-                    buttons: [
-                        { id: 'copy', type: 'default', text: 'Скопировать' },
-                        { type: 'cancel', text: 'Отмена' }
-                    ]
-                }, (buttonId) => {
-                    if (buttonId === 'copy') {
-                        copyPhoneNumber(phoneNumber);
-                        tg.showPopup({
-                            message: 'Номер скопирован! Вставьте его в приложение телефона.'
-                        });
-                    }
-                });
-            } else {
-                copyPhoneNumber(phoneNumber);
-                alert(`Номер ${phoneNumber} скопирован! Вставьте его в приложение телефона.`);
-            }
-        }
-
-        function openWebsite() {
-            if (tg && tg.openLink) {
-                tg.openLink('https://buhtahotel.ru');
-                tg.BackButton.show();
-                tg.BackButton.onClick(() => {
-                    tg.BackButton.hide();
-                    showScreen('menu-screen');
-                });
-            } else {
-                window.open('https://buhtahotel.ru', '_blank');
-            }
-        }
-
-        applyTheme();
-        tg.onEvent('themeChanged', applyTheme);
-
-        const loadingScreen = document.getElementById('loading-screen');
-        loadingScreen.style.display = 'flex';
-        setTimeout(() => {
-            loadingScreen.classList.add('hide');
-            document.getElementById('menu-screen').classList.add('active');
-        }, 3000);
-
-        let currentIndex = 0;
-        const images = document.querySelectorAll('.gallery-images img');
-        const totalImages = images.length;
-
-        function showImage(index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
-        }
-
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % totalImages;
-            showImage(currentIndex);
-        }
-
-        setInterval(nextImage, 5000);
-
-        let galleryIndex = 0;
-        const galleryImages = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
-        const totalGalleryImages = galleryImages.length;
-
-        function showGalleryImage(index) {
-            galleryImages.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
-        }
-
-        function openGallery() {
-            document.getElementById('gallery-screen').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            galleryIndex = currentIndex;
-            showGalleryImage(galleryIndex);
-        }
-
-        function closeGallery() {
-            document.getElementById('gallery-screen').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function nextGalleryImage() {
-            galleryIndex = (galleryIndex + 1) % totalGalleryImages;
-            showGalleryImage(galleryIndex);
-        }
-
-        function prevGalleryImage() {
-            galleryIndex = (galleryIndex - 1 + totalGalleryImages) % totalGalleryImages;
-            showGalleryImage(galleryIndex);
-        }
-
-        document.querySelector('.gallery').addEventListener('click', openGallery);
-
-        const galleryScreen = document.getElementById('gallery-screen');
-        let touchStartX = 0;
-        let touchCurrentX = 0;
-
-        galleryScreen.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
+    function updateArrowIcons() {
+        const arrows = document.querySelectorAll('.arrow-icon');
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        arrows.forEach(arrow => {
+            arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png';
         });
+    }
 
-        galleryScreen.addEventListener('touchmove', (e) => {
-            touchCurrentX = e.touches[0].clientX;
-        });
+    function updateAboutUsArrow() {
+        const arrow = document.querySelector('.custom-arrow-about');
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        arrow.src = isDarkTheme ? 'images/arrow-right-dark.png' : 'images/arrow-right-light.png';
+    }
 
-        galleryScreen.addEventListener('touchend', () => {
-            const diff = touchStartX - touchCurrentX;
-            if (diff > 50) {
-                nextGalleryImage();
-            } else if (diff < -50) {
-                prevGalleryImage();
-            }
-        });
+    function toggleAboutUs() {
+        const aboutUs = document.querySelector('.about-us');
+        aboutUs.classList.toggle('expanded');
+    }
 
-        function openModal(name, price, weight, image) {
-            currentItem = { name, price, weight, image };
-            modalQuantity = 1;
-
-            document.getElementById('modal-title').textContent = name;
-            document.getElementById('modal-price').textContent = `${price}₽`;
-            document.getElementById('modal-weight').textContent = weight;
-            document.getElementById('modal-image').src = image;
-            document.getElementById('modal-quantity').textContent = modalQuantity;
-
-            document.getElementById('modal').classList.add('active');
-            document.getElementById('modal-overlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
+    function copyPhoneNumber(phoneNumber) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(phoneNumber)
+                .then(() => console.log('Номер скопирован в буфер обмена'))
+                .catch(err => console.error('Ошибка копирования:', err));
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = phoneNumber;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            console.log('Номер скопирован через резервный метод');
         }
+    }
 
-        function closeModal() {
-            document.getElementById('modal').style.bottom = '-100%';
-            document.getElementById('modal').classList.remove('active');
-            document.getElementById('modal-overlay').classList.remove('active');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                modal.style.removeProperty('bottom');
-            }, 300);
-        }
-
-        function changeModalQuantity(delta) {
-            modalQuantity = Math.max(1, modalQuantity + delta);
-            document.getElementById('modal-quantity').textContent = modalQuantity;
-        }
-
-        function addToCartFromModal() {
-            if (!currentItem) return;
-
-            const existingItem = cart.find(item => item.name === currentItem.name);
-            if (existingItem) {
-                existingItem.quantity += modalQuantity;
-            } else {
-                cart.push({
-                    name: currentItem.name,
-                    price: currentItem.price,
-                    quantity: modalQuantity
-                });
-            }
-
-            updateCart();
-            updateCartCounter();
-
-            const cartButton = document.querySelector('.mini-bar .cart-button');
-            cartButton.classList.add('animate');
-            setTimeout(() => cartButton.classList.remove('animate'), 500);
-
-            showCustomAlert('Товар добавлен в корзину!');
-            closeModal();
-        }
-
-        function updateCart() {
-            const cartItems = document.getElementById('cart-items');
-            const totalPrice = document.getElementById('total-price');
-            const emptyCart = document.getElementById('empty-cart');
-            cartItems.innerHTML = '';
-            let total = 0;
-
-            if (cart.length === 0) {
-                emptyCart.classList.add('active');
-                cartItems.style.display = 'none';
-            } else {
-                emptyCart.classList.remove('active');
-                cartItems.style.display = 'block';
-                cart.forEach((item, index) => {
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'menu-item';
-                    cartItem.innerHTML = `
-                        <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
-                        <div class="info">
-                            <h3>${item.name}</h3>
-                            <p>${item.price}₽ за шт.</p>
-                        </div>
-                        <div class="quantity-controls">
-                            <button onclick="changeQuantity(${index}, -1)">−</button>
-                            <span>${item.quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)">+</button>
-                        </div>
-                    `;
-                    cartItems.appendChild(cartItem);
-                    total += item.price * item.quantity;
-                });
-            }
-
-            totalPrice.textContent = total;
-        }
-
-        function changeQuantity(index, delta) {
-            const item = cart[index];
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            updateCart();
-            updateCartCounter();
-        }
-
-        function updateCartCounter() {
-            const cartCounter = document.getElementById('cart-counter');
-            cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-        }
-
-        window.addEventListener('scroll', () => {
-            const categoryGrid = document.getElementById('category-grid');
-            const menuScreen = document.getElementById('menu-screen');
-            const homeButton = document.getElementById('home-button');
-            const menuButton = document.getElementById('menu-button');
-            const cartButton = document.getElementById('cart-button');
-
-            if (menuScreen.classList.contains('active')) {
-                const rect = categoryGrid.getBoundingClientRect();
-                const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
-
-                if (isCategoriesVisible) {
-                    homeButton.classList.remove('active');
-                    menuButton.classList.add('active');
-                    cartButton.classList.remove('active');
-                } else {
-                    homeButton.classList.add('active');
-                    menuButton.classList.remove('active');
-                    cartButton.classList.remove('active');
+    function openPhone() {
+        const phoneNumber = '+79785791270';
+        if (tg && tg.showPopup) {
+            tg.showPopup({
+                title: 'Номер телефона',
+                message: `Скопируйте номер для звонка: ${phoneNumber}`,
+                buttons: [
+                    { id: 'copy', type: 'default', text: 'Скопировать' },
+                    { type: 'cancel', text: 'Отмена' }
+                ]
+            }, (buttonId) => {
+                if (buttonId === 'copy') {
+                    copyPhoneNumber(phoneNumber);
+                    tg.showPopup({
+                        message: 'Номер скопирован! Вставьте его в приложение телефона.'
+                    });
                 }
-            }
+            });
+        } else {
+            copyPhoneNumber(phoneNumber);
+            alert(`Номер ${phoneNumber} скопирован! Вставьте его в приложение телефона.`);
+        }
+    }
+
+    function openWebsite() {
+        if (tg && tg.openLink) {
+            tg.openLink('https://buhtahotel.ru');
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                tg.BackButton.hide();
+                showScreen('menu-screen');
+            });
+        } else {
+            window.open('https://buhtahotel.ru', '_blank');
+        }
+    }
+
+    applyTheme();
+    tg.onEvent('themeChanged', applyTheme);
+
+    const loadingScreen = document.getElementById('loading-screen');
+    loadingScreen.style.display = 'flex';
+    setTimeout(() => {
+        loadingScreen.classList.add('hide');
+        document.getElementById('menu-screen').classList.add('active');
+    }, 3000);
+
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.gallery-images img');
+    const totalImages = images.length;
+
+    function showImage(index) {
+        images.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
         });
+    }
 
-        function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % totalImages;
+        showImage(currentIndex);
+    }
 
-            const homeButton = document.getElementById('home-button');
-            const menuButton = document.getElementById('menu-button');
-            const cartButton = document.getElementById('cart-button');
+    setInterval(nextImage, 5000);
 
-            homeButton.classList.remove('active');
-            menuButton.classList.remove('active');
-            cartButton.classList.remove('active');
+    let galleryIndex = 0;
+    const galleryImages = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
+    const totalGalleryImages = galleryImages.length;
 
-            if (screenId === 'menu-screen') {
-                homeButton.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if (screenId === 'cart-screen') {
-                cartButton.classList.add('active');
-                updateCart();
-            } else {
-                menuButton.classList.add('active');
-            }
-        }
-
-        function scrollToCategories() {
-            showScreen('menu-screen');
-            const categoryGrid = document.getElementById('category-grid');
-            if (categoryGrid) {
-                categoryGrid.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(() => {
-                    document.getElementById('home-button').classList.remove('active');
-                    document.getElementById('menu-button').classList.add('active');
-                    document.getElementById('cart-button').classList.remove('active');
-                }, 300);
-            }
-        }
-
-        function toggleRoomNumber() {
-            const deliveryMethod = document.getElementById('delivery-method');
-            const roomNumberContainer = document.getElementById('room-number-container');
-            if (deliveryMethod.value === 'delivery') {
-                roomNumberContainer.style.display = 'block';
-            } else {
-                roomNumberContainer.style.display = 'none';
-            }
-        }
-
-        function showCustomAlert(message) {
-            const alert = document.getElementById('custom-alert');
-            alert.textContent = message;
-            alert.classList.add('show');
-            setTimeout(() => alert.classList.remove('show'), 1500);
-        }
-
-        function clearCart() {
-            cart = [];
-            updateCart();
-            updateCartCounter();
-        }
-
-        function submitOrder(event) {
-            event.preventDefault();
-
-            const lastName = document.getElementById('last-name').value;
-            const firstName = document.getElementById('first-name').value;
-            const phone = document.getElementById('phone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const deliveryMethod = document.getElementById('delivery-method').value;
-            const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
-
-            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
-                alert('Пожалуйста, заполните все обязательные поля.');
-                return;
-            }
-
-            const orderData = {
-                lastName,
-                firstName,
-                phone,
-                paymentMethod,
-                deliveryMethod,
-                roomNumber,
-                cart: cart.map(item => ({ name: item.name, price: item.price })),                total: document.getElementById('total-price').textContent
-            };
-
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(orderData));
-            }
-
-            alert('Заказ успешно оформлен!');
-            clearCart();
-            showScreen('menu-screen');
-        }
-
-        document.getElementById('checkout-form').addEventListener('submit', submitOrder);
-
-        const modal = document.getElementById('modal');
-        let touchStartY = 0;
-        let touchCurrentY = 0;
-
-        modal.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
+    function showGalleryImage(index) {
+        galleryImages.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
         });
+    }
 
-        modal.addEventListener('touchmove', (e) => {
-            touchCurrentY = e.touches[0].clientY;
-            const diff = touchCurrentY - touchStartY;
-            if (diff > 0) {
-                modal.style.bottom = `-${diff}px`;
-            }
-        });
+    function openGallery() {
+        document.getElementById('gallery-screen').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        galleryIndex = currentIndex;
+        showGalleryImage(galleryIndex);
+    }
 
-        modal.addEventListener('touchend', () => {
-            const diff = touchCurrentY - touchStartY;
-            if (diff > 100) {
-                modal.style.transition = 'bottom 0.3s ease';
-                closeModal();
-            } else {
-                modal.style.bottom = '0';
-            }
-        });
+    function closeGallery() {
+        document.getElementById('gallery-screen').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function nextGalleryImage() {
+        galleryIndex = (galleryIndex + 1) % totalGalleryImages;
+        showGalleryImage(galleryIndex);
+    }
+
+    function prevGalleryImage() {
+        galleryIndex = (galleryIndex - 1 + totalGalleryImages) % totalGalleryImages;
+        showGalleryImage(galleryIndex);
+    }
+
+    document.querySelector('.gallery').addEventListener('click', openGallery);
+
+    const galleryScreen = document.getElementById('gallery-screen');
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+
+    galleryScreen.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    galleryScreen.addEventListener('touchmove', (e) => {
+        touchCurrentX = e.touches[0].clientX;
+    });
+
+    galleryScreen.addEventListener('touchend', () => {
+        const diff = touchStartX - touchCurrentX;
+        if (diff > 50) {
+            nextGalleryImage();
+        } else if (diff < -50) {
+            prevGalleryImage();
+        }
+    });
+
+    function openModal(name, price, weight, image) {
+        currentItem = { name, price, weight, image };
+        modalQuantity = 1;
+
+        document.getElementById('modal-title').textContent = name;
+        document.getElementById('modal-price').textContent = `${price}₽`;
+        document.getElementById('modal-weight').textContent = weight;
+        document.getElementById('modal-image').src = image;
+        document.getElementById('modal-quantity').textContent = modalQuantity;
+
+        document.getElementById('modal').classList.add('active');
+        document.getElementById('modal-overlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.bottom = '-100%';
+        document.getElementById('modal').classList.remove('active');
+        document.getElementById('modal-overlay').classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            document.getElementById('modal').style.removeProperty('bottom');
+        }, 300);
+    }
+
+    function changeModalQuantity(delta) {
+        modalQuantity = Math.max(1, modalQuantity + delta);
+        document.getElementById('modal-quantity').textContent = modalQuantity;
+    }
+
+    function addToCartFromModal() {
+        if (!currentItem) return;
+
+        const existingItem = cart.find(item => item.name === currentItem.name);
+        if (existingItem) {
+            existingItem.quantity += modalQuantity;
+        } else {
+            cart.push({
+                name: currentItem.name,
+                price: currentItem.price,
+                quantity: modalQuantity
+            });
+        }
 
         updateCart();
-    </script>
+        updateCartCounter();
+
+        const cartButton = document.querySelector('.mini-bar .cart-button');
+        cartButton.classList.add('animate');
+        setTimeout(() => cartButton.classList.remove('animate'), 500);
+
+        showCustomAlert('Товар добавлен в корзину!');
+        closeModal();
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById('cart-items');
+        const totalPrice = document.getElementById('total-price');
+        const emptyCart = document.getElementById('empty-cart');
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            emptyCart.classList.add('active');
+            cartItems.style.display = 'none';
+        } else {
+            emptyCart.classList.remove('active');
+            cartItems.style.display = 'block';
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'menu-item';
+                cartItem.innerHTML = `
+                    <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
+                    <div class="info">
+                        <h3>${item.name}</h3>
+                        <p>${item.price}₽ за шт.</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button onclick="changeQuantity(${index}, -1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, 1)">+</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+                total += item.price * item.quantity;
+            });
+        }
+
+        totalPrice.textContent = total;
+    }
+
+    function changeQuantity(index, delta) {
+        const item = cart[index];
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            cart.splice(index, 1);
+        }
+        updateCart();
+        updateCartCounter();
+    }
+
+    function updateCartCounter() {
+        const cartCounter = document.getElementById('cart-counter');
+        cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    window.addEventListener('scroll', () => {
+        const categoryGrid = document.getElementById('category-grid');
+        const menuScreen = document.getElementById('menu-screen');
+        const homeButton = document.getElementById('home-button');
+        const menuButton = document.getElementById('menu-button');
+        const cartButton = document.getElementById('cart-button');
+
+        if (menuScreen.classList.contains('active')) {
+            const rect = categoryGrid.getBoundingClientRect();
+            const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
+
+            if (isCategoriesVisible) {
+                homeButton.classList.remove('active');
+                menuButton.classList.add('active');
+                cartButton.classList.remove('active');
+            } else {
+                homeButton.classList.add('active');
+                menuButton.classList.remove('active');
+                cartButton.classList.remove('active');
+            }
+        }
+    });
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+
+        const homeButton = document.getElementById('home-button');
+        const menuButton = document.getElementById('menu-button');
+        const cartButton = document.getElementById('cart-button');
+
+        homeButton.classList.remove('active');
+        menuButton.classList.remove('active');
+        cartButton.classList.remove('active');
+
+        if (screenId === 'menu-screen') {
+            homeButton.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (screenId === 'cart-screen') {
+            cartButton.classList.add('active');
+            updateCart();
+        } else {
+            menuButton.classList.add('active');
+        }
+    }
+
+    function scrollToCategories() {
+        showScreen('menu-screen');
+        const categoryGrid = document.getElementById('category-grid');
+        if (categoryGrid) {
+            categoryGrid.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('home-button').classList.remove('active');
+                document.getElementById('menu-button').classList.add('active');
+                document.getElementById('cart-button').classList.remove('active');
+            }, 300);
+        }
+    }
+
+    function toggleRoomNumber() {
+        const deliveryMethod = document.getElementById('delivery-method');
+        const roomNumberContainer = document.getElementById('room-number-container');
+        if (deliveryMethod.value === 'delivery') {
+            roomNumberContainer.style.display = 'block';
+        } else {
+            roomNumberContainer.style.display = 'none';
+        }
+    }
+
+    function showCustomAlert(message) {
+        const alert = document.getElementById('custom-alert');
+        alert.textContent = message;
+        alert.classList.add('show');
+        setTimeout(() => alert.classList.remove('show'), 1500);
+    }
+
+    function clearCart() {
+        cart = [];
+        updateCart();
+        updateCartCounter();
+    }
+
+    function submitOrder(event) {
+        event.preventDefault();
+
+        const lastName = document.getElementById('last-name').value;
+        const firstName = document.getElementById('first-name').value;
+        const phone = document.getElementById('phone').value;
+        const paymentMethod = document.getElementById('payment-method').value;
+        const deliveryMethod = document.getElementById('delivery-method').value;
+        const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
+
+        if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
+            alert('Пожалуйста, заполните все обязательные поля.');
+            return;
+        }
+
+        const orderData = {
+            lastName,
+            firstName,
+            phone,
+            paymentMethod,
+            deliveryMethod,
+            roomNumber,
+            cart: cart.map(item => ({ name: item.name, price: item.price })),
+            total: document.getElementById('total-price').textContent
+        };
+
+        if (tg && tg.sendData) {
+            tg.sendData(JSON.stringify(orderData));
+        }
+
+        alert('Заказ успешно оформлен!');
+        clearCart();
+        showScreen('menu-screen');
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', submitOrder);
+
+    const modal = document.getElementById('modal');
+    let touchStartY = 0;
+    let touchCurrentY = 0;
+
+    modal.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    });
+
+    modal.addEventListener('touchmove', (e) => {
+        touchCurrentY = e.touches[0].clientY;
+        const diff = touchCurrentY - touchStartY;
+        if (diff > 0) {
+            modal.style.bottom = `-${diff}px`;
+        }
+    });
+
+    modal.addEventListener('touchend', () => {
+        const diff = touchCurrentY - touchStartY;
+        if (diff > 100) {
+            modal.style.transition = 'bottom 0.3s ease';
+            closeModal();
+        } else {
+            modal.style.bottom = '0';
+        }
+    });
+
+    updateCart();
+</script>
 </body>
 </html>
