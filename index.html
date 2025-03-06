@@ -2660,30 +2660,93 @@
             visibility: visible;
             transform: translateY(0);
         }
+/* Стили для формы оформления заказа */
+#checkout-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Занимает весь экран */
+    padding: 20px;
+    background-image: url('https://example.com/your-background-image.jpg'); /* Ваше фоновое изображение */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-        .checkout-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+#checkout-form {
+    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px; /* Максимальная ширина формы */
+    backdrop-filter: blur(10px); /* Размытие фона */
+    text-align: center;
+}
 
-        .checkout-form input,
-        .checkout-form select {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
+#checkout-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color);
+}
 
-        .checkout-form button {
-            background-color: #ff6600;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+#checkout-form input,
+#checkout-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон для полей */
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#checkout-form input:focus,
+#checkout-form select:focus {
+    border-color: #2ea6ff;
+    box-shadow: 0 0 8px rgba(46, 166, 255, 0.5);
+    outline: none;
+}
+
+#checkout-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2ea6ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#checkout-form button:hover {
+    background-color: #1e8fd1;
+}
+
+#room-number-container {
+    margin-top: 10px;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 480px) {
+    #checkout-form {
+        padding: 20px;
+    }
+
+    #checkout-form input,
+    #checkout-form select {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #checkout-form button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
 
         .quantity-controls {
             display: flex;
@@ -3374,30 +3437,30 @@
     </div>
 
     <div id="checkout-screen" class="container">
-        <span class="back-button" onclick="showScreen('cart-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
+    <span class="back-button" onclick="showScreen('cart-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <form id="checkout-form" class="checkout-form">
         <h2>Оформление заказа</h2>
-        <form id="checkout-form" class="checkout-form">
-            <input type="text" id="last-name" placeholder="Фамилия" required>
-            <input type="text" id="first-name" placeholder="Имя" required>
-            <input type="tel" id="phone" placeholder="Номер телефона" required>
-            <select id="payment-method" required>
-                <option value="" disabled selected>Способ оплаты</option>
-                <option value="cash">Наличные</option>
-                <option value="card">Карта</option>
-            </select>
-            <select id="delivery-method" required onchange="toggleRoomNumber()">
-                <option value="" disabled selected>Способ получения</option>
-                <option value="delivery">Доставка</option>
-                <option value="pickup">Самовынос</option>
-            </select>
-            <div id="room-number-container" style="display: none;">
-                <input type="text" id="room-number" placeholder="Номер комнаты">
-            </div>
-            <button type="submit">Подтвердить заказ</button>
-        </form>
-    </div>
+        <input type="text" id="last-name" placeholder="Фамилия" required>
+        <input type="text" id="first-name" placeholder="Имя" required>
+        <input type="tel" id="phone" placeholder="Номер телефона" required>
+        <select id="payment-method" required>
+            <option value="" disabled selected>Способ оплаты</option>
+            <option value="cash">Наличные</option>
+            <option value="card">Карта</option>
+        </select>
+        <select id="delivery-method" required onchange="toggleRoomNumber()">
+            <option value="" disabled selected>Способ получения</option>
+            <option value="delivery">Доставка</option>
+            <option value="pickup">Самовынос</option>
+        </select>
+        <div id="room-number-container" style="display: none;">
+            <input type="text" id="room-number" placeholder="Номер комнаты">
+        </div>
+        <button type="submit">Подтвердить заказ</button>
+    </form>
+</div>
 
     <div id="gallery-screen" class="container">
         <button class="close-gallery" onclick="closeGallery()">×</button>
