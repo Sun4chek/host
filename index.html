@@ -862,28 +862,15 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-
-
-
-
 /* Добавляем фон только для экрана оформления заказа */
 #checkout-screen {
-    position: fixed; /* Фиксируем экран */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */
-    background-size: cover; /* Растягиваем фон на всю область */
-    background-position: center; /* Центрируем фон */
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh; /* Занимает всю высоту экрана */
     padding: 20px; /* Отступы для контента */
     box-sizing: border-box; /* Учитываем padding в высоте */
-    z-index: 1000; /* Убедимся, что экран поверх других элементов */
 }
 
 /* Основные стили для формы */
@@ -893,7 +880,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%; /* Занимает всю доступную ширину */
-    max-width: 400px; /* Ограничиваем ширину формы */
+    max-width: none; /* Убираем ограничение по ширине */
     backdrop-filter: blur(5px); /* Размытие фона */
     margin: 0 auto; /* Центрирование формы */
     box-sizing: border-box; /* Учитываем padding в ширине */
@@ -1029,6 +1016,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         width: 100%; /* Кнопки занимают всю ширину */
     }
 }
+
 
 
 
@@ -1523,7 +1511,20 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-    <div id="checkout-screen" class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="checkout-screen" class="container">
     <span class="back-button" onclick="showScreen('cart-screen')">
         <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
     </span>
@@ -1572,6 +1573,28 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         </form>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div id="gallery-screen" class="container">
     <button class="close-gallery" onclick="closeGallery()">×</button>
