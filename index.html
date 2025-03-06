@@ -639,40 +639,30 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             transform: translateY(0);
         }
 
-        .checkout-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        /* Убираем фон для body */
 
-        .checkout-form input,
-        .checkout-form select {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
+/* Добавляем фон только для экрана оформления заказа */
+#checkout-screen {
+    background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
+    min-height: 100vh; /* Занимает всю высоту экрана */
+    padding: 20px; /* Отступы для контента */
+    box-sizing: border-box; /* Учитываем padding в высоте */
+}
 
-        .checkout-form button {
-            background-color: #ff6600;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-      /* Основные стили для формы */
+/* Основные стили для формы */
 .checkout-container {
     background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 100%;
-    max-width: 400px;
+    width: 100%; /* Занимает всю доступную ширину */
+    max-width: none; /* Убираем ограничение по ширине */
     backdrop-filter: blur(5px); /* Размытие фона */
     margin: 0 auto; /* Центрирование формы */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .checkout-header {
@@ -712,6 +702,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     color: var(--text-color);
     background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон полей */
     transition: border-color 0.3s ease;
+    width: 100%; /* Занимает всю ширину */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .form-group input:focus,
@@ -772,7 +764,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 @media (max-width: 480px) {
     .checkout-container {
         padding: 15px;
-        max-width: 100%; /* Форма занимает всю ширину экрана */
+        border-radius: 0; /* Убираем скругление углов на маленьких экранах */
     }
 
     .checkout-header h2 {
