@@ -640,16 +640,29 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
 
         /* Убираем фон для body */
+body {
+    background-color: var(--background-color); /* Используем переменную из вашего кода */
+    color: var(--text-color);
+}
 
 /* Добавляем фон только для экрана оформления заказа */
 #checkout-screen {
+    position: fixed; /* Фиксируем экран */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */
-    background-size: cover;
-    background-position: center;
+    background-size: cover; /* Растягиваем фон на всю область */
+    background-position: center; /* Центрируем фон */
     background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
-    min-height: 100vh; /* Занимает всю высоту экрана */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px; /* Отступы для контента */
     box-sizing: border-box; /* Учитываем padding в высоте */
+    z-index: 1000; /* Убедимся, что экран поверх других элементов */
 }
 
 /* Основные стили для формы */
@@ -659,7 +672,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%; /* Занимает всю доступную ширину */
-    max-width: none; /* Убираем ограничение по ширине */
+    max-width: 400px; /* Ограничиваем ширину формы */
     backdrop-filter: blur(5px); /* Размытие фона */
     margin: 0 auto; /* Центрирование формы */
     box-sizing: border-box; /* Учитываем padding в ширине */
