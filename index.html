@@ -859,34 +859,26 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-
-
-
-/* Добавляем фон только для экрана оформления заказа */
+/* Стили для экрана оформления заказа */
 #checkout-screen {
-background-color: #7FFFD4; /* Аквамариновый цвет */
-<!--    background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */-->
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
+    padding: 20px; /* Отступы для контента */
     min-height: 100vh; /* Занимает всю высоту экрана */
-    padding: 0px; /* Отступы для контента */
-<!--    box-sizing: border-box; /* Учитываем padding в высоте */-->
+    box-sizing: border-box; /* Учитываем padding в высоте */
 }
 
-/* Основные стили для формы */
+/* Стили для контейнера формы */
 .checkout-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    background-color: #7FFFD4; /* Аквамариновый цвет фона формы */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%; /* Занимает всю доступную ширину */
-    max-width: none; /* Убираем ограничение по ширине */
-    backdrop-filter: blur(5px); /* Размытие фона */
+    max-width: 500px; /* Ограничиваем ширину формы */
     margin: 0 auto; /* Центрирование формы */
     box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
+/* Стили для заголовка формы */
 .checkout-header {
     text-align: center;
     margin-bottom: 20px;
@@ -895,15 +887,17 @@ background-color: #7FFFD4; /* Аквамариновый цвет */
 .checkout-header h2 {
     margin: 0;
     font-size: 24px;
-    color: var(--text-color);
+    color: #333; /* Цвет текста заголовка */
 }
 
+/* Стили для формы */
 .checkout-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+/* Стили для групп полей формы */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -912,17 +906,17 @@ background-color: #7FFFD4; /* Аквамариновый цвет */
 
 .form-group label {
     font-size: 14px;
-    color: var(--secondary-text-color);
+    color: #333; /* Цвет текста меток */
 }
 
 .form-group input,
 .form-group select {
     padding: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #ccc; /* Цвет границы полей */
     border-radius: 5px;
     font-size: 14px;
-    color: var(--text-color);
-    background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон полей */
+    color: #333; /* Цвет текста в полях */
+    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон полей */
     transition: border-color 0.3s ease;
     width: 100%; /* Занимает всю ширину */
     box-sizing: border-box; /* Учитываем padding в ширине */
@@ -935,7 +929,7 @@ background-color: #7FFFD4; /* Аквамариновый цвет */
 }
 
 .form-group input::placeholder {
-    color: var(--secondary-text-color);
+    color: #666; /* Цвет текста плейсхолдера */
 }
 
 .form-group select {
@@ -974,8 +968,8 @@ background-color: #7FFFD4; /* Аквамариновый цвет */
 
 .form-actions button[type="button"] {
     background-color: rgba(248, 249, 250, 0.9); /* Полупрозрачный фон кнопки */
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+    color: #333; /* Цвет текста кнопки */
+    border: 1px solid #ccc; /* Цвет границы кнопки */
 }
 
 .form-actions button[type="button"]:hover {
@@ -1017,8 +1011,6 @@ background-color: #7FFFD4; /* Аквамариновый цвет */
         width: 100%; /* Кнопки занимают всю ширину */
     }
 }
-
-
 
 
 
