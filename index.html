@@ -859,80 +859,101 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-/* Стили для экрана оформления заказа */
-#checkout-screen {
-    padding: 0px; /* Отступы для контента */
-    min-height: 100vh; /* Занимает всю высоту экрана */
-    box-sizing: border-box; /* Учитываем padding в высоте */
-}
 
-/* Стили для контейнера формы */
-.checkout-container {
-    background-color: #7FFFD4; /* Аквамариновый цвет фона формы */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+
+
+
+
+
+
+/* Стили для модального окна оформления заказа */
+#checkout-modal {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background-color: var(--item-bg-color);
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 80vh;
+    overflow-y: auto;
+    transition: bottom 0.3s ease;
+    z-index: 2000;
     padding: 20px;
-    width: 100%; /* Занимает всю доступную ширину */
-    max-width: 500px; /* Ограничиваем ширину формы */
-    margin: 0 auto; /* Центрирование формы */
-    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
-/* Стили для заголовка формы */
-.checkout-header {
-    text-align: center;
-    margin-bottom: 20px;
+#checkout-modal.active {
+    bottom: 0;
 }
 
-.checkout-header h2 {
-    margin: 0;
-    font-size: 24px;
-    color: #333; /* Цвет текста заголовка */
+#checkout-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 1900;
 }
 
-/* Стили для формы */
-.checkout-form {
+#checkout-modal-overlay.active {
+    display: block;
+}
+
+/* Стили для формы внутри модального окна */
+#checkout-modal .modal-content {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    height: 100%;
 }
 
-/* Стили для групп полей формы */
-.form-group {
+#checkout-modal h2 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+#checkout-modal .form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.form-group label {
+#checkout-modal .form-group label {
     font-size: 14px;
-    color: #333; /* Цвет текста меток */
+    color: var(--text-color);
 }
 
-.form-group input,
-.form-group select {
+#checkout-modal .form-group input,
+#checkout-modal .form-group select {
     padding: 10px;
-    border: 1px solid #ccc; /* Цвет границы полей */
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     font-size: 14px;
-    color: #333; /* Цвет текста в полях */
-    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон полей */
+    color: var(--text-color);
+    background-color: var(--item-bg-color);
     transition: border-color 0.3s ease;
-    width: 100%; /* Занимает всю ширину */
-    box-sizing: border-box; /* Учитываем padding в ширине */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+#checkout-modal .form-group input:focus,
+#checkout-modal .form-group select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-.form-group input::placeholder {
-    color: #666; /* Цвет текста плейсхолдера */
+#checkout-modal .form-group input::placeholder {
+    color: var(--secondary-text-color);
 }
 
-.form-group select {
+#checkout-modal .form-group select {
     appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
     background-repeat: no-repeat;
@@ -940,14 +961,14 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     background-size: 12px;
 }
 
-.form-actions {
+#checkout-modal .form-actions {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: auto;
 }
 
-.form-actions button {
+#checkout-modal .form-actions button {
     flex: 1;
     padding: 10px;
     border: none;
@@ -957,60 +978,27 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     transition: background-color 0.3s ease;
 }
 
-.form-actions button[type="submit"] {
+#checkout-modal .form-actions button[type="submit"] {
     background-color: #007bff;
     color: #fff;
 }
 
-.form-actions button[type="submit"]:hover {
+#checkout-modal .form-actions button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-.form-actions button[type="button"] {
-    background-color: rgba(248, 249, 250, 0.9); /* Полупрозрачный фон кнопки */
-    color: #333; /* Цвет текста кнопки */
-    border: 1px solid #ccc; /* Цвет границы кнопки */
+#checkout-modal .form-actions button[type="button"] {
+    background-color: rgba(248, 249, 250, 0.9);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 }
 
-.form-actions button[type="button"]:hover {
-    background-color: rgba(233, 236, 239, 0.9); /* Полупрозрачный фон при наведении */
+#checkout-modal .form-actions button[type="button"]:hover {
+    background-color: rgba(233, 236, 239, 0.9);
 }
 
-/* Адаптация для мобильных устройств */
-@media (max-width: 480px) {
-    .checkout-container {
-        padding: 0px;
-        border-radius: 0; /* Убираем скругление углов на маленьких экранах */
-    }
 
-    .checkout-header h2 {
-        font-size: 20px; /* Уменьшаем размер заголовка */
-    }
 
-    .form-group label {
-        font-size: 12px; /* Уменьшаем размер текста меток */
-    }
-
-    .form-group input,
-    .form-group select {
-        padding: 8px; /* Уменьшаем отступы внутри полей */
-        font-size: 12px; /* Уменьшаем размер текста в полях */
-    }
-
-    .form-actions button {
-        font-size: 14px; /* Уменьшаем размер текста кнопок */
-        padding: 8px; /* Уменьшаем отступы внутри кнопок */
-    }
-
-    .form-actions {
-        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
-        gap: 10px;
-    }
-
-    .form-actions button {
-        width: 100%; /* Кнопки занимают всю ширину */
-    }
-}
 
 
 
@@ -1516,16 +1504,11 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-
-<div id="checkout-screen" class="container">
-    <span class="back-button" onclick="showScreen('cart-screen')">
-        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-    </span>
-
-    <div class="checkout-container">
-        <div class="checkout-header">
-            <h2>Оформление заказа</h2>
-        </div>
+<!-- Модальное окно для оформления заказа -->
+<div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
+<div id="checkout-modal" class="modal">
+    <div class="modal-content">
+        <h2>Оформление заказа</h2>
         <form class="checkout-form" id="checkout-form">
             <div class="form-group">
                 <label for="last-name">Фамилия</label>
@@ -1560,7 +1543,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
                 <input type="text" id="room-number" placeholder="Введите номер комнаты">
             </div>
             <div class="form-actions">
-                <button type="button" onclick="showScreen('cart-screen')">Назад</button>
+                <button type="button" onclick="closeCheckoutModal()">Назад</button>
                 <button type="submit">Подтвердить</button>
             </div>
         </form>
@@ -2071,6 +2054,28 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     });
 
     updateCart();
+
+    function openCheckoutModal() {
+    document.getElementById('checkout-modal').classList.add('active');
+    document.getElementById('checkout-modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCheckoutModal() {
+    document.getElementById('checkout-modal').classList.remove('active');
+    document.getElementById('checkout-modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Обновим кнопку "Оформить заказ" в корзине
+document.querySelector('#cart-screen button[onclick="showScreen(\'checkout-screen\')"]').onclick = openCheckoutModal;
+
+// Обработка отправки формы
+document.getElementById('checkout-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    submitOrder(event);
+    closeCheckoutModal();
+});
 </script>
 </body>
 </html>
