@@ -2661,163 +2661,90 @@
             transform: translateY(0);
         }
 /* Стили для формы оформления заказа */
-/* Обновлённые стили для checkout-screen */
 #checkout-screen {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 20px;
-    background: transparent; /* Фон можно добавить позже */
-    overflow-y: auto; /* Для прокрутки на маленьких экранах */
-}
-
-.checkout-header {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.checkout-header h2 {
-    font-size: 24px;
-    color: var(--text-color);
-    margin: 0;
-    text-align: center;
-    flex-grow: 1;
-}
-
-.back-button {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 5px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.back-button:hover {
-    opacity: 0.8;
+    align-items: center;
+    min-height: 100vh; /* Занимает весь экран */
+    padding: 20px;
+    background-image: url('https://example.com/your-background-image.jpg'); /* Ваше фоновое изображение */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #checkout-form {
-    background: rgba(255, 255, 255, 0.95); /* Полупрозрачный фон */
-    backdrop-filter: blur(8px); /* Эффект размытия */
-    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    max-width: 400px; /* Максимальная ширина формы */
+    backdrop-filter: blur(10px); /* Размытие фона */
+    text-align: center;
 }
 
-.form-group {
-    position: relative;
-    width: 100%;
+#checkout-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color);
 }
 
 #checkout-form input,
 #checkout-form select {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px;
+    margin-bottom: 15px;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон для полей */
     color: var(--text-color);
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #checkout-form input:focus,
 #checkout-form select:focus {
     border-color: #2ea6ff;
-    box-shadow: 0 0 8px rgba(46, 166, 255, 0.3);
+    box-shadow: 0 0 8px rgba(46, 166, 255, 0.5);
     outline: none;
-    background: rgba(255, 255, 255, 1);
 }
 
-#checkout-form input::placeholder,
-#checkout-form select:invalid {
-    color: var(--secondary-text-color);
-    opacity: 0.7;
-}
-
-#checkout-form select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px;
-}
-
-body.dark-theme #checkout-form select {
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-}
-
-.submit-btn {
+#checkout-form button {
     width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #2ea6ff, #1e8fd1);
+    padding: 12px;
+    background-color: #2ea6ff;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(46, 166, 255, 0.3);
+    transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
-    background: linear-gradient(135deg, #1e8fd1, #2ea6ff);
-    box-shadow: 0 6px 15px rgba(46, 166, 255, 0.4);
-    transform: translateY(-2px);
+#checkout-form button:hover {
+    background-color: #1e8fd1;
 }
 
-.submit-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(46, 166, 255, 0.2);
+#room-number-container {
+    margin-top: 10px;
 }
 
-/* Адаптивность для мобильных устройств */
+/* Адаптация для мобильных устройств */
 @media (max-width: 480px) {
-    #checkout-screen {
-        padding: 15px;
-    }
-
-    .checkout-header h2 {
-        font-size: 20px;
-    }
-
     #checkout-form {
         padding: 20px;
-        max-width: 100%;
     }
 
     #checkout-form input,
     #checkout-form select {
-        padding: 10px 12px;
+        padding: 10px;
         font-size: 14px;
     }
 
-    .submit-btn {
-        padding: 12px;
+    #checkout-form button {
+        padding: 10px;
         font-size: 14px;
-    }
-
-    .back-button {
-        padding: 3px;
-    }
-
-    .arrow-icon {
-        width: 20px;
-        height: 20px;
     }
 }
 
@@ -3508,42 +3435,30 @@ body.dark-theme #checkout-form select {
         <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
         <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
     </div>
-<!-- HTML для checkout-screen -->
-<div id="checkout-screen" class="container">
-    <div class="checkout-header">
-        <span class="back-button" onclick="showScreen('cart-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Оформление заказа</h2>
-    </div>
+
+    <div id="checkout-screen" class="container">
+    <span class="back-button" onclick="showScreen('cart-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
     <form id="checkout-form" class="checkout-form">
-        <div class="form-group">
-            <input type="text" id="last-name" placeholder="Фамилия" required>
-        </div>
-        <div class="form-group">
-            <input type="text" id="first-name" placeholder="Имя" required>
-        </div>
-        <div class="form-group">
-            <input type="tel" id="phone" placeholder="Номер телефона" required>
-        </div>
-        <div class="form-group">
-            <select id="payment-method" required>
-                <option value="" disabled selected>Способ оплаты</option>
-                <option value="cash">Наличные</option>
-                <option value="card">Карта</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <select id="delivery-method" required onchange="toggleRoomNumber()">
-                <option value="" disabled selected>Способ получения</option>
-                <option value="delivery">Доставка</option>
-                <option value="pickup">Самовынос</option>
-            </select>
-        </div>
-        <div id="room-number-container" class="form-group" style="display: none;">
+        <h2>Оформление заказа</h2>
+        <input type="text" id="last-name" placeholder="Фамилия" required>
+        <input type="text" id="first-name" placeholder="Имя" required>
+        <input type="tel" id="phone" placeholder="Номер телефона" required>
+        <select id="payment-method" required>
+            <option value="" disabled selected>Способ оплаты</option>
+            <option value="cash">Наличные</option>
+            <option value="card">Карта</option>
+        </select>
+        <select id="delivery-method" required onchange="toggleRoomNumber()">
+            <option value="" disabled selected>Способ получения</option>
+            <option value="delivery">Доставка</option>
+            <option value="pickup">Самовынос</option>
+        </select>
+        <div id="room-number-container" style="display: none;">
             <input type="text" id="room-number" placeholder="Номер комнаты">
         </div>
-        <button type="submit" class="submit-btn">Подтвердить заказ</button>
+        <button type="submit">Подтвердить заказ</button>
     </form>
 </div>
 
