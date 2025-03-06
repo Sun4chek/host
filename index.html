@@ -852,16 +852,51 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             100% { transform: rotate(0deg); }
         }
 
-      /* Стили для кастомной формы оформления заказа */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Добавляем фон только для экрана оформления заказа */
+#checkout-screen {
+    position: fixed; /* Фиксируем экран */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */
+    background-size: cover; /* Растягиваем фон на всю область */
+    background-position: center; /* Центрируем фон */
+    background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Отступы для контента */
+    box-sizing: border-box; /* Учитываем padding в высоте */
+    z-index: 1000; /* Убедимся, что экран поверх других элементов */
+}
+
+/* Основные стили для формы */
 .checkout-container {
     background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 100%;
-    max-width: 400px;
+    width: 100%; /* Занимает всю доступную ширину */
+    max-width: 400px; /* Ограничиваем ширину формы */
     backdrop-filter: blur(5px); /* Размытие фона */
     margin: 0 auto; /* Центрирование формы */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .checkout-header {
@@ -901,6 +936,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     color: var(--text-color);
     background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон полей */
     transition: border-color 0.3s ease;
+    width: 100%; /* Занимает всю ширину */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .form-group input:focus,
@@ -956,6 +993,54 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 .form-actions button[type="button"]:hover {
     background-color: rgba(233, 236, 239, 0.9); /* Полупрозрачный фон при наведении */
 }
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 480px) {
+    .checkout-container {
+        padding: 15px;
+        border-radius: 0; /* Убираем скругление углов на маленьких экранах */
+    }
+
+    .checkout-header h2 {
+        font-size: 20px; /* Уменьшаем размер заголовка */
+    }
+
+    .form-group label {
+        font-size: 12px; /* Уменьшаем размер текста меток */
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 8px; /* Уменьшаем отступы внутри полей */
+        font-size: 12px; /* Уменьшаем размер текста в полях */
+    }
+
+    .form-actions button {
+        font-size: 14px; /* Уменьшаем размер текста кнопок */
+        padding: 8px; /* Уменьшаем отступы внутри кнопок */
+    }
+
+    .form-actions {
+        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
+        gap: 10px;
+    }
+
+    .form-actions button {
+        width: 100%; /* Кнопки занимают всю ширину */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
         @media (max-width: 480px) {
             #header {
@@ -1433,7 +1518,12 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
     <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
 </div>
-<div id="checkout-screen" class="container">
+
+
+
+
+
+    <div id="checkout-screen" class="container">
     <span class="back-button" onclick="showScreen('cart-screen')">
         <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
     </span>
