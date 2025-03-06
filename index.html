@@ -639,7 +639,170 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             transform: translateY(0);
         }
 
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
+        .checkout-form input,
+        .checkout-form select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .checkout-form button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+      /* Основные стили для формы */
+.checkout-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(5px); /* Размытие фона */
+    margin: 0 auto; /* Центрирование формы */
+}
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.checkout-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон полей */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: var(--secondary-text-color);
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.form-actions button[type="button"] {
+    background-color: rgba(248, 249, 250, 0.9); /* Полупрозрачный фон кнопки */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: rgba(233, 236, 239, 0.9); /* Полупрозрачный фон при наведении */
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 480px) {
+    .checkout-container {
+        padding: 15px;
+        max-width: 100%; /* Форма занимает всю ширину экрана */
+    }
+
+    .checkout-header h2 {
+        font-size: 20px; /* Уменьшаем размер заголовка */
+    }
+
+    .form-group label {
+        font-size: 12px; /* Уменьшаем размер текста меток */
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 8px; /* Уменьшаем отступы внутри полей */
+        font-size: 12px; /* Уменьшаем размер текста в полях */
+    }
+
+    .form-actions button {
+        font-size: 14px; /* Уменьшаем размер текста кнопок */
+        padding: 8px; /* Уменьшаем отступы внутри кнопок */
+    }
+
+    .form-actions {
+        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
+        gap: 10px;
+    }
+
+    .form-actions button {
+        width: 100%; /* Кнопки занимают всю ширину */
+    }
+}
 
         .quantity-controls {
             display: flex;
@@ -854,39 +1017,16 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             100% { transform: rotate(0deg); }
         }
 
-
-
-/* Добавляем фон только для экрана оформления заказа */
-#checkout-screen {
-    position: fixed; /* Фиксируем экран */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('https://i.pinimg.com/236x/90/85/81/9085812b057712803036443a70409303.jpg'); /* Ваше изображение */
-    background-size: cover; /* Растягиваем фон на всю область */
-    background-position: center; /* Центрируем фон */
-    background-attachment: fixed; /* Фон фиксируется, чтобы не скроллился */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px; /* Отступы для контента */
-    box-sizing: border-box; /* Учитываем padding в высоте */
-    z-index: 1000; /* Убедимся, что экран поверх других элементов */
-}
-
-/* Основные стили для формы */
+      /* Стили для кастомной формы оформления заказа */
 .checkout-container {
     background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 100%; /* Занимает всю доступную ширину */
-    max-width: 400px; /* Ограничиваем ширину формы */
+    width: 100%;
+    max-width: 400px;
     backdrop-filter: blur(5px); /* Размытие фона */
     margin: 0 auto; /* Центрирование формы */
-    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .checkout-header {
@@ -926,8 +1066,6 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     color: var(--text-color);
     background-color: rgba(249, 249, 249, 0.9); /* Полупрозрачный фон полей */
     transition: border-color 0.3s ease;
-    width: 100%; /* Занимает всю ширину */
-    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 
 .form-group input:focus,
@@ -982,42 +1120,6 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 .form-actions button[type="button"]:hover {
     background-color: rgba(233, 236, 239, 0.9); /* Полупрозрачный фон при наведении */
-}
-
-/* Адаптация для мобильных устройств */
-@media (max-width: 480px) {
-    .checkout-container {
-        padding: 15px;
-        border-radius: 0; /* Убираем скругление углов на маленьких экранах */
-    }
-
-    .checkout-header h2 {
-        font-size: 20px; /* Уменьшаем размер заголовка */
-    }
-
-    .form-group label {
-        font-size: 12px; /* Уменьшаем размер текста меток */
-    }
-
-    .form-group input,
-    .form-group select {
-        padding: 8px; /* Уменьшаем отступы внутри полей */
-        font-size: 12px; /* Уменьшаем размер текста в полях */
-    }
-
-    .form-actions button {
-        font-size: 14px; /* Уменьшаем размер текста кнопок */
-        padding: 8px; /* Уменьшаем отступы внутри кнопок */
-    }
-
-    .form-actions {
-        flex-direction: column; /* Кнопки в столбик на маленьких экранах */
-        gap: 10px;
-    }
-
-    .form-actions button {
-        width: 100%; /* Кнопки занимают всю ширину */
-    }
 }
 
         @media (max-width: 480px) {
