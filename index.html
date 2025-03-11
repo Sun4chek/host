@@ -2183,6 +2183,12 @@
 
 
 
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2735,7 +2741,7 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #ff0000; /* Красный вместо синего */
+            background-color: #ff0000;
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -3147,6 +3153,112 @@
             background-color: rgba(233, 236, 239, 0.9);
         }
 
+        /* Обновлённые стили для карточек в корзине */
+        #cart-items .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: var(--text-color);
+            background-color: var(--item-bg-color);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #cart-items .menu-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        #cart-items .menu-item .info {
+            flex: 1;
+            margin-right: 15px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        #cart-items .menu-item .info h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #cart-items .menu-item .info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: var(--secondary-text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #cart-items .menu-item .price-and-button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+
+        #cart-items .menu-item .price {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+            color: var(--text-color);
+            background-color: rgba(46, 166, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        #cart-items .menu-item .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #cart-items .menu-item .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            background-color: #2ea6ff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            border-radius: 5px;
+        }
+
+        #cart-items .menu-item .quantity-controls button:hover {
+            background-color: #1e8fd1;
+        }
+
+        #cart-items .menu-item .quantity-controls span {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px;
+            background-color: var(--item-bg-color);
+            border-radius: 5px;
+            color: var(--text-color);
+            min-width: 20px;
+            text-align: center;
+        }
+
         @media (max-width: 480px) {
             #header {
                 margin-bottom: 5px;
@@ -3230,15 +3342,15 @@
         }
 
         #cart-screen > div[style*="font-weight: bold"] {
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-    font-size: 18px;
-    color: var(--text-color);
-}
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            font-size: 18px;
+            color: var(--text-color);
+        }
 
-#cart-screen > div[style*="font-weight: bold"] #total-price {
-    font-size: 18px;
-}
+        #cart-screen > div[style*="font-weight: bold"] #total-price {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -3478,7 +3590,6 @@
             </div>
         </div>
     </div>
-
     <div id="pasta-screen" class="container">
         <span class="back-button" onclick="scrollToCategories()">
             <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
@@ -3535,7 +3646,7 @@
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">
             <div class="info">
                 <h3>Шашлык из курицы</h3>
-                            <p>300г</p>
+                <p>300г</p>
             </div>
             <div class="price-and-button">
                 <div class="price">500₽</div>
@@ -4048,7 +4159,8 @@
                     name: currentItem.name,
                     price: currentItem.price,
                     quantity: modalQuantity,
-                    image: currentItem.image
+                    image: currentItem.image,
+                    weight: currentItem.weight // Добавляем вес для отображения в корзине
                 });
             }
 
@@ -4082,7 +4194,7 @@
                     <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.name}">
                     <div class="info">
                         <h3>${item.name}</h3>
-                        <p>${item.weight}</p>
+                        <p>${item.weight || ''}</p>
                     </div>
                     <div class="price-and-button">
                         <div class="price">${item.price * item.quantity}₽</div>
