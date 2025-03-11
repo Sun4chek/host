@@ -3021,43 +3021,50 @@
             100% { transform: rotate(0deg); }
         }
 
-   
+
+
 /* Стили для модального окна оформления заказа */
 #checkout-modal {
     position: fixed;
-    bottom: 0;
+    bottom: -100%;
     left: 0;
     right: 0;
     background-color: var(--item-bg-color);
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 90vh; /* Уменьшаем высоту, чтобы все помещалось */
-    max-height: 90vh; /* Ограничиваем максимальную высоту */
-    overflow-y: hidden; /* Убираем прокрутку всего модального окна */
+    height: 80vh;
+    overflow-y: auto;
     transition: bottom 0.3s ease;
     z-index: 2000;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
 }
 
 #checkout-modal.active {
     bottom: 0;
 }
 
+#checkout-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 1900;
+}
+
+#checkout-modal-overlay.active {
+    display: block;
+}
+
+/* Стили для формы внутри модального окна */
 #checkout-modal .modal-content {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px;
     height: 100%;
-    overflow-y: hidden; /* Убираем прокрутку контента */
-}
-
-#checkout-modal .form-container {
-    flex: 1;
-    overflow-y: auto; /* Добавляем прокрутку только для полей формы */
-    padding-bottom: 20px; /* Отступ снизу для видимости полей */
 }
 
 #checkout-modal h2 {
@@ -3070,8 +3077,7 @@
 #checkout-modal .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Уменьшаем отступ между меткой и полем */
-    margin-bottom: 10px; /* Уменьшаем отступ между группами */
+    gap: 5px;
 }
 
 #checkout-modal .form-group label {
@@ -3081,7 +3087,7 @@
 
 #checkout-modal .form-group input,
 #checkout-modal .form-group select {
-    padding: 8px; /* Уменьшаем внутренний отступ */
+    padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     font-size: 14px;
@@ -3110,15 +3116,17 @@
     background-size: 12px;
 }
 
+
+
+
+
 #checkout-modal .form-actions {
-    position: sticky; /* Фиксируем кнопки внизу */
-    bottom: 0;
     display: flex;
     justify-content: space-between;
-    gap: 15px;
-    padding: 10px 0;
-    background-color: var(--item-bg-color); /* Фон для кнопок */
-    border-top: 1px solid var(--border-color); /* Разделитель */
+    gap: 10px;
+     margin-top: 20px; /* Добавляем отступ сверху */
+    padding-top: 10px; /* Добавляем отступ сверху внутри контейнера */
+
 }
 
 #checkout-modal .form-actions button {
@@ -3149,6 +3157,8 @@
 #checkout-modal .form-actions button[type="button"]:hover {
     background-color: rgba(233, 236, 239, 0.9);
 }
+
+
 
         #cart-items .menu-item {
             display: flex;
