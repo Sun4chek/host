@@ -3807,9 +3807,10 @@
     </div>
 
     <div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <h2>Оформление заказа</h2>
+<div id="checkout-modal" class="modal">
+    <div class="modal-content">
+        <h2>Оформление заказа</h2>
+        <div class="form-container">
             <form class="checkout-form" id="checkout-form">
                 <div class="form-group">
                     <label for="last-name">Фамилия</label>
@@ -3843,13 +3844,14 @@
                     <label for="room-number">Номер комнаты</label>
                     <input type="text" id="room-number" placeholder="Введите номер комнаты">
                 </div>
-                <div class="form-actions">
-                    <button type="button" onclick="closeCheckoutModal()">Назад</button>
-                    <button type="submit">Подтвердить</button>
-                </div>
             </form>
         </div>
+        <div class="form-actions">
+            <button type="button" onclick="closeCheckoutModal()">Назад</button>
+            <button type="submit" form="checkout-form">Подтвердить</button>
+        </div>
     </div>
+</div>
 
     <div id="gallery-screen" class="container">
         <button class="close-gallery" onclick="closeGallery()">×</button>
