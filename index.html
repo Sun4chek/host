@@ -1,2191 +1,3 @@
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="ru">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">-->
-<!--    <title>Меню ресторана</title>-->
-<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
-<!--    <style>-->
-<!--        :root {-->
-<!--            &#45;&#45;background-color: #f8f8f8;-->
-<!--            &#45;&#45;text-color: #333;-->
-<!--            &#45;&#45;secondary-text-color: #666;-->
-<!--            &#45;&#45;item-bg-color: #ffffff;-->
-<!--            &#45;&#45;border-color: #ddd;-->
-<!--        }-->
-
-<!--        /* Анимация для светлой темы */-->
-<!--body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {-->
-<!--    animation: bounceLight 0.5s ease;-->
-<!--}-->
-
-<!--@keyframes bounceLight {-->
-<!--    0%, 100% { transform: scale(1); color: #333; }-->
-<!--    50% { transform: scale(1.2); color: #000; filter: brightness(1.2); }-->
-<!--}-->
-
-<!--/* Анимация для тёмной темы */-->
-<!--body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {-->
-<!--    animation: bounceDark 0.5s ease;-->
-<!--}-->
-
-<!--@keyframes bounceDark {-->
-<!--    0%, 100% { transform: scale(1); color: #ffffff; }-->
-<!--    50% { transform: scale(1.2); color: #ffffff; filter: brightness(1.5); }-->
-<!--}-->
-
-<!--        body {-->
-<!--            font-family: "Montserrat", sans-serif;-->
-<!--            padding: 20px;-->
-<!--            margin: 0;-->
-<!--            padding-bottom: 100px;-->
-<!--            background-color: var(&#45;&#45;background-color);-->
-<!--            color: var(&#45;&#45;text-color);-->
-
-<!--        }-->
-
-<!--        body.dark-theme {-->
-<!--            &#45;&#45;background-color: #1e1e1e;-->
-<!--            &#45;&#45;text-color: #ffffff;-->
-<!--            &#45;&#45;secondary-text-color: #aaa;-->
-<!--            &#45;&#45;item-bg-color: #213040;-->
-<!--            &#45;&#45;border-color: #444;-->
-<!--        }-->
-
-<!--        #header {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            margin-bottom: 10px;-->
-<!--            background-color: transparent;-->
-<!--            border-bottom: none;-->
-<!--            width: 100%;-->
-<!--            padding: 0;-->
-<!--        }-->
-
-<!--        .header-top {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            width: 100%;-->
-<!--            padding: 0;-->
-<!--            margin-bottom: 10px;-->
-<!--            position: relative;-->
-<!--        }-->
-
-<!--        .logo {-->
-<!--            width: 100%;-->
-<!--            max-width: 400px;-->
-<!--            margin: -70px auto 10px;-->
-<!--            padding: 0;-->
-<!--            box-sizing: border-box;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .logo img {-->
-<!--            width: 110%;-->
-<!--            height: 250px;-->
-<!--            max-width: none;-->
-<!--            transform: translateX(-5%);-->
-<!--        }-->
-
-<!--        .working-hours {-->
-<!--            position: absolute;-->
-<!--            top: 160px;-->
-<!--            right: 5px;-->
-<!--            text-align: right;-->
-<!--            font-size: 14px;-->
-<!--            color: var(&#45;&#45;secondary-text-color);-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            z-index: 1;-->
-<!--        }-->
-
-<!--        .working-hours p {-->
-<!--            margin: 8px 0;-->
-<!--            transition: color 0.3s ease;-->
-<!--        }-->
-
-<!--        .working-hours .schedule {-->
-<!--            font-weight: bold;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        .working-hours p:hover {-->
-<!--            color: #2ea6ff;-->
-<!--        }-->
-
-<!--        .divider {-->
-<!--            width: 70%;-->
-<!--            height: 1px;-->
-<!--            background-color: var(&#45;&#45;border-color);-->
-<!--            margin: 5px auto;-->
-<!--            opacity: 0.5;-->
-<!--        }-->
-
-<!--        .social-links {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            gap: 5px;-->
-<!--            width: 100%;-->
-<!--            margin: 5px 0;-->
-<!--            padding: 0;-->
-<!--        }-->
-
-<!--        .social-link {-->
-<!--            flex: 1;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            padding: 0;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        .social-link img {-->
-<!--            width: 32px;-->
-<!--            height: 32px;-->
-<!--            transition: transform 0.2s ease, opacity 0.2s ease;-->
-<!--        }-->
-
-<!--        .social-link:hover img {-->
-<!--            transform: scale(1.1);-->
-<!--            opacity: 0.8;-->
-<!--        }-->
-
-<!--        #phone-icon {-->
-<!--            filter: none;-->
-<!--        }-->
-
-<!--        body.dark-theme #phone-icon {-->
-<!--            filter: invert(1);-->
-<!--        }-->
-
-<!--        .header-widget {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            gap: 20px;-->
-<!--            width: 100%;-->
-<!--            max-width: 800px;-->
-<!--            margin: 20px 0 0 0;-->
-<!--            padding: 0;-->
-<!--        }-->
-
-<!--        .gallery {-->
-<!--            width: 100%;-->
-<!--            height: 450px;-->
-<!--            position: relative;-->
-<!--            overflow: hidden;-->
-<!--            border-radius: 10px;-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        .gallery-images {-->
-<!--            display: flex;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            position: relative;-->
-<!--        }-->
-
-<!--        .gallery-images img {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--            border-radius: 10px;-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            opacity: 0;-->
-<!--            transition: opacity 0.5s ease-in-out;-->
-<!--        }-->
-
-<!--        .gallery-images img.active {-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        #gallery-screen {-->
-<!--            position: fixed;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background-color: rgba(0, 0, 0, 0.9);-->
-<!--            z-index: 3000;-->
-<!--            display: none;-->
-<!--            flex-direction: column;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        #gallery-screen.active {-->
-<!--            display: flex;-->
-<!--        }-->
-
-<!--        .gallery-fullscreen {-->
-<!--            width: 90%;-->
-<!--            height: 80%;-->
-<!--            position: relative;-->
-<!--            overflow: hidden;-->
-<!--        }-->
-
-<!--        .gallery-fullscreen img {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: contain;-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            opacity: 0;-->
-<!--            transition: opacity 0.5s ease-in-out;-->
-<!--        }-->
-
-<!--        .gallery-fullscreen img.active {-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        .gallery-nav {-->
-<!--            position: absolute;-->
-<!--            top: 50%;-->
-<!--            width: 100%;-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            transform: translateY(-50%);-->
-<!--            padding: 0 10px;-->
-<!--            box-sizing: border-box;-->
-<!--        }-->
-
-<!--        .gallery-nav button {-->
-<!--            background: rgba(255, 255, 255, 0.7);-->
-<!--            border: none;-->
-<!--            width: 40px;-->
-<!--            height: 40px;-->
-<!--            border-radius: 50%;-->
-<!--            font-size: 24px;-->
-<!--            cursor: pointer;-->
-<!--            transition: background 0.3s ease;-->
-<!--        }-->
-
-<!--        .gallery-nav button:hover {-->
-<!--            background: rgba(255, 255, 255, 1);-->
-<!--        }-->
-
-<!--        @media (max-width: 480px) {-->
-<!--            .gallery-nav {-->
-<!--                display: none;-->
-<!--            }-->
-<!--        }-->
-
-<!--        .close-gallery {-->
-<!--            position: absolute;-->
-<!--            top: 20px;-->
-<!--            right: 20px;-->
-<!--            background: none;-->
-<!--            border: none;-->
-<!--            width: 40px;-->
-<!--            height: 40px;-->
-<!--            font-size: 24px;-->
-<!--            color: #ffffff;-->
-<!--            cursor: pointer;-->
-<!--            transition: color 0.3s ease;-->
-<!--        }-->
-
-<!--        .close-gallery:hover {-->
-<!--            color: #cccccc;-->
-<!--        }-->
-
-<!--        .about-us {-->
-<!--            width: 100%;-->
-<!--            padding: 15px 0;-->
-<!--            border-radius: 10px;-->
-<!--            border: 2px solid var(&#45;&#45;border-color);-->
-<!--            background-color: var(&#45;&#45;item-bg-color);-->
-<!--            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);-->
-<!--            margin-top: 20px;-->
-<!--            overflow: hidden;-->
-<!--            transition: all 0.5s ease;-->
-<!--        }-->
-
-<!--        .about-us-header .custom-arrow-about {-->
-<!--            width: 20px;-->
-<!--            height: 20px;-->
-<!--            vertical-align: middle;-->
-<!--            transition: transform 0.3s ease;-->
-<!--        }-->
-
-<!--        .about-us.expanded .custom-arrow-about {-->
-<!--            transform: rotate(90deg);-->
-<!--        }-->
-
-<!--        .about-us-header {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--            cursor: pointer;-->
-<!--            padding: 0 15px;-->
-<!--        }-->
-
-<!--        .about-us-header h2 {-->
-<!--            margin: 0;-->
-<!--            font-size: 20px;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        .about-us-content {-->
-<!--            max-height: 0;-->
-<!--            overflow: hidden;-->
-<!--            transition: max-height 0.5s ease, padding 0.5s ease;-->
-<!--            padding: 0 15px;-->
-<!--        }-->
-
-<!--        .about-us-content p {-->
-<!--            margin: 10px 0;-->
-<!--            color: var(&#45;&#45;secondary-text-color);-->
-<!--            font-size: 14px;-->
-<!--            line-height: 1.6;-->
-<!--        }-->
-
-<!--        .about-us.expanded .about-us-content {-->
-<!--            max-height: 500px;-->
-<!--            padding: 10px 15px;-->
-<!--        }-->
-
-<!--        @media (max-width: 768px) {-->
-<!--            .social-link img {-->
-<!--                width: 24px;-->
-<!--                height: 24px;-->
-<!--            }-->
-<!--            .social-links {-->
-<!--                gap: 5px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        h2 {-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        .category-grid {-->
-<!--            display: grid;-->
-<!--            grid-template-columns: repeat(2, 1fr);-->
-<!--            gap: 10px;-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        .category-item {-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            height: 120px;-->
-<!--            background-size: cover;-->
-<!--            background-position: center;-->
-<!--            color: white;-->
-<!--            font-size: 20px;-->
-<!--            font-weight: bold;-->
-<!--            border-radius: 10px;-->
-<!--            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);-->
-<!--            cursor: pointer;-->
-<!--            position: relative;-->
-<!--            overflow: hidden;-->
-<!--            transition: transform 0.2s ease, box-shadow 0.2s ease;-->
-<!--        }-->
-
-<!--        .category-item:hover {-->
-<!--            transform: scale(1.05);-->
-<!--            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);-->
-<!--        }-->
-
-<!--        .container {-->
-<!--            display: none;-->
-<!--            opacity: 0;-->
-<!--            transition: opacity 0.3s ease;-->
-<!--        }-->
-
-<!--        .container.active {-->
-<!--            display: block;-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        .back-button {-->
-<!--            display: inline-block;-->
-<!--            cursor: pointer;-->
-<!--            padding: 5px;-->
-<!--            margin-bottom: 10px;-->
-<!--            transition: opacity 0.2s ease;-->
-<!--        }-->
-
-<!--        .back-button:hover {-->
-<!--            opacity: 0.8;-->
-<!--        }-->
-
-<!--        .arrow-icon {-->
-<!--            width: 24px;-->
-<!--            height: 24px;-->
-<!--            vertical-align: middle;-->
-<!--        }-->
-
-<!--        .menu-item {-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            padding: 10px;-->
-<!--            margin-bottom: 10px;-->
-<!--            border-radius: 10px;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--            background-color: var(&#45;&#45;item-bg-color);-->
-<!--            transition: transform 0.2s ease;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        .menu-item:hover {-->
-<!--            transform: scale(1.02);-->
-<!--        }-->
-
-<!--        .menu-item img {-->
-<!--            width: 100px;-->
-<!--            height: 100px;-->
-<!--            object-fit: cover;-->
-<!--            border-radius: 10px;-->
-<!--            margin-right: 15px;-->
-<!--        }-->
-
-<!--        .menu-item .info {-->
-<!--            flex: 1;-->
-<!--            margin-right: 15px;-->
-<!--        }-->
-
-<!--        .menu-item h3 {-->
-<!--            margin: 0;-->
-<!--            font-size: 18px;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        .menu-item p {-->
-<!--            margin: 5px 0;-->
-<!--            font-size: 14px;-->
-<!--            color: var(&#45;&#45;secondary-text-color);-->
-<!--        }-->
-
-<!--        .price-and-button {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: flex-end;-->
-<!--            gap: 10px;-->
-<!--        }-->
-
-<!--        .price {-->
-<!--            font-size: 16px;-->
-<!--            font-weight: bold;-->
-<!--            text-align: right;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--            background-color: rgba(46, 166, 255, 0.1);-->
-<!--            padding: 5px 10px;-->
-<!--            border-radius: 5px;-->
-<!--            display: inline-block;-->
-<!--        }-->
-
-<!--        body.dark-theme .price {-->
-<!--            background-color: rgba(46, 166, 255, 0.2);-->
-<!--        }-->
-
-<!--        .add-to-cart {-->
-<!--            display: none;-->
-<!--        }-->
-
-<!--        .mini-bar {-->
-<!--            position: fixed;-->
-<!--            bottom: 20px;-->
-<!--            left: 10px;-->
-<!--            right: 10px;-->
-<!--            background-color: var(&#45;&#45;item-bg-color);-->
-<!--            display: flex;-->
-<!--            justify-content: space-around;-->
-<!--            align-items: center;-->
-<!--            padding: 10px;-->
-<!--            border-radius: 15px;-->
-<!--            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);-->
-<!--            z-index: 1000;-->
-<!--            border: 1px solid var(&#45;&#45;border-color);-->
-<!--            transition: background-color 0.3s ease;-->
-<!--        }-->
-
-<!--        .mini-bar button {-->
-<!--            background: none;-->
-<!--            border: none;-->
-<!--            cursor: pointer;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--            transition: color 0.2s ease, background-color 0.2s ease;-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            gap: 5px;-->
-<!--            font-size: 14px;-->
-<!--            padding: 10px;-->
-<!--            border-radius: 10px;-->
-<!--            flex: 1;-->
-<!--        }-->
-
-<!--        .mini-bar button:hover {-->
-<!--            color: #2ea6ff;-->
-<!--            background-color: rgba(46, 166, 255, 0.1);-->
-<!--        }-->
-
-<!--        .mini-bar button.active {-->
-<!--            background-color: #2ea6ff;-->
-<!--            color: white;-->
-<!--        }-->
-
-<!--        .mini-bar button .material-symbols-outlined.icon {-->
-<!--            width: 24px;-->
-<!--            height: 24px;-->
-<!--            transition: transform 0.2s ease;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        body:not(.dark-theme) .mini-bar button .material-symbols-outlined.icon {-->
-<!--            color: #333;-->
-<!--        }-->
-
-<!--        body.dark-theme .mini-bar button .material-symbols-outlined.icon {-->
-<!--            color: #ffffff;-->
-<!--        }-->
-
-<!--        .mini-bar button.active .material-symbols-outlined.icon {-->
-<!--            color: #ffffff;-->
-<!--        }-->
-
-<!--        .mini-bar button:hover .material-symbols-outlined.icon {-->
-<!--            transform: scale(1.1);-->
-<!--        }-->
-
-<!--        .mini-bar button.cart-button {-->
-<!--            position: relative;-->
-<!--        }-->
-
-<!--        .cart-icon-wrapper {-->
-<!--            position: relative;-->
-<!--            display: inline-flex;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        .mini-bar button.cart-button .cart-counter {-->
-<!--            position: absolute;-->
-<!--            top: -10px;-->
-<!--            right: -12px;-->
-<!--            background-color: #2ea6ff;-->
-<!--            color: white;-->
-<!--            border-radius: 50%;-->
-<!--            padding: 2px 6px;-->
-<!--            font-size: 12px;-->
-<!--        }-->
-
-<!--        /* Анимация для светлой темы */-->
-<!--        body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {-->
-<!--            animation: bounceLight 0.5s ease;-->
-<!--        }-->
-
-<!--        @keyframes bounceLight {-->
-<!--            0%, 100% {-->
-<!--                transform: scale(1);-->
-<!--                color: #333; /* Тёмный цвет в светлой теме */-->
-<!--            }-->
-<!--            50% {-->
-<!--                transform: scale(1.2);-->
-<!--                color: #000; /* Более насыщенный тёмный во время анимации */-->
-<!--                filter: brightness(1.2); /* Лёгкое усиление для эффекта */-->
-<!--            }-->
-<!--        }-->
-
-<!--        /* Анимация для тёмной темы */-->
-<!--        body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {-->
-<!--            animation: bounceDark 0.5s ease;-->
-<!--        }-->
-
-<!--        @keyframes bounceDark {-->
-<!--            0%, 100% {-->
-<!--                transform: scale(1);-->
-<!--                color: #ffffff; /* Белый цвет в тёмной теме */-->
-<!--            }-->
-<!--            50% {-->
-<!--                transform: scale(1.2);-->
-<!--                color: #ffffff; /* Остаётся белым */-->
-<!--                filter: brightness(1.5); /* Усиление яркости для эффекта свечения */-->
-<!--            }-->
-<!--        }-->
-
-<!--        .custom-alert {-->
-<!--            position: fixed;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            right: 0;-->
-<!--            width: 100%;-->
-<!--            background-color: #4CAF50;-->
-<!--            color: white;-->
-<!--            padding: 15px;-->
-<!--            text-align: center;-->
-<!--            font-size: 16px;-->
-<!--            font-weight: bold;-->
-<!--            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);-->
-<!--            opacity: 0;-->
-<!--            visibility: hidden;-->
-<!--            transform: translateY(-100%);-->
-<!--            transition: opacity 0.3s ease, transform 0.3s ease;-->
-<!--            z-index: 1000;-->
-<!--        }-->
-
-<!--        .custom-alert.show {-->
-<!--            opacity: 1;-->
-<!--            visibility: visible;-->
-<!--            transform: translateY(0);-->
-<!--        }-->
-
-<!--        .quantity-controls {-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            gap: 10px;-->
-<!--        }-->
-
-<!--        .quantity-controls button {-->
-<!--            width: 36px;-->
-<!--            height: 36px;-->
-<!--            background-color: #2ea6ff;-->
-<!--            color: white;-->
-<!--            border: none;-->
-<!--            font-size: 18px;-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.2s ease, transform 0.2s ease;-->
-<!--            border-radius: 5px;-->
-<!--        }-->
-
-<!--        .quantity-controls button:hover {-->
-<!--            background-color: #1e8fd1;-->
-<!--        }-->
-
-<!--        .quantity-controls button:active {-->
-<!--            transform: scale(0.9);-->
-<!--        }-->
-
-<!--        .quantity-controls span {-->
-<!--            font-size: 16px;-->
-<!--            font-weight: bold;-->
-<!--            padding: 5px 10px;-->
-<!--            background-color: var(&#45;&#45;item-bg-color);-->
-<!--            border-radius: 5px;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        #loading-screen {-->
-<!--            position: fixed;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            background-color: #f8f8f8;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            z-index: 10000;-->
-<!--            opacity: 1;-->
-<!--            transition: opacity 0.5s ease;-->
-<!--        }-->
-
-<!--        #loading-screen.hide {-->
-<!--            opacity: 0;-->
-<!--            visibility: hidden;-->
-<!--        }-->
-
-<!--        #loading-screen img {-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            object-fit: cover;-->
-<!--        }-->
-
-<!--        .modal {-->
-<!--            position: fixed;-->
-<!--            bottom: -100%;-->
-<!--            left: 0;-->
-<!--            right: 0;-->
-<!--            background-color: var(&#45;&#45;item-bg-color);-->
-<!--            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);-->
-<!--            border-top-left-radius: 15px;-->
-<!--            border-top-right-radius: 15px;-->
-<!--            height: 80vh;-->
-<!--            overflow-y: auto;-->
-<!--            transition: bottom 0.3s ease;-->
-<!--            z-index: 2000;-->
-<!--            padding: 20px;-->
-<!--        }-->
-
-<!--        .modal.active {-->
-<!--            bottom: 0;-->
-<!--        }-->
-
-<!--        .modal-content {-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            gap: 15px;-->
-<!--            height: 100%;-->
-<!--        }-->
-
-<!--        .modal-image {-->
-<!--            width: 100%;-->
-<!--            height: 300px;-->
-<!--            object-fit: cover;-->
-<!--            border-radius: 10px;-->
-<!--        }-->
-
-<!--        .modal-info {-->
-<!--            flex-grow: 1;-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            gap: 10px;-->
-<!--        }-->
-
-<!--        .modal-title-price {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        .modal-info h3 {-->
-<!--            margin: 0;-->
-<!--            font-size: 22px;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--        }-->
-
-<!--        .modal-info .price {-->
-<!--            font-size: 18px;-->
-<!--            font-weight: bold;-->
-<!--            color: var(&#45;&#45;text-color);-->
-<!--            background-color: rgba(46, 166, 255, 0.1);-->
-<!--            padding: 5px 10px;-->
-<!--            border-radius: 5px;-->
-<!--        }-->
-
-<!--        body.dark-theme .modal-info .price {-->
-<!--            background-color: rgba(46, 166, 255, 0.2);-->
-<!--        }-->
-
-<!--        .modal-info p {-->
-<!--            margin: 5px 0;-->
-<!--            font-size: 16px;-->
-<!--            color: var(&#45;&#45;secondary-text-color);-->
-<!--        }-->
-
-<!--        .modal-controls {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--            gap: 15px;-->
-<!--            margin-top: auto;-->
-<!--        }-->
-
-<!--        .modal-overlay {-->
-<!--            position: fixed;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            right: 0;-->
-<!--            bottom: 0;-->
-<!--            background-color: rgba(0, 0, 0, 0.5);-->
-<!--            display: none;-->
-<!--            z-index: 1900;-->
-<!--        }-->
-
-<!--        .modal-overlay.active {-->
-<!--            display: block;-->
-<!--        }-->
-
-<!--        #modal-add-to-cart {-->
-<!--            display: block;-->
-<!--            background-color: #2ea6ff;-->
-<!--            color: white;-->
-<!--            border: none;-->
-<!--            padding: 12px 24px;-->
-<!--            border-radius: 5px;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease;-->
-<!--            font-size: 16px;-->
-<!--        }-->
-
-<!--        #modal-add-to-cart:hover {-->
-<!--            background-color: #1e8fd1;-->
-<!--        }-->
-
-<!--        .empty-cart {-->
-<!--            display: none;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            height: 50vh;-->
-<!--            text-align: center;-->
-<!--            opacity: 0;-->
-<!--            transition: opacity 0.3s ease;-->
-<!--        }-->
-
-<!--        .empty-cart.active {-->
-<!--            display: flex;-->
-<!--            opacity: 1;-->
-<!--        }-->
-
-<!--        .empty-cart img {-->
-<!--            width: 150px;-->
-<!--            height: 150px;-->
-<!--            animation: emptyCartShake 1.5s infinite ease-in-out;-->
-<!--            filter: contrast(1.2) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));-->
-<!--        }-->
-
-<!--        .empty-cart p {-->
-<!--            margin-top: 20px;-->
-<!--            font-size: 18px;-->
-<!--            color: var(&#45;&#45;secondary-text-color);-->
-<!--        }-->
-
-<!--        @keyframes emptyCartShake {-->
-<!--            0% { transform: rotate(0deg); }-->
-<!--            20% { transform: rotate(20deg); }-->
-<!--            40% { transform: rotate(-20deg); }-->
-<!--            60% { transform: rotate(10deg); }-->
-<!--            80% { transform: rotate(-10deg); }-->
-<!--            100% { transform: rotate(0deg); }-->
-<!--        }-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--/* Стили для модального окна оформления заказа */-->
-<!--#checkout-modal {-->
-<!--    position: fixed;-->
-<!--    bottom: -100%;-->
-<!--    left: 0;-->
-<!--    right: 0;-->
-<!--    background-color: var(&#45;&#45;item-bg-color);-->
-<!--    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);-->
-<!--    border-top-left-radius: 15px;-->
-<!--    border-top-right-radius: 15px;-->
-<!--    height: 80vh;-->
-<!--    overflow-y: auto;-->
-<!--    transition: bottom 0.3s ease;-->
-<!--    z-index: 2000;-->
-<!--    padding: 20px;-->
-<!--}-->
-
-<!--#checkout-modal.active {-->
-<!--    bottom: 0;-->
-<!--}-->
-
-<!--#checkout-modal-overlay {-->
-<!--    position: fixed;-->
-<!--    top: 0;-->
-<!--    left: 0;-->
-<!--    right: 0;-->
-<!--    bottom: 0;-->
-<!--    background-color: rgba(0, 0, 0, 0.5);-->
-<!--    display: none;-->
-<!--    z-index: 1900;-->
-<!--}-->
-
-<!--#checkout-modal-overlay.active {-->
-<!--    display: block;-->
-<!--}-->
-
-<!--/* Стили для формы внутри модального окна */-->
-<!--#checkout-modal .modal-content {-->
-<!--    display: flex;-->
-<!--    flex-direction: column;-->
-<!--    gap: 15px;-->
-<!--    height: 100%;-->
-<!--}-->
-
-<!--#checkout-modal h2 {-->
-<!--    margin: 0;-->
-<!--    font-size: 24px;-->
-<!--    color: var(&#45;&#45;text-color);-->
-<!--    text-align: center;-->
-<!--}-->
-
-<!--#checkout-modal .form-group {-->
-<!--    display: flex;-->
-<!--    flex-direction: column;-->
-<!--    gap: 5px;-->
-<!--}-->
-
-<!--#checkout-modal .form-group label {-->
-<!--    font-size: 14px;-->
-<!--    color: var(&#45;&#45;text-color);-->
-<!--}-->
-
-<!--#checkout-modal .form-group input,-->
-<!--#checkout-modal .form-group select {-->
-<!--    padding: 10px;-->
-<!--    border: 1px solid var(&#45;&#45;border-color);-->
-<!--    border-radius: 5px;-->
-<!--    font-size: 14px;-->
-<!--    color: var(&#45;&#45;text-color);-->
-<!--    background-color: var(&#45;&#45;item-bg-color);-->
-<!--    transition: border-color 0.3s ease;-->
-<!--    width: 100%;-->
-<!--    box-sizing: border-box;-->
-<!--}-->
-
-<!--#checkout-modal .form-group input:focus,-->
-<!--#checkout-modal .form-group select:focus {-->
-<!--    border-color: #007bff;-->
-<!--    outline: none;-->
-<!--}-->
-
-<!--#checkout-modal .form-group input::placeholder {-->
-<!--    color: var(&#45;&#45;secondary-text-color);-->
-<!--}-->
-
-<!--#checkout-modal .form-group select {-->
-<!--    appearance: none;-->
-<!--    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');-->
-<!--    background-repeat: no-repeat;-->
-<!--    background-position: right 10px center;-->
-<!--    background-size: 12px;-->
-<!--}-->
-
-
-
-
-
-<!--#checkout-modal .form-actions {-->
-<!--    display: flex;-->
-<!--    justify-content: space-between;-->
-<!--    gap: 10px;-->
-<!--     margin-top: 20px; /* Добавляем отступ сверху */-->
-<!--    padding-top: 10px; /* Добавляем отступ сверху внутри контейнера */-->
-
-<!--}-->
-
-<!--#checkout-modal .form-actions button {-->
-<!--    flex: 1;-->
-<!--    padding: 10px;-->
-<!--    border: none;-->
-<!--    border-radius: 5px;-->
-<!--    font-size: 16px;-->
-<!--    cursor: pointer;-->
-<!--    transition: background-color 0.3s ease;-->
-<!--}-->
-
-<!--#checkout-modal .form-actions button[type="submit"] {-->
-<!--    background-color: #007bff;-->
-<!--    color: #fff;-->
-<!--}-->
-
-<!--#checkout-modal .form-actions button[type="submit"]:hover {-->
-<!--    background-color: #0056b3;-->
-<!--}-->
-
-<!--#checkout-modal .form-actions button[type="button"] {-->
-<!--    background-color: rgba(248, 249, 250, 0.9);-->
-<!--    color: var(&#45;&#45;text-color);-->
-<!--    border: 1px solid var(&#45;&#45;border-color);-->
-<!--}-->
-
-<!--#checkout-modal .form-actions button[type="button"]:hover {-->
-<!--    background-color: rgba(233, 236, 239, 0.9);-->
-<!--}-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--        @media (max-width: 480px) {-->
-<!--            #header {-->
-<!--                margin-bottom: 5px;-->
-<!--            }-->
-
-<!--            .header-top {-->
-<!--                flex-direction: column;-->
-<!--                align-items: center;-->
-<!--                margin-bottom: 5px;-->
-<!--            }-->
-
-<!--            .logo {-->
-<!--                width: 90%;-->
-<!--                max-width: 500px;-->
-<!--                margin: -30px auto 8px;-->
-<!--            }-->
-
-<!--            .working-hours {-->
-<!--                font-size: 14px;-->
-<!--                margin-right: 5px;-->
-<!--            }-->
-
-<!--            .working-hours p {-->
-<!--                margin: 5px 0;-->
-<!--            }-->
-
-<!--            .divider {-->
-<!--                width: 90%;-->
-<!--            }-->
-
-<!--            .social-links {-->
-<!--                gap: 2px;-->
-<!--                flex-wrap: wrap;-->
-<!--                justify-content: center;-->
-<!--            }-->
-
-<!--            .social-link img {-->
-<!--                width: 24px;-->
-<!--                height: 24px;-->
-<!--            }-->
-
-<!--            .header-widget {-->
-<!--                gap: 15px;-->
-<!--                margin-top: 10px;-->
-<!--                max-width: 100%;-->
-<!--            }-->
-
-<!--            .gallery {-->
-<!--                height: 350px;-->
-<!--            }-->
-
-<!--            .about-us {-->
-<!--                margin-top: 15px;-->
-<!--                padding: 10px 0;-->
-<!--            }-->
-
-<!--            .about-us-header {-->
-<!--                padding: 0 10px;-->
-<!--            }-->
-
-<!--            .about-us-header h2 {-->
-<!--                font-size: 18px;-->
-<!--            }-->
-
-<!--            .about-us-content {-->
-<!--                padding: 0 10px;-->
-<!--            }-->
-
-<!--            .about-us.expanded .about-us-content {-->
-<!--                padding: 8px 10px;-->
-<!--            }-->
-
-<!--            .about-us-content p {-->
-<!--                font-size: 13px;-->
-<!--                line-height: 1.5;-->
-<!--            }-->
-
-<!--            .price-and-button {-->
-<!--                gap: 5px;-->
-<!--            }-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <div id="loading-screen">-->
-<!--        <img src="https://i.ibb.co/TfR8BgV/first-screen.png" alt="Загрузка">-->
-<!--    </div>-->
-
-<!--    <div id="custom-alert" class="custom-alert">-->
-<!--        Товар добавлен в корзину!-->
-<!--    </div>-->
-
-<!--    <div id="menu-screen" class="container active">-->
-<!--        <div id="header">-->
-<!--            <div class="header-top">-->
-<!--                <div class="logo">-->
-<!--                    <img src="images/logo1.png" alt="Логотип ресторана">-->
-<!--                </div>-->
-<!--                <div class="working-hours">-->
-<!--                    <p><span class="schedule">Часы работы: 10:00 - 12:00</span></p>-->
-<!--                    <p><span class="schedule">График: Ежедневно</span></p>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="divider"></div>-->
-
-<!--            <div class="social-links">-->
-<!--                <div id="phone-link" class="social-link" onclick="openPhone()">-->
-<!--                    <img id="phone-icon" src="https://cdn-icons-png.flaticon.com/512/126/126341.png" alt="Телефон">-->
-<!--                </div>-->
-<!--                <a href="mailto:info@restaurant.com" class="social-link">-->
-<!--                    <img src="images/email-icon.png" alt="Почта">-->
-<!--                </a>-->
-<!--                <a href="https://t.me/Buhta_hotel" class="social-link">-->
-<!--                    <img src="images/telegram-icon.png" alt="Телеграм">-->
-<!--                </a>-->
-<!--                <a href="https://api.whatsapp.com/send/?phone=79785871717&text&type=phone_number&app_absent=0" class="social-link">-->
-<!--                    <img src="images/whatsapp-icon.png" alt="WhatsApp">-->
-<!--                </a>-->
-<!--                <a href="https://vk.com/buhtahotel" class="social-link">-->
-<!--                    <img src="images/vk-icon.png" alt="ВКонтакте">-->
-<!--                </a>-->
-
-<!--                <a href="https://buhtahotel.ru" class="social-link" target="_blank" onclick="openWebsite()">-->
-<!--                    <img src="images/website-icon.png" alt="Сайт">-->
-<!--                </a>-->
-<!--                 <a href="https://yandex.ru/maps/-/CHBmA00V" class="social-link">-->
-<!--                    <img src="images/yandex-maps-icon.png" alt="Яндекс Карты">-->
-<!--                </a>-->
-<!--            </div>-->
-
-<!--            <div class="divider"></div>-->
-
-<!--            <div class="header-widget">-->
-<!--                <div class="gallery">-->
-<!--                    <div class="gallery-images">-->
-<!--                        <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">-->
-<!--                        <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">-->
-<!--                        <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="about-us">-->
-<!--                    <div class="about-us-header" onclick="toggleAboutUs()">-->
-<!--                        <h2>О нас</h2>-->
-<!--                        <img class="custom-arrow-about" src="images/arrow-right-light.png" alt="Стрелка">-->
-<!--                    </div>-->
-<!--                    <div class="about-us-content">-->
-<!--                        <p>-->
-<!--                            Добро пожаловать в наш ресторан! Мы предлагаем блюда, приготовленные с любовью из свежайших ингредиентов.-->
-<!--                            Наша команда поваров старается удивить вас уникальными вкусами и атмосферой уюта.-->
-<!--                            Приходите к нам, чтобы насладиться великолепной кухней и приятным обслуживанием.-->
-<!--                        </p>-->
-<!--                        <p>-->
-<!--                            Мы также предлагаем широкий выбор напитков и десертов, чтобы завершить ваш обед на высокой ноте.-->
-<!--                            Наш интерьер создан для того, чтобы вы чувствовали себя как дома, а наши сотрудники всегда готовы помочь вам.-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <h2 id="main-title">Выберите категорию</h2>-->
-<!--        <div class="category-grid" id="category-grid">-->
-<!--            <div class="category-item" style="background-image: url('https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924');" onclick="showScreen('soups-screen')">Первые блюда</div>-->
-<!--            <div class="category-item" style="background-image: url('https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg');" onclick="showScreen('salads-screen')">Салаты</div>-->
-<!--            <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>-->
-<!--            <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>-->
-<!--            <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>-->
-<!--            <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>-->
-<!--            <div class="category-item" style="background-image: url('https://example.com/bar.jpg');" onclick="showScreen('bar-screen')">Бар</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="main-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Основные блюда</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Сковорода куриная', 450, '360г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Сковорода куриная">-->
-<!--            <div class="info">-->
-<!--                <h3>Сковорода куриная</h3>-->
-<!--                <p>360г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">450₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Куриная отбивная', 400, '200г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Куриная отбивная">-->
-<!--            <div class="info">-->
-<!--                <h3>Куриная отбивная</h3>-->
-<!--                <p>200г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">400₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Сковорода свиная', 530, '360г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Сковорода свиная">-->
-<!--            <div class="info">-->
-<!--                <h3>Сковорода свиная</h3>-->
-<!--                <p>360г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">530₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="soups-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Первые блюда</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Борщ', 400, '350г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Борщ">-->
-<!--            <div class="info">-->
-<!--                <h3>Борщ</h3>-->
-<!--                <p>350г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">400₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Солянка', 450, '350г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Солянка">-->
-<!--            <div class="info">-->
-<!--                <h3>Солянка</h3>-->
-<!--                <p>350г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">450₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Суп лапша', 300, '300г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Суп лапша">-->
-<!--            <div class="info">-->
-<!--                <h3>Суп лапша</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">300₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="salads-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Салаты</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Цезарь с курицей', 350, '250г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Цезарь с курицей">-->
-<!--            <div class="info">-->
-<!--                <h3>Цезарь с курицей</h3>-->
-<!--                <p>250г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">350₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Греческий салат', 400, '300г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Греческий салат">-->
-<!--            <div class="info">-->
-<!--                <h3>Греческий салат</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">400₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Салат с креветками', 450, '300г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Салат с креветками">-->
-<!--            <div class="info">-->
-<!--                <h3>Салат с креветками</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">450₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="seafood-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Морепродукты</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Мидии в сливочном соусе', 600, '300г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Мидии в сливочном соусе">-->
-<!--            <div class="info">-->
-<!--                <h3>Мидии в сливочном соусе</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">600₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Креветки гриль', 700, '250г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Креветки гриль">-->
-<!--            <div class="info">-->
-<!--                <h3>Креветки гриль</h3>-->
-<!--                <p>250г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">700₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Кальмары в кляре', 550, '300г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Кальмары в кляре">-->
-<!--            <div class="info">-->
-<!--                <h3>Кальмары в кляре</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">550₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="pasta-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Пасты</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Паста со сливочным маслом', 330, '250г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Паста со сливочным маслом">-->
-<!--            <div class="info">-->
-<!--                <h3>Паста со сливочным маслом</h3>-->
-<!--                <p>250г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">330₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Карбонара', 470, '300г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Карбонара">-->
-<!--            <div class="info">-->
-<!--                <h3>Карбонара</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">470₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Болоньезе', 450, '300г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Болоньезе">-->
-<!--            <div class="info">-->
-<!--                <h3>Болоньезе</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">450₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="grill-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Мангал</h2>-->
-<!--        <div class="menu-item" onclick="openModal('Шашлык из свинины', 600, '300г', 'https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924')">-->
-<!--            <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="Шашлык из свинины">-->
-<!--            <div class="info">-->
-<!--                <h3>Шашлык из свинины</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">600₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Шашлык из курицы', 500, '300г', 'https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg')">-->
-<!--            <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">-->
-<!--            <div class="info">-->
-<!--                <h3>Шашлык из курицы</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">500₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="menu-item" onclick="openModal('Шашлык из баранины', 800, '300г', 'https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp')">-->
-<!--            <img src="https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp" alt="Шашлык из баранины">-->
-<!--            <div class="info">-->
-<!--                <h3>Шашлык из баранины</h3>-->
-<!--                <p>300г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">800₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div id="bar-screen" class="container">-->
-<!--        <span class="back-button" onclick="scrollToCategories()">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Бар</h2>-->
-<!--        <div class="category-grid">-->
-<!--            <div class="category-item" style="background-image: url('https://example.com/alcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>-->
-<!--            <div class="category-item" style="background-image: url('https://example.com/drinks.jpg');" onclick="showScreen('drinks-screen')">Напитки</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--<div id="drinks-screen" class="container">-->
-<!--    <span class="back-button" onclick="showScreen('bar-screen')">-->
-<!--        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--    </span>-->
-<!--    <h2>Напитки</h2>-->
-<!--    <h3>Безалкогольные напитки</h3>-->
-<!--    <div class="menu-item" onclick="openModal('\"Borjomi\" (стекло)', 1800, '0,5 л', 'https://example.com/borjomi.jpg')">-->
-<!--        <img src="https://example.com/borjomi.jpg" alt="Borjomi">-->
-<!--        <div class="info">-->
-<!--            <h3>"Borjomi" (стекло)</h3>-->
-<!--            <p>0,5 л</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">1800₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Вода \"Крымская\" (стекло)', 2100, '0,5 л (газ./сл. газ)', 'https://example.com/krymskaya-voda.jpg')">-->
-<!--        <img src="https://example.com/krymskaya-voda.jpg" alt="Вода Крымская">-->
-<!--        <div class="info">-->
-<!--            <h3>Вода "Крымская" (стекло)</h3>-->
-<!--            <p>0,5 л (газ./сл. газ)</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">2100₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('\"Кола\" (стекло)', 1700, '0,33 л', 'https://example.com/cola.jpg')">-->
-<!--        <img src="https://example.com/cola.jpg" alt="Кола">-->
-<!--        <div class="info">-->
-<!--            <h3>"Кола" (стекло)</h3>-->
-<!--            <p>0,33 л</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">1700₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Сок в ассортименте', 80, '200 г', 'https://example.com/juice.jpg')">-->
-<!--        <img src="https://example.com/juice.jpg" alt="Сок в ассортименте">-->
-<!--        <div class="info">-->
-<!--            <h3>Сок в ассортименте</h3>-->
-<!--            <p>200 г / 1 л - 80₽ / 400₽</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">80₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Морс черная смородина', 80, '200 г', 'https://example.com/mors.jpg')">-->
-<!--        <img src="https://example.com/mors.jpg" alt="Морс черная смородина">-->
-<!--        <div class="info">-->
-<!--            <h3>Морс черная смородина</h3>-->
-<!--            <p>200 г / 1 л - 80₽ / 400₽</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">80₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <h3>Чай (500 мл / 700 мл)</h3>-->
-<!--    <div class="menu-item" onclick="openModal('Чай черный / зеленый', 250, '0,5 л', 'https://example.com/tea.jpg')">-->
-<!--        <img src="https://example.com/tea.jpg" alt="Чай черный / зеленый">-->
-<!--        <div class="info">-->
-<!--            <h3>Чай черный / зеленый</h3>-->
-<!--            <p>0,5 л / 0,7 л - 250₽ / 350₽</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">250₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Молочный улунг', 250, '0,5 л', 'https://example.com/oolong.jpg')">-->
-<!--        <img src="https://example.com/oolong.jpg" alt="Молочный улунг">-->
-<!--        <div class="info">-->
-<!--            <h3>Молочный улунг</h3>-->
-<!--            <p>0,5 л / 0,7 л - 250₽ / 350₽</p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">250₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <h3>Кофе</h3>-->
-<!--    <div class="menu-item" onclick="openModal('Эспрессо', 150, '', 'https://example.com/espresso.jpg')">-->
-<!--        <img src="https://example.com/espresso.jpg" alt="Эспрессо">-->
-<!--        <div class="info">-->
-<!--            <h3>Эспрессо</h3>-->
-<!--            <p></p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">150₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Американо', 150, '', 'https://example.com/americano.jpg')">-->
-<!--        <img src="https://example.com/americano.jpg" alt="Американо">-->
-<!--        <div class="info">-->
-<!--            <h3>Американо</h3>-->
-<!--            <p></p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">150₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Американо с молоком', 200, '', 'https://example.com/americano-milk.jpg')">-->
-<!--        <img src="https://example.com/americano-milk.jpg" alt="Американо с молоком">-->
-<!--        <div class="info">-->
-<!--            <h3>Американо с молоком</h3>-->
-<!--            <p></p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">200₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Капучино', 200, '', 'https://example.com/cappuccino.jpg')">-->
-<!--        <img src="https://example.com/cappuccino.jpg" alt="Капучино">-->
-<!--        <div class="info">-->
-<!--            <h3>Капучино</h3>-->
-<!--            <p></p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">200₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="menu-item" onclick="openModal('Латте', 250, '', 'https://example.com/latte.jpg')">-->
-<!--        <img src="https://example.com/latte.jpg" alt="Латте">-->
-<!--        <div class="info">-->
-<!--            <h3>Латте</h3>-->
-<!--            <p></p>-->
-<!--        </div>-->
-<!--        <div class="price-and-button">-->
-<!--            <div class="price">250₽</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--    <div id="alcohol-screen" class="container">-->
-<!--        <span class="back-button" onclick="showScreen('bar-screen')">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Алкоголь</h2>-->
-<!--        <h3>Коньяк</h3>-->
-<!--        <div class="menu-item" onclick="openModal('Арарат 3 года (50 г)', 290, '50 г', 'https://example.com/ararat-3.jpg')">-->
-<!--            <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">-->
-<!--            <div class="info">-->
-<!--                <h3>Арарат 3 года</h3>-->
-<!--                <p>50 г</p>-->
-<!--            </div>-->
-<!--            <div class="price-and-button">-->
-<!--                <div class="price">290₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--   <div id="cart-screen" class="container">-->
-<!--    <span class="back-button" onclick="showScreen('menu-screen')">-->
-<!--        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--    </span>-->
-<!--    <h2>Корзина</h2>-->
-<!--    <div id="cart-items"></div>-->
-<!--    <div class="empty-cart" id="empty-cart">-->
-<!--        <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">-->
-<!--        <p>Корзина пока пустая</p>-->
-<!--    </div>-->
-<!--    <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>-->
-<!--    <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>-->
-<!--    <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>-->
-<!--</div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--&lt;!&ndash; Модальное окно для оформления заказа &ndash;&gt;-->
-<!--<div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>-->
-<!--<div id="checkout-modal" class="modal">-->
-<!--    <div class="modal-content">-->
-<!--        <h2>Оформление заказа</h2>-->
-<!--        <form class="checkout-form" id="checkout-form">-->
-<!--            <div class="form-group">-->
-<!--                <label for="last-name">Фамилия</label>-->
-<!--                <input type="text" id="last-name" placeholder="Введите фамилию" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="first-name">Имя</label>-->
-<!--                <input type="text" id="first-name" placeholder="Введите имя" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="phone">Телефон</label>-->
-<!--                <input type="tel" id="phone" placeholder="Введите номер телефона" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="payment-method">Способ оплаты</label>-->
-<!--                <select id="payment-method" required>-->
-<!--                    <option value="" disabled selected>Выберите способ оплаты</option>-->
-<!--                    <option value="cash">Наличные</option>-->
-<!--                    <option value="card">Карта</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="delivery-method">Способ получения</label>-->
-<!--                <select id="delivery-method" required onchange="toggleRoomNumber()">-->
-<!--                    <option value="" disabled selected>Выберите способ получения</option>-->
-<!--                    <option value="delivery">Доставка</option>-->
-<!--                    <option value="pickup">Самовынос</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group" id="room-number-container" style="display: none;">-->
-<!--                <label for="room-number">Номер комнаты</label>-->
-<!--                <input type="text" id="room-number" placeholder="Введите номер комнаты">-->
-<!--            </div>-->
-<!--            <div class="form-actions">-->
-<!--                <button type="button" onclick="closeCheckoutModal()">Назад</button>-->
-<!--                <button type="submit">Подтвердить</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<div id="gallery-screen" class="container">-->
-<!--    <button class="close-gallery" onclick="closeGallery()">×</button>-->
-<!--    <div class="gallery-fullscreen">-->
-<!--        <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">-->
-<!--        <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">-->
-<!--        <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">-->
-<!--    </div>-->
-<!--    <div class="gallery-nav">-->
-<!--        <button onclick="prevGalleryImage()">◄</button>-->
-<!--        <button onclick="nextGalleryImage()">►</button>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>-->
-<!--<div id="modal" class="modal">-->
-<!--    <div class="modal-content">-->
-<!--        <img id="modal-image" class="modal-image" src="" alt="">-->
-<!--        <div class="modal-info">-->
-<!--            <div class="modal-title-price">-->
-<!--                <h3 id="modal-title"></h3>-->
-<!--                <div class="price" id="modal-price"></div>-->
-<!--            </div>-->
-<!--            <p id="modal-weight"></p>-->
-<!--            <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>-->
-<!--        </div>-->
-<!--        <div class="modal-controls">-->
-<!--            <div class="quantity-controls">-->
-<!--                <button onclick="changeModalQuantity(-1)">−</button>-->
-<!--                <span id="modal-quantity">1</span>-->
-<!--                <button onclick="changeModalQuantity(1)">+</button>-->
-<!--            </div>-->
-<!--            <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal()">Добавить в корзину</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="mini-bar">-->
-<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
-<!--    <button onclick="showScreen('menu-screen')" id="home-button">-->
-<!--        <span class="material-symbols-outlined icon">home</span>-->
-<!--        <span>Главная</span>-->
-<!--    </button>-->
-<!--    <button onclick="scrollToCategories()" id="menu-button">-->
-<!--        <span class="material-symbols-outlined icon">menu_book</span>-->
-<!--        <span>Меню</span>-->
-<!--    </button>-->
-<!--    <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">-->
-<!--        <div class="cart-icon-wrapper">-->
-<!--            <span class="material-symbols-outlined icon">shopping_cart</span>-->
-<!--            <div id="cart-counter" class="cart-counter">0</div>-->
-<!--        </div>-->
-<!--        <span>Корзина</span>-->
-<!--    </button>-->
-<!--</div>-->
-
-<!--<script>-->
-<!--    let cart = [];-->
-<!--    let tg = window.Telegram.WebApp;-->
-<!--    let modalQuantity = 1;-->
-<!--    let currentItem = null;-->
-
-<!--    tg.enableClosingConfirmation();-->
-<!--    tg.disableVerticalSwipes();-->
-<!--    tg.expand();-->
-
-<!--    function applyTheme() {-->
-<!--        const body = document.body;-->
-<!--        if (tg.colorScheme === 'dark') {-->
-<!--            body.classList.add('dark-theme');-->
-<!--        } else {-->
-<!--            body.classList.remove('dark-theme');-->
-<!--        }-->
-<!--        updateArrowIcons();-->
-<!--        updateAboutUsArrow();-->
-<!--    }-->
-
-<!--    function updateArrowIcons() {-->
-<!--        const arrows = document.querySelectorAll('.arrow-icon');-->
-<!--        const isDarkTheme = document.body.classList.contains('dark-theme');-->
-<!--        arrows.forEach(arrow => {-->
-<!--            arrow.src = isDarkTheme ? 'images/arrow-light.png' : 'images/arrow-dark.png';-->
-<!--        });-->
-<!--    }-->
-
-<!--    function updateAboutUsArrow() {-->
-<!--        const arrow = document.querySelector('.custom-arrow-about');-->
-<!--        const isDarkTheme = document.body.classList.contains('dark-theme');-->
-<!--        arrow.src = isDarkTheme ? 'images/arrow-right-dark.png' : 'images/arrow-right-light.png';-->
-<!--    }-->
-
-<!--    function toggleAboutUs() {-->
-<!--        const aboutUs = document.querySelector('.about-us');-->
-<!--        aboutUs.classList.toggle('expanded');-->
-<!--    }-->
-
-<!--    function copyPhoneNumber(phoneNumber) {-->
-<!--        if (navigator.clipboard && navigator.clipboard.writeText) {-->
-<!--            navigator.clipboard.writeText(phoneNumber)-->
-<!--                .then(() => console.log('Номер скопирован в буфер обмена'))-->
-<!--                .catch(err => console.error('Ошибка копирования:', err));-->
-<!--        } else {-->
-<!--            const textarea = document.createElement('textarea');-->
-<!--            textarea.value = phoneNumber;-->
-<!--            document.body.appendChild(textarea);-->
-<!--            textarea.select();-->
-<!--            document.execCommand('copy');-->
-<!--            document.body.removeChild(textarea);-->
-<!--            console.log('Номер скопирован через резервный метод');-->
-<!--        }-->
-<!--    }-->
-
-<!--    function openPhone() {-->
-<!--        const phoneNumber = '+79785791270';-->
-<!--        if (tg && tg.showPopup) {-->
-<!--            tg.showPopup({-->
-<!--                title: 'Номер телефона',-->
-<!--                message: `Скопируйте номер для звонка: ${phoneNumber}`,-->
-<!--                buttons: [-->
-<!--                    { id: 'copy', type: 'default', text: 'Скопировать' },-->
-<!--                    { type: 'cancel', text: 'Отмена' }-->
-<!--                ]-->
-<!--            }, (buttonId) => {-->
-<!--                if (buttonId === 'copy') {-->
-<!--                    copyPhoneNumber(phoneNumber);-->
-<!--                    tg.showPopup({-->
-<!--                        message: 'Номер скопирован! Вставьте его в приложение телефона.'-->
-<!--                    });-->
-<!--                }-->
-<!--            });-->
-<!--        } else {-->
-<!--            copyPhoneNumber(phoneNumber);-->
-<!--            alert(`Номер ${phoneNumber} скопирован! Вставьте его в приложение телефона.`);-->
-<!--        }-->
-<!--    }-->
-
-<!--    function openWebsite() {-->
-<!--        if (tg && tg.openLink) {-->
-<!--            tg.openLink('https://buhtahotel.ru');-->
-<!--            tg.BackButton.show();-->
-<!--            tg.BackButton.onClick(() => {-->
-<!--                tg.BackButton.hide();-->
-<!--                showScreen('menu-screen');-->
-<!--            });-->
-<!--        } else {-->
-<!--            window.open('https://buhtahotel.ru', '_blank');-->
-<!--        }-->
-<!--    }-->
-
-<!--    applyTheme();-->
-<!--    tg.onEvent('themeChanged', applyTheme);-->
-
-<!--    const loadingScreen = document.getElementById('loading-screen');-->
-<!--    loadingScreen.style.display = 'flex';-->
-<!--    setTimeout(() => {-->
-<!--        loadingScreen.classList.add('hide');-->
-<!--        document.getElementById('menu-screen').classList.add('active');-->
-<!--    }, 3000);-->
-
-<!--    let currentIndex = 0;-->
-<!--    const images = document.querySelectorAll('.gallery-images img');-->
-<!--    const totalImages = images.length;-->
-
-<!--    function showImage(index) {-->
-<!--        images.forEach((img, i) => {-->
-<!--            img.classList.toggle('active', i === index);-->
-<!--        });-->
-<!--    }-->
-
-<!--    function nextImage() {-->
-<!--        currentIndex = (currentIndex + 1) % totalImages;-->
-<!--        showImage(currentIndex);-->
-<!--    }-->
-
-<!--    setInterval(nextImage, 5000);-->
-
-<!--    let galleryIndex = 0;-->
-<!--    const galleryImages = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');-->
-<!--    const totalGalleryImages = galleryImages.length;-->
-
-<!--    function showGalleryImage(index) {-->
-<!--        galleryImages.forEach((img, i) => {-->
-<!--            img.classList.toggle('active', i === index);-->
-<!--        });-->
-<!--    }-->
-
-<!--    function openGallery() {-->
-<!--        document.getElementById('gallery-screen').classList.add('active');-->
-<!--        document.body.style.overflow = 'hidden';-->
-<!--        galleryIndex = currentIndex;-->
-<!--        showGalleryImage(galleryIndex);-->
-<!--    }-->
-
-<!--    function closeGallery() {-->
-<!--        document.getElementById('gallery-screen').classList.remove('active');-->
-<!--        document.body.style.overflow = '';-->
-<!--    }-->
-
-<!--    function nextGalleryImage() {-->
-<!--        galleryIndex = (galleryIndex + 1) % totalGalleryImages;-->
-<!--        showGalleryImage(galleryIndex);-->
-<!--    }-->
-
-<!--    function prevGalleryImage() {-->
-<!--        galleryIndex = (galleryIndex - 1 + totalGalleryImages) % totalGalleryImages;-->
-<!--        showGalleryImage(galleryIndex);-->
-<!--    }-->
-
-<!--    document.querySelector('.gallery').addEventListener('click', openGallery);-->
-
-<!--    const galleryScreen = document.getElementById('gallery-screen');-->
-<!--    let touchStartX = 0;-->
-<!--    let touchCurrentX = 0;-->
-
-<!--    galleryScreen.addEventListener('touchstart', (e) => {-->
-<!--        touchStartX = e.touches[0].clientX;-->
-<!--    });-->
-
-<!--    galleryScreen.addEventListener('touchmove', (e) => {-->
-<!--        touchCurrentX = e.touches[0].clientX;-->
-<!--    });-->
-
-<!--    galleryScreen.addEventListener('touchend', () => {-->
-<!--        const diff = touchStartX - touchCurrentX;-->
-<!--        if (diff > 50) {-->
-<!--            nextGalleryImage();-->
-<!--        } else if (diff < -50) {-->
-<!--            prevGalleryImage();-->
-<!--        }-->
-<!--    });-->
-
-<!--    function openModal(name, price, weight, image) {-->
-<!--        currentItem = { name, price, weight, image };-->
-<!--        modalQuantity = 1;-->
-
-<!--        document.getElementById('modal-title').textContent = name;-->
-<!--        document.getElementById('modal-price').textContent = `${price}₽`;-->
-<!--        document.getElementById('modal-weight').textContent = weight;-->
-<!--        document.getElementById('modal-image').src = image;-->
-<!--        document.getElementById('modal-quantity').textContent = modalQuantity;-->
-
-<!--        document.getElementById('modal').classList.add('active');-->
-<!--        document.getElementById('modal-overlay').classList.add('active');-->
-<!--        document.body.style.overflow = 'hidden';-->
-<!--    }-->
-
-<!--    function closeModal() {-->
-<!--        document.getElementById('modal').style.bottom = '-100%';-->
-<!--        document.getElementById('modal').classList.remove('active');-->
-<!--        document.getElementById('modal-overlay').classList.remove('active');-->
-<!--        document.body.style.overflow = '';-->
-<!--        setTimeout(() => {-->
-<!--            document.getElementById('modal').style.removeProperty('bottom');-->
-<!--        }, 300);-->
-<!--    }-->
-
-<!--    function changeModalQuantity(delta) {-->
-<!--        modalQuantity = Math.max(1, modalQuantity + delta);-->
-<!--        document.getElementById('modal-quantity').textContent = modalQuantity;-->
-<!--    }-->
-
-<!--    function addToCartFromModal() {-->
-<!--        if (!currentItem) return;-->
-
-<!--        const existingItem = cart.find(item => item.name === currentItem.name);-->
-<!--        if (existingItem) {-->
-<!--            existingItem.quantity += modalQuantity;-->
-<!--        } else {-->
-<!--            cart.push({-->
-<!--                name: currentItem.name,-->
-<!--                price: currentItem.price,-->
-<!--                quantity: modalQuantity-->
-<!--            });-->
-<!--        }-->
-
-<!--        updateCart();-->
-<!--        updateCartCounter();-->
-
-<!--        const cartButton = document.querySelector('.mini-bar .cart-button');-->
-<!--        cartButton.classList.add('animate');-->
-<!--        setTimeout(() => cartButton.classList.remove('animate'), 500);-->
-
-<!--        showCustomAlert('Товар добавлен в корзину!');-->
-<!--        closeModal();-->
-<!--    }-->
-
-<!--    function updateCart() {-->
-<!--        const cartItems = document.getElementById('cart-items');-->
-<!--        const totalPrice = document.getElementById('total-price');-->
-<!--        const emptyCart = document.getElementById('empty-cart');-->
-<!--        cartItems.innerHTML = '';-->
-<!--        let total = 0;-->
-
-<!--        if (cart.length === 0) {-->
-<!--            emptyCart.classList.add('active');-->
-<!--            cartItems.style.display = 'none';-->
-<!--        } else {-->
-<!--            emptyCart.classList.remove('active');-->
-<!--            cartItems.style.display = 'block';-->
-<!--            cart.forEach((item, index) => {-->
-<!--                const cartItem = document.createElement('div');-->
-<!--                cartItem.className = 'menu-item';-->
-<!--                cartItem.innerHTML = `-->
-<!--                    <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">-->
-<!--                    <div class="info">-->
-<!--                        <h3>${item.name}</h3>-->
-<!--                        <p>${item.price}₽ за шт.</p>-->
-<!--                    </div>-->
-<!--                    <div class="quantity-controls">-->
-<!--                        <button onclick="changeQuantity(${index}, -1)">−</button>-->
-<!--                        <span>${item.quantity}</span>-->
-<!--                        <button onclick="changeQuantity(${index}, 1)">+</button>-->
-<!--                    </div>-->
-<!--                `;-->
-<!--                cartItems.appendChild(cartItem);-->
-<!--                total += item.price * item.quantity;-->
-<!--            });-->
-<!--        }-->
-
-<!--        totalPrice.textContent = total;-->
-<!--    }-->
-
-<!--    function changeQuantity(index, delta) {-->
-<!--        const item = cart[index];-->
-<!--        item.quantity += delta;-->
-<!--        if (item.quantity <= 0) {-->
-<!--            cart.splice(index, 1);-->
-<!--        }-->
-<!--        updateCart();-->
-<!--        updateCartCounter();-->
-<!--    }-->
-
-<!--    function updateCartCounter() {-->
-<!--        const cartCounter = document.getElementById('cart-counter');-->
-<!--        cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);-->
-<!--    }-->
-
-<!--    window.addEventListener('scroll', () => {-->
-<!--        const categoryGrid = document.getElementById('category-grid');-->
-<!--        const menuScreen = document.getElementById('menu-screen');-->
-<!--        const homeButton = document.getElementById('home-button');-->
-<!--        const menuButton = document.getElementById('menu-button');-->
-<!--        const cartButton = document.getElementById('cart-button');-->
-
-<!--        if (menuScreen.classList.contains('active')) {-->
-<!--            const rect = categoryGrid.getBoundingClientRect();-->
-<!--            const isCategoriesVisible = rect.top <= window.innerHeight && rect.bottom >= 0;-->
-
-<!--            if (isCategoriesVisible) {-->
-<!--                homeButton.classList.remove('active');-->
-<!--                menuButton.classList.add('active');-->
-<!--                cartButton.classList.remove('active');-->
-<!--            } else {-->
-<!--                homeButton.classList.add('active');-->
-<!--                menuButton.classList.remove('active');-->
-<!--                cartButton.classList.remove('active');-->
-<!--            }-->
-<!--        }-->
-<!--    });-->
-
-<!--    function showScreen(screenId) {-->
-<!--        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));-->
-<!--        document.getElementById(screenId).classList.add('active');-->
-
-<!--        const homeButton = document.getElementById('home-button');-->
-<!--        const menuButton = document.getElementById('menu-button');-->
-<!--        const cartButton = document.getElementById('cart-button');-->
-
-<!--        homeButton.classList.remove('active');-->
-<!--        menuButton.classList.remove('active');-->
-<!--        cartButton.classList.remove('active');-->
-
-<!--        if (screenId === 'menu-screen') {-->
-<!--            homeButton.classList.add('active');-->
-<!--            window.scrollTo({ top: 0, behavior: 'smooth' });-->
-<!--        } else if (screenId === 'cart-screen') {-->
-<!--            cartButton.classList.add('active');-->
-<!--            updateCart();-->
-<!--        } else {-->
-<!--            menuButton.classList.add('active');-->
-<!--        }-->
-<!--    }-->
-
-<!--    function scrollToCategories() {-->
-<!--        showScreen('menu-screen');-->
-<!--        const categoryGrid = document.getElementById('category-grid');-->
-<!--        if (categoryGrid) {-->
-<!--            categoryGrid.scrollIntoView({ behavior: 'smooth' });-->
-<!--            setTimeout(() => {-->
-<!--                document.getElementById('home-button').classList.remove('active');-->
-<!--                document.getElementById('menu-button').classList.add('active');-->
-<!--                document.getElementById('cart-button').classList.remove('active');-->
-<!--            }, 300);-->
-<!--        }-->
-<!--    }-->
-
-<!--  function toggleRoomNumber() {-->
-<!--    const deliveryMethod = document.getElementById('delivery-method');-->
-<!--    const roomNumberContainer = document.getElementById('room-number-container');-->
-<!--    if (deliveryMethod.value === 'delivery') {-->
-<!--        roomNumberContainer.style.display = 'block';-->
-<!--    } else {-->
-<!--        roomNumberContainer.style.display = 'none';-->
-<!--    }-->
-<!--}-->
-
-<!--    function showCustomAlert(message) {-->
-<!--        const alert = document.getElementById('custom-alert');-->
-<!--        alert.textContent = message;-->
-<!--        alert.classList.add('show');-->
-<!--        setTimeout(() => alert.classList.remove('show'), 1500);-->
-<!--    }-->
-
-<!--    function clearCart() {-->
-<!--        cart = [];-->
-<!--        updateCart();-->
-<!--        updateCartCounter();-->
-<!--    }-->
-
-<!--    function submitOrder(event) {-->
-<!--        event.preventDefault();-->
-
-<!--        const lastName = document.getElementById('last-name').value;-->
-<!--        const firstName = document.getElementById('first-name').value;-->
-<!--        const phone = document.getElementById('phone').value;-->
-<!--        const paymentMethod = document.getElementById('payment-method').value;-->
-<!--        const deliveryMethod = document.getElementById('delivery-method').value;-->
-<!--        const roomNumber = document.getElementById('room-number')?.value || 'Не указано';-->
-
-<!--        if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {-->
-<!--            alert('Пожалуйста, заполните все обязательные поля.');-->
-<!--            return;-->
-<!--        }-->
-
-<!--        const orderData = {-->
-<!--            lastName,-->
-<!--            firstName,-->
-<!--            phone,-->
-<!--            paymentMethod,-->
-<!--            deliveryMethod,-->
-<!--            roomNumber,-->
-<!--            cart: cart.map(item => ({ name: item.name, price: item.price })),-->
-<!--            total: document.getElementById('total-price').textContent-->
-<!--        };-->
-
-<!--        if (tg && tg.sendData) {-->
-<!--            tg.sendData(JSON.stringify(orderData));-->
-<!--        }-->
-
-<!--        alert('Заказ успешно оформлен!');-->
-<!--        clearCart();-->
-<!--        showScreen('menu-screen');-->
-<!--    }-->
-
-<!--    document.getElementById('checkout-form').addEventListener('submit', submitOrder);-->
-
-<!--    const modal = document.getElementById('modal');-->
-<!--    let touchStartY = 0;-->
-<!--    let touchCurrentY = 0;-->
-
-<!--    modal.addEventListener('touchstart', (e) => {-->
-<!--        touchStartY = e.touches[0].clientY;-->
-<!--    });-->
-
-<!--    modal.addEventListener('touchmove', (e) => {-->
-<!--        touchCurrentY = e.touches[0].clientY;-->
-<!--        const diff = touchCurrentY - touchStartY;-->
-<!--        if (diff > 0) {-->
-<!--            modal.style.bottom = `-${diff}px`;-->
-<!--        }-->
-<!--    });-->
-
-<!--    modal.addEventListener('touchend', () => {-->
-<!--        const diff = touchCurrentY - touchStartY;-->
-<!--        if (diff > 100) {-->
-<!--            modal.style.transition = 'bottom 0.3s ease';-->
-<!--            closeModal();-->
-<!--        } else {-->
-<!--            modal.style.bottom = '0';-->
-<!--        }-->
-<!--    });-->
-
-<!--    updateCart();-->
-
-<!--    function openCheckoutModal() {-->
-<!--    document.getElementById('checkout-modal').classList.add('active');-->
-<!--    document.getElementById('checkout-modal-overlay').classList.add('active');-->
-<!--    document.body.style.overflow = 'hidden';-->
-<!--}-->
-
-<!--function closeCheckoutModal() {-->
-<!--    document.getElementById('checkout-modal').classList.remove('active');-->
-<!--    document.getElementById('checkout-modal-overlay').classList.remove('active');-->
-<!--    document.body.style.overflow = '';-->
-<!--}-->
-
-<!--// Обновим кнопку "Оформить заказ" в корзине-->
-<!--document.querySelector('#cart-screen button[onclick="showScreen(\'checkout-screen\')"]').onclick = openCheckoutModal;-->
-
-<!--// Обработка отправки формы-->
-<!--document.getElementById('checkout-form').addEventListener('submit', function (event) {-->
-<!--    event.preventDefault();-->
-<!--    submitOrder(event);-->
-<!--    closeCheckoutModal();-->
-<!--});-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2672,7 +484,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .mini-bar.hidden {
+            transform: translateY(100px);
         }
 
         .mini-bar button {
@@ -2738,7 +554,7 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #ff0000;
+            background-color: #2ea6ff;
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -2762,24 +578,19 @@
         }
 
         body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
-            animation: bounceDark 0.5s ease !important;
-            color: #ffffff !important;
+            animation: bounceDark 0.5s ease;
         }
 
         @keyframes bounceDark {
             0%, 100% {
                 transform: scale(1);
-                color: #ffffff !important;
+                color: #ffffff;
             }
             50% {
                 transform: scale(1.2);
-                color: #ffffff !important;
+                color: #ffffff;
                 filter: brightness(1.5);
             }
-        }
-
-        body.dark-theme .mini-bar button.cart-button .material-symbols-outlined.icon {
-            color: #ffffff !important;
         }
 
         .custom-alert {
@@ -2877,7 +688,7 @@
             bottom: -100%;
             left: 0;
             right: 0;
-                        background-color: var(--item-bg-color);
+            background-color: var(--item-bg-color);
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
@@ -3021,248 +832,135 @@
             100% { transform: rotate(0deg); }
         }
 
+        #checkout-modal {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background-color: var(--item-bg-color);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 80vh;
+            overflow-y: auto;
+            transition: bottom 0.3s ease;
+            z-index: 2000;
+            padding: 20px;
+        }
 
+        #checkout-modal.active {
+            bottom: 0;
+        }
 
-/* Стили для модального окна оформления заказа */
-#checkout-modal {
-    position: fixed;
-    bottom: -100%;
-    left: 0;
-    right: 0;
-    background-color: var(--item-bg-color);
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    height: 80vh;
-    overflow-y: auto;
-    transition: bottom 0.3s ease;
-    z-index: 2000;
-    padding: 20px;
-}
+        #checkout-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1900;
+        }
 
-#checkout-modal.active {
-    bottom: 0;
-}
+        #checkout-modal-overlay.active {
+            display: block;
+        }
 
-#checkout-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1900;
-}
-
-#checkout-modal-overlay.active {
-    display: block;
-}
-
-/* Стили для формы внутри модального окна */
-#checkout-modal .modal-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 100%;
-}
-
-#checkout-modal h2 {
-    margin: 0;
-    font-size: 24px;
-    color: var(--text-color);
-    text-align: center;
-}
-
-#checkout-modal .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-#checkout-modal .form-group label {
-    font-size: 14px;
-    color: var(--text-color);
-}
-
-#checkout-modal .form-group input,
-#checkout-modal .form-group select {
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    font-size: 14px;
-    color: var(--text-color);
-    background-color: var(--item-bg-color);
-    transition: border-color 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#checkout-modal .form-group input:focus,
-#checkout-modal .form-group select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-#checkout-modal .form-group input::placeholder {
-    color: var(--secondary-text-color);
-}
-
-#checkout-modal .form-group select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-}
-
-
-
-
-
-#checkout-modal .form-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-     margin-top: 20px; /* Добавляем отступ сверху */
-    padding-top: 10px; /* Добавляем отступ сверху внутри контейнера */
-
-}
-
-#checkout-modal .form-actions button {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#checkout-modal .form-actions button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-}
-
-#checkout-modal .form-actions button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-#checkout-modal .form-actions button[type="button"] {
-    background-color: rgba(248, 249, 250, 0.9);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-#checkout-modal .form-actions button[type="button"]:hover {
-    background-color: rgba(233, 236, 239, 0.9);
-}
-
-
-
-        #cart-items .menu-item {
+        #checkout-modal .modal-content {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        #checkout-modal h2 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        #checkout-modal .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px; /* Увеличенный отступ между полями */
+        }
+
+        #checkout-modal .form-group label {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        #checkout-modal .form-group input,
+        #checkout-modal .form-group select {
             padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 14px;
             color: var(--text-color);
             background-color: var(--item-bg-color);
-            transition: transform 0.2s ease;
-            cursor: pointer;
+            transition: border-color 0.3s ease;
             width: 100%;
             box-sizing: border-box;
         }
 
-        #cart-items .menu-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-right: 15px;
-            flex-shrink: 0;
+        #checkout-modal .form-group input:focus,
+        #checkout-modal .form-group select:focus {
+            border-color: #007bff;
+            outline: none;
         }
 
-        #cart-items .menu-item .info {
-            flex: 1;
-            margin-right: 15px;
-            min-width: 0;
-            overflow: hidden;
-        }
-
-        #cart-items .menu-item .info h3 {
-            margin: 0;
-            font-size: 18px;
-            color: var(--text-color);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        #cart-items .menu-item .info p {
-            margin: 5px 0;
-            font-size: 14px;
+        #checkout-modal .form-group input::placeholder {
             color: var(--secondary-text-color);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        #cart-items .menu-item .price-and-button {
+        #checkout-modal .form-group select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+
+        #checkout-modal .form-actions {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            justify-content: space-between;
             gap: 10px;
-            flex-shrink: 0;
-            min-width: 120px;
-        }
-
-        #cart-items .menu-item .price {
-            font-size: 16px;
-            font-weight: bold;
-            text-align: right;
-            color: var(--text-color);
-            background-color: rgba(46, 166, 255, 0.1);
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        #cart-items .menu-item .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        #cart-items .menu-item .quantity-controls button {
-            width: 30px;
-            height: 30px;
-            background-color: #2ea6ff;
-            color: white;
-            border: none;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            border-radius: 5px;
-        }
-
-        #cart-items .menu-item .quantity-controls button:hover {
-            background-color: #1e8fd1;
-        }
-
-        #cart-items .menu-item .quantity-controls span {
-            font-size: 16px;
-            font-weight: bold;
-            padding: 5px;
+            position: sticky;
+            bottom: 0;
+            padding-top: 20px;
             background-color: var(--item-bg-color);
+        }
+
+        #checkout-modal .form-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
             border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #checkout-modal .form-actions button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #checkout-modal .form-actions button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #checkout-modal .form-actions button[type="button"] {
+            background-color: rgba(248, 249, 250, 0.9);
             color: var(--text-color);
-            min-width: 20px;
-            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        #checkout-modal .form-actions button[type="button"]:hover {
+            background-color: rgba(233, 236, 239, 0.9);
         }
 
         @media (max-width: 480px) {
@@ -3787,52 +1485,52 @@
         </div>
     </div>
 
-   <div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
-<div id="checkout-modal" class="modal"> <!-- Убрано .active из класса -->
-    <div class="modal-content">
-        <h2>Оформление заказа</h2>
-        <div class="form-container">
-            <form class="checkout-form" id="checkout-form">
-                <div class="form-group">
-                    <label for="last-name">Фамилия</label>
-                    <input type="text" id="last-name" placeholder="Введите фамилию" required>
-                </div>
-                <div class="form-group">
-                    <label for="first-name">Имя</label>
-                    <input type="text" id="first-name" placeholder="Введите имя" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Телефон</label>
-                    <input type="tel" id="phone" placeholder="Введите номер телефона" required>
-                </div>
-                <div class="form-group">
-                    <label for="payment-method">Способ оплаты</label>
-                    <select id="payment-method" required>
-                        <option value="" disabled selected>Выберите способ оплаты</option>
-                        <option value="cash">Наличные</option>
-                        <option value="card">Карта</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delivery-method">Способ получения</label>
-                    <select id="delivery-method" required onchange="toggleRoomNumber()">
-                        <option value="" disabled selected>Выберите способ получения</option>
-                        <option value="delivery">Доставка</option>
-                        <option value="pickup">Самовынос</option>
-                    </select>
-                </div>
-                <div class="form-group" id="room-number-container" style="display: none;">
-                    <label for="room-number">Номер комнаты</label>
-                    <input type="text" id="room-number" placeholder="Введите номер комнаты">
-                </div>
-            </form>
-        </div>
-        <div class="form-actions">
-            <button type="button" onclick="closeCheckoutModal()">Назад</button>
-            <button type="submit" form="checkout-form">Подтвердить</button>
+    <div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <h2>Оформление заказа</h2>
+            <div class="form-container">
+                <form class="checkout-form" id="checkout-form">
+                    <div class="form-group">
+                        <label for="last-name">Фамилия</label>
+                        <input type="text" id="last-name" placeholder="Введите фамилию" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="first-name">Имя</label>
+                        <input type="text" id="first-name" placeholder="Введите имя" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" placeholder="Введите номер телефона" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Способ оплаты</label>
+                        <select id="payment-method" required>
+                            <option value="" disabled selected>Выберите способ оплаты</option>
+                            <option value="cash">Наличные</option>
+                            <option value="card">Карта</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-method">Способ получения</label>
+                        <select id="delivery-method" required onchange="toggleRoomNumber()">
+                            <option value="" disabled selected>Выберите способ получения</option>
+                            <option value="delivery">Доставка</option>
+                            <option value="pickup">Самовынос</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="room-number-container" style="display: none;">
+                        <label for="room-number">Номер комнаты</label>
+                        <input type="text" id="room-number" placeholder="Введите номер комнаты">
+                    </div>
+                </form>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="closeCheckoutModal()">Назад</button>
+                <button type="submit" form="checkout-form">Подтвердить</button>
+            </div>
         </div>
     </div>
-</div>
 
     <div id="gallery-screen" class="container">
         <button class="close-gallery" onclick="closeGallery()">×</button>
@@ -4114,11 +1812,19 @@
             updateCartCounter();
 
             const cartButton = document.querySelector('.mini-bar .cart-button');
-            cartButton.classList.add('animate');
+                    cartButton.classList.add('animate');
             setTimeout(() => cartButton.classList.remove('animate'), 500);
 
-            showCustomAlert('Товар добавлен в корзину!');
+            const alert = document.getElementById('custom-alert');
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 2000);
+
             closeModal();
+        }
+
+        function updateCartCounter() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-counter').textContent = totalItems;
         }
 
         function updateCart() {
@@ -4128,7 +1834,6 @@
 
             if (cart.length === 0) {
                 emptyCart.classList.add('active');
-                document.getElementById('total-price').textContent = '0';
                 return;
             } else {
                 emptyCart.classList.remove('active');
@@ -4136,12 +1841,12 @@
 
             cart.forEach((item, index) => {
                 const cartItem = document.createElement('div');
-                cartItem.classList.add('menu-item');
+                cartItem.className = 'menu-item';
                 cartItem.innerHTML = `
-                    <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.name}">
+                    <img src="${item.image}" alt="${item.name}">
                     <div class="info">
                         <h3>${item.name}</h3>
-                        <p>${item.weight || ''}</p>
+                        <p>${item.weight}</p>
                     </div>
                     <div class="price-and-button">
                         <div class="price">${item.price * item.quantity}₽</div>
@@ -4160,10 +1865,7 @@
         }
 
         function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
+            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
             updateCart();
             updateCartCounter();
         }
@@ -4172,55 +1874,52 @@
             cart = [];
             updateCart();
             updateCartCounter();
-            showCustomAlert('Корзина очищена!');
-        }
-
-        function updateCartCounter() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-counter').textContent = totalItems;
-        }
-
-        function showCustomAlert(message) {
-            const alert = document.getElementById('custom-alert');
-            alert.textContent = message;
-            alert.classList.add('show');
-            setTimeout(() => {
-                alert.classList.remove('show');
-            }, 2000);
         }
 
         function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(container => {
-                container.classList.remove('active');
-            });
+            const screens = document.querySelectorAll('.container');
+            screens.forEach(screen => screen.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
 
-            document.querySelectorAll('.mini-bar button').forEach(button => {
-                button.classList.remove('active');
-            });
+            const miniBarButtons = document.querySelectorAll('.mini-bar button');
+            miniBarButtons.forEach(button => button.classList.remove('active'));
+
             if (screenId === 'menu-screen') {
                 document.getElementById('home-button').classList.add('active');
             } else if (screenId === 'cart-screen') {
                 document.getElementById('cart-button').classList.add('active');
                 updateCart();
-            } else {
-                document.getElementById('menu-button').classList.add('active');
             }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function scrollToCategories() {
             showScreen('menu-screen');
             const categoryGrid = document.getElementById('category-grid');
             categoryGrid.scrollIntoView({ behavior: 'smooth' });
+
+            const miniBar = document.querySelector('.mini-bar');
+            miniBar.classList.remove('hidden');
+            document.getElementById('menu-button').classList.add('active');
+
+            setTimeout(() => {
+                miniBar.classList.add('hidden');
+            }, 2000);
         }
 
         function openCheckoutModal() {
             if (cart.length === 0) {
-                showCustomAlert('Корзина пуста!');
+                const alert = document.getElementById('custom-alert');
+                alert.textContent = 'Корзина пуста!';
+                alert.style.backgroundColor = '#ff4444';
+                alert.classList.add('show');
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    alert.textContent = 'Товар добавлен в корзину!';
+                    alert.style.backgroundColor = '#4CAF50';
+                }, 2000);
                 return;
             }
+
             document.getElementById('checkout-modal').classList.add('active');
             document.getElementById('checkout-modal-overlay').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -4246,48 +1945,60 @@
             }
         }
 
-        document.getElementById('checkout-form').addEventListener('submit', function (event) {
-            event.preventDefault();
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            const lastName = document.getElementById('last-name').value.trim();
-            const firstName = document.getElementById('first-name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
+            const lastName = document.getElementById('last-name').value;
+            const firstName = document.getElementById('first-name').value;
+            const phone = document.getElementById('phone').value;
             const paymentMethod = document.getElementById('payment-method').value;
             const deliveryMethod = document.getElementById('delivery-method').value;
-            const roomNumber = deliveryMethod === 'delivery' ? document.getElementById('room-number').value.trim() : '';
-
-            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
-                showCustomAlert('Пожалуйста, заполните все обязательные поля!');
-                return;
-            }
-
-            if (deliveryMethod === 'delivery' && !roomNumber) {
-                showCustomAlert('Пожалуйста, укажите номер комнаты для доставки!');
-                return;
-            }
+            const roomNumber = deliveryMethod === 'delivery' ? document.getElementById('room-number').value : 'Самовынос';
 
             const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            const orderData = {
-                lastName,
-                firstName,
-                phone,
-                paymentMethod,
-                deliveryMethod,
-                roomNumber,
-                cart,
-                totalPrice
-            };
+
+            let orderMessage = `Новый заказ:\n`;
+            orderMessage += `Фамилия: ${lastName}\n`;
+            orderMessage += `Имя: ${firstName}\n`;
+            orderMessage += `Телефон: ${phone}\n`;
+            orderMessage += `Способ оплаты: ${paymentMethod === 'cash' ? 'Наличные' : 'Карта'}\n`;
+            orderMessage += `Способ получения: ${deliveryMethod === 'delivery' ? 'Доставка' : 'Самовынос'}\n`;
+            if (deliveryMethod === 'delivery') {
+                orderMessage += `Номер комнаты: ${roomNumber}\n`;
+            }
+            orderMessage += `\nТовары:\n`;
+            cart.forEach(item => {
+                orderMessage += `${item.name} (${item.weight}) - ${item.quantity} шт. - ${item.price * item.quantity}₽\n`;
+            });
+            orderMessage += `\nИтого: ${totalPrice}₽`;
 
             if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(orderData));
+                tg.sendData(orderMessage);
             } else {
-                console.log('Order data:', orderData);
+                console.log(orderMessage);
+                alert('Заказ успешно отправлен!\n' + orderMessage);
             }
 
-            showCustomAlert('Заказ успешно оформлен!');
             closeCheckoutModal();
             clearCart();
             showScreen('menu-screen');
+        });
+
+        window.addEventListener('scroll', () => {
+            const miniBar = document.querySelector('.mini-bar');
+            const categoryGrid = document.getElementById('category-grid');
+            const rect = categoryGrid.getBoundingClientRect();
+
+            if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+                miniBar.classList.remove('hidden');
+            } else {
+                miniBar.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCounter();
+            applyTheme();
         });
     </script>
 </body>
