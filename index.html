@@ -2706,15 +2706,15 @@
         }
 
         body:not(.dark-theme) .mini-bar button .material-symbols-outlined.icon {
-            color: #333; /* Тёмный цвет для светлой темы */
+            color: #333;
         }
 
         body.dark-theme .mini-bar button .material-symbols-outlined.icon {
-            color: #ffffff; /* Белый цвет для тёмной темы */
+            color: #ffffff;
         }
 
         .mini-bar button.active .material-symbols-outlined.icon {
-            color: #ffffff; /* Белый цвет для активной кнопки */
+            color: #ffffff;
         }
 
         .mini-bar button:hover .material-symbols-outlined.icon {
@@ -2735,7 +2735,7 @@
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #2ea6ff;
+            background-color: #ff0000; /* Красный вместо синего */
             color: white;
             border-radius: 50%;
             padding: 2px 6px;
@@ -2750,11 +2750,11 @@
         @keyframes bounceLight {
             0%, 100% {
                 transform: scale(1);
-                color: #333; /* Тёмный цвет */
+                color: #333;
             }
             50% {
                 transform: scale(1.2);
-                color: #000; /* Более насыщенный тёмный */
+                color: #000;
                 filter: brightness(1.2);
             }
         }
@@ -2767,12 +2767,12 @@
         @keyframes bounceDark {
             0%, 100% {
                 transform: scale(1);
-                color: #ffffff; /* Белый цвет */
+                color: #ffffff !important;
             }
             50% {
                 transform: scale(1.2);
-                color: #ffffff; /* Остаётся белым */
-                filter: brightness(1.5); /* Эффект свечения */
+                color: #ffffff !important;
+                filter: brightness(1.5);
             }
         }
 
@@ -3521,7 +3521,7 @@
             <img src="https://ferma-m2.ru/images/shop/recipe_image/crop_rimskiy.jpg" alt="Шашлык из курицы">
             <div class="info">
                 <h3>Шашлык из курицы</h3>
-                <p>300г</p>
+                            <p>300г</p>
             </div>
             <div class="price-and-button">
                 <div class="price">500₽</div>
@@ -3700,7 +3700,7 @@
         </div>
     </div>
 
-    <div id="cart-screen" class="container">
+    <div id="cart-screen" class="container" style="padding-bottom: 120px;">
         <span class="back-button" onclick="showScreen('menu-screen')">
             <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
         </span>
@@ -3710,9 +3710,9 @@
             <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
             <p>Корзина пока пустая</p>
         </div>
-        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
+        <div style="font-weight: bold; margin-top: 10px;">Итого: <span id="total-price">0</span>₽</div>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+        <button style="margin EA-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
     </div>
 
     <!-- Модальное окно для оформления заказа -->
@@ -4031,7 +4031,8 @@
                 cart.push({
                     name: currentItem.name,
                     price: currentItem.price,
-                    quantity: modalQuantity
+                    quantity: modalQuantity,
+                    image: currentItem.image
                 });
             }
 
@@ -4041,6 +4042,7 @@
             const cartButton = document.querySelector('.mini-bar .cart-button');
             cartButton.classList.add('animate');
             setTimeout(() => cartButton.classList.remove('animate'), 500);
+
             showCustomAlert('Товар добавлен в корзину!');
             closeModal();
         }
