@@ -2742,7 +2742,6 @@
             font-size: 12px;
         }
 
-        /* Анимация для светлой темы (тёмная иконка) */
         body:not(.dark-theme) .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
             animation: bounceLight 0.5s ease;
         }
@@ -2759,9 +2758,9 @@
             }
         }
 
-        /* Анимация для тёмной темы (белая иконка) */
         body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.icon {
-            animation: bounceDark 0.5s ease;
+            animation: bounceDark 0.5s ease !important;
+            color: #ffffff !important;
         }
 
         @keyframes bounceDark {
@@ -2774,6 +2773,10 @@
                 color: #ffffff !important;
                 filter: brightness(1.5);
             }
+        }
+
+        body.dark-theme .mini-bar button.cart-button .material-symbols-outlined.icon {
+            color: #ffffff !important;
         }
 
         .custom-alert {
@@ -3225,6 +3228,17 @@
                 gap: 5px;
             }
         }
+
+        #cart-screen > div[style*="font-weight: bold"] {
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+#cart-screen > div[style*="font-weight: bold"] #total-price {
+    font-size: 18px;
+}
     </style>
 </head>
 <body>
@@ -3710,9 +3724,11 @@
             <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
             <p>Корзина пока пустая</p>
         </div>
-        <div style="font-weight: bold; margin-top: 10px;">Итого: <span id="total-price">0</span>₽</div>
-        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-        <button style="margin EA-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
+        <div style="font-weight: bold; margin: 20px 0 10px 0;">Итого: <span id="total-price">0</span>₽</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button style="width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+            <button style="width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
+        </div>
     </div>
 
     <!-- Модальное окно для оформления заказа -->
