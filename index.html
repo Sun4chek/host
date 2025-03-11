@@ -1469,22 +1469,566 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     </div>
 
     <div id="alcohol-screen" class="container">
-        <span class="back-button" onclick="showScreen('bar-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Алкоголь</h2>
-        <h3>Коньяк</h3>
-        <div class="menu-item" onclick="openModal('Арарат 3 года (50 г)', 290, '50 г', 'https://example.com/ararat-3.jpg')">
-            <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
-            <div class="info">
-                <h3>Арарат 3 года</h3>
-                <p>50 г</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">290₽</div>
-            </div>
+    <span class="back-button" onclick="showScreen('bar-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Алкоголь</h2>
+    <h3>Игривые вина и шампанское</h3>
+    <div class="menu-item" onclick="openModal('Просекко "Чинзано"', 4200, 'Бут', 'https://example.com/prosecco-cinzano.jpg')">
+        <img src="https://example.com/prosecco-cinzano.jpg" alt="Просекко Чинзано">
+        <div class="info">
+            <h3>Просекко "Чинзано"</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">4200₽</div>
         </div>
     </div>
+    <div class="menu-item" onclick="openModal('PROSECCO Don Treviso', 2600, 'Бут', 'https://example.com/prosecco-don-treviso.jpg')">
+        <img src="https://example.com/prosecco-don-treviso.jpg" alt="PROSECCO Don Treviso">
+        <div class="info">
+            <h3>PROSECCO Don Treviso</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">2600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Новый свет" коллекционное брют белое', 2200, 'Бут', 'https://example.com/novy-svet-brut.jpg')">
+        <img src="https://example.com/novy-svet-brut.jpg" alt="Новый свет коллекционное брют белое">
+        <div class="info">
+            <h3>"Новый свет" коллекционное брют белое</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Новый свет" белое полусладкое', 2000, 'Бут', 'https://example.com/novy-svet-polusladkoe.jpg')">
+        <img src="https://example.com/novy-svet-polusladkoe.jpg" alt="Новый свет белое полусладкое">
+        <div class="info">
+            <h3>"Новый свет" белое полусладкое</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">2000₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Золотая балка" брют белое', 1450, 'Бут', 'https://example.com/zolotaya-balka-brut.jpg')">
+        <img src="https://example.com/zolotaya-balka-brut.jpg" alt="Золотая балка брют белое">
+        <div class="info">
+            <h3>"Золотая балка" брют белое</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">1450₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Золотая балка" Frizzante розовое', 1450, 'Бут', 'https://example.com/zolotaya-balka-frizzante.jpg')">
+        <img src="https://example.com/zolotaya-balka-frizzante.jpg" alt="Золотая балка Frizzante розовое">
+        <div class="info">
+            <h3>"Золотая балка" Frizzante розовое</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">1450₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Золотая балка" Moscato белое', 1450, 'Бут', 'https://example.com/zolotaya-balka-moscato.jpg')">
+        <img src="https://example.com/zolotaya-balka-moscato.jpg" alt="Золотая балка Moscato белое">
+        <div class="info">
+            <h3>"Золотая балка" Moscato белое</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">1450₽</div>
+        </div>
+    </div>
+
+    <h3>ESSE</h3>
+    <div class="menu-item" onclick="openModal('Совиньон Блан', 320, '150 гр / Бут', 'https://example.com/sovignon-blanc.jpg')">
+        <img src="https://example.com/sovignon-blanc.jpg" alt="Совиньон Блан">
+        <div class="info">
+            <h3>Совиньон Блан</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Каберне отборное', 320, '150 гр / Бут', 'https://example.com/cabernet-otbornoe.jpg')">
+        <img src="https://example.com/cabernet-otbornoe.jpg" alt="Каберне отборное">
+        <div class="info">
+            <h3>Каберне отборное</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Гевюрцтраминер', 2600, 'Бут', 'https://example.com/gewurztraminer.jpg')">
+        <img src="https://example.com/gewurztraminer.jpg" alt="Гевюрцтраминер">
+        <div class="info">
+            <h3>Гевюрцтраминер</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">2600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Каберне Фран', 2300, 'Бут', 'https://example.com/cabernet-franc.jpg')">
+        <img src="https://example.com/cabernet-franc.jpg" alt="Каберне Фран">
+        <div class="info">
+            <h3>Каберне Фран</h3>
+            <p>Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">2300₽</div>
+        </div>
+    </div>
+
+    <h3>ALMA VALLEY</h3>
+    <div class="menu-item" onclick="openModal('"Совиньон" белое сухое', 320, '150 гр / Бут', 'https://example.com/alma-valley-sovignon.jpg')">
+        <img src="https://example.com/alma-valley-sovignon.jpg" alt="Совиньон белое сухое">
+        <div class="info">
+            <h3>"Совиньон" белое сухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Пикник" белое полусухое', 300, '150 гр / Бут', 'https://example.com/alma-valley-piknik.jpg')">
+        <img src="https://example.com/alma-valley-piknik.jpg" alt="Пикник белое полусухое">
+        <div class="info">
+            <h3>"Пикник" белое полусухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 1500₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Весеннее" белое полусладкое', 320, '150 гр / Бут', 'https://example.com/alma-valley-vesenee.jpg')">
+        <img src="https://example.com/alma-valley-vesenee.jpg" alt="Весеннее белое полусладкое">
+        <div class="info">
+            <h3>"Весеннее" белое полусладкое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Каберне "Совиньон" красное сухое', 360, '150 гр / Бут', 'https://example.com/alma-valley-cabernet-sovignon.jpg')">
+        <img src="https://example.com/alma-valley-cabernet-sovignon.jpg" alt="Каберне Совиньон красное сухое">
+        <div class="info">
+            <h3>Каберне "Совиньон" красное сухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">360₽ / 1800₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Зимнее" полусладкое красное', 320, '150 гр / Бут', 'https://example.com/alma-valley-zimnee.jpg')">
+        <img src="https://example.com/alma-valley-zimnee.jpg" alt="Зимнее полусладкое красное">
+        <div class="info">
+            <h3>"Зимнее" полусладкое красное</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+
+    <h3>INKERMAN</h3>
+    <div class="menu-item" onclick="openModal('"Траминер" Serve белое сухое', 300, '150 гр / Бут', 'https://example.com/inkerman-traminer.jpg')">
+        <img src="https://example.com/inkerman-traminer.jpg" alt="Траминер Serve белое сухое">
+        <div class="info">
+            <h3>"Траминер" Serve белое сухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 1500₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Каберне" совиньон Serve розовое сухое', 330, '150 гр / Бут', 'https://example.com/inkerman-cabernet-sovignon.jpg')">
+        <img src="https://example.com/inkerman-cabernet-sovignon.jpg" alt="Каберне совиньон Serve розовое сухое">
+        <div class="info">
+            <h3>"Каберне" совиньон Serve розовое сухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">330₽ / 1650₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Рислинг" белое полусухое', 300, '150 гр / Бут', 'https://example.com/inkerman-riesling.jpg')">
+        <img src="https://example.com/inkerman-riesling.jpg" alt="Рислинг белое полусухое">
+        <div class="info">
+            <h3>"Рислинг" белое полусухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 1500₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Мускат "Инкерман" белое полусладкое', 300, '150 гр / Бут', 'https://example.com/inkerman-muscat.jpg')">
+        <img src="https://example.com/inkerman-muscat.jpg" alt="Мускат Инкерман белое полусладкое">
+        <div class="info">
+            <h3>Мускат "Инкерман" белое полусладкое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 1500₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Каберне резерв" красное сухое', 360, '150 гр / Бут', 'https://example.com/inkerman-cabernet-reserve.jpg')">
+        <img src="https://example.com/inkerman-cabernet-reserve.jpg" alt="Каберне резерв красное сухое">
+        <div class="info">
+            <h3>"Каберне резерв" красное сухое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">360₽ / 1800₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Пино Нуар" красное полусладкое', 360, '150 гр / Бут', 'https://example.com/inkerman-pinot-noir.jpg')">
+        <img src="https://example.com/inkerman-pinot-noir.jpg" alt="Пино Нуар красное полусладкое">
+        <div class="info">
+            <h3>"Пино Нуар" красное полусладкое</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">360₽ / 1800₽</div>
+        </div>
+    </div>
+
+    <h3>Вина Массандры</h3>
+    <div class="menu-item" onclick="openModal('"Херес" Массандра', 360, '150 гр / Бут', 'https://example.com/massandra-jerez.jpg')">
+        <img src="https://example.com/massandra-jerez.jpg" alt="Херес Массандра">
+        <div class="info">
+            <h3>"Херес" Массандра</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">360₽ / 1800₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Мадера" Крымская', 420, '150 гр / Бут', 'https://example.com/massandra-madeira.jpg')">
+        <img src="https://example.com/massandra-madeira.jpg" alt="Мадера Крымская">
+        <div class="info">
+            <h3>"Мадера" Крымская</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">420₽ / 2100₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Портвейн красный "Ливадия"', 340, '150 гр / Бут', 'https://example.com/massandra-port-livadia.jpg')">
+        <img src="https://example.com/massandra-port-livadia.jpg" alt="Портвейн красный Ливадия">
+        <div class="info">
+            <h3>Портвейн красный "Ливадия"</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">340₽ / 1700₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Портвейн белый "Крымский"', 300, '150 гр / Бут', 'https://example.com/massandra-port-krymsky.jpg')">
+        <img src="https://example.com/massandra-port-krymsky.jpg" alt="Портвейн белый Крымский">
+        <div class="info">
+            <h3>Портвейн белый "Крымский"</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 1500₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Седьмое небо князя Голицына"', 320, '150 гр / Бут', 'https://example.com/massandra-golitsyn.jpg')">
+        <img src="https://example.com/massandra-golitsyn.jpg" alt="Седьмое небо князя Голицына">
+        <div class="info">
+            <h3>"Седьмое небо князя Голицына"</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 1600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Бастардо"', 380, '150 гр / Бут', 'https://example.com/massandra-bastardo.jpg')">
+        <img src="https://example.com/massandra-bastardo.jpg" alt="Бастардо">
+        <div class="info">
+            <h3>"Бастардо"</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">380₽ / 1900₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Мускат белый Красного Камня"', 440, '150 гр / Бут', 'https://example.com/massandra-muscat.jpg')">
+        <img src="https://example.com/massandra-muscat.jpg" alt="Мускат белый Красного Камня">
+        <div class="info">
+            <h3>"Мускат белый Красного Камня"</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">440₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"CinZana Bianco" Вермут', 250, '150 гр / Бут', 'https://example.com/massandra-vermouth.jpg')">
+        <img src="https://example.com/massandra-vermouth.jpg" alt="CinZana Bianco Вермут">
+        <div class="info">
+            <h3>"CinZana Bianco" Вермут</h3>
+            <p>150 гр / Бут</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 2500₽</div>
+        </div>
+    </div>
+
+    <h3>Пиво бутылочное</h3>
+    <div class="menu-item" onclick="openModal('"Крымская Ривьера" светлое', 180, '0,450 л', 'https://example.com/krymskaya-riviera.jpg')">
+        <img src="https://example.com/krymskaya-riviera.jpg" alt="Крымская Ривьера светлое">
+        <div class="info">
+            <h3>"Крымская Ривьера" светлое</h3>
+            <p>0,450 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">180₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Белая скала" светлое н/ф', 180, '0,450 л', 'https://example.com/belaya-skala.jpg')">
+        <img src="https://example.com/belaya-skala.jpg" alt="Белая скала светлое н/ф">
+        <div class="info">
+            <h3>"Белая скала" светлое н/ф</h3>
+            <p>0,450 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">180₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Черное гора" темное', 180, '0,450 л', 'https://example.com/chernoe-gora.jpg')">
+        <img src="https://example.com/chernoe-gora.jpg" alt="Черное гора темное">
+        <div class="info">
+            <h3>"Черное гора" темное</h3>
+            <p>0,450 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">180₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Крымское безалкогольное', 200, '0,440 л', 'https://example.com/krymskoe-bezalkogolnoe.jpg')">
+        <img src="https://example.com/krymskoe-bezalkogolnoe.jpg" alt="Крымское безалкогольное">
+        <div class="info">
+            <h3>Крымское безалкогольное</h3>
+            <p>0,440 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽</div>
+        </div>
+    </div>
+
+    <h3>Виски</h3>
+    <div class="menu-item" onclick="openModal('"Jameson"', 350, '50 гр', 'https://example.com/jameson.jpg')">
+        <img src="https://example.com/jameson.jpg" alt="Jameson">
+        <div class="info">
+            <h3>"Jameson"</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">350₽ / 7000₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Ballantines"', 300, '50 гр', 'https://example.com/ballantines.jpg')">
+        <img src="https://example.com/ballantines.jpg" alt="Ballantines">
+        <div class="info">
+            <h3>"Ballantines"</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 6000₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Chivas Rigal"', 630, '50 гр', 'https://example.com/chivas-rigal.jpg')">
+        <img src="https://example.com/chivas-rigal.jpg" alt="Chivas Rigal">
+        <div class="info">
+            <h3>"Chivas Rigal"</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">630₽ / 12500₽</div>
+        </div>
+    </div>
+
+    <h3>Бренди</h3>
+    <div class="menu-item" onclick="openModal('Коктель резерв 5 лет', 220, '50 гр', 'https://example.com/koktel-rezerv-5.jpg')">
+        <img src="https://example.com/koktel-rezerv-5.jpg" alt="Коктель резерв 5 лет">
+        <div class="info">
+            <h3>Коктель резерв 5 лет</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 3200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Коктель резерв 7 лет', 200, '50 гр', 'https://example.com/koktel-rezerv-7.jpg')">
+        <img src="https://example.com/koktel-rezerv-7.jpg" alt="Коктель резерв 7 лет">
+        <div class="info">
+            <h3>Коктель резерв 7 лет</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('"Македонский" 3 года', 220, '50 гр', 'https://example.com/makedonsky-3.jpg')">
+        <img src="https://example.com/makedonsky-3.jpg" alt="Македонский 3 года">
+        <div class="info">
+            <h3>"Македонский" 3 года</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Лезгинка 6 лет', 220, '50 гр', 'https://example.com/lezginka-6.jpg')">
+        <img src="https://example.com/lezginka-6.jpg" alt="Лезгинка 6 лет">
+        <div class="info">
+            <h3>Лезгинка 6 лет</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Старейшина Ecological', 220, '50 гр', 'https://example.com/stareishina-eco.jpg')">
+        <img src="https://example.com/stareishina-eco.jpg" alt="Старейшина Ecological">
+        <div class="info">
+            <h3>Старейшина Ecological</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+
+    <h3>Коньяк</h3>
+    <div class="menu-item" onclick="openModal('Арарат 3 года', 290, '50 гр', 'https://example.com/ararat-3.jpg')">
+        <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
+        <div class="info">
+            <h3>Арарат 3 года</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">290₽ / 4060₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Арарат 5 лет', 345, '50 гр', 'https://example.com/ararat-5.jpg')">
+        <img src="https://example.com/ararat-5.jpg" alt="Арарат 5 лет">
+        <div class="info">
+            <h3>Арарат 5 лет</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">345₽ / 4830₽</div>
+        </div>
+    </div>
+
+    <h3>Ром</h3>
+    <div class="menu-item" onclick="openModal('Havana club', 290, '50 гр', 'https://example.com/havana-club.jpg')">
+        <img src="https://example.com/havana-club.jpg" alt="Havana club">
+        <div class="info">
+            <h3>Havana club</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">290₽ / 5800₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Captain Morgan', 250, '50 гр', 'https://example.com/captain-morgan.jpg')">
+        <img src="https://example.com/captain-morgan.jpg" alt="Captain Morgan">
+        <div class="info">
+            <h3>Captain Morgan</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 3500₽</div>
+        </div>
+    </div>
+
+    <h3>Джин</h3>
+    <div class="menu-item" onclick="openModal('Beefater', 320, '50 гр', 'https://example.com/beefater.jpg')">
+        <img src="https://example.com/beefater.jpg" alt="Beefater">
+        <div class="info">
+            <h3>Beefater</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 6400₽</div>
+        </div>
+    </div>
+
+    <h3>Текила</h3>
+    <div class="menu-item" onclick="openModal('Olmeсa Blanko', 500, '50 гр', 'https://example.com/olmeca-blanko.jpg')">
+        <img src="https://example.com/olmeca-blanko.jpg" alt="Olmeсa Blanko">
+        <div class="info">
+            <h3>Olmeсa Blanko</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">500₽ / 7000₽</div>
+        </div>
+    </div>
+
+    <h3>Водка</h3>
+    <div class="menu-item" onclick="openModal('Organic vodka', 400, '50 гр', 'https://example.com/organic-vodka.jpg')">
+        <img src="https://example.com/organic-vodka.jpg" alt="Organic vodka">
+        <div class="info">
+            <h3>Organic vodka</h3>
+            <p>50 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">400₽ / 5600₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Чистые Росы пшеничная', 150, '100 гр', 'https://example.com/chistye-rosy.jpg')">
+        <img src="https://example.com/chistye-rosy.jpg" alt="Чистые Росы пшеничная">
+        <div class="info">
+            <h3>Чистые Росы пшеничная</h3>
+            <p>100 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽ / 2100₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Царская золотая', 120, '100 гр', 'https://example.com/tsarskaya-zolotaya.jpg')">
+        <img src="https://example.com/tsarskaya-zolotaya.jpg" alt="Царская золотая">
+        <div class="info">
+            <h3>Царская золотая</h3>
+            <p>100 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">120₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Ханская', 100, '100 гр', 'https://example.com/hanskaya.jpg')">
+        <img src="https://example.com/hanskaya.jpg" alt="Ханская">
+        <div class="info">
+            <h3>Ханская</h3>
+            <p>100 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">100₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Medoff', 1000, '100 гр', 'https://example.com/medoff.jpg')">
+        <img src="https://example.com/medoff.jpg" alt="Medoff">
+        <div class="info">
+            <h3>Medoff</h3>
+            <p>100 гр</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">1000₽</div>
+        </div>
+    </div>
+</div>
 
 <div id="cart-screen" class="container">
         <span class="back-button" onclick="showScreen('menu-screen')">
