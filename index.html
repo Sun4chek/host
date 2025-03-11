@@ -1476,16 +1476,16 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     <h2>Алкоголь</h2>
 
     <!-- Пример алкогольной позиции -->
-    <div class="menu-item" onclick="openModal('Совиньон Блан', 320, '150 гр', 'https://example.com/sovignon-blanc.jpg')">
-        <img src="https://example.com/sovignon-blanc.jpg" alt="Совиньон Блан">
-        <div class="info">
-            <h3>Совиньон Блан</h3>
-            <p>150 гр</p>
-        </div>
-        <div class="price-and-button">
-            <div class="price">320₽</div>
-        </div>
+  <div class="menu-item" onclick="openModal('Совиньон Блан', 320, '150 гр', 'https://example.com/sovignon-blanc.jpg', 1600)">
+    <img src="https://example.com/sovignon-blanc.jpg" alt="Совиньон Блан">
+    <div class="info">
+        <h3>Совиньон Блан</h3>
+        <p>150 гр / Бутылка</p>
     </div>
+    <div class="price-and-button">
+        <div class="price">320₽ / 1600₽</div>
+    </div>
+</div>
 
     <!-- Другие алкогольные позиции -->
     <div class="menu-item" onclick="openModal('Вино красное', 500, '750 мл', 'https://example.com/red-wine.jpg')">
@@ -1643,7 +1643,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
                 <span id="modal-quantity">1</span>
                 <button onclick="changeModalQuantity(1)">+</button>
             </div>
-            <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal()">Добавить в корзину</button>
+            <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal('portion')">Добавить порцию</button>
+            <button class="add-to-cart" id="modal-add-bottle" onclick="addToCartFromModal('bottle')">Добавить бутылку</button>
         </div>
     </div>
 </div>
@@ -1842,20 +1843,29 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
     });
 
-    function openModal(name, price, weight, image) {
-        currentItem = { name, price, weight, image };
-        modalQuantity = 1;
+    function openModal(name, price, weight, image, bottlePrice = null) {
+    currentItem = { name, price, weight, image, bottlePrice };
+    modalQuantity = 1;
 
-        document.getElementById('modal-title').textContent = name;
-        document.getElementById('modal-price').textContent = `${price}₽`;
-        document.getElementById('modal-weight').textContent = weight;
-        document.getElementById('modal-image').src = image;
-        document.getElementById('modal-quantity').textContent = modalQuantity;
+    document.getElementById('modal-title').textContent = name;
+    document.getElementById('modal-price').textContent = `${price}₽`;
+    document.getElementById('modal-weight').textContent = weight;
+    document.getElementById('modal-image').src = image;
+    document.getElementById('modal-quantity').textContent = modalQuantity;
 
-        document.getElementById('modal').classList.add('active');
-        document.getElementById('modal-overlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Показываем или скрываем кнопку для добавления бутылки
+    const addBottleButton = document.getElementById('modal-add-bottle');
+    if (bottlePrice) {
+        addBottleButton.style.display = 'block';
+        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+    } else {
+        addBottleButton.style.display = 'none';
     }
+
+    document.getElementById('modal').classList.add('active');
+    document.getElementById('modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
     function closeModal() {
         document.getElementById('modal').style.bottom = '-100%';
@@ -1872,19 +1882,27 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         document.getElementById('modal-quantity').textContent = modalQuantity;
     }
 
-    function addToCartFromModal() {
-        if (!currentItem) return;
+    function addToCartFromModal(type) {
+    if (!currentItem) return;
 
-        const existingItem = cart.find(item => item.name === currentItem.name);
-        if (existingItem) {
-            existingItem.quantity += modalQuantity;
-        } else {
-            cart.push({
-                name: currentItem.name,
-                price: currentItem.price,
-                quantity: modalQuantity
-            });
-        }
+    let itemName = currentItem.name;
+    let itemPrice = currentItem.price;
+
+    if (type === 'bottle' && currentItem.bottlePrice) {
+        itemName += ' (бутылка)';
+        itemPrice = currentItem.bottlePrice;
+    }
+
+    const existingItem = cart.find(item => item.name === itemName);
+    if (existingItem) {
+        existingItem.quantity += modalQuantity;
+    } else {
+        cart.push({
+            name: itemName,
+            price: itemPrice,
+            quantity: modalQuantity
+        });
+    }
 
         updateCart();
         updateCartCounter();
