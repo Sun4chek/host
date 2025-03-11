@@ -1469,33 +1469,47 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     </div>
 
 
-       <div id="alcohol-screen" class="container">
-        <span class="back-button" onclick="showScreen('bar-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Алкоголь</h2>
+      <div id="alcohol-screen" class="container">
+    <span class="back-button" onclick="showScreen('bar-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Алкоголь</h2>
 
-        <!-- Пример алкогольной позиции с двумя ценами -->
-        <div class="menu-item" onclick="openModal('Совиньон Блан', 320, '150 гр', 'https://example.com/sovignon-blanc.jpg', [
-            { label: '150 гр', price: 320 },
-            { label: 'Бут', price: 1600 }
-        ])">
-            <img src="https://example.com/sovignon-blanc.jpg" alt="Совиньон Блан">
-            <div class="info">
-                <h3>Совиньон Блан</h3>
-                <p>150 гр / Бут</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">320₽ / 1600₽</div>
-                <div class="add-to-cart-buttons">
-                    <button onclick="addToCart('Совиньон Блан (150 гр)', 320, '150 гр')">Добавить 150 гр</button>
-                    <button onclick="addToCart('Совиньон Блан (Бут)', 1600, 'Бут')">Добавить бутылку</button>
-                </div>
-            </div>
+    <!-- Пример алкогольной позиции -->
+    <div class="menu-item" onclick="openModal('Совиньон Блан', 320, '150 гр', 'https://example.com/sovignon-blanc.jpg')">
+        <img src="https://example.com/sovignon-blanc.jpg" alt="Совиньон Блан">
+        <div class="info">
+            <h3>Совиньон Блан</h3>
+            <p>150 гр</p>
         </div>
-
-        <!-- Другие алкогольные позиции -->
+        <div class="price-and-button">
+            <div class="price">320₽</div>
+        </div>
     </div>
+
+    <!-- Другие алкогольные позиции -->
+    <div class="menu-item" onclick="openModal('Вино красное', 500, '750 мл', 'https://example.com/red-wine.jpg')">
+        <img src="https://example.com/red-wine.jpg" alt="Вино красное">
+        <div class="info">
+            <h3>Вино красное</h3>
+            <p>750 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">500₽</div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="openModal('Пиво', 200, '0.5 л', 'https://example.com/beer.jpg')">
+        <img src="https://example.com/beer.jpg" alt="Пиво">
+        <div class="info">
+            <h3>Пиво</h3>
+            <p>0.5 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽</div>
+        </div>
+    </div>
+</div>
 
 
 
