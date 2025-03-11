@@ -856,7 +856,9 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-
+#cart-screen {
+            padding-bottom: 100px; /* Добавлено для удлинения экрана корзины вниз */
+        }
 
 
 #cart-items .menu-item h3 {
@@ -1484,21 +1486,20 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         </div>
     </div>
 
-   <div id="cart-screen" class="container">
-    <span class="back-button" onclick="showScreen('menu-screen')">
-        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Корзина</h2>
-    <div id="cart-items"></div>
-    <div class="empty-cart" id="empty-cart">
-        <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
-        <p>Корзина пока пустая</p>
+<div id="cart-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">
+            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+        </span>
+        <h2>Корзина</h2>
+        <div id="cart-items"></div>
+        <div class="empty-cart" id="empty-cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
+            <p>Корзина пока пустая</p>
+        </div>
+        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
+        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
     </div>
-    <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-    <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-    <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="showScreen('checkout-screen')">Оформить заказ</button>
-</div>
-
 
 
 
