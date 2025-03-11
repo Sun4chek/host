@@ -2186,9 +2186,6 @@
 
 
 
-
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2880,7 +2877,7 @@
             bottom: -100%;
             left: 0;
             right: 0;
-            background-color: var(--item-bg-color);
+                        background-color: var(--item-bg-color);
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
@@ -3024,7 +3021,6 @@
             100% { transform: rotate(0deg); }
         }
 
-        /* Стили для модального окна оформления заказа */
         #checkout-modal {
             position: fixed;
             bottom: -100%;
@@ -3063,7 +3059,7 @@
         #checkout-modal .modal-content {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 25px;
             height: 100%;
         }
 
@@ -3077,7 +3073,8 @@
         #checkout-modal .form-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         #checkout-modal .form-group label {
@@ -3119,9 +3116,9 @@
         #checkout-modal .form-actions {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-            padding-top: 10px;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 15px;
         }
 
         #checkout-modal .form-actions button {
@@ -3153,7 +3150,6 @@
             background-color: rgba(233, 236, 239, 0.9);
         }
 
-        /* Обновлённые стили для карточек в корзине */
         #cart-items .menu-item {
             display: flex;
             align-items: center;
@@ -3260,85 +3256,23 @@
         }
 
         @media (max-width: 480px) {
-            #header {
-                margin-bottom: 5px;
-            }
-
-            .header-top {
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 5px;
-            }
-
-            .logo {
-                width: 90%;
-                max-width: 500px;
-                margin: -30px auto 8px;
-            }
-
-            .working-hours {
-                font-size: 14px;
-                margin-right: 5px;
-            }
-
-            .working-hours p {
-                margin: 5px 0;
-            }
-
-            .divider {
-                width: 90%;
-            }
-
-            .social-links {
-                gap: 2px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .social-link img {
-                width: 24px;
-                height: 24px;
-            }
-
-            .header-widget {
-                gap: 15px;
-                margin-top: 10px;
-                max-width: 100%;
-            }
-
-            .gallery {
-                height: 350px;
-            }
-
-            .about-us {
-                margin-top: 15px;
-                padding: 10px 0;
-            }
-
-            .about-us-header {
-                padding: 0 10px;
-            }
-
-            .about-us-header h2 {
-                font-size: 18px;
-            }
-
-            .about-us-content {
-                padding: 0 10px;
-            }
-
-            .about-us.expanded .about-us-content {
-                padding: 8px 10px;
-            }
-
-            .about-us-content p {
-                font-size: 13px;
-                line-height: 1.5;
-            }
-
-            .price-and-button {
-                gap: 5px;
-            }
+            #header { margin-bottom: 5px; }
+            .header-top { flex-direction: column; align-items: center; margin-bottom: 5px; }
+            .logo { width: 90%; max-width: 500px; margin: -30px auto 8px; }
+            .working-hours { font-size: 14px; margin-right: 5px; }
+            .working-hours p { margin: 5px 0; }
+            .divider { width: 90%; }
+            .social-links { gap: 2px; flex-wrap: wrap; justify-content: center; }
+            .social-link img { width: 24px; height: 24px; }
+            .header-widget { gap: 15px; margin-top: 10px; max-width: 100%; }
+            .gallery { height: 350px; }
+            .about-us { margin-top: 15px; padding: 10px 0; }
+            .about-us-header { padding: 0 10px; }
+            .about-us-header h2 { font-size: 18px; }
+            .about-us-content { padding: 0 10px; }
+            .about-us.expanded .about-us-content { padding: 8px 10px; }
+            .about-us-content p { font-size: 13px; line-height: 1.5; }
+            .price-and-button { gap: 5px; }
         }
 
         #cart-screen > div[style*="font-weight: bold"] {
@@ -3590,6 +3524,7 @@
             </div>
         </div>
     </div>
+
     <div id="pasta-screen" class="container">
         <span class="back-button" onclick="scrollToCategories()">
             <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
@@ -3842,7 +3777,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для оформления заказа -->
     <div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
@@ -4160,7 +4094,7 @@
                     price: currentItem.price,
                     quantity: modalQuantity,
                     image: currentItem.image,
-                    weight: currentItem.weight // Добавляем вес для отображения в корзине
+                    weight: currentItem.weight
                 });
             }
 
@@ -4182,6 +4116,7 @@
 
             if (cart.length === 0) {
                 emptyCart.classList.add('active');
+                document.getElementById('total-price').textContent = '0';
                 return;
             } else {
                 emptyCart.classList.remove('active');
@@ -4213,7 +4148,10 @@
         }
 
         function changeQuantity(index, delta) {
-            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
             updateCart();
             updateCartCounter();
         }
