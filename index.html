@@ -658,9 +658,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 .quantity-controls {
     display: flex;
     align-items: center;
-    gap: 10px; /* Расстояние между кнопками и числом */
-    justify-content: center;
-    margin-bottom: 10px; /* Отступ снизу */
+    gap: 5px; /* Расстояние между кнопками и числом */
 }
 
 .quantity-controls button {
@@ -686,7 +684,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             transform: scale(0.9);
         }
 
-     .quantity-controls span {
+.quantity-controls span {
     font-size: 16px;
     font-weight: bold;
     min-width: 20px;
@@ -806,6 +804,13 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 .modal-controls {
     display: flex;
     flex-direction: column;
+    gap: 10px; /* Расстояние между элементами */
+}
+
+/* Контейнер для кнопок и управления количеством */
+.quantity-and-button {
+    display: flex;
+    align-items: center;
     gap: 10px; /* Расстояние между элементами */
 }
 
@@ -1650,6 +1655,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         <button onclick="nextGalleryImage()">►</button>
     </div>
 </div>
+
+
 <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -1663,24 +1670,40 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>
         </div>
         <div class="modal-controls">
-            <!-- Кнопка "Добавить порцию" с управлением количеством -->
-            <div class="quantity-controls">
-                <button onclick="changeModalQuantity('portion', -1)">−</button>
-                <span id="modal-quantity-portion">1</span>
-                <button onclick="changeModalQuantity('portion', 1)">+</button>
+            <!-- Управление количеством и кнопка "Добавить порцию" -->
+            <div class="quantity-and-button">
+                <div class="quantity-controls">
+                    <button onclick="changeModalQuantity('portion', -1)">−</button>
+                    <span id="modal-quantity-portion">1</span>
+                    <button onclick="changeModalQuantity('portion', 1)">+</button>
+                </div>
+                <button class="add-to-cart" onclick="addToCartFromModal('portion')">Добавить порцию</button>
             </div>
-            <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal('portion')">Добавить порцию</button>
 
-            <!-- Кнопка "Добавить бутылку" с управлением количеством -->
-            <div class="quantity-controls" id="bottle-quantity-controls">
-                <button onclick="changeModalQuantity('bottle', -1)">−</button>
-                <span id="modal-quantity-bottle">1</span>
-                <button onclick="changeModalQuantity('bottle', 1)">+</button>
+            <!-- Управление количеством и кнопка "Добавить бутылку" (если есть второй ценник) -->
+            <div class="quantity-and-button" id="bottle-quantity-and-button">
+                <div class="quantity-controls">
+                    <button onclick="changeModalQuantity('bottle', -1)">−</button>
+                    <span id="modal-quantity-bottle">1</span>
+                    <button onclick="changeModalQuantity('bottle', 1)">+</button>
+                </div>
+                <button class="add-to-cart" id="modal-add-bottle" onclick="addToCartFromModal('bottle')">Добавить бутылку</button>
             </div>
-            <button class="add-to-cart" id="modal-add-bottle" onclick="addToCartFromModal('bottle')">Добавить бутылку</button>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="mini-bar">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -1877,7 +1900,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
     });
 
-    function openModal(name, price, weight, image, bottlePrice = null) {
+function openModal(name, price, weight, image, bottlePrice = null) {
     currentItem = { name, price, weight, image, bottlePrice };
     portionQuantity = 1;
     bottleQuantity = 1;
@@ -1890,15 +1913,12 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
 
     // Показываем или скрываем блок для бутылки
-    const bottleControls = document.getElementById('bottle-quantity-controls');
-    const addBottleButton = document.getElementById('modal-add-bottle');
+    const bottleControls = document.getElementById('bottle-quantity-and-button');
     if (bottlePrice) {
-        bottleControls.style.display = 'flex';
-        addBottleButton.style.display = 'block';
-        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+        bottleControls.classList.add('visible');
+        document.getElementById('modal-add-bottle').textContent = `Добавить бутылку (${bottlePrice}₽)`;
     } else {
-        bottleControls.style.display = 'none';
-        addBottleButton.style.display = 'none';
+        bottleControls.classList.remove('visible');
     }
 
     document.getElementById('modal').classList.add('active');
