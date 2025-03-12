@@ -987,6 +987,14 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     outline: none;
 }
 
+#bottle-quantity-and-button {
+    display: none;
+}
+
+/* Показываем блок для бутылки, если есть второй ценник */
+#bottle-quantity-and-button.visible {
+    display: flex;
+}
 #checkout-modal .form-group input::placeholder {
     color: var(--secondary-text-color);
 }
@@ -1669,7 +1677,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             <p id="modal-weight"></p>
             <p id="modal-description">Вкусное блюдо, приготовленное из свежих ингредиентов с любовью.</p>
         </div>
-     <div class="modal-controls">
+        <div class="modal-controls">
     <!-- Управление количеством и кнопка "Добавить порцию" -->
     <div class="quantity-and-button">
         <div class="quantity-controls">
@@ -1900,7 +1908,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
     });
 
-function openModal(name, price, weight, image, bottlePrice = null) {
+function function openModal(name, price, weight, image, bottlePrice = null) {
     currentItem = { name, price, weight, image, bottlePrice };
     portionQuantity = 1;
     bottleQuantity = 1;
@@ -1932,7 +1940,6 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     document.getElementById('modal-overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
     function closeModal() {
         document.getElementById('modal').style.bottom = '-100%';
         document.getElementById('modal').classList.remove('active');
