@@ -729,86 +729,84 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
 
         .modal {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            right: 0;
-            background-color: var(--item-bg-color);
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            height: 80vh;
-            overflow-y: auto;
-            transition: bottom 0.3s ease;
-            z-index: 2000;
-            padding: 20px;
-        }
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background-color: var(--item-bg-color);
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 80vh;
+    overflow-y: auto;
+    transition: bottom 0.3s ease;
+    z-index: 2000;
+    padding: 20px;
+}
 
-        .modal.active {
-            bottom: 0;
-        }
+   .modal.active {
+    bottom: 0;
+}
 
-        .modal-content {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            height: 100%;
-        }
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
 
-        .modal-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+      .modal-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
-        .modal-info {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.modal-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .modal-title-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+       .modal-title-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .modal-info h3 {
-            margin: 0;
-            font-size: 22px;
-            color: var(--text-color);
-        }
+.modal-info h3 {
+    margin: 0;
+    font-size: 22px;
+    color: var(--text-color);
+}
 
-        .modal-info .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--text-color);
-            background-color: rgba(46, 166, 255, 0.1);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
+       .modal-info .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: rgba(46, 166, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
 
-        body.dark-theme .modal-info .price {
-            background-color: rgba(46, 166, 255, 0.2);
-        }
+body.dark-theme .modal-info .price {
+    background-color: rgba(46, 166, 255, 0.2);
+}
 
-        .modal-info p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: var(--secondary-text-color);
-        }
+.modal-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: var(--secondary-text-color);
+}
 
-       /* Стили для модального окна */
 .modal-controls {
     display: flex;
     flex-direction: column;
     gap: 10px; /* Расстояние между элементами */
-    margin-bottom: 40px; /* Добавляем отступ снизу */
+    margin-bottom: 20px; /* Добавляем отступ снизу */
 }
 
-/* Контейнер для кнопок и управления количеством */
 .quantity-and-button {
     display: flex;
     align-items: center;
