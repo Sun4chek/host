@@ -1717,20 +1717,20 @@ body.dark-theme .modal-info .price {
 
 
 
-<!--<div id="cart-screen" class="container">-->
-<!--        <span class="back-button" onclick="showScreen('menu-screen')">-->
-<!--            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">-->
-<!--        </span>-->
-<!--        <h2>Корзина</h2>-->
-<!--        <div id="cart-items"></div>-->
-<!--        <div class="empty-cart" id="empty-cart">-->
-<!--            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">-->
-<!--            <p>Корзина пока пустая</p>-->
-<!--        </div>-->
-<!--        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>-->
-<!--        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>-->
-<!--        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>-->
-<!--    </div>-->
+<div id="cart-screen" class="container">
+        <span class="back-button" onclick="showScreen('menu-screen')">
+            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+        </span>
+        <h2>Корзина</h2>
+        <div id="cart-items"></div>
+        <div class="empty-cart" id="empty-cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
+            <p>Корзина пока пустая</p>
+        </div>
+        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
+        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
+    </div>
 
 
 
@@ -1747,51 +1747,51 @@ body.dark-theme .modal-info .price {
 
 
 
-<!--&lt;!&ndash; Модальное окно для оформления заказа &ndash;&gt;-->
-<!--<div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>-->
-<!--<div id="checkout-modal" class="modal">-->
-<!--    <div class="modal-content">-->
-<!--        <h2>Оформление заказа</h2>-->
-<!--        <form class="checkout-form" id="checkout-form">-->
-<!--            <div class="form-group">-->
-<!--                <label for="last-name">Фамилия</label>-->
-<!--                <input type="text" id="last-name" placeholder="Введите фамилию" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="first-name">Имя</label>-->
-<!--                <input type="text" id="first-name" placeholder="Введите имя" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="phone">Телефон</label>-->
-<!--                <input type="tel" id="phone" placeholder="Введите номер телефона" required>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="payment-method">Способ оплаты</label>-->
-<!--                <select id="payment-method" required>-->
-<!--                    <option value="" disabled selected>Выберите способ оплаты</option>-->
-<!--                    <option value="cash">Наличные</option>-->
-<!--                    <option value="card">Карта</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="delivery-method">Способ получения</label>-->
-<!--                <select id="delivery-method" required onchange="toggleRoomNumber()">-->
-<!--                    <option value="" disabled selected>Выберите способ получения</option>-->
-<!--                    <option value="delivery">Доставка</option>-->
-<!--                    <option value="pickup">Самовынос</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="form-group" id="room-number-container" style="display: none;">-->
-<!--                <label for="room-number">Номер комнаты</label>-->
-<!--                <input type="text" id="room-number" placeholder="Введите номер комнаты">-->
-<!--            </div>-->
-<!--            <div class="form-actions">-->
-<!--                <button type="button" onclick="closeCheckoutModal()">Назад</button>-->
-<!--                <button type="submit">Подтвердить</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
+<!-- Модальное окно для оформления заказа -->
+<div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
+<div id="checkout-modal" class="modal">
+    <div class="modal-content">
+        <h2>Оформление заказа</h2>
+        <form class="checkout-form" id="checkout-form">
+            <div class="form-group">
+                <label for="last-name">Фамилия</label>
+                <input type="text" id="last-name" placeholder="Введите фамилию" required>
+            </div>
+            <div class="form-group">
+                <label for="first-name">Имя</label>
+                <input type="text" id="first-name" placeholder="Введите имя" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" placeholder="Введите номер телефона" required>
+            </div>
+            <div class="form-group">
+                <label for="payment-method">Способ оплаты</label>
+                <select id="payment-method" required>
+                    <option value="" disabled selected>Выберите способ оплаты</option>
+                    <option value="cash">Наличные</option>
+                    <option value="card">Карта</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="delivery-method">Способ получения</label>
+                <select id="delivery-method" required onchange="toggleRoomNumber()">
+                    <option value="" disabled selected>Выберите способ получения</option>
+                    <option value="delivery">Доставка</option>
+                    <option value="pickup">Самовынос</option>
+                </select>
+            </div>
+            <div class="form-group" id="room-number-container" style="display: none;">
+                <label for="room-number">Номер комнаты</label>
+                <input type="text" id="room-number" placeholder="Введите номер комнаты">
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="closeCheckoutModal()">Назад</button>
+                <button type="submit">Подтвердить</button>
+            </div>
+        </form>
+    </div>
+</div>
     <div id="alcohol-screen" class="container">
         <span class="back-button" onclick="showScreen('bar-screen')">
             <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
