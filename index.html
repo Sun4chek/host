@@ -2493,52 +2493,37 @@ body.dark-theme .modal-info .price {
         }
     });
 
-function openModalFromData(element) {
-    const name = element.getAttribute('data-name');
-    const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
-    const weight = element.getAttribute('data-weight');
-    const image = element.getAttribute('data-image');
-    const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
-
-    console.log('openModalFromData:', { name, price, weight, image, bottlePrice }); // Отладка
-    openModal(name, price, weight, image, bottlePrice);
-}
-
 function openModal(name, price, weight, image, bottlePrice = null) {
-    console.log('openModal:', { name, price, weight, image, bottlePrice }); // Отладка
+    // Установка базовых данных
+    document.getElementById('modal-name').textContent = name;
+    document.getElementById('modal-weight').textContent = weight;
+    document.getElementById('modal-image').src = image;
 
-    try {
-        // Установка базовых данных
-        document.getElementById('modal-name').textContent = name;
-        document.getElementById('modal-weight').textContent = weight;
-        document.getElementById('modal-image').src = image;
+    const portionButton = document.getElementById('portion-button');
+    const bottleButton = document.getElementById('bottle-button');
 
-        const portionButton = document.getElementById('portion-button');
-        const bottleButton = document.getElementById('bottle-button');
+    // Очистка предыдущих значений
+    portionButton.style.display = 'none';
+    bottleButton.style.display = 'none';
 
-        // Скрываем обе кнопки по умолчанию
-        portionButton.style.display = 'none';
-        bottleButton.style.display = 'none';
-
-        // Логика отображения кнопок
-        if (price !== null && bottlePrice !== null) {
-            portionButton.style.display = 'block';
-            bottleButton.style.display = 'block';
-            portionButton.textContent = `Добавить порцию (${price}₽)`;
-            bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
-        } else if (bottlePrice !== null) {
-            bottleButton.style.display = 'block';
-            bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
-        } else {
-            console.error('Ошибка: нет корректной цены для товара', name);
-        }
-
-        // Открытие модального окна
-        document.getElementById('modal').style.display = 'block';
-    } catch (error) {
-        console.error('Ошибка в openModal:', error);
+    // Логика отображения кнопок и цен
+    if (price !== null && bottlePrice !== null) {
+        portionButton.style.display = 'block';
+        bottleButton.style.display = 'block';
+        portionButton.textContent = `Добавить порцию (${price}₽)`;
+        bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+    } else if (bottlePrice !== null) {
+        bottleButton.style.display = 'block';
+        bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
+    } else {
+        console.error('Ошибка: нет корректной цены для товара', name);
     }
+
+    // Открытие модального окна
+    document.getElementById('modal').style.display = 'block';
 }
+
+
 
     function closeModal() {
         document.getElementById('modal').style.bottom = '-100%';
