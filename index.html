@@ -490,20 +490,21 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
         /* Стили для кнопок "Добавить порцию" и "Добавить бутылку" */
 .add-to-cart {
-    background-color: #2ea6ff; /* Синий фон */
+    background-color: #2ea6ff;
     color: white;
     border: none;
-    padding: 10px 20px; /* Удобные отступы */
-    border-radius: 8px; /* Мягкие углы */
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 16px; /* Читаемый шрифт */
-    height: 40px; /* Совпадает с кнопками "+" и "−" */
+    font-size: 16px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
 }
 
 .add-to-cart:hover {
@@ -691,11 +692,13 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
        transform: scale(0.9);
 }
 
+
 .quantity-controls span {
     font-size: 18px;
     font-weight: bold;
     min-width: 24px;
     text-align: center;
+    color: var(--text-color);
 }
 
 
@@ -2498,8 +2501,7 @@ let portionQuantity = 1;
 
 
 
-
-  function openModal(name, price, weight, image, bottlePrice = null) {
+function openModal(name, price, weight, image, bottlePrice = null) {
     currentItem = { name, price, weight, image, bottlePrice };
     portionQuantity = 1;
     bottleQuantity = 1;
@@ -2523,27 +2525,26 @@ let portionQuantity = 1;
         document.getElementById('modal-price').textContent = `${price}₽ / ${bottlePrice}₽`;
         portionControls.style.display = 'flex';
         bottleControls.classList.add('visible');
-        addPortionButton.textContent = `Добавить порцию (${price}₽)`;
-        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+        addPortionButton.textContent = "Добавить порцию"; // Без цены
+        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`; // С ценой только для бутылки
     } else if (price && !bottlePrice) {
         // Только цена за порцию
         document.getElementById('modal-price').textContent = `${price}₽`;
         portionControls.style.display = 'flex';
         bottleControls.classList.remove('visible');
-        addPortionButton.textContent = `Добавить в корзину (${price}₽)`;
+        addPortionButton.textContent = "Добавить в корзину"; // Без цены
     } else if (!price && bottlePrice) {
         // Только цена за бутылку
         document.getElementById('modal-price').textContent = `${bottlePrice}₽`;
         portionControls.style.display = 'none'; // Скрываем блок порции
         bottleControls.classList.add('visible');
-        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+        addBottleButton.textContent = "Добавить в корзину"; // Без цены
     }
 
     document.getElementById('modal').classList.add('active');
     document.getElementById('modal-overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
   function openModalFromData(element) {
     const name = element.getAttribute('data-name');
     const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
