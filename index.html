@@ -493,7 +493,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     background-color: #2ea6ff;
     color: white;
     border: none;
-    padding: 10px 30px; /* Увеличиваем горизонтальные отступы с 20px до 30px */
+    padding: 10px; /* Убираем фиксированные отступы, ширина теперь задаётся явно */
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
@@ -504,8 +504,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
-    min-width: 180px; /* Добавляем минимальную ширину для большей заметности */
+    width: 180px; /* Фиксированная ширина для всех кнопок "Добавить" */
+    white-space: nowrap; /* Текст не переносится */
 }
 
 .add-to-cart:hover {
@@ -673,7 +673,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     background-color: #2ea6ff;
     color: white;
     border: none;
-    width: 50px; /* Увеличиваем ширину с 40px до 50px */
+    width: 60px; /* Увеличиваем до 60px для большего соответствия */
     height: 40px;
     border-radius: 8px;
     font-size: 20px;
