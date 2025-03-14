@@ -1821,42 +1821,212 @@ body.dark-theme .modal-info .price {
 
     <!-- Экран для крепкого алкоголя -->
     <div id="strong-alcohol-screen" class="container">
-        <span class="back-button" onclick="showScreen('alcohol-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Крепкий алкоголь</h2>
-        <div class="menu-item" onclick="openModal('Виски Jameson', 350, '50 мл', 'https://example.com/jameson.jpg', 7000)">
-            <img src="https://example.com/jameson.jpg" alt="Виски Jameson">
-            <div class="info">
-                <h3>Виски Jameson</h3>
-                <p>50 мл / 1 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">350₽ / 7000₽</div>
-            </div>
+    <span class="back-button" onclick="showScreen('alcohol-screen')">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Крепкий алкоголь</h2>
+
+    <!-- Виски -->
+    <h3>Виски</h3>
+    <div class="menu-item" onclick="openModal('Виски Jameson', 350, '50 г', 'https://example.com/jameson.jpg', 7000)">
+        <img src="https://example.com/jameson.jpg" alt="Виски Jameson">
+        <div class="info">
+            <h3>Виски Jameson</h3>
+            <p>50 г / 0,7 л</p>
         </div>
-        <div class="menu-item" onclick="openModal('Виски Ballantines', 300, '50 мл', 'https://example.com/ballantines.jpg', 6000)">
-            <img src="https://example.com/ballantines.jpg" alt="Виски Ballantines">
-            <div class="info">
-                <h3>Виски Ballantines</h3>
-                <p>50 мл / 1 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">300₽ / 6000₽</div>
-            </div>
+        <div class="price-and-button">
+            <div class="price">350₽ / 7000₽</div>
         </div>
-        <div class="menu-item" onclick="openModal('Виски Chivas Regal', 630, '50 мл', 'https://example.com/chivas-regal.jpg', 12500)">
-            <img src="https://example.com/chivas-regal.jpg" alt="Виски Chivas Regal">
-            <div class="info">
-                <h3>Виски Chivas Regal</h3>
-                <p>50 мл / 1 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">630₽ / 12500₽</div>
-            </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Виски Ballantines', 300, '50 г', 'https://example.com/ballantines.jpg', 6000)">
+        <img src="https://example.com/ballantines.jpg" alt="Виски Ballantines">
+        <div class="info">
+            <h3>Виски Ballantines</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 6000₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Виски Chivas Regal', 630, '50 г', 'https://example.com/chivas-regal.jpg', 12500)">
+        <img src="https://example.com/chivas-regal.jpg" alt="Виски Chivas Regal">
+        <div class="info">
+            <h3>Виски Chivas Regal</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">630₽ / 12500₽</div>
         </div>
     </div>
 
+    <!-- Бренди -->
+    <h3>Бренди</h3>
+    <div class="menu-item" onclick="openModal('Коктель резерв 5 лет', 220, '50 г', 'https://example.com/coctel-reserve-5.jpg', 3200)">
+        <img src="https://example.com/coctel-reserve-5.jpg" alt="Коктель резерв 5 лет">
+        <div class="info">
+            <h3>Коктель резерв 5 лет</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 3200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Коктель резерв 7 лет', 200, '50 г', 'https://example.com/coctel-reserve-7.jpg', 2200)">
+        <img src="https://example.com/coctel-reserve-7.jpg" alt="Коктель резерв 7 лет">
+        <div class="info">
+            <h3>Коктель резерв 7 лет</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Македонский 3 года', 220, '50 г', 'https://example.com/makedonsky-3.jpg', 2200)">
+        <img src="https://example.com/makedonsky-3.jpg" alt="Македонский 3 года">
+        <div class="info">
+            <h3>Македонский 3 года</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Лезгинка 6 лет', 220, '50 г', 'https://example.com/lezginka-6.jpg', 2200)">
+        <img src="https://example.com/lezginka-6.jpg" alt="Лезгинка 6 лет">
+        <div class="info">
+            <h3>Лезгинка 6 лет</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Старейшина Ecological', 220, '50 г', 'https://example.com/stareyshina-ecological.jpg', 2200)">
+        <img src="https://example.com/stareyshina-ecological.jpg" alt="Старейшина Ecological">
+        <div class="info">
+            <h3>Старейшина Ecological</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">220₽ / 2200₽</div>
+        </div>
+    </div>
+
+    <!-- Коньяк -->
+    <h3>Коньяк</h3>
+    <div class="menu-item" onclick="openModal('Арарат 3 года', 290, '50 г', 'https://example.com/ararat-3.jpg', 4060)">
+        <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
+        <div class="info">
+            <h3>Арарат 3 года</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">290₽ / 4060₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Арарат 5 лет', 345, '50 г', 'https://example.com/ararat-5.jpg', 4830)">
+        <img src="https://example.com/ararat-5.jpg" alt="Арарат 5 лет">
+        <div class="info">
+            <h3>Арарат 5 лет</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">345₽ / 4830₽</div>
+        </div>
+    </div>
+
+    <!-- Ром -->
+    <h3>Ром</h3>
+    <div class="menu-item" onclick="openModal('Havana Club', 290, '50 г', 'https://example.com/havana-club.jpg', 5800)">
+        <img src="https://example.com/havana-club.jpg" alt="Havana Club">
+        <div class="info">
+            <h3>Havana Club</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">290₽ / 5800₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Captain Morgan', 250, '50 г', 'https://example.com/captain-morgan.jpg', 3500)">
+        <img src="https://example.com/captain-morgan.jpg" alt="Captain Morgan">
+        <div class="info">
+            <h3>Captain Morgan</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 3500₽</div>
+        </div>
+    </div>
+
+    <!-- Джин -->
+    <h3>Джин</h3>
+    <div class="menu-item" onclick="openModal('Beefeater', 320, '50 г', 'https://example.com/beefeater.jpg', 6400)">
+        <img src="https://example.com/beefeater.jpg" alt="Beefeater">
+        <div class="info">
+            <h3>Beefeater</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">320₽ / 6400₽</div>
+        </div>
+    </div>
+
+    <!-- Текила -->
+    <h3>Текила</h3>
+    <div class="menu-item" onclick="openModal('Olmeca Blanco', 500, '50 г', 'https://example.com/olmeca-blanco.jpg', 7000)">
+        <img src="https://example.com/olmeca-blanco.jpg" alt="Olmeca Blanco">
+        <div class="info">
+            <h3>Olmeca Blanco</h3>
+            <p>50 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">500₽ / 7000₽</div>
+        </div>
+    </div>
+
+    <!-- Водка -->
+    <h3>Водка</h3>
+    <div class="menu-item" onclick="openModal('Organic vodka Чистые Росы пшеничная', 150, '100 г', 'https://example.com/chistye-rosy.jpg', 2100)">
+        <img src="https://example.com/chistye-rosy.jpg" alt="Organic vodka Чистые Росы пшеничная">
+        <div class="info">
+            <h3>Organic vodka Чистые Росы пшеничная</h3>
+            <p>100 г / 0,7 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽ / 2100₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Царская золотая', 120, '100 г', 'https://example.com/tsarskaya-zolotaya.jpg')">
+        <img src="https://example.com/tsarskaya-zolotaya.jpg" alt="Царская золотая">
+        <div class="info">
+            <h3>Царская золотая</h3>
+            <p>100 г</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">120₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Ханская', 100, '100 г', 'https://example.com/khanskaya.jpg')">
+        <img src="https://example.com/khanskaya.jpg" alt="Ханская">
+        <div class="info">
+            <h3>Ханская</h3>
+            <p>100 г</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">100₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModal('Medoff', 1000, '100 г', 'https://example.com/medoff.jpg')">
+        <img src="https://example.com/medoff.jpg" alt="Medoff">
+        <div class="info">
+            <h3>Medoff</h3>
+            <p>100 г</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">1000₽</div>
+        </div>
+    </div>
+</div>
     <!-- Экран для вина -->
 <!-- Экран для вина -->
 <div id="wine-screen" class="container">
