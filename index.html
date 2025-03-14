@@ -2445,15 +2445,7 @@ body.dark-theme .modal-info .price {
         showGalleryImage(galleryIndex);
     }
 
-    function openModalFromData(element) {
-    const name = element.getAttribute('data-name');
-    const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
-    const weight = element.getAttribute('data-weight');
-    const image = element.getAttribute('data-image');
-    const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
-
-    openModal(name, price, weight, image, bottlePrice);
-}
+   
 
     function closeGallery() {
         document.getElementById('gallery-screen').classList.remove('active');
@@ -2493,6 +2485,23 @@ body.dark-theme .modal-info .price {
         }
     });
 
+
+
+function openModalFromData(element) {
+    const name = element.getAttribute('data-name');
+    const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
+    const weight = element.getAttribute('data-weight');
+    const image = element.getAttribute('data-image');
+    const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
+
+    console.log('openModalFromData:', { name, price, weight, image, bottlePrice }); // Отладка
+    openModal(name, price, weight, image, bottlePrice);
+}
+
+
+
+
+
 function openModal(name, price, weight, image, bottlePrice = null) {
     // Установка базовых данных
     document.getElementById('modal-name').textContent = name;
@@ -2502,17 +2511,19 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     const portionButton = document.getElementById('portion-button');
     const bottleButton = document.getElementById('bottle-button');
 
-    // Очистка предыдущих значений
+    // Скрываем обе кнопки по умолчанию
     portionButton.style.display = 'none';
     bottleButton.style.display = 'none';
 
-    // Логика отображения кнопок и цен
+    // Логика отображения кнопок
     if (price !== null && bottlePrice !== null) {
+        // Две кнопки для позиций с ценой за порцию и бутылку
         portionButton.style.display = 'block';
         bottleButton.style.display = 'block';
         portionButton.textContent = `Добавить порцию (${price}₽)`;
         bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
     } else if (bottlePrice !== null) {
+        // Одна кнопка для позиций только с ценой за бутылку
         bottleButton.style.display = 'block';
         bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
     } else {
@@ -2522,6 +2533,20 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     // Открытие модального окна
     document.getElementById('modal').style.display = 'block';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
