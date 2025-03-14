@@ -493,7 +493,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     background-color: #2ea6ff;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 30px; /* Увеличиваем горизонтальные отступы с 20px до 30px */
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
@@ -505,6 +505,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     white-space: nowrap;
+    min-width: 180px; /* Добавляем минимальную ширину для большей заметности */
 }
 
 .add-to-cart:hover {
@@ -669,19 +670,19 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 }
 
 .quantity-controls button {
-    background-color: #2ea6ff; /* Синий фон */
+    background-color: #2ea6ff;
     color: white;
     border: none;
-    width: 40px; /* Увеличим ширину для удобства нажатия */
-    height: 40px; /* Увеличим высоту */
-    border-radius: 8px; /* Более мягкие углы */
-    font-size: 20px; /* Увеличим шрифт для читаемости */
+    width: 50px; /* Увеличиваем ширину с 40px до 50px */
+    height: 40px;
+    border-radius: 8px;
+    font-size: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для глубины */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
       .quantity-controls button:hover {
@@ -689,7 +690,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 }
 
 .quantity-controls button:active {
-       transform: scale(0.9);
+       transform: scale(0.95);
 }
 
 
@@ -817,11 +818,12 @@ body.dark-theme .modal-info .price {
     margin-bottom: 20px; /* Добавляем отступ снизу */
 }
 
+/* Контейнер для кнопок */
 .quantity-and-button {
     display: flex;
     align-items: center;
-    gap: 15px; /* Увеличим расстояние между количеством и кнопкой "Добавить" */
-    margin-bottom: 10px; /* Отступ снизу для разделения блоков */
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
         .modal-overlay {
