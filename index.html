@@ -2358,7 +2358,7 @@ body.dark-theme .modal-info .price {
     </span>
     <h2>Пиво</h2>
 
- 
+
 
     <!-- Пиво бутылочное (новые позиции) -->
     <h3>Пиво бутылочное</h3>
@@ -2742,12 +2742,20 @@ function openModal(name, price, weight, image, bottlePrice = null) {
 
     openModal(name, price, weight, image, bottlePrice);
 }
-  function addToCartFromModal(type) {
+
+
+function addToCartFromModal(type) {
     if (!currentItem) return;
 
     let itemName = currentItem.name;
     let itemPrice = currentItem.price;
     let quantity = portionQuantity;
+
+    // Проверяем, находится ли пользователь в разделе "Алкоголь" или его подкатегориях
+    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
+    const isAlcoholSection = alcoholScreens.some(screenId =>
+        document.getElementById(screenId)?.classList.contains('active')
+    );
 
     if (type === 'bottle' && currentItem.bottlePrice) {
         itemName += ' (бутылка)';
@@ -2778,7 +2786,13 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     cartButton.classList.add('animate');
     setTimeout(() => cartButton.classList.remove('animate'), 500);
 
-    showCustomAlert('Товар добавлен в корзину!');
+    // Показываем соответствующий алерт в зависимости от раздела
+    if (isAlcoholSection) {
+        showCustomAlert('Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.');
+    } else {
+        showCustomAlert('Товар добавлен в корзину!');
+    }
+
     closeModal();
 }
 
