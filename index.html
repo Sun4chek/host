@@ -489,8 +489,9 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
 
         /* Стили для кнопок "Добавить порцию" и "Добавить бутылку" */
-background-color: #2ea6ff;
-    color: white;
+.add-to-cart {
+    background-color: #2ea6ff; /* Синий фон */
+    color: white; /* Белый текст */
     border: none;
     padding: 10px;
     border-radius: 8px;
@@ -502,8 +503,8 @@ background-color: #2ea6ff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 180px; /* Уменьшаем до 160px, так как текст короче */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+    width: 160px; /* Фиксированная ширина */
     white-space: nowrap;
 }
 
@@ -1085,14 +1086,7 @@ body.dark-theme .modal-info .price {
                 margin-bottom: 5px;
             }
 
-            .add-to-cart {
-        width: 170px; /* Ещё меньше для узких экранов */
-        font-size: 14px; /* Уменьшаем шрифт для компактности */
-    }
 
-    .quantity-controls button {
-        width: 40px; /* Уменьшаем кнопки "+" и "−" */
-    }
 
             .logo {
                 width: 90%;
