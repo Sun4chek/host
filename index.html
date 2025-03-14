@@ -2445,7 +2445,7 @@ body.dark-theme .modal-info .price {
         showGalleryImage(galleryIndex);
     }
 
-   
+
 
     function closeGallery() {
         document.getElementById('gallery-screen').classList.remove('active');
@@ -2501,40 +2501,41 @@ function openModalFromData(element) {
 
 
 
-
 function openModal(name, price, weight, image, bottlePrice = null) {
-    // Установка базовых данных
-    document.getElementById('modal-name').textContent = name;
-    document.getElementById('modal-weight').textContent = weight;
-    document.getElementById('modal-image').src = image;
+    console.log('openModal:', { name, price, weight, image, bottlePrice }); // Отладка
 
-    const portionButton = document.getElementById('portion-button');
-    const bottleButton = document.getElementById('bottle-button');
+    try {
+        // Установка базовых данных
+        document.getElementById('modal-name').textContent = name;
+        document.getElementById('modal-weight').textContent = weight;
+        document.getElementById('modal-image').src = image;
 
-    // Скрываем обе кнопки по умолчанию
-    portionButton.style.display = 'none';
-    bottleButton.style.display = 'none';
+        const portionButton = document.getElementById('portion-button');
+        const bottleButton = document.getElementById('bottle-button');
 
-    // Логика отображения кнопок
-    if (price !== null && bottlePrice !== null) {
-        // Две кнопки для позиций с ценой за порцию и бутылку
-        portionButton.style.display = 'block';
-        bottleButton.style.display = 'block';
-        portionButton.textContent = `Добавить порцию (${price}₽)`;
-        bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
-    } else if (bottlePrice !== null) {
-        // Одна кнопка для позиций только с ценой за бутылку
-        bottleButton.style.display = 'block';
-        bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
-    } else {
-        console.error('Ошибка: нет корректной цены для товара', name);
+        // Скрываем обе кнопки по умолчанию
+        portionButton.style.display = 'none';
+        bottleButton.style.display = 'none';
+
+        // Логика отображения кнопок
+        if (price !== null && bottlePrice !== null) {
+            portionButton.style.display = 'block';
+            bottleButton.style.display = 'block';
+            portionButton.textContent = `Добавить порцию (${price}₽)`;
+            bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+        } else if (bottlePrice !== null) {
+            bottleButton.style.display = 'block';
+            bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
+        } else {
+            console.error('Ошибка: нет корректной цены для товара', name);
+        }
+
+        // Открытие модального окна
+        document.getElementById('modal').style.display = 'block';
+    } catch (error) {
+        console.error('Ошибка в openModal:', error);
     }
-
-    // Открытие модального окна
-    document.getElementById('modal').style.display = 'block';
 }
-
-
 
 
 
