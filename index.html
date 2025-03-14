@@ -2502,17 +2502,19 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     const portionButton = document.getElementById('portion-button');
     const bottleButton = document.getElementById('bottle-button');
 
-    // Очистка предыдущих значений
+    // Скрываем обе кнопки по умолчанию
     portionButton.style.display = 'none';
     bottleButton.style.display = 'none';
 
-    // Логика отображения кнопок и цен
+    // Логика отображения кнопок
     if (price !== null && bottlePrice !== null) {
+        // Две кнопки для позиций с ценой за порцию и бутылку
         portionButton.style.display = 'block';
         bottleButton.style.display = 'block';
         portionButton.textContent = `Добавить порцию (${price}₽)`;
         bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
     } else if (bottlePrice !== null) {
+        // Одна кнопка для позиций только с ценой за бутылку
         bottleButton.style.display = 'block';
         bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
     } else {
@@ -2522,7 +2524,6 @@ function openModal(name, price, weight, image, bottlePrice = null) {
     // Открытие модального окна
     document.getElementById('modal').style.display = 'block';
 }
-
 
 
     function closeModal() {
