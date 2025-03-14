@@ -2494,15 +2494,12 @@ function openModalFromData(element) {
     const image = element.getAttribute('data-image');
     const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
 
-    console.log('openModalFromData:', { name, price, weight, image, bottlePrice }); // Отладка
+    console.log('openModalFromData:', { name, price, weight, image, bottlePrice });
     openModal(name, price, weight, image, bottlePrice);
 }
 
-
-
-
 function openModal(name, price, weight, image, bottlePrice = null) {
-    console.log('openModal:', { name, price, weight, image, bottlePrice }); // Отладка
+    console.log('openModal:', { name, price, weight, image, bottlePrice });
 
     try {
         // Установка базовых данных
