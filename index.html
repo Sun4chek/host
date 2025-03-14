@@ -489,11 +489,10 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
         }
 
         /* Стили для кнопок "Добавить порцию" и "Добавить бутылку" */
-.add-to-cart {
-    background-color: #2ea6ff;
+background-color: #2ea6ff;
     color: white;
     border: none;
-    padding: 10px; /* Убираем фиксированные отступы, ширина теперь задаётся явно */
+    padding: 10px;
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
@@ -504,8 +503,8 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 200px; /* Фиксированная ширина для всех кнопок "Добавить" */
-    white-space: nowrap; /* Текст не переносится */
+    width: 180px; /* Уменьшаем до 160px, так как текст короче */
+    white-space: nowrap;
 }
 
 .add-to-cart:hover {
@@ -673,7 +672,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     background-color: #2ea6ff;
     color: white;
     border: none;
-    width: 60px; /* Увеличиваем до 60px для большего соответствия */
+    width: 60px;
     height: 40px;
     border-radius: 8px;
     font-size: 20px;
@@ -1085,6 +1084,15 @@ body.dark-theme .modal-info .price {
                 align-items: center;
                 margin-bottom: 5px;
             }
+
+            .add-to-cart {
+        width: 140px; /* Ещё меньше для узких экранов */
+        font-size: 14px; /* Уменьшаем шрифт для компактности */
+    }
+
+    .quantity-controls button {
+        width: 50px; /* Уменьшаем кнопки "+" и "−" */
+    }
 
             .logo {
                 width: 90%;
@@ -2528,7 +2536,7 @@ function openModal(name, price, weight, image, bottlePrice = null) {
         portionControls.style.display = 'flex';
         bottleControls.classList.add('visible');
         addPortionButton.textContent = "Добавить порцию"; // Без цены
-        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`; // С ценой только для бутылки
+        addBottleButton.textContent = "Добавить бутылку"; // Без цены
     } else if (price && !bottlePrice) {
         // Только цена за порцию
         document.getElementById('modal-price').textContent = `${price}₽`;
