@@ -2450,7 +2450,7 @@ body.dark-theme .modal-info .price {
     const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
     const weight = element.getAttribute('data-weight');
     const image = element.getAttribute('data-image');
-    const bottlePrice = parseInt(element.getAttribute('data-bottle-price'));
+    const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
 
     openModal(name, price, weight, image, bottlePrice);
 }
@@ -2494,37 +2494,37 @@ body.dark-theme .modal-info .price {
     });
 
 function openModal(name, price, weight, image, bottlePrice = null) {
-    currentItem = { name, price, weight, image, bottlePrice };
-    portionQuantity = 1;
-    bottleQuantity = 1;
-
-    document.getElementById('modal-title').textContent = name;
-    document.getElementById('modal-price').textContent = `${price}₽`;
+    // Установка базовых данных
+    document.getElementById('modal-name').textContent = name;
     document.getElementById('modal-weight').textContent = weight;
     document.getElementById('modal-image').src = image;
-    document.getElementById('modal-quantity-portion').textContent = portionQuantity;
-    document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
 
-    // Показываем или скрываем блок для бутылки
-    const bottleControls = document.getElementById('bottle-quantity-and-button');
-    const addPortionButton = document.getElementById('modal-add-to-cart');
-    const addBottleButton = document.getElementById('modal-add-bottle');
+    const portionButton = document.getElementById('portion-button');
+    const bottleButton = document.getElementById('bottle-button');
 
-    if (bottlePrice) {
-        // Для товаров с двумя ценниками
-        bottleControls.classList.add('visible');
-        addPortionButton.textContent = 'Добавить порцию';
-        addBottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+    // Очистка предыдущих значений
+    portionButton.style.display = 'none';
+    bottleButton.style.display = 'none';
+
+    // Логика отображения кнопок и цен
+    if (price !== null && bottlePrice !== null) {
+        portionButton.style.display = 'block';
+        bottleButton.style.display = 'block';
+        portionButton.textContent = `Добавить порцию (${price}₽)`;
+        bottleButton.textContent = `Добавить бутылку (${bottlePrice}₽)`;
+    } else if (bottlePrice !== null) {
+        bottleButton.style.display = 'block';
+        bottleButton.textContent = `Добавить в корзину (${bottlePrice}₽)`;
     } else {
-        // Для товаров с одним ценником
-        bottleControls.classList.remove('visible');
-        addPortionButton.textContent = 'Добавить в корзину';
+        console.error('Ошибка: нет корректной цены для товара', name);
     }
 
-    document.getElementById('modal').classList.add('active');
-    document.getElementById('modal-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
+    // Открытие модального окна
+    document.getElementById('modal').style.display = 'block';
 }
+
+
+
     function closeModal() {
         document.getElementById('modal').style.bottom = '-100%';
         document.getElementById('modal').classList.remove('active');
