@@ -490,27 +490,28 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
         /* Стили для кнопок "Добавить порцию" и "Добавить бутылку" */
 .add-to-cart {
-    background-color: #2ea6ff; /* Синий цвет */
+    background-color: #2ea6ff; /* Синий фон */
     color: white;
     border: none;
-    padding: 10px 20px; /* Устанавливаем внутренние отступы */
-    border-radius: 5px;
+    padding: 10px 20px; /* Удобные отступы */
+    border-radius: 8px; /* Мягкие углы */
     cursor: pointer;
     text-align: center;
-    transition: background-color 0.3s ease;
-    font-size: 14px;
-    min-width: 120px; /* Минимальная ширина для кнопок без переноса строки */
-    height: 40px; /* Фиксированная высота, совпадающая с кнопками "+" и "−" */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px; /* Читаемый шрифт */
+    height: 40px; /* Совпадает с кнопками "+" и "−" */
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
 }
 
 .add-to-cart:hover {
     background-color: #1e8fd1; /* Темно-синий при наведении */
 }
-
+.add-to-cart:active {
+    transform: scale(0.95); /* Лёгкое уменьшение при нажатии */
+}
 
         .mini-bar {
             position: fixed;
@@ -663,36 +664,37 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 .quantity-controls {
     display: flex;
     align-items: center;
-    gap: 5px; /* Расстояние между кнопками и числом */
+    gap: 8px; /* Расстояние между кнопками и числом */
 }
 
 .quantity-controls button {
-    background-color: #2ea6ff; /* Синий цвет */
+    background-color: #2ea6ff; /* Синий фон */
     color: white;
     border: none;
-    width: 30px;
-    height: 35px;
-    border-radius: 5px; /* Квадратные кнопки с закругленными углами */
-    font-size: 18px;
+    width: 40px; /* Увеличим ширину для удобства нажатия */
+    height: 40px; /* Увеличим высоту */
+    border-radius: 8px; /* Более мягкие углы */
+    font-size: 20px; /* Увеличим шрифт для читаемости */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для глубины */
 }
 
       .quantity-controls button:hover {
     background-color: #1e8fd1; /* Темно-синий при наведении */
 }
 
-        .quantity-controls button:active {
-            transform: scale(0.9);
-        }
+.quantity-controls button:active {
+       transform: scale(0.9);
+}
 
 .quantity-controls span {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    min-width: 20px;
+    min-width: 24px;
     text-align: center;
 }
 
@@ -815,7 +817,8 @@ body.dark-theme .modal-info .price {
 .quantity-and-button {
     display: flex;
     align-items: center;
-    gap: 10px; /* Расстояние между элементами */
+    gap: 15px; /* Увеличим расстояние между количеством и кнопкой "Добавить" */
+    margin-bottom: 10px; /* Отступ снизу для разделения блоков */
 }
 
         .modal-overlay {
