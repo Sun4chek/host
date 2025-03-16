@@ -2672,16 +2672,23 @@ let portionQuantity = 1;
         });
     }
 
-    function goToCategories() {
-    showScreen('menu-screen');
+function goToCategories() {
+    // Переключаем на экран меню
+    showScreen('menu-screen', true); // Передаем флаг, чтобы не прокручивать вверх
+
+    // Прокручиваем к категориям
     const categoryGrid = document.getElementById('category-grid');
     if (categoryGrid) {
-        categoryGrid.scrollIntoView({ behavior: 'smooth' });
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Обновляем состояние кнопок
         setTimeout(() => {
             document.getElementById('home-button').classList.remove('active');
             document.getElementById('menu-button').classList.add('active');
             document.getElementById('cart-button').classList.remove('active');
         }, 300);
+    } else {
+        console.error('Элемент #category-grid не найден!');
     }
 }
 
@@ -2966,28 +2973,31 @@ function addToCartFromModal(type) {
         }
     });
 
-    function showScreen(screenId) {
-        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
+function showScreen(screenId, skipScroll = false) {
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
 
-        const homeButton = document.getElementById('home-button');
-        const menuButton = document.getElementById('menu-button');
-        const cartButton = document.getElementById('cart-button');
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
 
-        homeButton.classList.remove('active');
-        menuButton.classList.remove('active');
-        cartButton.classList.remove('active');
+    homeButton.classList.remove('active');
+    menuButton.classList.remove('active');
+    cartButton.classList.remove('active');
 
-        if (screenId === 'menu-screen') {
+    if (screenId === 'menu-screen') {
+        // Прокручиваем вверх только если skipScroll не true
+        if (!skipScroll) {
             homeButton.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (screenId === 'cart-screen') {
-            cartButton.classList.add('active');
-            updateCart();
-        } else {
-            menuButton.classList.add('active');
         }
+    } else if (screenId === 'cart-screen') {
+        cartButton.classList.add('active');
+        updateCart();
+    } else {
+        menuButton.classList.add('active');
     }
+}
 
     function scrollToCategories() {
         showScreen('menu-screen');
