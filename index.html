@@ -910,7 +910,13 @@ body.dark-theme .modal-info .price {
     max-width: 200px; /* Ограничиваем ширину текста */
     font-size: 16px; /* Уменьшаем размер шрифта, если нужно */
 }
-
+/* Специфические стили для кнопок в корзине */
+#cart-items .quantity-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+}
 
 
 .alcohol-notification {
@@ -2505,20 +2511,12 @@ body.dark-theme .modal-info .price {
 
 
 
-
-
-
-
-
-
-
 <div class="mini-bar">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <button onclick="showScreen('menu-screen')" id="home-button">
         <span class="material-symbols-outlined icon">home</span>
         <span>Главная</span>
     </button>
-    <button onclick="scrollToCategories()" id="menu-button">
+    <button onclick="goToCategories()" id="menu-button">
         <span class="material-symbols-outlined icon">menu_book</span>
         <span>Меню</span>
     </button>
@@ -2530,6 +2528,12 @@ body.dark-theme .modal-info .price {
         <span>Корзина</span>
     </button>
 </div>
+
+
+
+
+
+
 <div id="alcohol-notification" class="alcohol-notification">
     Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.
     <span class="close-notification" onclick="closeAlcoholNotification()">✕</span>
@@ -2668,6 +2672,19 @@ let portionQuantity = 1;
             img.classList.toggle('active', i === index);
         });
     }
+
+    function goToCategories() {
+    showScreen('menu-screen');
+    const categoryGrid = document.getElementById('category-grid');
+    if (categoryGrid) {
+        categoryGrid.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            document.getElementById('home-button').classList.remove('active');
+            document.getElementById('menu-button').classList.add('active');
+            document.getElementById('cart-button').classList.remove('active');
+        }, 300);
+    }
+}
 
     function openGallery() {
         document.getElementById('gallery-screen').classList.add('active');
