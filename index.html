@@ -3012,59 +3012,36 @@ function showScreen(screenId) {
 
 
 
-
-
 function scrollToCategories() {
-    console.log('scrollToCategories: Начало выполнения');
-
-    // 1. Переключаем экран на #menu-screen
+    console.log('scrollToCategories: Начало');
     const menuScreen = document.getElementById('menu-screen');
-    if (!menuScreen) {
-        console.error('scrollToCategories: Элемент #menu-screen не найден');
-        return;
+    if (menuScreen) {
+        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+        menuScreen.classList.add('active');
+        console.log('scrollToCategories: Экран переключён');
     }
-    document.querySelectorAll('.container').forEach(el => {
-        el.classList.remove('active');
-        console.log('scrollToCategories: Убрана класс active с', el.id);
-    });
-    menuScreen.classList.add('active');
-    console.log('scrollToCategories: Экран #menu-screen активирован');
 
-    // 2. Прокручиваем к #category-grid
     const categoryGrid = document.getElementById('category-grid');
-    if (!categoryGrid) {
-        console.error('scrollToCategories: Элемент #category-grid не найден');
-        return;
+    if (categoryGrid) {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.enableVerticalSwipes();
+        }
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('scrollToCategories: Прокручено к категориям');
+        setTimeout(() => {
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.disableVerticalSwipes();
+            }
+        }, 1000);
     }
-    // Временно отключаем запрет прокрутки в Telegram
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.enableVerticalSwipes();
-        console.log('scrollToCategories: Включена вертикальная прокрутка в Telegram');
-    }
-    categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    console.log('scrollToCategories: Прокрутка к #category-grid выполнена');
 
-    // 3. Обновляем кнопки мини-бара
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
     const cartButton = document.getElementById('cart-button');
-
-    if (!homeButton || !menuButton || !cartButton) {
-        console.error('scrollToCategories: Одна из кнопок мини-бара не найдена');
-        return;
-    }
     homeButton.classList.remove('active');
     menuButton.classList.add('active');
     cartButton.classList.remove('active');
-    console.log('scrollToCategories: Кнопки обновлены: Главная - неактивна, Меню - активна, Корзина - неактивна');
-
-    // Возвращаем запрет прокрутки через 1 секунду
-    if (window.Telegram && window.Telegram.WebApp) {
-        setTimeout(() => {
-            window.Telegram.WebApp.disableVerticalSwipes();
-            console.log('scrollToCategories: Вертикальная прокрутка отключена');
-        }, 1000);
-    }
+    console.log('scrollToCategories: Кнопки обновлены');
 }
 
   function toggleRoomNumber() {
