@@ -2971,12 +2971,18 @@ function addToCartFromModal(type) {
         }
     });
 
+
 function showScreen(screenId) {
-    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    console.log('showScreen: Переключение на экран', screenId);
     const targetScreen = document.getElementById(screenId);
-    if (targetScreen) {
-        targetScreen.classList.add('active');
+    if (!targetScreen) {
+        console.error('showScreen: Экран с ID', screenId, 'не найден');
+        return;
     }
+
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    targetScreen.classList.add('active');
+    console.log('showScreen: Активирован экран', screenId);
 
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
@@ -2987,8 +2993,9 @@ function showScreen(screenId) {
     cartButton.classList.remove('active');
 
     if (screenId === 'menu-screen') {
-        // Не активируем "Главная" автоматически, оставляем это для scrollToCategories
+        console.log('showScreen: Прокрутка к началу для #menu-screen');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        homeButton.classList.add('active'); // Оставляем только для прямого вызова showScreen
     } else if (screenId === 'cart-screen') {
         cartButton.classList.add('active');
         updateCart();
@@ -2997,27 +3004,66 @@ function showScreen(screenId) {
     }
 }
 
- function scrollToCategories() {
-    // Переключаем экран
-    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+
+
+
+
+
+
+
+
+
+
+function scrollToCategories() {
+    console.log('scrollToCategories: Начало выполнения');
+
+    // 1. Переключаем экран на #menu-screen
     const menuScreen = document.getElementById('menu-screen');
-    if (menuScreen) {
-        menuScreen.classList.add('active');
-    } else {
-        console.error('menu-screen не найден');
+    if (!menuScreen) {
+        console.error('scrollToCategories: Элемент #menu-screen не найден');
         return;
     }
+    document.querySelectorAll('.container').forEach(el => {
+        el.classList.remove('active');
+        console.log('scrollToCategories: Убрана класс active с', el.id);
+    });
+    menuScreen.classList.add('active');
+    console.log('scrollToCategories: Экран #menu-screen активирован');
 
-    // Прокручиваем к категориям
+    // 2. Прокручиваем к #category-grid
     const categoryGrid = document.getElementById('category-grid');
-    if (categoryGrid) {
-        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Обновляем кнопки сразу после начала прокрутки
-        document.getElementById('home-button').classList.remove('active');
-        document.getElementById('menu-button').classList.add('active');
-        document.getElementById('cart-button').classList.remove('active');
-    } else {
-        console.error('category-grid не найден');
+    if (!categoryGrid) {
+        console.error('scrollToCategories: Элемент #category-grid не найден');
+        return;
+    }
+    // Временно отключаем запрет прокрутки в Telegram
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.enableVerticalSwipes();
+        console.log('scrollToCategories: Включена вертикальная прокрутка в Telegram');
+    }
+    categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    console.log('scrollToCategories: Прокрутка к #category-grid выполнена');
+
+    // 3. Обновляем кнопки мини-бара
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
+
+    if (!homeButton || !menuButton || !cartButton) {
+        console.error('scrollToCategories: Одна из кнопок мини-бара не найдена');
+        return;
+    }
+    homeButton.classList.remove('active');
+    menuButton.classList.add('active');
+    cartButton.classList.remove('active');
+    console.log('scrollToCategories: Кнопки обновлены: Главная - неактивна, Меню - активна, Корзина - неактивна');
+
+    // Возвращаем запрет прокрутки через 1 секунду
+    if (window.Telegram && window.Telegram.WebApp) {
+        setTimeout(() => {
+            window.Telegram.WebApp.disableVerticalSwipes();
+            console.log('scrollToCategories: Вертикальная прокрутка отключена');
+        }, 1000);
     }
 }
 
