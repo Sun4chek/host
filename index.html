@@ -2510,7 +2510,6 @@ body.dark-theme .modal-info .price {
 
 
 <div class="mini-bar">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <button onclick="showScreen('menu-screen')" id="home-button">
         <span class="material-symbols-outlined icon">home</span>
         <span>Главная</span>
@@ -2972,42 +2971,55 @@ function addToCartFromModal(type) {
         }
     });
 
-
 function showScreen(screenId) {
-        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-
-        const homeButton = document.getElementById('home-button');
-        const menuButton = document.getElementById('menu-button');
-        const cartButton = document.getElementById('cart-button');
-
-        homeButton.classList.remove('active');
-        menuButton.classList.remove('active');
-        cartButton.classList.remove('active');
-
-        if (screenId === 'menu-screen') {
-            homeButton.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (screenId === 'cart-screen') {
-            cartButton.classList.add('active');
-            updateCart();
-        } else {
-            menuButton.classList.add('active');
-        }
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.add('active');
     }
 
-    function scrollToCategories() {
-        showScreen('menu-screen');
-        const categoryGrid = document.getElementById('category-grid');
-        if (categoryGrid) {
-            categoryGrid.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                document.getElementById('home-button').classList.remove('active');
-                document.getElementById('menu-button').classList.add('active');
-                document.getElementById('cart-button').classList.remove('active');
-            }, 300);
-        }
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
+
+    homeButton.classList.remove('active');
+    menuButton.classList.remove('active');
+    cartButton.classList.remove('active');
+
+    if (screenId === 'menu-screen') {
+        // Не активируем "Главная" автоматически, оставляем это для scrollToCategories
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (screenId === 'cart-screen') {
+        cartButton.classList.add('active');
+        updateCart();
+    } else {
+        menuButton.classList.add('active');
     }
+}
+
+ function scrollToCategories() {
+    // Переключаем экран
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    const menuScreen = document.getElementById('menu-screen');
+    if (menuScreen) {
+        menuScreen.classList.add('active');
+    } else {
+        console.error('menu-screen не найден');
+        return;
+    }
+
+    // Прокручиваем к категориям
+    const categoryGrid = document.getElementById('category-grid');
+    if (categoryGrid) {
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Обновляем кнопки сразу после начала прокрутки
+        document.getElementById('home-button').classList.remove('active');
+        document.getElementById('menu-button').classList.add('active');
+        document.getElementById('cart-button').classList.remove('active');
+    } else {
+        console.error('category-grid не найден');
+    }
+}
 
   function toggleRoomNumber() {
     const deliveryMethod = document.getElementById('delivery-method');
