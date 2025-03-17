@@ -2753,54 +2753,56 @@ function showAlcoholNotification() {
             openModal(name, price, weight, image, bottlePrice);
         }
 
-        function addToCartFromModal(type) {
-            if (!currentItem) return;
+function addToCartFromModal(type) {
+    if (!currentItem) return;
 
-            let itemName = currentItem.name;
-            let itemPrice = currentItem.price;
-            let quantity = portionQuantity;
+    let itemName = currentItem.name;
+    let itemPrice = currentItem.price;
+    let quantity = portionQuantity;
 
-            const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
-            const isAlcoholSection = alcoholScreens.some(screenId =>
-                document.getElementById(screenId)?.classList.contains('active')
-            );
+    // Проверяем, является ли товар алкогольным по активному экрану
+    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
+    const isAlcohol = alcoholScreens.some(screenId =>
+        document.getElementById(screenId)?.classList.contains('active')
+    );
 
-            if (type === 'bottle' && currentItem.bottlePrice) {
-                itemName += ' (бутылка)';
-                itemPrice = currentItem.bottlePrice;
-                quantity = bottleQuantity;
-            } else if (!currentItem.price && currentItem.bottlePrice) {
-                itemName += ' (бутылка)';
-                itemPrice = currentItem.bottlePrice;
-                quantity = bottleQuantity;
-            }
+    if (type === 'bottle' && currentItem.bottlePrice) {
+        itemName += ' (бутылка)';
+        itemPrice = currentItem.bottlePrice;
+        quantity = bottleQuantity;
+    } else if (!currentItem.price && currentItem.bottlePrice) {
+        itemName += ' (бутылка)';
+        itemPrice = currentItem.bottlePrice;
+        quantity = bottleQuantity;
+    }
 
-            const existingItem = cart.find(item => item.name === itemName);
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    name: itemName,
-                    price: itemPrice,
-                    quantity: quantity
-                });
-            }
+    const existingItem = cart.find(item => item.name === itemName);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            name: itemName,
+            price: itemPrice,
+            quantity: quantity,
+            isAlcohol: isAlcohol // Добавляем флаг алкогольного товара
+        });
+    }
 
-            updateCart();
-            updateCartCounter();
+    updateCart();
+    updateCartCounter();
 
-            const cartButton = document.querySelector('.mini-bar .cart-button');
-            cartButton.classList.add('animate');
-            setTimeout(() => cartButton.classList.remove('animate'), 500);
+    const cartButton = document.querySelector('.mini-bar .cart-button');
+    cartButton.classList.add('animate');
+    setTimeout(() => cartButton.classList.remove('animate'), 500);
 
-            if (isAlcoholSection) {
-                showAlcoholNotification();
-            } else {
-                showCustomAlert('Товар добавлен в корзину!');
-            }
+    if (isAlcohol) {
+        showAlcoholNotification();
+    } else {
+        showCustomAlert('Товар добавлен в корзину!');
+    }
 
-            closeModal();
-        }
+    closeModal();
+}
 
         function closeModal() {
             document.getElementById('modal').style.bottom = '-100%';
@@ -2821,15 +2823,15 @@ function showAlcoholNotification() {
                 document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
             }
         }
+
+
+
 function updateCart() {
     const cartItems = document.getElementById('cart-items');
     const totalPrice = document.getElementById('total-price');
     const emptyCart = document.getElementById('empty-cart');
     cartItems.innerHTML = '';
     let total = 0;
-
-    // Список экранов с алкоголем
-    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
 
     if (cart.length === 0) {
         emptyCart.classList.add('active');
@@ -2838,13 +2840,8 @@ function updateCart() {
         emptyCart.classList.remove('active');
         cartItems.style.display = 'block';
         cart.forEach((item, index) => {
-            // Проверяем, является ли товар алкогольным по наличию "(бутылка)" или упоминанию алкогольных категорий в имени
-            const isAlcohol = item.name.includes('(бутылка)') ||
-                            alcoholScreens.some(screen => item.name.toLowerCase().includes(screen.replace('-screen', '')));
-
-            // Для алкогольных товаров цена отображается как 0
-            const displayPrice = isAlcohol ? 0 : item.price;
-            const originalPrice = item.price; // Сохраняем оригинальную цену для отображения
+            const isAlcohol = item.isAlcohol || false; // Проверяем, алкоголь ли
+            const displayPrice = isAlcohol ? 0 : item.price; // Цена 0 для алкоголя
 
             const cartItem = document.createElement('div');
             cartItem.className = 'menu-item';
@@ -2852,7 +2849,7 @@ function updateCart() {
                 <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
                 <div class="info">
                     <h3>${item.name}</h3>
-                    <p>${isAlcohol ? `${originalPrice}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
+                    <p>${isAlcohol ? `${item.price}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
                 </div>
                 <div class="quantity-controls">
                     <button onclick="changeQuantity(${index}, -1)">−</button>
@@ -2862,15 +2859,18 @@ function updateCart() {
             `;
             cartItems.appendChild(cartItem);
 
-            // Добавляем к общей сумме только неалкогольные товары
             if (!isAlcohol) {
-                total += item.price * item.quantity;
+                total += item.price * item.quantity; // Сумма только для неалкоголя
             }
         });
     }
 
     totalPrice.textContent = total;
 }
+
+
+
+
 
         function changeQuantity(index, delta) {
             const item = cart[index];
@@ -2983,8 +2983,6 @@ function submitOrder(event) {
         return;
     }
 
-    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
-
     const orderData = {
         lastName,
         firstName,
@@ -2994,12 +2992,11 @@ function submitOrder(event) {
         roomNumber,
         cart: cart.map(item => ({
             name: item.name,
-            price: item.price,
+            price: item.price, // Исходная цена
             quantity: item.quantity,
-            isAlcohol: item.name.includes('(бутылка)') ||
-                      alcoholScreens.some(screen => item.name.toLowerCase().includes(screen.replace('-screen', '')))
+            isAlcohol: item.isAlcohol || false // Флаг алкоголя
         })),
-        total: document.getElementById('total-price').textContent,
+        total: document.getElementById('total-price').textContent, // Сумма без алкоголя
         note: "Алкоголь оплачивается отдельно при получении или доставке"
     };
 
