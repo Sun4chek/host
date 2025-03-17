@@ -2510,13 +2510,12 @@ body.dark-theme .modal-info .price {
 
 
 
-
 <div class="mini-bar">
     <button onclick="showScreen('menu-screen')" id="home-button">
         <span class="material-symbols-outlined icon">home</span>
         <span>Главная</span>
     </button>
-    <button onclick="goToCategories()" id="menu-button">
+    <button onclick="scrollToCategories()" id="menu-button">
         <span class="material-symbols-outlined icon">menu_book</span>
         <span>Меню</span>
     </button>
@@ -2973,9 +2972,14 @@ function addToCartFromModal(type) {
         }
     });
 
-function showScreen(screenId, skipScroll = false) {
+
+
+  function showScreen(screenId, skipScroll = false) {
     document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.add('active');
+    }
 
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
@@ -2985,32 +2989,34 @@ function showScreen(screenId, skipScroll = false) {
     menuButton.classList.remove('active');
     cartButton.classList.remove('active');
 
-    if (screenId === 'menu-screen') {
-        // Прокручиваем вверх только если skipScroll не true
-        if (!skipScroll) {
-            homeButton.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    if (screenId === 'menu-screen' && !skipScroll) {
+        // Не активируем "Главная" автоматически, оставляем это для scrollToCategories
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (screenId === 'cart-screen') {
         cartButton.classList.add('active');
         updateCart();
-    } else {
+    } else if (screenId !== 'menu-screen') {
         menuButton.classList.add('active');
     }
 }
+ function scrollToCategories() {
+    console.log('scrollToCategories вызвана');
+    showScreen('menu-screen'); // Переключаем экран
 
-    function scrollToCategories() {
-        showScreen('menu-screen');
-        const categoryGrid = document.getElementById('category-grid');
-        if (categoryGrid) {
-            categoryGrid.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                document.getElementById('home-button').classList.remove('active');
-                document.getElementById('menu-button').classList.add('active');
-                document.getElementById('cart-button').classList.remove('active');
-            }, 300);
-        }
+    const categoryGrid = document.getElementById('category-grid');
+    if (categoryGrid) {
+        console.log('Прокручиваем к category-grid');
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+            document.getElementById('home-button').classList.remove('active');
+            document.getElementById('menu-button').classList.add('active');
+            document.getElementById('cart-button').classList.remove('active');
+            console.log('Кнопки обновлены');
+        }, 300);
+    } else {
+        console.error('Элемент #category-grid не найден');
     }
+}
 
   function toggleRoomNumber() {
     const deliveryMethod = document.getElementById('delivery-method');
