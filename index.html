@@ -2640,16 +2640,7 @@ body.dark-theme .modal-info .price {
             });
         }
 
-
-
-        function openGallery() {
-            document.getElementById('gallery-screen').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            galleryIndex = currentIndex;
-            showGalleryImage(galleryIndex);
-        }
-
-   function showAlcoholNotification() {
+function showAlcoholNotification() {
     if (tg && tg.showPopup) {
         tg.showPopup({
             title: 'Важная информация',
@@ -2663,6 +2654,15 @@ body.dark-theme .modal-info .price {
         alert('Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.');
     }
 }
+
+        function openGallery() {
+            document.getElementById('gallery-screen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            galleryIndex = currentIndex;
+            showGalleryImage(galleryIndex);
+        }
+
+
 
         function closeGallery() {
             document.getElementById('gallery-screen').classList.remove('active');
@@ -2821,42 +2821,56 @@ body.dark-theme .modal-info .price {
                 document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
             }
         }
+function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    const totalPrice = document.getElementById('total-price');
+    const emptyCart = document.getElementById('empty-cart');
+    cartItems.innerHTML = '';
+    let total = 0;
 
-        function updateCart() {
-            const cartItems = document.getElementById('cart-items');
-            const totalPrice = document.getElementById('total-price');
-            const emptyCart = document.getElementById('empty-cart');
-            cartItems.innerHTML = '';
-            let total = 0;
+    // Список экранов с алкоголем
+    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
 
-            if (cart.length === 0) {
-                emptyCart.classList.add('active');
-                cartItems.style.display = 'none';
-            } else {
-                emptyCart.classList.remove('active');
-                cartItems.style.display = 'block';
-                cart.forEach((item, index) => {
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'menu-item';
-                    cartItem.innerHTML = `
-                        <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
-                        <div class="info">
-                            <h3>${item.name}</h3>
-                            <p>${item.price}₽ за шт.</p>
-                        </div>
-                        <div class="quantity-controls">
-                            <button onclick="changeQuantity(${index}, -1)">−</button>
-                            <span>${item.quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)">+</button>
-                        </div>
-                    `;
-                    cartItems.appendChild(cartItem);
-                    total += item.price * item.quantity;
-                });
+    if (cart.length === 0) {
+        emptyCart.classList.add('active');
+        cartItems.style.display = 'none';
+    } else {
+        emptyCart.classList.remove('active');
+        cartItems.style.display = 'block';
+        cart.forEach((item, index) => {
+            // Проверяем, является ли товар алкогольным по наличию "(бутылка)" или упоминанию алкогольных категорий в имени
+            const isAlcohol = item.name.includes('(бутылка)') ||
+                            alcoholScreens.some(screen => item.name.toLowerCase().includes(screen.replace('-screen', '')));
+
+            // Для алкогольных товаров цена отображается как 0
+            const displayPrice = isAlcohol ? 0 : item.price;
+            const originalPrice = item.price; // Сохраняем оригинальную цену для отображения
+
+            const cartItem = document.createElement('div');
+            cartItem.className = 'menu-item';
+            cartItem.innerHTML = `
+                <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
+                <div class="info">
+                    <h3>${item.name}</h3>
+                    <p>${isAlcohol ? `${originalPrice}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
+                </div>
+                <div class="quantity-controls">
+                    <button onclick="changeQuantity(${index}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQuantity(${index}, 1)">+</button>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+
+            // Добавляем к общей сумме только неалкогольные товары
+            if (!isAlcohol) {
+                total += item.price * item.quantity;
             }
+        });
+    }
 
-            totalPrice.textContent = total;
-        }
+    totalPrice.textContent = total;
+}
 
         function changeQuantity(index, delta) {
             const item = cart[index];
@@ -2984,7 +2998,7 @@ body.dark-theme .modal-info .price {
                 tg.sendData(JSON.stringify(orderData));
             }
 
-            alert('Заказ успешно оформлен!');
+           alert('Заказ успешно оформлен! Алкоголь оплачивается отдельно.');
             clearCart();
             showScreen('menu-screen');
         }
