@@ -2508,17 +2508,16 @@ body.dark-theme .modal-info .price {
     </div>
 </div>
 
-
 <div class="mini-bar">
-    <button onclick="showScreen('menu-screen')" id="home-button">
+    <button id="home-button">
         <span class="material-symbols-outlined icon">home</span>
         <span>Главная</span>
     </button>
-    <button onclick="scrollToCategories()" id="menu-button">
+    <button id="menu-button">
         <span class="material-symbols-outlined icon">menu_book</span>
         <span>Меню</span>
     </button>
-    <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
+    <button class="cart-button" id="cart-button" onclick="showScreen('cart-screen')">
         <div class="cart-icon-wrapper">
             <span class="material-symbols-outlined icon">shopping_cart</span>
             <div id="cart-counter" class="cart-counter">0</div>
@@ -2971,24 +2970,48 @@ function addToCartFromModal(type) {
         }
     });
 
+
+document.getElementById('home-button').addEventListener('click', () => {
+    showScreen('menu-screen');
+});
+
+document.getElementById('menu-button').addEventListener('click', () => {
+    scrollToCategories();
+});
+
+
+
+
+
+
 function showScreen(screenId) {
     const targetScreen = document.getElementById(screenId);
     if (!targetScreen) return;
-
-    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-    targetScreen.classList.add('active');
 
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
     const cartButton = document.getElementById('cart-button');
 
+    // Если мы уже на главной странице, просто прокручиваем вверх
+    if (screenId === 'menu-screen' && targetScreen.classList.contains('active')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        homeButton.classList.add('active');
+        menuButton.classList.remove('active');
+        cartButton.classList.remove('active');
+        return;
+    }
+
+    // Переключаем экраны
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    targetScreen.classList.add('active');
+
+    // Обновляем состояние кнопок
     homeButton.classList.remove('active');
     menuButton.classList.remove('active');
     cartButton.classList.remove('active');
 
     if (screenId === 'menu-screen') {
         homeButton.classList.add('active');
-        // Прокрутка к началу только если не вызвано из scrollToCategories
     } else if (screenId === 'cart-screen') {
         cartButton.classList.add('active');
         updateCart();
@@ -2997,6 +3020,15 @@ function showScreen(screenId) {
     }
 }
 
+
+
+
+
+
+
+
+
+
 function scrollToCategories() {
     const menuScreen = document.getElementById('menu-screen');
     const categoryGrid = document.getElementById('category-grid');
@@ -3004,7 +3036,7 @@ function scrollToCategories() {
     const menuButton = document.getElementById('menu-button');
     const cartButton = document.getElementById('cart-button');
 
-    // Переключаем на экран меню, если он не активен
+    // Если мы не на главной странице, переключаемся на неё
     if (!menuScreen.classList.contains('active')) {
         document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
         menuScreen.classList.add('active');
@@ -3020,7 +3052,6 @@ function scrollToCategories() {
     menuButton.classList.add('active');
     cartButton.classList.remove('active');
 }
-
 
 
 
