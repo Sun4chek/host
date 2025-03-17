@@ -921,33 +921,7 @@ body.dark-theme .modal-info .price {
 }
 
 
-.alcohol-notification {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff9800; /* Оранжевый фон для алкоголя */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-<!--    z-index: 2500;-->
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    font-size: 14px;
-    max-width: 90%;
-    text-align: center;
-}
 
-.alcohol-notification.active {
-    opacity: 1;
-}
-.alcohol-notification .close-notification {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 16px;
-}
 
 
 
@@ -2532,10 +2506,7 @@ body.dark-theme .modal-info .price {
 
 
 
-<div id="alcohol-notification" class="alcohol-notification">
-    Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.
-    <span class="close-notification" onclick="closeAlcoholNotification()">✕</span>
-</div>
+
 </body>
 <script>
         let cart = [];
@@ -2678,14 +2649,20 @@ body.dark-theme .modal-info .price {
             showGalleryImage(galleryIndex);
         }
 
-        function closeAlcoholNotification() {
-            document.getElementById('alcohol-notification').classList.remove('active');
-        }
-
-        function showAlcoholNotification() {
-            const notification = document.getElementById('alcohol-notification');
-            notification.classList.add('active');
-        }
+   function showAlcoholNotification() {
+    if (tg && tg.showPopup) {
+        tg.showPopup({
+            title: 'Важная информация',
+            message: 'Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.',
+            buttons: [
+                { type: 'ok', text: 'Понятно' }
+            ]
+        });
+    } else {
+        // Запасной вариант для браузеров без Telegram Web App
+        alert('Алкоголь не включается в стоимость. Его можно оплатить при получении или при доставке в номер отеля.');
+    }
+}
 
         function closeGallery() {
             document.getElementById('gallery-screen').classList.remove('active');
