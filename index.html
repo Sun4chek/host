@@ -522,7 +522,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     bottom: 20px;
     left: 10px;
     right: 10px;
-    background-color: var(--item-bg-color); /* Явный фон из переменной */
+    background-color: var(--item-bg-color); /* Оставляем переменную */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -532,7 +532,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     z-index: 4000;
     border: 1px solid var(--border-color);
     transition: background-color 0.3s ease;
-    opacity: 1; /* Убираем возможную прозрачность */
+    opacity: 1 !important; /* Защита от прозрачности */
 }
 
        .mini-bar button {
@@ -747,7 +747,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     bottom: -100%;
     left: 0;
     right: 0;
-    background-color: var(--item-bg-color); /* Явный фон из переменной */
+    background-color: var(--item-bg-color); /* Оставляем переменную */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -756,12 +756,14 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     transition: bottom 0.3s ease;
     z-index: 2000;
     padding: 20px;
-    opacity: 1; /* Убираем возможную прозрачность */
+    opacity: 1 !important; /* Защита от прозрачности */
 }
 
-   .modal.active {
+.modal.active {
     bottom: 0;
 }
+
+
 
 .modal-content {
     display: flex;
