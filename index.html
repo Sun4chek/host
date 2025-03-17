@@ -8,7 +8,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-    <style>
+    
         :root {
             --background-color: #f8f8f8;
             --text-color: #333;
@@ -518,21 +518,20 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 }
 
 .mini-bar {
-    position: fixed;
-    bottom: 20px;
-    left: 10px;
-    right: 10px;
-    background-color: var(--item-bg-color); /* Оставляем переменную */
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 4000;
-    border: 1px solid var(--border-color);
-    transition: background-color 0.3s ease;
-    opacity: 1 !important; /* Защита от прозрачности */
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 10px !important;
+    right: 10px !important;
+    background: var(--item-bg-color, #ffffff) !important; /* Запасной белый цвет */
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    padding: 10px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    z-index: 1000 !important;
+    border: 1px solid var(--border-color) !important;
+    transition: background 0.3s ease !important;
 }
 
        .mini-bar button {
@@ -741,27 +740,27 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             height: 100%;
             object-fit: cover;
         }
-
 .modal {
     position: fixed;
     bottom: -100%;
     left: 0;
     right: 0;
-    background-color: var(--item-bg-color); /* Оставляем переменную */
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    height: 80vh;
-    overflow-y: auto;
-    transition: bottom 0.3s ease;
-    z-index: 2000;
-    padding: 20px;
-    opacity: 1 !important; /* Защита от прозрачности */
+    background: var(--item-bg-color, #ffffff) !important; /* Запасной белый цвет */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1) !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    height: 80vh !important;
+    overflow-y: auto !important;
+    transition: bottom 0.3s ease !important;
+    z-index: 2000 !important;
+    padding: 20px !important;
 }
 
 .modal.active {
-    bottom: 0;
+    bottom: 0 !important;
 }
+
+
 
 
 
@@ -2524,16 +2523,24 @@ body.dark-theme .modal-info .price {
         tg.disableVerticalSwipes();
         tg.expand();
 
-        function applyTheme() {
-            const body = document.body;
-            if (tg.colorScheme === 'dark') {
-                body.classList.add('dark-theme');
-            } else {
-                body.classList.remove('dark-theme');
-            }
-            updateArrowIcons();
-            updateAboutUsArrow();
-        }
+     function applyTheme() {
+    const body = document.body;
+    if (tg.colorScheme === 'dark') {
+        body.classList.add('dark-theme');
+        console.log('Темная тема применена, --item-bg-color должен быть #213040');
+    } else {
+        body.classList.remove('dark-theme');
+        console.log('Светлая тема применена, --item-bg-color должен быть #ffffff');
+    }
+    updateArrowIcons();
+    updateAboutUsArrow();
+
+    // Отладка: проверяем текущий фон .modal и .mini-bar
+    const modal = document.getElementById('modal');
+    const miniBar = document.querySelector('.mini-bar');
+    console.log('Modal background:', window.getComputedStyle(modal).background);
+    console.log('Mini-bar background:', window.getComputedStyle(miniBar).background);
+}
 
         function updateArrowIcons() {
             const arrows = document.querySelectorAll('.arrow-icon');
