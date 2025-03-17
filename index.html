@@ -522,16 +522,17 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     bottom: 20px;
     left: 10px;
     right: 10px;
-    background-color: var(--item-bg-color);
+    background-color: var(--item-bg-color); /* Явный фон из переменной */
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 2000;
+    z-index: 4000;
     border: 1px solid var(--border-color);
     transition: background-color 0.3s ease;
+    opacity: 1; /* Убираем возможную прозрачность */
 }
 
        .mini-bar button {
@@ -741,20 +742,21 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             object-fit: cover;
         }
 
-        .modal {
+.modal {
     position: fixed;
     bottom: -100%;
     left: 0;
     right: 0;
-    background-color: var(--item-bg-color);
+    background-color: var(--item-bg-color); /* Явный фон из переменной */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     height: 80vh;
     overflow-y: auto;
     transition: bottom 0.3s ease;
-    z-index: 2500;
+    z-index: 2000;
     padding: 20px;
+    opacity: 1; /* Убираем возможную прозрачность */
 }
 
    .modal.active {
