@@ -2971,18 +2971,12 @@ function addToCartFromModal(type) {
         }
     });
 
-
 function showScreen(screenId) {
-    console.log('showScreen: Переключение на экран', screenId);
     const targetScreen = document.getElementById(screenId);
-    if (!targetScreen) {
-        console.error('showScreen: Экран с ID', screenId, 'не найден');
-        return;
-    }
+    if (!targetScreen) return;
 
     document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
     targetScreen.classList.add('active');
-    console.log('showScreen: Активирован экран', screenId);
 
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
@@ -2993,9 +2987,8 @@ function showScreen(screenId) {
     cartButton.classList.remove('active');
 
     if (screenId === 'menu-screen') {
-        console.log('showScreen: Прокрутка к началу для #menu-screen');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        homeButton.classList.add('active'); // Оставляем только для прямого вызова showScreen
+        homeButton.classList.add('active');
+        // Прокрутка к началу только если не вызвано из scrollToCategories
     } else if (screenId === 'cart-screen') {
         cartButton.classList.add('active');
         updateCart();
@@ -3004,45 +2997,34 @@ function showScreen(screenId) {
     }
 }
 
-
-
-
-
-
-
-
-
 function scrollToCategories() {
-    console.log('scrollToCategories: Начало');
     const menuScreen = document.getElementById('menu-screen');
-    if (menuScreen) {
-        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-        menuScreen.classList.add('active');
-        console.log('scrollToCategories: Экран переключён');
-    }
-
     const categoryGrid = document.getElementById('category-grid');
-    if (categoryGrid) {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.enableVerticalSwipes();
-        }
-        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        console.log('scrollToCategories: Прокручено к категориям');
-        setTimeout(() => {
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.disableVerticalSwipes();
-            }
-        }, 1000);
-    }
-
     const homeButton = document.getElementById('home-button');
     const menuButton = document.getElementById('menu-button');
     const cartButton = document.getElementById('cart-button');
+
+    // Переключаем на экран меню, если он не активен
+    if (!menuScreen.classList.contains('active')) {
+        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+        menuScreen.classList.add('active');
+    }
+
+    // Прокручиваем к категориям
+    if (categoryGrid) {
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Обновляем состояние кнопок
     homeButton.classList.remove('active');
     menuButton.classList.add('active');
     cartButton.classList.remove('active');
-    console.log('scrollToCategories: Кнопки обновлены');
 }
+
+
+
+
+
 
   function toggleRoomNumber() {
     const deliveryMethod = document.getElementById('delivery-method');
