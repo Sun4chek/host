@@ -517,38 +517,38 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
     transform: scale(0.95); /* Лёгкое уменьшение при нажатии */
 }
 
-        .mini-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            right: 10px;
-            background-color: var(--item-bg-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease;
-        }
+.mini-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+    background-color: var(--item-bg-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
 
-        .mini-bar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: color 0.2s ease, background-color 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 10px;
-            flex: 1;
-        }
+       .mini-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;
+}
 
         .mini-bar button:hover {
             color: #2ea6ff;
@@ -2514,10 +2514,10 @@ body.dark-theme .modal-info .price {
         <span class="material-symbols-outlined icon">home</span>
         <span>Главная</span>
     </button>
-    <button onclick="scrollToCategories()" id="menu-button">
-        <span class="material-symbols-outlined icon">menu_book</span>
-        <span>Меню</span>
-    </button>
+   <button onclick="scrollToCategories()" id="menu-button">
+    <span class="material-symbols-outlined icon">menu_book</span>
+    <span>Меню</span>
+</button>
     <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
         <div class="cart-icon-wrapper">
             <span class="material-symbols-outlined icon">shopping_cart</span>
@@ -2956,26 +2956,26 @@ body.dark-theme .modal-info .price {
             }
         }
 
-        function scrollToCategories() {
-            const menuScreen = document.getElementById('menu-screen');
-            const categoryGrid = document.getElementById('category-grid');
-            const homeButton = document.getElementById('home-button');
-            const menuButton = document.getElementById('menu-button');
-            const cartButton = document.getElementById('cart-button');
+function scrollToCategories() {
+    const menuScreen = document.getElementById('menu-screen');
+    const categoryGrid = document.getElementById('category-grid');
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
 
-            if (!menuScreen.classList.contains('active')) {
-                document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-                menuScreen.classList.add('active');
-            }
+    if (!menuScreen.classList.contains('active')) {
+        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+        menuScreen.classList.add('active');
+    }
 
-            if (categoryGrid) {
-                categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+    if (categoryGrid) {
+        categoryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-            homeButton.classList.remove('active');
-            menuButton.classList.add('active');
-            cartButton.classList.remove('active');
-        }
+    homeButton.classList.remove('active');
+    menuButton.classList.add('active');
+    cartButton.classList.remove('active');
+}
 
         function toggleRoomNumber() {
             const deliveryMethod = document.getElementById('delivery-method');
