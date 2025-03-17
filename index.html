@@ -2968,40 +2968,49 @@ function updateCart() {
             updateCartCounter();
         }
 
-        function submitOrder(event) {
-            event.preventDefault();
+function submitOrder(event) {
+    event.preventDefault();
 
-            const lastName = document.getElementById('last-name').value;
-            const firstName = document.getElementById('first-name').value;
-            const phone = document.getElementById('phone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const deliveryMethod = document.getElementById('delivery-method').value;
-            const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
+    const lastName = document.getElementById('last-name').value;
+    const firstName = document.getElementById('first-name').value;
+    const phone = document.getElementById('phone').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+    const deliveryMethod = document.getElementById('delivery-method').value;
+    const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
 
-            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
-                alert('Пожалуйста, заполните все обязательные поля.');
-                return;
-            }
+    if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
+        alert('Пожалуйста, заполните все обязательные поля.');
+        return;
+    }
 
-            const orderData = {
-                lastName,
-                firstName,
-                phone,
-                paymentMethod,
-                deliveryMethod,
-                roomNumber,
-                cart: cart.map(item => ({ name: item.name, price: item.price })),
-                total: document.getElementById('total-price').textContent
-            };
+    const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
 
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(orderData));
-            }
+    const orderData = {
+        lastName,
+        firstName,
+        phone,
+        paymentMethod,
+        deliveryMethod,
+        roomNumber,
+        cart: cart.map(item => ({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            isAlcohol: item.name.includes('(бутылка)') ||
+                      alcoholScreens.some(screen => item.name.toLowerCase().includes(screen.replace('-screen', '')))
+        })),
+        total: document.getElementById('total-price').textContent,
+        note: "Алкоголь оплачивается отдельно при получении или доставке"
+    };
 
-           alert('Заказ успешно оформлен! Алкоголь оплачивается отдельно.');
-            clearCart();
-            showScreen('menu-screen');
-        }
+    if (tg && tg.sendData) {
+        tg.sendData(JSON.stringify(orderData));
+    }
+
+    alert('Заказ успешно оформлен! Алкоголь оплачивается отдельно.');
+    clearCart();
+    showScreen('menu-screen');
+}
 
         document.getElementById('checkout-form').addEventListener('submit', submitOrder);
 
