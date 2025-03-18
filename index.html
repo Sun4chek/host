@@ -374,24 +374,29 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
             gap: 10px;
             margin-bottom: 20px;
         }
-
-        .category-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 120px;
-            background-size: cover;
-            background-position: center;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 10px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+.category-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center; /* Центрирование текста */
+    padding: 10px; /* Отступы для текста */
+    box-sizing: border-box;
+    white-space: normal; /* Разрешаем перенос строк */
+    word-wrap: break-word; /* Переносим слова */
+    line-height: 1.2; /* Высота строки для читаемости */
+}
 
         .category-item:hover {
             transform: scale(1.05);
@@ -410,18 +415,7 @@ body.dark-theme .mini-bar button.cart-button.animate .material-symbols-outlined.
 
 
 
-        #strong-alcohol-screen h2 {
-    text-align: center;
-    margin: 10px 0;
-}
 
-@media (max-width: 480px) {
-    #strong-alcohol-screen h2 {
-        text-align: center;
-        font-size: 14px;
-        margin: 8px 0;
-    }
-}
 
         .container.active {
             display: block;
