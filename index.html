@@ -3038,13 +3038,13 @@ function updateCart() {
         emptyCart.classList.remove('active');
         cartItems.style.display = 'block';
         cart.forEach((item, index) => {
-            const isAlcohol = item.isAlcohol || false; // Проверяем, алкоголь ли
-            const displayPrice = isAlcohol ? 0 : item.price; // Цена 0 для алкоголя
+            const isAlcohol = item.isAlcohol || false;
+            const displayPrice = isAlcohol ? 0 : item.price;
 
             const cartItem = document.createElement('div');
             cartItem.className = 'menu-item';
             cartItem.innerHTML = `
-                <img src="https://i.obozrevatel.com/food/recipemain/2018/11/23/7762801.jpg?size=1944x924" alt="${item.name}">
+                <img src="${item.image}" alt="${item.name}"> <!-- Добавляем изображение -->
                 <div class="info">
                     <h3>${item.name}</h3>
                     <p>${isAlcohol ? `${item.price}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
@@ -3058,7 +3058,7 @@ function updateCart() {
             cartItems.appendChild(cartItem);
 
             if (!isAlcohol) {
-                total += item.price * item.quantity; // Сумма только для неалкоголя
+                total += item.price * item.quantity;
             }
         });
     }
