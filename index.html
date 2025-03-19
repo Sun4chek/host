@@ -2955,6 +2955,7 @@ function addToCartFromModal(type) {
     let itemName = currentItem.name;
     let itemPrice = currentItem.price;
     let quantity = portionQuantity;
+    let imageUrl = currentItem.image; // Добавляем URL изображения
 
     // Проверяем, является ли товар алкогольным по активному экрану
     const alcoholScreens = ['alcohol-screen', 'strong-alcohol-screen', 'wine-screen', 'beer-screen'];
@@ -2980,7 +2981,8 @@ function addToCartFromModal(type) {
             name: itemName,
             price: itemPrice,
             quantity: quantity,
-            isAlcohol: isAlcohol // Добавляем флаг алкогольного товара
+            image: imageUrl, // Добавляем URL изображения
+            isAlcohol: isAlcohol
         });
     }
 
