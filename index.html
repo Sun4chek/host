@@ -1830,6 +1830,11 @@ body.dark-theme .modal-info .price {
         </form>
     </div>
 </div>
+
+
+
+
+
     <div id="alcohol-screen" class="container">
         <span class="back-button" onclick="showScreen('bar-screen')">
             <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
@@ -1843,7 +1848,8 @@ body.dark-theme .modal-info .price {
     </div>
 
     <!-- Экран для крепкого алкоголя -->
-    <div id="strong-alcohol-screen" class="container">
+
+<div id="strong-alcohol-screen" class="container">
     <span class="back-button" onclick="showScreen('alcohol-screen')">
         <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
     </span>
@@ -1851,7 +1857,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Виски -->
     <h3>Виски</h3>
-    <div class="menu-item" onclick="openModal('Виски Jameson', 350, '50 г', 'https://example.com/jameson.jpg', 7000)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Виски Jameson"
+         data-price="350"
+         data-weight="50 г"
+         data-image="https://champagne.kz/image/product/0-1380.jpg"
+         data-bottle-price="7000"
+         data-description="Классический ирландский виски с мягким вкусом и ароматом ванили и специй.">
         <img src="https://champagne.kz/image/product/0-1380.jpg" alt="Виски Jameson">
         <div class="info">
             <h3>Виски Jameson</h3>
@@ -1861,7 +1874,14 @@ body.dark-theme .modal-info .price {
             <div class="price">350₽ / 7000₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Виски Ballantines', 300, '50 г', 'https://example.com/ballantines.jpg', 6000)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Виски Ballantines"
+         data-price="300"
+         data-weight="50 г"
+         data-image="https://wiski.ru/images/com_dc/medium/ballantines_6262.jpg?8"
+         data-bottle-price="6000"
+         data-description="Шотландский виски с насыщенным вкусом и ароматом дуба и специй.">
         <img src="https://wiski.ru/images/com_dc/medium/ballantines_6262.jpg?8" alt="Виски Ballantines">
         <div class="info">
             <h3>Виски Ballantines</h3>
@@ -1871,7 +1891,14 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 6000₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Виски Chivas Regal', 630, '50 г', 'https://example.com/chivas-regal.jpg', 12500)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Виски Chivas Regal"
+         data-price="630"
+         data-weight="50 г"
+         data-image="https://m.media-amazon.com/images/I/71qr11EbuWL.jpg"
+         data-bottle-price="12500"
+         data-description="Элитный шотландский виски с богатым вкусом и ароматом.">
         <img src="https://m.media-amazon.com/images/I/71qr11EbuWL.jpg" alt="Виски Chivas Regal">
         <div class="info">
             <h3>Виски Chivas Regal</h3>
@@ -1884,7 +1911,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Бренди -->
     <h3>Бренди</h3>
-    <div class="menu-item" onclick="openModal('Коктель резерв 5 лет', 220, '50 г', 'https://example.com/coctel-reserve-5.jpg', 2200)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Коктель резерв 5 лет"
+         data-price="220"
+         data-weight="50 г"
+         data-image="https://example.com/coctel-reserve-5.jpg"
+         data-bottle-price="2200"
+         data-description="Бренди с выдержкой 5 лет, с насыщенным вкусом и ароматом дуба.">
         <img src="https://example.com/coctel-reserve-5.jpg" alt="Коктель резерв 5 лет">
         <div class="info">
             <h3>Коктель резерв 5 лет</h3>
@@ -1894,7 +1928,14 @@ body.dark-theme .modal-info .price {
             <div class="price">220₽ / 2200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Коктель резерв 7 лет', 200, '50 г', 'https://example.com/coctel-reserve-7.jpg', 3200)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Коктель резерв 7 лет"
+         data-price="200"
+         data-weight="50 г"
+         data-image="https://example.com/coctel-reserve-7.jpg"
+         data-bottle-price="3200"
+         data-description="Бренди с выдержкой 7 лет, с мягким вкусом и ароматом специй.">
         <img src="https://example.com/coctel-reserve-7.jpg" alt="Коктель резерв 7 лет">
         <div class="info">
             <h3>Коктель резерв 7 лет</h3>
@@ -1904,7 +1945,14 @@ body.dark-theme .modal-info .price {
             <div class="price">200₽ / 3200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Македонский 3 года', 200, '50 г', 'https://example.com/makedonsky-3.jpg', 2000)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Македонский 3 года"
+         data-price="200"
+         data-weight="50 г"
+         data-image="https://example.com/makedonsky-3.jpg"
+         data-bottle-price="2000"
+         data-description="Бренди с выдержкой 3 года, с легким вкусом и ароматом.">
         <img src="https://example.com/makedonsky-3.jpg" alt="Македонский 3 года">
         <div class="info">
             <h3>Македонский 3 года</h3>
@@ -1914,7 +1962,14 @@ body.dark-theme .modal-info .price {
             <div class="price">200₽ / 2000₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Лезгинка 6 лет', 220, '50 г', 'https://example.com/lezginka-6.jpg', 2200)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Лезгинка 6 лет"
+         data-price="220"
+         data-weight="50 г"
+         data-image="https://example.com/lezginka-6.jpg"
+         data-bottle-price="2200"
+         data-description="Бренди с выдержкой 6 лет, с насыщенным вкусом и ароматом.">
         <img src="https://example.com/lezginka-6.jpg" alt="Лезгинка 6 лет">
         <div class="info">
             <h3>Лезгинка 6 лет</h3>
@@ -1924,7 +1979,14 @@ body.dark-theme .modal-info .price {
             <div class="price">220₽ / 2200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Старейшина Ecological', 220, '50 г', 'https://example.com/stareyshina-ecological.jpg', 2200)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Старейшина Ecological"
+         data-price="220"
+         data-weight="50 г"
+         data-image="https://example.com/stareyshina-ecological.jpg"
+         data-bottle-price="2200"
+         data-description="Экологически чистый бренди с выдержкой 7 лет.">
         <img src="https://example.com/stareyshina-ecological.jpg" alt="Старейшина Ecological">
         <div class="info">
             <h3>Старейшина Ecological</h3>
@@ -1937,7 +1999,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Коньяк -->
     <h3>Коньяк</h3>
-    <div class="menu-item" onclick="openModal('Арарат 3 года', 290, '50 г', 'https://example.com/ararat-3.jpg', 4060)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Арарат 3 года"
+         data-price="290"
+         data-weight="50 г"
+         data-image="https://example.com/ararat-3.jpg"
+         data-bottle-price="4060"
+         data-description="Армянский коньяк с выдержкой 3 года, с мягким вкусом и ароматом.">
         <img src="https://example.com/ararat-3.jpg" alt="Арарат 3 года">
         <div class="info">
             <h3>Арарат 3 года</h3>
@@ -1947,7 +2016,14 @@ body.dark-theme .modal-info .price {
             <div class="price">290₽ / 4060₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Арарат 5 лет', 345, '50 г', 'https://example.com/ararat-5.jpg', 4830)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Арарат 5 лет"
+         data-price="345"
+         data-weight="50 г"
+         data-image="https://example.com/ararat-5.jpg"
+         data-bottle-price="4830"
+         data-description="Армянский коньяк с выдержкой 5 лет, с насыщенным вкусом и ароматом.">
         <img src="https://example.com/ararat-5.jpg" alt="Арарат 5 лет">
         <div class="info">
             <h3>Арарат 5 лет</h3>
@@ -1960,7 +2036,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Ром -->
     <h3>Ром</h3>
-    <div class="menu-item" onclick="openModal('Havana Club', 290, '50 г', 'https://example.com/havana-club.jpg', 5800)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Havana Club"
+         data-price="290"
+         data-weight="50 г"
+         data-image="https://example.com/havana-club.jpg"
+         data-bottle-price="5800"
+         data-description="Кубинский ром с насыщенным вкусом и ароматом тростникового сахара.">
         <img src="https://example.com/havana-club.jpg" alt="Havana Club">
         <div class="info">
             <h3>Havana Club</h3>
@@ -1970,7 +2053,14 @@ body.dark-theme .modal-info .price {
             <div class="price">290₽ / 5800₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Captain Morgan', 250, '50 г', 'https://example.com/captain-morgan.jpg', 3500)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Captain Morgan"
+         data-price="250"
+         data-weight="50 г"
+         data-image="https://example.com/captain-morgan.jpg"
+         data-bottle-price="3500"
+         data-description="Карибский ром с пряным вкусом и ароматом специй.">
         <img src="https://example.com/captain-morgan.jpg" alt="Captain Morgan">
         <div class="info">
             <h3>Captain Morgan</h3>
@@ -1983,7 +2073,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Джин -->
     <h3>Джин</h3>
-    <div class="menu-item" onclick="openModal('Beefeater', 320, '50 г', 'https://example.com/beefeater.jpg', 6400)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Beefeater"
+         data-price="320"
+         data-weight="50 г"
+         data-image="https://example.com/beefeater.jpg"
+         data-bottle-price="6400"
+         data-description="Классический лондонский джин с ярким вкусом и ароматом можжевельника.">
         <img src="https://example.com/beefeater.jpg" alt="Beefeater">
         <div class="info">
             <h3>Beefeater</h3>
@@ -1996,7 +2093,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Текила -->
     <h3>Текила</h3>
-    <div class="menu-item" onclick="openModal('Olmeca Blanco', 500, '50 г', 'https://example.com/olmeca-blanco.jpg', 7000)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Olmeca Blanco"
+         data-price="500"
+         data-weight="50 г"
+         data-image="https://example.com/olmeca-blanco.jpg"
+         data-bottle-price="7000"
+         data-description="Мексиканская текила с чистым вкусом и ароматом агавы.">
         <img src="https://example.com/olmeca-blanco.jpg" alt="Olmeca Blanco">
         <div class="info">
             <h3>Olmeca Blanco</h3>
@@ -2009,7 +2113,14 @@ body.dark-theme .modal-info .price {
 
     <!-- Водка -->
     <h3>Водка</h3>
-    <div class="menu-item" onclick="openModal('Organic vodka Чистые Росы пшеничная', 400, '100 г', 'https://example.com/chistye-rosy.jpg', 5600)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Organic vodka Чистые Росы пшеничная"
+         data-price="400"
+         data-weight="100 г"
+         data-image="https://example.com/chistye-rosy.jpg"
+         data-bottle-price="5600"
+         data-description="Органическая водка из пшеницы с мягким вкусом и ароматом.">
         <img src="https://example.com/chistye-rosy.jpg" alt="Organic vodka Чистые Росы пшеничная">
         <div class="info">
             <h3>Organic vodka Чистые Росы пшеничная</h3>
@@ -2019,7 +2130,14 @@ body.dark-theme .modal-info .price {
             <div class="price">400₽ / 5600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Царская золотая', 150, '50 г', 'https://example.com/tsarskaya-zolotaya.jpg',2100)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Царская золотая"
+         data-price="150"
+         data-weight="50 г"
+         data-image="https://example.com/tsarskaya-zolotaya.jpg"
+         data-bottle-price="2100"
+         data-description="Водка премиум-класса с мягким вкусом и ароматом.">
         <img src="https://example.com/tsarskaya-zolotaya.jpg" alt="Царская золотая">
         <div class="info">
             <h3>Царская золотая</h3>
@@ -2029,7 +2147,14 @@ body.dark-theme .modal-info .price {
             <div class="price">150₽ / 2100₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Ханская', 120, '50 г', 'https://example.com/khanskaya.jpg',1200)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Ханская"
+         data-price="120"
+         data-weight="50 г"
+         data-image="https://example.com/khanskaya.jpg"
+         data-bottle-price="1200"
+         data-description="Традиционная водка с мягким вкусом и ароматом.">
         <img src="https://example.com/khanskaya.jpg" alt="Ханская">
         <div class="info">
             <h3>Ханская</h3>
@@ -2039,7 +2164,14 @@ body.dark-theme .modal-info .price {
             <div class="price">120₽ / 1200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Medoff', 100, '50 г', 'https://example.com/medoff.jpg',1000)">
+    <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name="Medoff"
+         data-price="100"
+         data-weight="50 г"
+         data-image="https://example.com/medoff.jpg"
+         data-bottle-price="1000"
+         data-description="Классическая водка с чистым вкусом и ароматом.">
         <img src="https://example.com/medoff.jpg" alt="Medoff">
         <div class="info">
             <h3>Medoff</h3>
@@ -2053,14 +2185,14 @@ body.dark-theme .modal-info .price {
     <!-- Экран для вина -->
 <!-- Экран для вина -->
 <div id="wine-screen" class="container">
-    <span class="back-button" onclick="showScreen('alcohol-screen')">
+    <span class="back-button" onclick="showScreen('bar-screen')">
         <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
     </span>
     <h2>Вино</h2>
 
     <!-- Игристые вина и шампанское -->
     <h3>Игристые вина и шампанское</h3>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='Просекко "Чинзано"' data-price="null" data-weight="0,75 л" data-image="https://example.com/prosecco-cinzano.jpg" data-bottle-price="4200">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Просекко "Чинзано"' data-price="null" data-weight="0,75 л" data-image="https://example.com/prosecco-cinzano.jpg" data-bottle-price="4200" data-description="Итальянское игристое вино с лёгкими фруктовыми нотами и свежим вкусом">
         <img src="https://example.com/prosecco-cinzano.jpg" alt="Просекко Чинзано">
         <div class="info">
             <h3>Просекко "Чинзано"</h3>
@@ -2070,7 +2202,7 @@ body.dark-theme .modal-info .price {
             <div class="price">4200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name="PROSECCO Don Treviso" data-price="null" data-weight="0,75 л" data-image="https://example.com/prosecco-don-treviso.jpg" data-bottle-price="2600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="PROSECCO Don Treviso" data-price="null" data-weight="0,75 л" data-image="https://example.com/prosecco-don-treviso.jpg" data-bottle-price="2600" data-description="Лёгкое игристое вино с тонким ароматом яблок и цитрусов">
         <img src="https://example.com/prosecco-don-treviso.jpg" alt="PROSECCO Don Treviso">
         <div class="info">
             <h3>PROSECCO Don Treviso</h3>
@@ -2080,7 +2212,7 @@ body.dark-theme .modal-info .price {
             <div class="price">2600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Новый свет" коллекционное брют белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/novy-svet-brut.jpg" data-bottle-price="2200">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Новый свет" коллекционное брют белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/novy-svet-brut.jpg" data-bottle-price="2200" data-description="Крымское игристое вино с сухим и насыщенным вкусом">
         <img src="https://example.com/novy-svet-brut.jpg" alt="Новый свет брют">
         <div class="info">
             <h3>"Новый свет" коллекционное брют белое</h3>
@@ -2090,7 +2222,7 @@ body.dark-theme .modal-info .price {
             <div class="price">2200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Новый свет" белое полусладкое' data-price="null" data-weight="0,75 л" data-image="https://example.com/novy-svet-semi-sweet.jpg" data-bottle-price="2000">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Новый свет" белое полусладкое' data-price="null" data-weight="0,75 л" data-image="https://example.com/novy-svet-semi-sweet.jpg" data-bottle-price="2000" data-description="Полусладкое игристое вино с мягкими фруктовыми оттенками">
         <img src="https://example.com/novy-svet-semi-sweet.jpg" alt="Новый свет полусладкое">
         <div class="info">
             <h3>"Новый свет" белое полусладкое</h3>
@@ -2100,7 +2232,7 @@ body.dark-theme .modal-info .price {
             <div class="price">2000₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" брют белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-brut.jpg" data-bottle-price="1450">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" брют белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-brut.jpg" data-bottle-price="1450" data-description="Сухое игристое вино с освежающим вкусом и тонким ароматом">
         <img src="https://example.com/zolotaya-balka-brut.jpg" alt="Золотая балка брют">
         <div class="info">
             <h3>"Золотая балка" брют белое</h3>
@@ -2110,7 +2242,7 @@ body.dark-theme .modal-info .price {
             <div class="price">1450₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" Frizzante розовое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-frizzante.jpg" data-bottle-price="1450">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" Frizzante розовое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-frizzante.jpg" data-bottle-price="1450" data-description="Розовое игристое вино с ягодными нотами и лёгкой сладостью">
         <img src="https://example.com/zolotaya-balka-frizzante.jpg" alt="Золотая балка Frizzante">
         <div class="info">
             <h3>"Золотая балка" Frizzante розовое</h3>
@@ -2120,7 +2252,7 @@ body.dark-theme .modal-info .price {
             <div class="price">1450₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" Moscato белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-moscato.jpg" data-bottle-price="1450">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Золотая балка" Moscato белое' data-price="null" data-weight="0,75 л" data-image="https://example.com/zolotaya-balka-moscato.jpg" data-bottle-price="1450" data-description="Белое игристое вино с мускатным ароматом и сладковатым вкусом">
         <img src="https://example.com/zolotaya-balka-moscato.jpg" alt="Золотая балка Moscato">
         <div class="info">
             <h3>"Золотая балка" Moscato белое</h3>
@@ -2133,7 +2265,7 @@ body.dark-theme .modal-info .price {
 
     <!-- Вина ESSE -->
     <h3>Вина ESSE</h3>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name="Совиньон Блан ESSE" data-price="320" data-weight="150 мл" data-image="https://example.com/esse-sauvignon-blanc.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Совиньон Блан ESSE" data-price="320" data-weight="150 мл" data-image="https://example.com/esse-sauvignon-blanc.jpg" data-bottle-price="1600" data-description="Белое сухое вино с яркими нотами зелёного яблока и цитруса">
         <img src="https://example.com/esse-sauvignon-blanc.jpg" alt="Совиньон Блан ESSE">
         <div class="info">
             <h3>Совиньон Блан ESSE</h3>
@@ -2143,7 +2275,7 @@ body.dark-theme .modal-info .price {
             <div class="price">320₽ / 1600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name="Каберне отборное ESSE" data-price="320" data-weight="150 мл" data-image="https://example.com/esse-cabernet.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Каберне отборное ESSE" data-price="320" data-weight="150 мл" data-image="https://example.com/esse-cabernet.jpg" data-bottle-price="1600" data-description="Красное сухое вино с насыщенным вкусом чёрной смородины и специй">
         <img src="https://example.com/esse-cabernet.jpg" alt="Каберне отборное ESSE">
         <div class="info">
             <h3>Каберне отборное ESSE</h3>
@@ -2153,7 +2285,7 @@ body.dark-theme .modal-info .price {
             <div class="price">320₽ / 1600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name="Гевиюрцтраминер ESSE" data-price="null" data-weight="0,75 л" data-image="https://example.com/esse-gewurztraminer.jpg" data-bottle-price="2600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Гевиюрцтраминер ESSE" data-price="null" data-weight="0,75 л" data-image="https://example.com/esse-gewurztraminer.jpg" data-bottle-price="2600" data-description="Белое ароматное вино с нотами личи, розы и пряностей">
         <img src="https://example.com/esse-gewurztraminer.jpg" alt="Гевиюрцтраминер ESSE">
         <div class="info">
             <h3>Гевиюрцтраминер ESSE</h3>
@@ -2163,7 +2295,7 @@ body.dark-theme .modal-info .price {
             <div class="price">2600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name="Каберне Фран ESSE" data-price="null" data-weight="0,75 л" data-image="https://example.com/esse-cabernet-franc.jpg" data-bottle-price="2300">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Каберне Фран ESSE" data-price="null" data-weight="0,75 л" data-image="https://example.com/esse-cabernet-franc.jpg" data-bottle-price="2300" data-description="Красное сухое вино с мягкими танинами и ягодным ароматом">
         <img src="https://example.com/esse-cabernet-franc.jpg" alt="Каберне Фран ESSE">
         <div class="info">
             <h3>Каберне Фран ESSE</h3>
@@ -2176,7 +2308,7 @@ body.dark-theme .modal-info .price {
 
     <!-- Вина ALMA VALLEY -->
     <h3>Вина ALMA VALLEY</h3>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Совиньон" белое сухое ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-sauvignon.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Совиньон" белое сухое ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-sauvignon.jpg" data-bottle-price="1600" data-description="Белое сухое вино с травяными и цитрусовыми нотами">
         <img src="https://example.com/alma-sauvignon.jpg" alt="Совиньон ALMA VALLEY">
         <div class="info">
             <h3>"Совиньон" белое сухое ALMA VALLEY</h3>
@@ -2186,7 +2318,7 @@ body.dark-theme .modal-info .price {
             <div class="price">320₽ / 1600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Пикник" белое полусухое ALMA VALLEY' data-price="300" data-weight="150 мл" data-image="https://example.com/alma-picnic.jpg" data-bottle-price="1500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Пикник" белое полусухое ALMA VALLEY' data-price="300" data-weight="150 мл" data-image="https://example.com/alma-picnic.jpg" data-bottle-price="1500" data-description="Лёгкое полусухое вино с фруктовым ароматом и свежим вкусом">
         <img src="https://example.com/alma-picnic.jpg" alt="Пикник ALMA VALLEY">
         <div class="info">
             <h3>"Пикник" белое полусухое ALMA VALLEY</h3>
@@ -2196,8 +2328,7 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 1500₽</div>
         </div>
     </div>
-        <!-- Вина ALMA VALLEY (продолжение) -->
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Весеннее" белое полусладкое ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-spring.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Весеннее" белое полусладкое ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-spring.jpg" data-bottle-price="1600" data-description="Полусладкое вино с цветочными и медовыми оттенками">
         <img src="https://example.com/alma-spring.jpg" alt="Весеннее ALMA VALLEY">
         <div class="info">
             <h3>"Весеннее" белое полусладкое ALMA VALLEY</h3>
@@ -2207,7 +2338,7 @@ body.dark-theme .modal-info .price {
             <div class="price">320₽ / 1600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='Каберне "Совиньон" красное сухое ALMA VALLEY' data-price="360" data-weight="150 мл" data-image="https://example.com/alma-cabernet-sauvignon.jpg" data-bottle-price="1800">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Каберне "Совиньон" красное сухое ALMA VALLEY' data-price="360" data-weight="150 мл" data-image="https://example.com/alma-cabernet-sauvignon.jpg" data-bottle-price="1800" data-description="Красное сухое вино с насыщенным вкусом ягод и пряностей">
         <img src="https://example.com/alma-cabernet-sauvignon.jpg" alt="Каберне Совиньон ALMA VALLEY">
         <div class="info">
             <h3>Каберне "Совиньон" красное сухое ALMA VALLEY</h3>
@@ -2217,7 +2348,7 @@ body.dark-theme .modal-info .price {
             <div class="price">360₽ / 1800₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Зимнее" полусладкое красное ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-winter.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Зимнее" полусладкое красное ALMA VALLEY' data-price="320" data-weight="150 мл" data-image="https://example.com/alma-winter.jpg" data-bottle-price="1600" data-description="Красное полусладкое вино с нотами спелых ягод и мягким послевкусием">
         <img src="https://example.com/alma-winter.jpg" alt="Зимнее ALMA VALLEY">
         <div class="info">
             <h3>"Зимнее" полусладкое красное ALMA VALLEY</h3>
@@ -2230,7 +2361,7 @@ body.dark-theme .modal-info .price {
 
     <!-- Вина INKERMAN -->
     <h3>Вина INKERMAN</h3>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Траминер" Serve белое сухое INKERMAN' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-traminer.jpg" data-bottle-price="1500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Траминер" Serve белое сухое INKERMAN' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-traminer.jpg" data-bottle-price="1500" data-description="Белое сухое вино с цветочным ароматом и лёгкой кислинкой">
         <img src="https://example.com/inkerman-traminer.jpg" alt="Траминер INKERMAN">
         <div class="info">
             <h3>"Траминер" Serve белое сухое INKERMAN</h3>
@@ -2240,7 +2371,7 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 1500₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Каберне" совиньон Serve розовое сухое INKERMAN' data-price="330" data-weight="150 мл" data-image="https://example.com/inkerman-cabernet-rose.jpg" data-bottle-price="1650">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Каберне" совиньон Serve розовое сухое INKERMAN' data-price="330" data-weight="150 мл" data-image="https://example.com/inkerman-cabernet-rose.jpg" data-bottle-price="1650" data-description="Розовое сухое вино с ягодным ароматом и свежим вкусом">
         <img src="https://example.com/inkerman-cabernet-rose.jpg" alt="Каберне совиньон розовое INKERMAN">
         <div class="info">
             <h3>"Каберне" совиньон Serve розовое сухое INKERMAN</h3>
@@ -2250,7 +2381,7 @@ body.dark-theme .modal-info .price {
             <div class="price">330₽ / 1650₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Рислинг" белое полусухое INKERMAN' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-riesling.jpg" data-bottle-price="1500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Рислинг" белое полусухое INKERMAN' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-riesling.jpg" data-bottle-price="1500" data-description="Полусухое белое вино с яблочными и цитрусовыми нотами">
         <img src="https://example.com/inkerman-riesling.jpg" alt="Рислинг INKERMAN">
         <div class="info">
             <h3>"Рислинг" белое полусухое INKERMAN</h3>
@@ -2260,7 +2391,7 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 1500₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='Мускат "Инкерман" белое полусладкое' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-muscat.jpg" data-bottle-price="1500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Мускат "Инкерман" белое полусладкое' data-price="300" data-weight="150 мл" data-image="https://example.com/inkerman-muscat.jpg" data-bottle-price="1500" data-description="Полусладкое белое вино с мускатным ароматом и сладким послевкусием">
         <img src="https://example.com/inkerman-muscat.jpg" alt="Мускат INKERMAN">
         <div class="info">
             <h3>Мускат "Инкерман" белое полусладкое</h3>
@@ -2270,7 +2401,7 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 1500₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Каберне резерв" красное сухое INKERMAN' data-price="360" data-weight="150 мл" data-image="https://example.com/inkerman-cabernet-reserve.jpg" data-bottle-price="1800">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Каберне резерв" красное сухое INKERMAN' data-price="360" data-weight="150 мл" data-image="https://example.com/inkerman-cabernet-reserve.jpg" data-bottle-price="1800" data-description="Красное сухое вино с глубоким вкусом ягод и дубовыми оттенками">
         <img src="https://example.com/inkerman-cabernet-reserve.jpg" alt="Каберне резерв INKERMAN">
         <div class="info">
             <h3>"Каберне резерв" красное сухое INKERMAN</h3>
@@ -2280,7 +2411,7 @@ body.dark-theme .modal-info .price {
             <div class="price">360₽ / 1800₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Пино Нуар" красное полусладкое INKERMAN' data-price="360" data-weight="150 мл" data-image="https://example.com/inkerman-pinot-noir.jpg" data-bottle-price="1800">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Пино Нуар" красное полусладкое INKERMAN' data-price="360" data-weight="150 мл" data-image="https://example.com/inkerman-pinot-noir.jpg" data-bottle-price="1800" data-description="Красное полусладкое вино с нотами вишни и мягким вкусом">
         <img src="https://example.com/inkerman-pinot-noir.jpg" alt="Пино Нуар INKERMAN">
         <div class="info">
             <h3>"Пино Нуар" красное полусладкое INKERMAN</h3>
@@ -2293,7 +2424,7 @@ body.dark-theme .modal-info .price {
 
     <!-- Вина Массандры -->
     <h3>Вина Массандры</h3>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Херес" Массандра' data-price="360" data-weight="150 мл" data-image="https://example.com/massandra-sherry.jpg" data-bottle-price="1800">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Херес" Массандра' data-price="360" data-weight="150 мл" data-image="https://example.com/massandra-sherry.jpg" data-bottle-price="1800" data-description="Крепкое вино с ореховым ароматом и насыщенным вкусом">
         <img src="https://example.com/massandra-sherry.jpg" alt="Херес Массандра">
         <div class="info">
             <h3>"Херес" Массандра</h3>
@@ -2303,7 +2434,7 @@ body.dark-theme .modal-info .price {
             <div class="price">360₽ / 1800₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Мадера" Крымская' data-price="420" data-weight="150 мл" data-image="https://example.com/massandra-madeira.jpg" data-bottle-price="2100">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Мадера" Крымская' data-price="420" data-weight="150 мл" data-image="https://example.com/massandra-madeira.jpg" data-bottle-price="2100" data-description="Крепкое вино с карамельными и ореховыми нотами">
         <img src="https://example.com/massandra-madeira.jpg" alt="Мадера Крымская">
         <div class="info">
             <h3>"Мадера" Крымская</h3>
@@ -2313,7 +2444,7 @@ body.dark-theme .modal-info .price {
             <div class="price">420₽ / 2100₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='Портвейн красный "Ливадия"' data-price="340" data-weight="150 мл" data-image="https://example.com/massandra-port-livadia.jpg" data-bottle-price="1700">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Портвейн красный "Ливадия"' data-price="340" data-weight="150 мл" data-image="https://example.com/massandra-port-livadia.jpg" data-bottle-price="1700" data-description="Красный портвейн с насыщенным вкусом спелых ягод">
         <img src="https://example.com/massandra-port-livadia.jpg" alt="Портвейн Ливадия">
         <div class="info">
             <h3>Портвейн красный "Ливадия"</h3>
@@ -2323,7 +2454,7 @@ body.dark-theme .modal-info .price {
             <div class="price">340₽ / 1700₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='Портвейн белый "Крымский"' data-price="300" data-weight="150 мл" data-image="https://example.com/massandra-port-krymsky.jpg" data-bottle-price="1500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Портвейн белый "Крымский"' data-price="300" data-weight="150 мл" data-image="https://example.com/massandra-port-krymsky.jpg" data-bottle-price="1500" data-description="Белый портвейн с фруктовым ароматом и сладковатым вкусом">
         <img src="https://example.com/massandra-port-krymsky.jpg" alt="Портвейн Крымский">
         <div class="info">
             <h3>Портвейн белый "Крымский"</h3>
@@ -2333,7 +2464,7 @@ body.dark-theme .modal-info .price {
             <div class="price">300₽ / 1500₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Седьмое небо князя Голицына"' data-price="320" data-weight="150 мл" data-image="https://example.com/massandra-seventh-heaven.jpg" data-bottle-price="1600">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Седьмое небо князя Голицына"' data-price="320" data-weight="150 мл" data-image="https://example.com/massandra-seventh-heaven.jpg" data-bottle-price="1600" data-description="Белое вино с изысканным ароматом и мягким вкусом">
         <img src="https://example.com/massandra-seventh-heaven.jpg" alt="Седьмое небо">
         <div class="info">
             <h3>"Седьмое небо князя Голицына"</h3>
@@ -2343,7 +2474,7 @@ body.dark-theme .modal-info .price {
             <div class="price">320₽ / 1600₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Бастардо"' data-price="380" data-weight="150 мл" data-image="https://example.com/massandra-bastardo.jpg" data-bottle-price="1900">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Бастардо"' data-price="380" data-weight="150 мл" data-image="https://example.com/massandra-bastardo.jpg" data-bottle-price="1900" data-description="Красное десертное вино с насыщенным вкусом и ароматом спелых ягод">
         <img src="https://example.com/massandra-bastardo.jpg" alt="Бастардо">
         <div class="info">
             <h3>"Бастардо"</h3>
@@ -2353,7 +2484,7 @@ body.dark-theme .modal-info .price {
             <div class="price">380₽ / 1900₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Мускат белый Красного Камня"' data-price="440" data-weight="150 мл" data-image="https://example.com/massandra-muscat-red-stone.jpg" data-bottle-price="2200">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Мускат белый Красного Камня"' data-price="440" data-weight="150 мл" data-image="https://example.com/massandra-muscat-red-stone.jpg" data-bottle-price="2200" data-description="Легендарное белое десертное вино с мускатным ароматом и медовыми нотами">
         <img src="https://example.com/massandra-muscat-red-stone.jpg" alt="Мускат Красного Камня">
         <div class="info">
             <h3>"Мускат белый Красного Камня"</h3>
@@ -2363,7 +2494,7 @@ body.dark-theme .modal-info .price {
             <div class="price">440₽ / 2200₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModalFromData(this)" data-name='"CinZana Bianco" Вермут' data-price="250" data-weight="150 мл" data-image="https://example.com/cinzana-bianco.jpg" data-bottle-price="2500">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"CinZana Bianco" Вермут' data-price="250" data-weight="150 мл" data-image="https://example.com/cinzana-bianco.jpg" data-bottle-price="2500" data-description="Классический белый вермут с травяными и пряными нотами">
         <img src="https://example.com/cinzana-bianco.jpg" alt="CinZana Bianco Вермут">
         <div class="info">
             <h3>"CinZana Bianco" Вермут</h3>
@@ -2375,17 +2506,19 @@ body.dark-theme .modal-info .price {
     </div>
 </div>
 
-    <div id="beer-screen" class="container">
+
+
+
+
+
+
+<div id="beer-screen" class="container">
     <span class="back-button" onclick="showScreen('alcohol-screen')">
         <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
     </span>
     <h2>Пиво</h2>
-
-
-
-    <!-- Пиво бутылочное (новые позиции) -->
     <h3>Пиво бутылочное</h3>
-    <div class="menu-item" onclick="openModal('Крымская Ривьера светлое', null, '0,450 л', 'https://example.com/krymskaya-riviera.jpg', 180)">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Крымская Ривьера светлое" data-price="null" data-weight="0,450 л" data-image="https://example.com/krymskaya-riviera.jpg" data-bottle-price="180" data-description="Легкое светлое пиво с мягким солодовым вкусом и приятной горчинкой.">
         <img src="https://example.com/krymskaya-riviera.jpg" alt="Крымская Ривьера светлое">
         <div class="info">
             <h3>Крымская Ривьера светлое</h3>
@@ -2395,7 +2528,7 @@ body.dark-theme .modal-info .price {
             <div class="price">180₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Белая скала светлое н/ф', null, '0,450 л', 'https://example.com/belaya-skala.jpg', 180)">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Белая скала светлое н/ф" data-price="null" data-weight="0,450 л" data-image="https://example.com/belaya-skala.jpg" data-bottle-price="180" data-description="Нефильтрованное светлое пиво с насыщенным вкусом и легкой хмелевой ноткой.">
         <img src="https://example.com/belaya-skala.jpg" alt="Белая скала светлое н/ф">
         <div class="info">
             <h3>Белая скала светлое н/ф</h3>
@@ -2405,7 +2538,7 @@ body.dark-theme .modal-info .price {
             <div class="price">180₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Черное гора темное', null, '0,450 л', 'https://example.com/chernoe-gora.jpg', 180)">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Черное гора темное" data-price="null" data-weight="0,450 л" data-image="https://example.com/chernoe-gora.jpg" data-bottle-price="180" data-description="Темное пиво с карамельными и шоколадными оттенками во вкусе.">
         <img src="https://example.com/chernoe-gora.jpg" alt="Черное гора темное">
         <div class="info">
             <h3>Черное гора темное</h3>
@@ -2415,7 +2548,7 @@ body.dark-theme .modal-info .price {
             <div class="price">180₽</div>
         </div>
     </div>
-    <div class="menu-item" onclick="openModal('Крымское безалкогольное', null, '0,440 л', 'https://example.com/krymskoe-bezalkogolnoe.jpg', 200)">
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Крымское безалкогольное" data-price="null" data-weight="0,440 л" data-image="https://example.com/krymskoe-bezalkogolnoe.jpg" data-bottle-price="200" data-description="Освежающее безалкогольное пиво с легким солодовым вкусом.">
         <img src="https://example.com/krymskoe-bezalkogolnoe.jpg" alt="Крымское безалкогольное">
         <div class="info">
             <h3>Крымское безалкогольное</h3>
@@ -2767,15 +2900,54 @@ function showAlcoholNotification() {
             document.body.style.overflow = 'hidden';
         }
 
-        function openModalFromData(element) {
-            const name = element.getAttribute('data-name');
-            const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
-            const weight = element.getAttribute('data-weight');
-            const image = element.getAttribute('data-image');
-            const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
+      function openModalFromData(element) {
+    const name = element.getAttribute('data-name');
+    const price = element.getAttribute('data-price') === 'null' ? null : parseInt(element.getAttribute('data-price'));
+    const weight = element.getAttribute('data-weight');
+    const image = element.getAttribute('data-image');
+    const bottlePrice = element.getAttribute('data-bottle-price') ? parseInt(element.getAttribute('data-bottle-price')) : null;
+    const description = element.getAttribute('data-description') || 'Описание отсутствует';
 
-            openModal(name, price, weight, image, bottlePrice);
-        }
+    currentItem = { name, price, weight, image, bottlePrice };
+    portionQuantity = 1;
+    bottleQuantity = 1;
+
+    document.getElementById('modal-title').textContent = name;
+    document.getElementById('modal-weight').textContent = weight;
+    document.getElementById('modal-image').src = image;
+    document.getElementById('modal-description').textContent = description; // Добавляем описание
+    document.getElementById('modal-quantity-portion').textContent = portionQuantity;
+    document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
+
+    const bottleControls = document.getElementById('bottle-quantity-and-button');
+    const portionControls = document.querySelector('.quantity-and-button');
+    const addPortionButton = document.getElementById('modal-add-to-cart');
+    const addBottleButton = document.getElementById('modal-add-bottle');
+
+    document.getElementById('modal-price').textContent = '';
+
+    if (price && bottlePrice) {
+        document.getElementById('modal-price').textContent = `${price}₽ / ${bottlePrice}₽`;
+        portionControls.style.display = 'flex';
+        bottleControls.classList.add('visible');
+        addPortionButton.textContent = "Добавить порцию";
+        addBottleButton.textContent = "Добавить бутылку";
+    } else if (price && !bottlePrice) {
+        document.getElementById('modal-price').textContent = `${price}₽`;
+        portionControls.style.display = 'flex';
+        bottleControls.classList.remove('visible');
+        addPortionButton.textContent = "Добавить в корзину";
+    } else if (!price && bottlePrice) {
+        document.getElementById('modal-price').textContent = `${bottlePrice}₽`;
+        portionControls.style.display = 'none';
+        bottleControls.classList.add('visible');
+        addBottleButton.textContent = "Добавить в корзину";
+    }
+
+    document.getElementById('modal').classList.add('active');
+    document.getElementById('modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
 function addToCartFromModal(type) {
     if (!currentItem) return;
