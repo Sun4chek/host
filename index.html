@@ -1507,42 +1507,223 @@ body.dark-theme .modal-info .price {
     </div>
 
     <div id="drinks-screen" class="container">
-        <span class="back-button" onclick="showScreen('bar-screen')">
-            <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
-        </span>
-        <h2>Напитки</h2>
-        <h3>Безалкогольные напитки</h3>
-        <div class="menu-item" onclick="openModal('\"Borjomi\" (стекло)', 1800, '0,5 л', 'https://example.com/borjomi.jpg')">
-            <img src="https://example.com/borjomi.jpg" alt="Borjomi">
-            <div class="info">
-                <h3>"Borjomi" (стекло)</h3>
-                <p>0,5 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">1800₽</div>
-            </div>
+    <span class="back-button" onclick="scrollToCategories()">
+        <img class="arrow-icon" src="images/arrow-light.png" alt="Назад">
+    </span>
+    <h2>Напитки</h2>
+
+    <!-- Безалкогольные напитки -->
+    <h3>Безалкогольные напитки</h3>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Borjomi" (стекло)' data-price="null" data-weight="0,5 л" data-image="https://example.com/borjomi.jpg" data-bottle-price="250" data-description="Газированная минеральная вода в стеклянной бутылке">
+        <img src="https://example.com/borjomi.jpg" alt="Borjomi">
+        <div class="info">
+            <h3>"Borjomi" (стекло)</h3>
+            <p>0,5 л</p>
         </div>
-        <div class="menu-item" onclick="openModal('Вода \"Крымская\" (стекло)', 2100, '0,5 л', 'https://example.com/krymskaya-voda.jpg')">
-            <img src="https://example.com/krymskaya-voda.jpg" alt="Вода Крымская">
-            <div class="info">
-                <h3>Вода "Крымская" (стекло)</h3>
-                <p>0,5 л (газ./сл. газ)</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">2100₽</div>
-            </div>
-        </div>
-        <div class="menu-item" onclick="openModal('\"Кола\" (стекло)', 1700, '0,33 л', 'https://example.com/cola.jpg')">
-            <img src="https://example.com/cola.jpg" alt="Кола">
-            <div class="info">
-                <h3>"Кола" (стекло)</h3>
-                <p>0,33 л</p>
-            </div>
-            <div class="price-and-button">
-                <div class="price">1700₽</div>
-            </div>
+        <div class="price-and-button">
+            <div class="price">250₽</div>
         </div>
     </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Вода "Крымская" (стекло) газ./сл.газ.' data-price="null" data-weight="0,5 л" data-image="https://example.com/krymskaya-water.jpg" data-bottle-price="120" data-description="Минеральная вода в стекле, газированная или слегка газированная">
+        <img src="https://example.com/krymskaya-water.jpg" alt="Крымская вода">
+        <div class="info">
+            <h3>Вода "Крымская" (стекло) газ./сл.газ.</h3>
+            <p>0,5 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">120₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='"Кола" (стекло)' data-price="null" data-weight="0,33 л" data-image="https://example.com/cola.jpg" data-bottle-price="250" data-description="Классическая кола в стеклянной бутылке">
+        <img src="https://example.com/cola.jpg" alt="Кола">
+        <div class="info">
+            <h3>"Кола" (стекло)</h3>
+            <p>0,33 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Сок в ассортименте" data-price="80" data-weight="200 г" data-image="https://example.com/juice.jpg" data-bottle-price="400" data-description="Сок на выбор: апельсин, яблоко, вишня и др.">
+        <img src="https://example.com/juice.jpg" alt="Сок">
+        <div class="info">
+            <h3>Сок в ассортименте</h3>
+            <p>200 г / 1 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">80₽ / 400₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Морс в ассортименте" data-price="80" data-weight="200 г" data-image="https://example.com/mors.jpg" data-bottle-price="400" data-description="Домашний морс: клюква, брусника, облепиха и др.">
+        <img src="https://example.com/mors.jpg" alt="Морс">
+        <div class="info">
+            <h3>Морс в ассортименте</h3>
+            <p>200 г / 1 л</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">80₽ / 400₽</div>
+        </div>
+    </div>
+
+    <!-- Лимонад -->
+    <h3>Лимонад (350 мл)</h3>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Крымская роза" data-price="150" data-weight="350 мл" data-image="https://example.com/rose-lemonade.jpg" data-bottle-price="null" data-description="Освежающий лимонад с ароматом крымской розы">
+        <img src="https://example.com/rose-lemonade.jpg" alt="Крымская роза">
+        <div class="info">
+            <h3>Крымская роза</h3>
+            <p>350 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Имбирный" data-price="150" data-weight="350 мл" data-image="https://example.com/ginger-lemonade.jpg" data-bottle-price="null" data-description="Лимонад с пряным вкусом имбиря">
+        <img src="https://example.com/ginger-lemonade.jpg" alt="Имбирный">
+        <div class="info">
+            <h3>Имбирный</h3>
+            <p>350 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Лавандовый" data-price="150" data-weight="350 мл" data-image="https://example.com/lavender-lemonade.jpg" data-bottle-price="null" data-description="Лимонад с нежным ароматом лаванды">
+        <img src="https://example.com/lavender-lemonade.jpg" alt="Лавандовый">
+        <div class="info">
+            <h3>Лавандовый</h3>
+            <p>350 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Клубника-базилик" data-price="150" data-weight="350 мл" data-image="https://example.com/strawberry-basil-lemonade.jpg" data-bottle-price="null" data-description="Лимонад с сочетанием клубники и базилика">
+        <img src="https://example.com/strawberry-basil-lemonade.jpg" alt="Клубника-базилик">
+        <div class="info">
+            <h3>Клубника-базилик</h3>
+            <p>350 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+
+    <!-- Чай -->
+    <h3>Чай</h3>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Чай облепиховый" data-price="300" data-weight="500 мл" data-image="https://example.com/sea-buckthorn-tea.jpg" data-bottle-price="400" data-description="Чай с ярким вкусом облепихи">
+        <img src="https://example.com/sea-buckthorn-tea.jpg" alt="Чай облепиховый">
+        <div class="info">
+            <h3>Чай облепиховый</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 400₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Чай имбирный" data-price="300" data-weight="500 мл" data-image="https://example.com/ginger-tea.jpg" data-bottle-price="400" data-description="Пряный чай с имбирём">
+        <img src="https://example.com/ginger-tea.jpg" alt="Чай имбирный">
+        <div class="info">
+            <h3>Чай имбирный</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 400₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name='Чай "Крымский сбор"' data-price="300" data-weight="500 мл" data-image="https://example.com/krymsky-tea.jpg" data-bottle-price="400" data-description="Чай из крымских трав">
+        <img src="https://example.com/krymsky-tea.jpg" alt="Крымский сбор">
+        <div class="info">
+            <h3>Чай "Крымский сбор"</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">300₽ / 400₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Чай черный" data-price="250" data-weight="500 мл" data-image="https://example.com/black-tea.jpg" data-bottle-price="350" data-description="Классический черный чай">
+        <img src="https://example.com/black-tea.jpg" alt="Чай черный">
+        <div class="info">
+            <h3>Чай черный</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 350₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Чай зеленый" data-price="250" data-weight="500 мл" data-image="https://example.com/green-tea.jpg" data-bottle-price="350" data-description="Классический зеленый чай">
+        <img src="https://example.com/green-tea.jpg" alt="Чай зеленый">
+        <div class="info">
+            <h3>Чай зеленый</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 350₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Молочный улун" data-price="250" data-weight="500 мл" data-image="https://example.com/milk-oolong.jpg" data-bottle-price="350" data-description="Чай с мягким сливочным вкусом">
+        <img src="https://example.com/milk-oolong.jpg" alt="Молочный улун">
+        <div class="info">
+            <h3>Молочный улун</h3>
+            <p>500 мл / 700 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽ / 350₽</div>
+        </div>
+    </div>
+
+    <!-- Кофе -->
+    <h3>Кофе</h3>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Эспрессо" data-price="150" data-weight="30 мл" data-image="https://example.com/espresso.jpg" data-bottle-price="null" data-description="Классический эспрессо">
+        <img src="https://example.com/espresso.jpg" alt="Эспрессо">
+        <div class="info">
+            <h3>Эспрессо</h3>
+            <p>30 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Американо" data-price="150" data-weight="120 мл" data-image="https://example.com/americano.jpg" data-bottle-price="null" data-description="Эспрессо с добавлением горячей воды">
+        <img src="https://example.com/americano.jpg" alt="Американо">
+        <div class="info">
+            <h3>Американо</h3>
+            <p>120 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Американо с молоком" data-price="200" data-weight="150 мл" data-image="https://example.com/americano-milk.jpg" data-bottle-price="null" data-description="Американо с добавлением молока">
+        <img src="https://example.com/americano-milk.jpg" alt="Американо с молоком">
+        <div class="info">
+            <h3>Американо с молоком</h3>
+            <p>150 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Капучино" data-price="200" data-weight="150 мл" data-image="https://example.com/cappuccino.jpg" data-bottle-price="null" data-description="Эспрессо с молочной пеной">
+        <img src="https://example.com/cappuccino.jpg" alt="Капучино">
+        <div class="info">
+            <h3>Капучино</h3>
+            <p>150 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">200₽</div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="openModalFromData(this)" data-name="Латте" data-price="250" data-weight="200 мл" data-image="https://example.com/latte.jpg" data-bottle-price="null" data-description="Эспрессо с большим количеством молока">
+        <img src="https://example.com/latte.jpg" alt="Латте">
+        <div class="info">
+            <h3>Латте</h3>
+            <p>200 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">250₽</div>
+        </div>
+    </div>
+</div>
 
 
 <!--      <div id="alcohol-screen" class="container">-->
