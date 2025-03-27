@@ -1,0 +1,60 @@
+   <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name=""/имя
+         data-price=""/цена порции
+         data-weight="г"/вес порции
+         data-image=""/картинка
+         data-bottle-price=""/бутылка стоимость
+         data-description=""> / описание
+        <img src="" alt=""> / изображение
+        <div class="info">
+            <h3></h3>/название позиции
+            <p></p>/обьем через слеш
+        </div>
+        <div class="price-and-button">
+            <div class="price">₽ / ₽</div>прайс через слеш
+        </div>
+    </div>
+
+
+
+      <div class="menu-item"
+         onclick="openModalFromData(this)"
+         data-name=""
+         data-price="₽"
+         data-weight="г"
+         data-image=""
+         data-bottle-price=""
+         data-description="">
+        <img src="" alt="">
+        <div class="info">
+            <h3></h3>
+            <p></p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">₽ / ₽</div>
+        </div>
+    </div>
+
+
+
+
+
+    //////для одного
+
+        <div class="menu-item" onclick="openModalFromData(this)"
+        data-name="Американо"
+        data-price="150"
+        data-weight="120 мл"
+        data-image="https://example.com/americano.jpg"
+        data-bottle-price="null"
+        data-description="Эспрессо с добавлением горячей воды">
+        <img src="https://example.com/americano.jpg" alt="Американо">
+        <div class="info">
+            <h3>Американо</h3>
+            <p>120 мл</p>
+        </div>
+        <div class="price-and-button">
+            <div class="price">150₽</div>
+        </div>
+    </div>
