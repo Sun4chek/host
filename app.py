@@ -454,6 +454,9 @@ async def on_startup(app):
     logger.debug("Зарегистрированные маршруты aiohttp:")
     for route in app.router.routes():
         logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
+    # Проверка статических файлов
+    static_files = os.listdir(flask_app.static_folder)
+    logger.debug(f"Статические файлы в {flask_app.static_folder}: {static_files}")
 
 async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
@@ -487,7 +490,7 @@ async def main():
     logger.debug(f"Запуск aiohttp сервера на порту {PORT}")
     runner = web.AppRunner(aiohttp_app)
     await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.1', PORT)
+    site = web.TCPSite(runner, '0.0.0.0', PORT)
     await site.start()
     logger.debug("Сервер запущен")
     await asyncio.Future()  # Держим сервер запущенным
