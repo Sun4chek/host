@@ -229,11 +229,11 @@
     let items = [];
     let stopList = [];
     let newlyAddedItems = [];
-    let orders = []; // Массив для хранения заказов
+    let orders = [];
     let currentTab = 'add';
     const restaurantCode = 'BUHTA123';
-    let apiUrl = 'https://a1e9-77-123-251-59.ngrok-free.app/api/menu/BUHTA123';
-    let ordersApiUrl = 'https://a1e9-77-123-251-59.ngrok-free.app/api/orders/BUHTA123'; // URL для заказов
+    let apiUrl = `${window.location.origin}/api/menu/BUHTA123`;
+    let ordersApiUrl = `${window.location.origin}/api/orders/BUHTA123`;
 
     // Инициализация
     document.addEventListener('DOMContentLoaded', async () => {
@@ -242,18 +242,14 @@
             tg.enableClosingConfirmation();
         }
         await fetchMenu();
-        await fetchOrders(); // Загружаем заказы при старте
+        await fetchOrders();
     });
 
     // Загрузка меню
     async function fetchMenu() {
         try {
             console.log('Попытка загрузки меню с:', apiUrl);
-            const response = await fetch(apiUrl, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true'
-                }
-            });
+            const response = await fetch(apiUrl);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Ошибка загрузки меню: ${response.status} - ${errorText}`);
@@ -280,18 +276,14 @@
     async function fetchOrders() {
         try {
             console.log('Попытка загрузки заказов с:', ordersApiUrl);
-            const response = await fetch(ordersApiUrl, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true'
-                }
-            });
+            const response = await fetch(ordersApiUrl);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Ошибка загрузки заказов: ${response.status} - ${errorText}`);
             }
             orders = await response.json();
             console.log('Полученные заказы:', orders);
-            if (currentTab === 'history') showTab('history'); // Обновляем вкладку, если она активна
+            if (currentTab === 'history') showTab('history');
         } catch (error) {
             console.error('Ошибка загрузки заказов:', error);
             tg.showAlert(`Ошибка загрузки заказов: ${error.message}`);
@@ -356,8 +348,7 @@
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(dish)
                 });
@@ -595,7 +586,6 @@
         `;
     }
 
-    // Функция для раскрытия/скрытия деталей заказа
     function toggleOrderDetails(orderId) {
         const details = document.getElementById(`order-details-${orderId}`);
         details.style.display = details.style.display === 'none' ? 'block' : 'none';
