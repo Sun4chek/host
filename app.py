@@ -2,6 +2,7 @@ import json
 import os
 import sqlite3
 import logging
+import asyncio
 from flask import Flask, jsonify, request, send_from_directory
 from flask_socketio import SocketIO
 from aiogram import Bot, Dispatcher, types
@@ -24,6 +25,7 @@ ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:5001")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
+PORT = int(os.getenv("PORT", 5001))
 
 # Инициализация Flask и SocketIO
 flask_app = Flask(__name__, static_folder='static')
@@ -323,7 +325,7 @@ def serve_static(path):
     logger.debug(f"Запрос статического файла: {path}")
     return send_from_directory('static', path)
 
-# Aiohttp для webhook’ов
+# Aiohttp приложение
 aiohttp_app = web.Application()
 user_handler = SimpleRequestHandler(dispatcher=user_dp, bot=user_bot)
 admin_handler = SimpleRequestHandler(dispatcher=admin_dp, bot=admin_bot)
@@ -332,16 +334,49 @@ admin_handler.register(aiohttp_app, path="/webhook/admin")
 setup_application(aiohttp_app, user_dp, bot=user_bot)
 setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
+# Перенаправление Flask-запросов
+async def flask_handler(request):
+    path = request.path
+    if path.startswith('/api/') or path.startswith('/static/'):
+        # Имитация Flask-запроса
+        environ = {
+            'REQUEST_METHOD': request.method,
+            'PATH_INFO': path,
+            'QUERY_STRING': request.query_string.decode(),
+            'SERVER_PROTOCOL': 'HTTP/1.1',
+            'CONTENT_TYPE': request.headers.get('Content-Type', ''),
+            'CONTENT_LENGTH': request.headers.get('Content-Length', '0'),
+            'wsgi.input': await request.content.read(),
+            'wsgi.url_scheme': 'https' if os.getenv("RENDER") else 'http',
+            'HTTP_HOST': request.host,
+        }
+        for header, value in request.headers.items():
+            environ[f'HTTP_{header.upper().replace("-", "_")}'] = value
+
+        from werkzeug.wrappers import Request, Response
+        flask_request = Request(environ)
+        with flask_app.request_context(flask_request):
+            response = flask_app.full_dispatch_request()
+        return web.Response(
+            body=response.get_data(),
+            status=response.status_code,
+            headers=dict(response.headers)
+        )
+    return web.Response(status=404)
+
 # Webhook настройка
-async def on_startup(_):
+async def on_startup(app):
     logger.debug(f"Запуск настройки вебхуков с BASE_URL: {BASE_URL}")
     webhook_path_user = "/webhook/user"
     webhook_path_admin = "/webhook/admin"
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
     logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    logger.debug("Зарегистрированные маршруты aiohttp:")
+    for route in app.router.routes():
+        logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
 
-async def on_shutdown(_):
+async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
     await user_bot.delete_webhook()
     await admin_bot.delete_webhook()
@@ -349,6 +384,9 @@ async def on_shutdown(_):
     await admin_bot.session.close()
     logger.debug("Webhooks удалены")
 
+# Регистрация маршрутов
+aiohttp_app.router.add_route('*', '/api/{path:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/static/{path:.*}', flask_handler)
 aiohttp_app.on_startup.append(on_startup)
 aiohttp_app.on_shutdown.append(on_shutdown)
 
@@ -460,18 +498,15 @@ async def handle_webapp_data_admin(message: types.Message):
         logger.error(f"Ошибка обработки WebApp данных: {e}")
         await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
 
+# Запуск сервера
+async def main():
+    logger.debug(f"Запуск aiohttp сервера на порту {PORT}")
+    runner = web.AppRunner(aiohttp_app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', PORT)
+    await site.start()
+    logger.debug("Сервер запущен")
+    await asyncio.Future()
+
 if __name__ == "__main__":
-    logger.debug("Запуск в локальном режиме")
-    socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)
-else:
-    logger.debug("Запуск в продакшен-режиме")
-    # Добавляем aiohttp маршруты в Flask приложение
-    flask_app.aiohttp_app = aiohttp_app
-    try:
-        from eventlet import wsgi
-        import eventlet
-        wsgi.server(eventlet.listen(('', 5001)), flask_app)
-        logger.debug("Flask с aiohttp запущен через eventlet")
-    except ImportError:
-        logger.error("Ошибка: eventlet не установлен. Установите с помощью 'pip install eventlet'.")
-        raise
+    asyncio.run(main())
