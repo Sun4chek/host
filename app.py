@@ -330,10 +330,22 @@ def serve_static(path):
         if not os.path.exists(full_path):
             logger.error(f"Файл не найден: {full_path}")
             return jsonify({"error": f"Файл /static/{path} не найден"}), 404
+        logger.debug(f"Файл найден, отправляем: {full_path}")
         return send_from_directory('static', path)
     except Exception as e:
         logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
         return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 404
+
+@flask_app.route('/debug/files', methods=['GET'])
+def debug_files():
+    logger.debug("Запрос списка статических файлов")
+    try:
+        files = os.listdir(flask_app.static_folder)
+        logger.debug(f"Статические файлы: {files}")
+        return jsonify({"static_files": files})
+    except Exception as e:
+        logger.error(f"Ошибка при получении списка файлов: {e}")
+        return jsonify({"error": str(e)}), 500
 
 # Обработчики основного бота
 @user_dp.message(Command("start"))
@@ -455,8 +467,11 @@ async def on_startup(app):
     for route in app.router.routes():
         logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
     # Проверка статических файлов
-    static_files = os.listdir(flask_app.static_folder)
-    logger.debug(f"Статические файлы в {flask_app.static_folder}: {static_files}")
+    try:
+        static_files = os.listdir(flask_app.static_folder)
+        logger.debug(f"Статические файлы в {flask_app.static_folder}: {static_files}")
+    except Exception as e:
+        logger.error(f"Ошибка при проверке статических файлов: {e}")
 
 async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
