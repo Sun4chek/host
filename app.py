@@ -325,10 +325,15 @@ def add_order(restaurant_code):
 def serve_static(path):
     logger.debug(f"Запрос статического файла: /static/{path}")
     try:
+        full_path = os.path.join(flask_app.static_folder, path)
+        logger.debug(f"Попытка найти файл: {full_path}")
+        if not os.path.exists(full_path):
+            logger.error(f"Файл не найден: {full_path}")
+            return jsonify({"error": f"Файл /static/{path} не найден"}), 404
         return send_from_directory('static', path)
     except Exception as e:
         logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
-        return jsonify({"error": "Файл не найден"}), 404
+        return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 404
 
 # Обработчики основного бота
 @user_dp.message(Command("start"))
@@ -482,7 +487,7 @@ async def main():
     logger.debug(f"Запуск aiohttp сервера на порту {PORT}")
     runner = web.AppRunner(aiohttp_app)
     await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.0', PORT)
+    site = web.TCPSite(runner, '0.0.0.1', PORT)
     await site.start()
     logger.debug("Сервер запущен")
     await asyncio.Future()  # Держим сервер запущенным
