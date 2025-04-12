@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 
 # Настройка логирования
 logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 # Загрузка переменных окружения
 load_dotenv()
@@ -73,6 +74,7 @@ def fetch_menu_data(restaurant_id):
 # Flask API маршруты
 @flask_app.route('/api/menu/<restaurant_code>', methods=['GET'])
 def get_menu(restaurant_code):
+    logger.debug(f"Запрос меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -87,11 +89,12 @@ def get_menu(restaurant_code):
         conn.close()
         return jsonify(menu_data)
     except Exception as e:
-        print(f"Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>', methods=['POST'])
 def add_menu_item(restaurant_code):
+    logger.debug(f"Добавление позиции в меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -126,12 +129,13 @@ def add_menu_item(restaurant_code):
         conn.close()
         return jsonify({"status": "success"}), 201
     except Exception as e:
-        print(f"Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['PUT'])
 def update_menu_item(restaurant_code, item_id):
+    logger.debug(f"Обновление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -173,12 +177,13 @@ def update_menu_item(restaurant_code, item_id):
         conn.close()
         return jsonify({"status": "success"}), 200
     except Exception as e:
-        print(f"Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['DELETE'])
 def delete_menu_item(restaurant_code, item_id):
+    logger.debug(f"Удаление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -200,12 +205,13 @@ def delete_menu_item(restaurant_code, item_id):
         conn.close()
         return jsonify({"status": "success"}), 200
     except Exception as e:
-        print(f"Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/orders/<restaurant_code>', methods=['GET'])
 def get_orders(restaurant_code):
+    logger.debug(f"Получение заказов для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -258,18 +264,19 @@ def get_orders(restaurant_code):
         conn.close()
         return jsonify(orders_data)
     except Exception as e:
-        print(f"Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/order/<restaurant_code>', methods=['POST'])
 def add_order(restaurant_code):
+    logger.debug(f"Добавление заказа для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
-            print(f"Ресторан с кодом {restaurant_code} не найден")
+            logger.error(f"Ресторан с кодом {restaurant_code} не найден")
             conn.close()
             return jsonify({"error": "Ресторан не найден"}), 404
 
@@ -277,7 +284,7 @@ def add_order(restaurant_code):
         data = request.get_json()
 
         if not data.get('customer') or not data.get('orderDetails'):
-            print("Ошибка: отсутствуют customer или orderDetails")
+            logger.error("Отсутствуют customer или orderDetails")
             conn.close()
             return jsonify({"error": "Некорректные данные заказа"}), 400
 
@@ -303,36 +310,51 @@ def add_order(restaurant_code):
         conn.close()
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
-        print(f"Ошибка преобразования данных: {ve}")
+        logger.error(f"Ошибка преобразования данных: {ve}")
         conn.close()
         return jsonify({"error": f"Ошибка данных: {ve}"}), 400
     except Exception as e:
-        print(f"Ошибка при сохранении заказа: {e}")
+        logger.error(f"Ошибка при сохранении заказа: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/static/<path:path>')
 def serve_static(path):
+    logger.debug(f"Запрос статического файла: {path}")
     return send_from_directory('static', path)
 
 # Обработчик вебхуков для передачи в aiohttp
 @flask_app.route('/webhook/<path:path>', methods=['POST'])
-def webhook_handler(path):
-    logging.debug(f"Получен webhook-запрос для пути: {path}")
+async def webhook_handler(path):
+    logger.debug(f"Получен webhook-запрос для пути: {path}")
     try:
         if not hasattr(flask_app, 'aiohttp_app'):
-            logging.error("aiohttp_app не инициализирован")
+            logger.error("aiohttp_app не инициализирован")
             return jsonify({"error": "Webhook not configured"}), 500
-        response = flask_app.aiohttp_app.router['__default__'].handle(request)
-        logging.debug(f"Webhook обработан, статус ответа: {response.status}")
-        return response
+        # Создаём aiohttp Request из Flask request
+        aiohttp_request = web.Request(
+            headers=request.headers,
+            method=request.method,
+            path=f"/webhook/{path}",
+            query_string=request.query_string.decode(),
+            body=await request.get_data()
+        )
+        # Обрабатываем запрос через aiohttp приложение
+        response = await flask_app.aiohttp_app(aiohttp_request)
+        logger.debug(f"Webhook обработан, статус ответа: {response.status}")
+        return web.Response(
+            body=response.body,
+            status=response.status,
+            headers=response.headers
+        )
     except Exception as e:
-        logging.error(f"Ошибка обработки webhook: {e}")
+        logger.error(f"Ошибка обработки webhook: {e}")
         return jsonify({"error": f"Webhook error: {str(e)}"}), 500
 
 # Обработчики основного бота
 @user_dp.message(Command("start"))
 async def start_command_user(message: types.Message):
+    logger.debug(f"Получена команда /start от пользователя {message.from_user.id}")
     markup = types.ReplyKeyboardMarkup(
         keyboard=[
             [types.KeyboardButton(
@@ -346,8 +368,10 @@ async def start_command_user(message: types.Message):
 
 @user_dp.message()
 async def handle_webapp_data_user(message: types.Message):
+    logger.debug(f"Получены WebApp данные от пользователя {message.from_user.id}")
     try:
         if not message.web_app_data:
+            logger.error("WebApp не передал данные")
             await message.answer("Ошибка: WebApp не передал данные 😢")
             return
 
@@ -378,13 +402,16 @@ async def handle_webapp_data_user(message: types.Message):
             await user_bot.send_message(admin_id, f"📩 Новый заказ:\n\n{response}")
 
     except json.JSONDecodeError:
+        logger.error("Некорректные JSON данные от WebApp")
         await message.answer("Ошибка: получены некорректные данные 😢")
     except Exception as e:
+        logger.error(f"Ошибка обработки WebApp данных: {e}")
         await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
 
 # Обработчики админского бота
 @admin_dp.message(Command("start"))
 async def start_command_admin(message: types.Message):
+    logger.debug(f"Получена команда /start от админа {message.from_user.id}")
     if str(message.from_user.id) not in ALLOWED_ADMINS:
         await message.answer("Доступ запрещен.")
         return
@@ -402,12 +429,14 @@ async def start_command_admin(message: types.Message):
 
 @admin_dp.message()
 async def handle_webapp_data_admin(message: types.Message):
+    logger.debug(f"Получены WebApp данные от админа {message.from_user.id}")
     if str(message.from_user.id) not in ALLOWED_ADMINS:
         await message.answer("Доступ запрещен.")
         return
 
     try:
         if not message.web_app_data:
+            logger.error("WebApp не передал данные")
             await message.answer("Ошибка: WebApp не передал данные 😢")
             return
 
@@ -424,24 +453,28 @@ async def handle_webapp_data_admin(message: types.Message):
             await admin_bot.send_message(message.from_user.id, f"Блюдо {data['name']} добавлено/удалено из стоп-листа")
 
     except json.JSONDecodeError:
+        logger.error("Некорректные JSON данные от WebApp")
         await message.answer("Ошибка: получены некорректные данные 😢")
     except Exception as e:
+        logger.error(f"Ошибка обработки WebApp данных: {e}")
         await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
 
 # Webhook настройка
 async def on_startup(_):
+    logger.debug(f"Запуск настройки вебхуков с BASE_URL: {BASE_URL}")
     webhook_path_user = "/webhook/user"
     webhook_path_admin = "/webhook/admin"
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
-    print(f"Webhooks set: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
 
 async def on_shutdown(_):
+    logger.debug("Удаление вебхуков")
     await user_bot.delete_webhook()
     await admin_bot.delete_webhook()
     await user_bot.session.close()
     await admin_bot.session.close()
-    print("Webhooks удалены")
+    logger.debug("Webhooks удалены")
 
 # Aiohttp для webhook’ов
 aiohttp_app = web.Application()
@@ -458,13 +491,13 @@ aiohttp_app.on_shutdown.append(on_shutdown)
 flask_app.aiohttp_app = aiohttp_app
 
 if __name__ == "__main__":
-    # Для локального тестирования
+    logger.debug("Запуск в локальном режиме")
     socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)
 else:
-    # Для продакшена
+    logger.debug("Запуск в продакшен-режиме")
     try:
         from eventlet import wsgi
         import eventlet
         wsgi.server(eventlet.listen(('', 5001)), flask_app)
     except ImportError:
-        print("Ошибка: eventlet не установлен. Установите с помощью 'pip install eventlet'.")
+        logger.error("Ошибка: eventlet не установлен. Установите с помощью 'pip install eventlet'.")
