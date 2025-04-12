@@ -3,7 +3,7 @@ import os
 import sqlite3
 import logging
 import asyncio
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request
 from flask_socketio import SocketIO
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
@@ -23,13 +23,13 @@ load_dotenv()
 # Конфигурация
 USER_BOT_TOKEN = os.getenv("USER_BOT_TOKEN")
 ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
-BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:5001")
+BASE_URL = os.getenv("BASE_URL", "https://buhtarest.onrender.com")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
-PORT = int(os.getenv("PORT", 443))  # По умолчанию 443 для Render
+PORT = int(os.getenv("PORT", 443))  # Для Render
 
 # Инициализация Flask и SocketIO
-flask_app = Flask(__name__, static_folder='static')
+flask_app = Flask(__name__)
 socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*")
 
 # Инициализация ботов
@@ -321,29 +321,23 @@ def add_order(restaurant_code):
         conn.close()
         return jsonify({"error": str(e)}), 500
 
-@flask_app.route('/static/<path:path>', methods=['GET'])
-def serve_static(path):
+# Aiohttp для статических файлов
+async def serve_static_aiohttp(request):
+    path = request.match_info['path']
+    full_path = os.path.join('static', path)
     logger.debug(f"Запрос статического файла: /static/{path}")
-    try:
-        full_path = os.path.join(flask_app.static_folder, path)
-        logger.debug(f"Путь к файлу: {full_path}")
-        logger.debug(f"static_folder: {flask_app.static_folder}")
-        logger.debug(f"os.path.exists({full_path}): {os.path.exists(full_path)}")
-        logger.debug(f"os.listdir(static_folder): {os.listdir(flask_app.static_folder)}")
-        if not os.path.exists(full_path):
-            logger.error(f"Файл не найден: {full_path}")
-            return jsonify({"error": f"Файл /static/{path} не найден"}), 404
-        logger.debug(f"Файл найден, отправляем: {full_path}")
-        return send_from_directory(flask_app.static_folder, path)
-    except Exception as e:
-        logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
-        return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 500
+    logger.debug(f"Путь к файлу: {full_path}")
+    if not os.path.exists(full_path):
+        logger.error(f"Файл не найден: {full_path}")
+        return web.json_response({"error": f"Файл /static/{path} не найден"}, status=404)
+    logger.debug(f"Отправляем файл: {full_path}")
+    return web.FileResponse(full_path)
 
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
     logger.debug("Запрос списка статических файлов")
     try:
-        files = os.listdir(flask_app.static_folder)
+        files = os.listdir('static')
         logger.debug(f"Статические файлы: {files}")
         return jsonify({"static_files": files})
     except Exception as e:
@@ -466,13 +460,9 @@ async def on_startup(app):
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
     logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
-    logger.debug("Зарегистрированные маршруты aiohttp:")
-    for route in app.router.routes():
-        logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
-    # Проверка статических файлов
     try:
-        static_files = os.listdir(flask_app.static_folder)
-        logger.debug(f"Статические файлы в {flask_app.static_folder}: {static_files}")
+        static_files = os.listdir('static')
+        logger.debug(f"Статические файлы в static: {static_files}")
     except Exception as e:
         logger.error(f"Ошибка при проверке статических файлов: {e}")
 
@@ -493,10 +483,12 @@ admin_handler.register(aiohttp_app, path="/webhook/admin")
 setup_application(aiohttp_app, user_dp, bot=user_bot)
 setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
-# Интеграция Flask с aiohttp
+# Статические файлы через aiohttp
+aiohttp_app.router.add_get('/static/{path:.*}', serve_static_aiohttp)
+
+# Flask API через aiohttp_wsgi
 flask_handler = WSGIHandler(flask_app)
 aiohttp_app.router.add_route('*', '/api/{path_info:.*}', flask_handler)
-aiohttp_app.router.add_route('*', '/static/{path_info:.*}', flask_handler)
 aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))
 
 # Регистрация хуков
@@ -504,14 +496,11 @@ aiohttp_app.on_startup.append(on_startup)
 aiohttp_app.on_shutdown.append(on_shutdown)
 
 # Запуск сервера
-async def main():
-    logger.debug(f"Запуск aiohttp сервера на порту {PORT}")
-    runner = web.AppRunner(aiohttp_app)
-    await runner.setup()
-    site = web.TCPSite(runner, '0.0.0.0', PORT)
-    await site.start()
-    logger.debug("Сервер запущен")
-    await asyncio.Future()  # Держим сервер запущенным
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    # Локально
+    socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)
+else:
+    # Продакшен
+    from eventlet import wsgi
+    import eventlet
+    wsgi.server(eventlet.listen(('', PORT)), aiohttp_app)
