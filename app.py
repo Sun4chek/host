@@ -502,6 +502,4 @@ aiohttp_app.on_shutdown.append(on_shutdown)
 # Запуск сервера
 if __name__ == "__main__":
     logger.debug(f"Запуск сервера на порту {PORT}")
-    from eventlet import wsgi
-    import eventlet
-    wsgi.server(eventlet.listen(('', PORT)), aiohttp_app)
+    web.run_app(aiohttp_app, host="0.0.0.0", port=PORT)
