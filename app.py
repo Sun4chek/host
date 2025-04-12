@@ -329,6 +329,7 @@ def serve_static(path):
         logger.debug(f"Путь к файлу: {full_path}")
         logger.debug(f"static_folder: {flask_app.static_folder}")
         logger.debug(f"os.path.exists({full_path}): {os.path.exists(full_path)}")
+        logger.debug(f"os.listdir(static_folder): {os.listdir(flask_app.static_folder)}")
         if not os.path.exists(full_path):
             logger.error(f"Файл не найден: {full_path}")
             return jsonify({"error": f"Файл /static/{path} не найден"}), 404
@@ -336,7 +337,7 @@ def serve_static(path):
         return send_from_directory(flask_app.static_folder, path)
     except Exception as e:
         logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
-        return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 404
+        return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 500
 
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
@@ -494,8 +495,8 @@ setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
 # Интеграция Flask с aiohttp
 flask_handler = WSGIHandler(flask_app)
-aiohttp_app.router.add_route('*', '/api/{path:.*}', flask_handler)
-aiohttp_app.router.add_route('*', '/static/{path:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/api/{path_info:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/static/{path_info:.*}', flask_handler)
 aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))
 
 # Регистрация хуков
