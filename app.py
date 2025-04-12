@@ -321,10 +321,14 @@ def add_order(restaurant_code):
         conn.close()
         return jsonify({"error": str(e)}), 500
 
-@flask_app.route('/static/<path:path>')
+@flask_app.route('/static/<path:path>', methods=['GET'])
 def serve_static(path):
-    logger.debug(f"Запрос статического файла: {path}")
-    return send_from_directory('static', path)
+    logger.debug(f"Запрос статического файла: /static/{path}")
+    try:
+        return send_from_directory('static', path)
+    except Exception as e:
+        logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
+        return jsonify({"error": "Файл не найден"}), 404
 
 # Обработчики основного бота
 @user_dp.message(Command("start"))
@@ -465,8 +469,8 @@ setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
 # Интеграция Flask с aiohttp
 flask_handler = WSGIHandler(flask_app)
-aiohttp_app.router.add_route('*', '/api/{path:.*}', flask_handler)
-aiohttp_app.router.add_route('*', '/static/{path:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/api/{path_info:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/static/{path_info:.*}', flask_handler)
 aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))
 
 # Регистрация хуков
