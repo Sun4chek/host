@@ -460,6 +460,10 @@ async def on_startup(app):
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
     logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    logger.debug(f"Сервер запускается на порту: {PORT}")
+    logger.debug("Зарегистрированные маршруты aiohttp:")
+    for route in app.router.routes():
+        logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
     try:
         static_files = os.listdir('static')
         logger.debug(f"Статические файлы в static: {static_files}")
@@ -497,10 +501,7 @@ aiohttp_app.on_shutdown.append(on_shutdown)
 
 # Запуск сервера
 if __name__ == "__main__":
-    # Локально
-    socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)
-else:
-    # Продакшен
+    logger.debug(f"Запуск сервера на порту {PORT}")
     from eventlet import wsgi
     import eventlet
     wsgi.server(eventlet.listen(('', PORT)), aiohttp_app)
