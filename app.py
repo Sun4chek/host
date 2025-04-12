@@ -323,33 +323,34 @@ def serve_static(path):
     logger.debug(f"Запрос статического файла: {path}")
     return send_from_directory('static', path)
 
-# Обработчик вебхуков для передачи в aiohttp
-@flask_app.route('/webhook/<path:path>', methods=['POST'])
-async def webhook_handler(path):
-    logger.debug(f"Получен webhook-запрос для пути: {path}")
-    try:
-        if not hasattr(flask_app, 'aiohttp_app'):
-            logger.error("aiohttp_app не инициализирован")
-            return jsonify({"error": "Webhook not configured"}), 500
-        # Создаём aiohttp Request из Flask request
-        aiohttp_request = web.Request(
-            headers=request.headers,
-            method=request.method,
-            path=f"/webhook/{path}",
-            query_string=request.query_string.decode(),
-            body=await request.get_data()
-        )
-        # Обрабатываем запрос через aiohttp приложение
-        response = await flask_app.aiohttp_app(aiohttp_request)
-        logger.debug(f"Webhook обработан, статус ответа: {response.status}")
-        return web.Response(
-            body=response.body,
-            status=response.status,
-            headers=response.headers
-        )
-    except Exception as e:
-        logger.error(f"Ошибка обработки webhook: {e}")
-        return jsonify({"error": f"Webhook error: {str(e)}"}), 500
+# Aiohttp для webhook’ов
+aiohttp_app = web.Application()
+user_handler = SimpleRequestHandler(dispatcher=user_dp, bot=user_bot)
+admin_handler = SimpleRequestHandler(dispatcher=admin_dp, bot=admin_bot)
+user_handler.register(aiohttp_app, path="/webhook/user")
+admin_handler.register(aiohttp_app, path="/webhook/admin")
+setup_application(aiohttp_app, user_dp, bot=user_bot)
+setup_application(aiohttp_app, admin_dp, bot=admin_bot)
+
+# Webhook настройка
+async def on_startup(_):
+    logger.debug(f"Запуск настройки вебхуков с BASE_URL: {BASE_URL}")
+    webhook_path_user = "/webhook/user"
+    webhook_path_admin = "/webhook/admin"
+    await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
+    await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
+    logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+
+async def on_shutdown(_):
+    logger.debug("Удаление вебхуков")
+    await user_bot.delete_webhook()
+    await admin_bot.delete_webhook()
+    await user_bot.session.close()
+    await admin_bot.session.close()
+    logger.debug("Webhooks удалены")
+
+aiohttp_app.on_startup.append(on_startup)
+aiohttp_app.on_shutdown.append(on_shutdown)
 
 # Обработчики основного бота
 @user_dp.message(Command("start"))
@@ -459,45 +460,18 @@ async def handle_webapp_data_admin(message: types.Message):
         logger.error(f"Ошибка обработки WebApp данных: {e}")
         await message.answer(f"Ошибка обработки данных 😢\n\n{str(e)}")
 
-# Webhook настройка
-async def on_startup(_):
-    logger.debug(f"Запуск настройки вебхуков с BASE_URL: {BASE_URL}")
-    webhook_path_user = "/webhook/user"
-    webhook_path_admin = "/webhook/admin"
-    await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
-    await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
-    logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
-
-async def on_shutdown(_):
-    logger.debug("Удаление вебхуков")
-    await user_bot.delete_webhook()
-    await admin_bot.delete_webhook()
-    await user_bot.session.close()
-    await admin_bot.session.close()
-    logger.debug("Webhooks удалены")
-
-# Aiohttp для webhook’ов
-aiohttp_app = web.Application()
-user_handler = SimpleRequestHandler(dispatcher=user_dp, bot=user_bot)
-admin_handler = SimpleRequestHandler(dispatcher=admin_dp, bot=admin_bot)
-user_handler.register(aiohttp_app, path="/webhook/user")
-admin_handler.register(aiohttp_app, path="/webhook/admin")
-setup_application(aiohttp_app, user_dp, bot=user_bot)
-setup_application(aiohttp_app, admin_dp, bot=admin_bot)
-aiohttp_app.on_startup.append(on_startup)
-aiohttp_app.on_shutdown.append(on_shutdown)
-
-# Привязка aiohttp к Flask для продакшена
-flask_app.aiohttp_app = aiohttp_app
-
 if __name__ == "__main__":
     logger.debug("Запуск в локальном режиме")
     socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)
 else:
     logger.debug("Запуск в продакшен-режиме")
+    # Добавляем aiohttp маршруты в Flask приложение
+    flask_app.aiohttp_app = aiohttp_app
     try:
         from eventlet import wsgi
         import eventlet
         wsgi.server(eventlet.listen(('', 5001)), flask_app)
+        logger.debug("Flask с aiohttp запущен через eventlet")
     except ImportError:
         logger.error("Ошибка: eventlet не установлен. Установите с помощью 'pip install eventlet'.")
+        raise
