@@ -34,6 +34,11 @@ def save_db_to_repo():
     logger.info("Попытка сохранения restaurant.db в репозиторий")
     try:
         os.chdir(REPO_DIR)
+        # Настраиваем Git
+        subprocess.run(["git", "config", "user.email", "render@buhtarest.com"], check=True)
+        subprocess.run(["git", "config", "user.name", "Render Bot"], check=True)
+        logger.debug("Git user.email и user.name настроены")
+
         # Проверяем изменения в db/restaurant.db
         result = subprocess.run(["git", "status", "--porcelain", "db/restaurant.db"], capture_output=True, text=True)
         if not result.stdout:
