@@ -1558,7 +1558,6 @@ async function fetchMenu() {
                 menuItems[item.id] = item;
             });
         }
-        renderMenu(data);
         return data;
     } catch (error) {
         console.error('Ошибка:', error);
@@ -1567,26 +1566,6 @@ async function fetchMenu() {
     }
 }
 
-// Инициализация
-async function init() {
-    const menu = await fetchMenu();
-    console.log('Инициализация завершена, меню:', menu);
-}
-init();
-
-// Тестовая функция рендеринга
-function renderMenu(data) {
-    const container = document.createElement('div');
-    for (const category in data) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.innerHTML = `<h2>${category}</h2>`;
-        data[category].forEach(item => {
-            categoryDiv.innerHTML += `<p>${item.name} - ${item.portion_price} руб</p>`;
-        });
-        container.appendChild(categoryDiv);
-    }
-    document.body.appendChild(container);
-}
     // Обновление меню с проверкой изменений
     async function updateMenu() {
         const newMenuData = await fetchMenu();

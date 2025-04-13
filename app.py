@@ -3,7 +3,7 @@ import os
 import sqlite3
 import logging
 from flask import Flask, jsonify, request
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from aiogram.types import WebAppInfo
@@ -25,11 +25,11 @@ ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest.onrender.com")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
-PORT = int(os.getenv("PORT", 10000))  # Render использует 10000
+PORT = int(os.getenv("PORT", 10000))
 
 # Инициализация Flask и SocketIO
 flask_app = Flask(__name__)
-socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*")
+socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*", logger=True, engineio_logger=True)
 
 # Инициализация ботов
 user_bot = Bot(token=USER_BOT_TOKEN)
@@ -193,7 +193,6 @@ def delete_menu_item(restaurant_code, item_id):
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
@@ -274,7 +273,7 @@ def get_orders(restaurant_code):
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/order/<restaurant_code>', methods=['POST'])
-def add_order(restaurant_code):
+async def add_order(restaurant_code):
     logger.debug(f"Flask: Добавление заказа для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
@@ -313,6 +312,30 @@ def add_order(restaurant_code):
             ''', (order_id, item.get('item_id'), item['name'], float(item['price']), item['quantity'], item.get('isAlcohol', False)))
 
         conn.commit()
+
+        # Отправка уведомления админам
+        response = (
+            f"✅ Новый заказ #{order_id}!\n\n"
+            f"👤 Фамилия: {customer['lastName']}\n"
+            f"👤 Имя: {customer['firstName']}\n"
+            f"📱 Телефон: {customer['phone']}\n"
+            f"💳 Способ оплаты: {order_details['paymentMethod']}\n"
+            f"🚚 Способ получения: {order_details['deliveryMethod']}\n"
+            f"🏠 Номер комнаты: {customer['roomNumber']}\n\n"
+            f"🍽 Заказанные блюда:\n"
+        )
+        for item in order_details['items']:
+            response += f"- {item['name']} ({item['quantity']} шт.) - {item['price']}₽\n"
+        response += f"\n💸 Итого: {order_details['total']}₽\n"
+        if any(item.get('isAlcohol', False) for item in order_details['items']):
+            response += f"ℹ️ {order_details.get('alcoholNote', 'Алкоголь оплачивается отдельно')}"
+
+        for admin_id in ALLOWED_ADMINS:
+            try:
+                await admin_bot.send_message(admin_id, response)
+            except Exception as e:
+                logger.error(f"Ошибка отправки уведомления админу {admin_id}: {e}")
+
         conn.close()
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
@@ -492,10 +515,6 @@ async def on_startup(app):
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
     logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
-    logger.debug(f"Сервер запускается на порту: {PORT}")
-    logger.debug("Зарегистрированные маршруты aiohttp:")
-    for route in app.router.routes():
-        logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
 
 async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
@@ -516,9 +535,9 @@ setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
 # Маршруты aiohttp
 flask_handler = WSGIHandler(flask_app)
-aiohttp_app.router.add_route('*', '/api/{path:.*}', flask_handler.handle_request)  # API через Flask
-aiohttp_app.router.add_get('/static/{path:.*}', serve_static_aiohttp)              # Статические файлы
-aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))   # Корневой маршрут
+aiohttp_app.router.add_route('*', '/api/{path_info:.*}', flask_handler.handle_request)
+aiohttp_app.router.add_get('/static/{path:.*}', serve_static_aiohttp)
+aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))
 
 # Регистрация хуков
 aiohttp_app.on_startup.append(on_startup)
@@ -526,5 +545,6 @@ aiohttp_app.on_shutdown.append(on_shutdown)
 
 # Запуск сервера
 if __name__ == "__main__":
-    logger.debug(f"Запуск сервера на порту {PORT}")
-    web.run_app(aiohttp_app, host="0.0.0.0", port=PORT)
+    import eventlet
+    eventlet.monkey_patch()
+    socketio.run(flask_app, host="0.0.0.0", port=PORT, use_reloader=False)
