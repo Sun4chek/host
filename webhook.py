@@ -18,9 +18,10 @@ load_dotenv()
 # Конфигурация
 USER_BOT_TOKEN = os.getenv("USER_BOT_TOKEN")
 ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
-BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
+BASE_URL = os.getenv("WEBHOOK_BASE_URL", "https://buhtarest-webhook.onrender.com")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 PORT = int(os.getenv("WEBHOOK_PORT", 8001))
+API_BASE_URL = os.getenv("API_BASE_URL", "https://buhtarest-api.onrender.com")
 
 # Инициализация ботов
 user_bot = Bot(token=USER_BOT_TOKEN)
@@ -36,7 +37,7 @@ async def start_command_user(message: types.Message):
         keyboard=[
             [types.KeyboardButton(
                 text="Открыть меню",
-                web_app=WebAppInfo(url=f"{BASE_URL}/static/user_webapp.html")
+                web_app=WebAppInfo(url=f"{API_BASE_URL}/static/user_webapp.html")
             )]
         ],
         resize_keyboard=True
@@ -97,7 +98,7 @@ async def start_command_admin(message: types.Message):
         keyboard=[
             [types.KeyboardButton(
                 text="Управление меню",
-                web_app=WebAppInfo(url=f"{BASE_URL}/static/admin_webapp.html")
+                web_app=WebAppInfo(url=f"{API_BASE_URL}/static/admin_webapp.html")
             )]
         ],
         resize_keyboard=True

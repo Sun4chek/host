@@ -2,8 +2,7 @@ import json
 import os
 import sqlite3
 import logging
-import requests
-from flask import Flask, jsonify, request, send_from_directory, Response
+from flask import Flask, jsonify, request, send_from_directory
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -17,7 +16,6 @@ load_dotenv()
 
 # Конфигурация
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
-WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://buhtarest-webhook.onrender.com")
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
 
 # Инициализация Flask и SocketIO
@@ -330,18 +328,6 @@ def serve_static_flask(path):
         logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
         return jsonify({"error": f"Файл не найден: {path}"}), 404
 
-# Прокси для вебхуков
-@flask_app.route('/webhook/<path:path>', methods=['POST'])
-def proxy_webhook(path):
-    logger.debug(f"Проксирование вебхука: /webhook/{path}")
-    try:
-        webhook_url = f"{WEBHOOK_URL}/webhook/{path}"
-        response = requests.post(webhook_url, json=request.get_json(), headers=request.headers)
-        return Response(response.content, response.status_code, response.headers.items())
-    except Exception as e:
-        logger.error(f"Ошибка проксирования вебхука: {e}")
-        return jsonify({"error": str(e)}), 500
-
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
     logger.debug("Запрос списка статических файлов")
@@ -367,6 +353,11 @@ def debug_db():
     except Exception as e:
         logger.error(f"Ошибка проверки базы данных: {e}")
         return jsonify({"error": str(e)}), 500
+
+@flask_app.route('/test', methods=['GET'])
+def test_route():
+    logger.debug("Запрос тестового маршрута")
+    return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
