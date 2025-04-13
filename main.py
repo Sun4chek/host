@@ -2,12 +2,12 @@ import json
 import os
 import sqlite3
 import logging
+import subprocess
 from flask import Flask, jsonify, request, send_from_directory
-from flask_socketio import SocketIO
 from flask_cors import CORS
 
 # Настройка логирования
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Загрузка переменных окружения
@@ -17,11 +17,25 @@ load_dotenv()
 # Конфигурация
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
+REPO_DIR = os.path.dirname(__file__)
 
-# Инициализация Flask и SocketIO
+# Инициализация Flask
 flask_app = Flask(__name__)
 CORS(flask_app, resources={r"/api/*": {"origins": "*"}})
-socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*")
+
+# Функция для сохранения базы данных в репозиторий
+def save_db_to_repo():
+    try:
+        logger.info("Сохранение restaurant.db в репозиторий")
+        os.chdir(REPO_DIR)
+        subprocess.run(["git", "add", "db/restaurant.db"], check=True)
+        subprocess.run(["git", "commit", "-m", "Update restaurant.db"], check=True)
+        subprocess.run(["git", "push", "origin", "main"], check=True)
+        logger.info("База данных успешно сохранена в репозиторий")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Ошибка при сохранении базы данных в репозиторий: {e}")
+    except Exception as e:
+        logger.error(f"Неизвестная ошибка при сохранении базы данных: {e}")
 
 # Подключение к базе данных
 def get_db_connection():
@@ -72,7 +86,7 @@ def fetch_menu_data(restaurant_id):
 # Flask API маршруты
 @flask_app.route('/api/menu/<restaurant_code>', methods=['GET'])
 def get_menu(restaurant_code):
-    logger.debug(f"Запрос меню для ресторана: {restaurant_code}")
+    logger.info(f"Запрос меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -94,7 +108,7 @@ def get_menu(restaurant_code):
 
 @flask_app.route('/api/menu/<restaurant_code>', methods=['POST'])
 def add_menu_item(restaurant_code):
-    logger.debug(f"Добавление позиции в меню для ресторана: {restaurant_code}")
+    logger.info(f"Добавление позиции в меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -124,9 +138,8 @@ def add_menu_item(restaurant_code):
               data['weight'], data['image'], data['description'], data['is_alcohol'], data['in_stop_list']))
 
         conn.commit()
-        menu_data = fetch_menu_data(restaurant_id)
-        socketio.emit('menu_updated', menu_data)
         conn.close()
+        save_db_to_repo()  # Сохраняем изменения в репозиторий
         return jsonify({"status": "success"}), 201
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -135,7 +148,7 @@ def add_menu_item(restaurant_code):
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['PUT'])
 def update_menu_item(restaurant_code, item_id):
-    logger.debug(f"Обновление позиции {item_id} для ресторана: {restaurant_code}")
+    logger.info(f"Обновление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -172,9 +185,8 @@ def update_menu_item(restaurant_code, item_id):
             return jsonify({"error": "Позиция не найдена"}), 404
 
         conn.commit()
-        menu_data = fetch_menu_data(restaurant_id)
-        socketio.emit('menu_updated', menu_data)
         conn.close()
+        save_db_to_repo()  # Сохраняем изменения в репозиторий
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -183,7 +195,7 @@ def update_menu_item(restaurant_code, item_id):
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['DELETE'])
 def delete_menu_item(restaurant_code, item_id):
-    logger.debug(f"Удаление позиции {item_id} для ресторана: {restaurant_code}")
+    logger.info(f"Удаление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -200,9 +212,8 @@ def delete_menu_item(restaurant_code, item_id):
             return jsonify({"error": "Позиция не найдена"}), 404
 
         conn.commit()
-        menu_data = fetch_menu_data(restaurant_id)
-        socketio.emit('menu_updated', menu_data)
         conn.close()
+        save_db_to_repo()  # Сохраняем изменения в репозиторий
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -211,7 +222,7 @@ def delete_menu_item(restaurant_code, item_id):
 
 @flask_app.route('/api/orders/<restaurant_code>', methods=['GET'])
 def get_orders(restaurant_code):
-    logger.debug(f"Получение заказов для ресторана: {restaurant_code}")
+    logger.info(f"Получение заказов для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -269,7 +280,7 @@ def get_orders(restaurant_code):
 
 @flask_app.route('/api/order/<restaurant_code>', methods=['POST'])
 def add_order(restaurant_code):
-    logger.debug(f"Добавление заказа для ресторана: {restaurant_code}")
+    logger.info(f"Добавление заказа для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -308,6 +319,7 @@ def add_order(restaurant_code):
 
         conn.commit()
         conn.close()
+        save_db_to_repo()  # Сохраняем изменения в репозиторий
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
         logger.error(f"Ошибка преобразования данных: {ve}")
@@ -321,7 +333,7 @@ def add_order(restaurant_code):
 # Статические файлы
 @flask_app.route('/static/<path:path>')
 def serve_static_flask(path):
-    logger.debug(f"Запрос статического файла: /static/{path}")
+    logger.info(f"Запрос статического файла: /static/{path}")
     try:
         return send_from_directory('static', path)
     except Exception as e:
@@ -330,7 +342,7 @@ def serve_static_flask(path):
 
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
-    logger.debug("Запрос списка статических файлов")
+    logger.info("Запрос списка статических файлов")
     try:
         files = os.listdir('static')
         logger.debug(f"Статические файлы: {files}")
@@ -341,7 +353,7 @@ def debug_files():
 
 @flask_app.route('/debug/db', methods=['GET'])
 def debug_db():
-    logger.debug("Запрос проверки базы данных")
+    logger.info("Запрос проверки базы данных")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -356,10 +368,10 @@ def debug_db():
 
 @flask_app.route('/test', methods=['GET'])
 def test_route():
-    logger.debug("Запрос тестового маршрута")
+    logger.info("Запрос тестового маршрута")
     return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
-    logger.debug(f"Запуск Flask на порту {port}")
-    socketio.run(flask_app, host="0.0.0.0", port=port)
+    logger.info(f"Запуск Flask на порту {port}")
+    flask_app.run(host="0.0.0.0", port=port)
