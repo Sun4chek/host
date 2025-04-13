@@ -18,6 +18,12 @@ load_dotenv()
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
 REPO_DIR = os.path.dirname(__file__)
+GIT_TOKEN = os.getenv("GIT_TOKEN")
+REPO_URL = os.getenv("REPO_URL", "https://github.com/<your-username>/<your-repo>.git")  # Замените на ваш репозиторий
+
+# Проверка GIT_TOKEN
+if not GIT_TOKEN:
+    logger.error("GIT_TOKEN не установлен в переменных окружения")
 
 # Инициализация Flask
 flask_app = Flask(__name__)
@@ -25,15 +31,29 @@ CORS(flask_app, resources={r"/api/*": {"origins": "*"}})
 
 # Функция для сохранения базы данных в репозиторий
 def save_db_to_repo():
+    logger.info("Попытка сохранения restaurant.db в репозиторий")
     try:
-        logger.info("Сохранение restaurant.db в репозиторий")
         os.chdir(REPO_DIR)
+        # Проверяем изменения в db/restaurant.db
+        result = subprocess.run(["git", "status", "--porcelain", "db/restaurant.db"], capture_output=True, text=True)
+        if not result.stdout:
+            logger.info("Нет изменений в restaurant.db для коммита")
+            return
+
+        # Добавляем файл
         subprocess.run(["git", "add", "db/restaurant.db"], check=True)
+        logger.debug("Файл db/restaurant.db добавлен в git")
+
+        # Коммитим
         subprocess.run(["git", "commit", "-m", "Update restaurant.db"], check=True)
-        subprocess.run(["git", "push", "origin", "main"], check=True)
+        logger.debug("Коммит создан")
+
+        # Push с использованием токена
+        auth_url = REPO_URL.replace("https://", f"https://{GIT_TOKEN}@")
+        subprocess.run(["git", "push", auth_url, "main"], check=True)
         logger.info("База данных успешно сохранена в репозиторий")
     except subprocess.CalledProcessError as e:
-        logger.error(f"Ошибка при сохранении базы данных в репозиторий: {e}")
+        logger.error(f"Ошибка при выполнении git-команды: {e}, stderr: {e.stderr}")
     except Exception as e:
         logger.error(f"Неизвестная ошибка при сохранении базы данных: {e}")
 
@@ -139,7 +159,7 @@ def add_menu_item(restaurant_code):
 
         conn.commit()
         conn.close()
-        save_db_to_repo()  # Сохраняем изменения в репозиторий
+        save_db_to_repo()
         return jsonify({"status": "success"}), 201
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -186,7 +206,7 @@ def update_menu_item(restaurant_code, item_id):
 
         conn.commit()
         conn.close()
-        save_db_to_repo()  # Сохраняем изменения в репозиторий
+        save_db_to_repo()
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -213,7 +233,7 @@ def delete_menu_item(restaurant_code, item_id):
 
         conn.commit()
         conn.close()
-        save_db_to_repo()  # Сохраняем изменения в репозиторий
+        save_db_to_repo()
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -319,7 +339,7 @@ def add_order(restaurant_code):
 
         conn.commit()
         conn.close()
-        save_db_to_repo()  # Сохраняем изменения в репозиторий
+        save_db_to_repo()
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
         logger.error(f"Ошибка преобразования данных: {ve}")
