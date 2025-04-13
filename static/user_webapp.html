@@ -1531,40 +1531,25 @@ body.dark-theme .modal-buttons button.disabled {
     });
 
     // Загрузка меню с сервера
-async function fetchMenu() {
-    try {
-        const url = `https://buhtarest.onrender.com/api/menu/BUHTA123`;
-        console.log('Запрос меню:', url);
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
+    async function fetchMenu() {
+        try {
+            const response = await fetch(`${window.location.origin}/api/menu/BUHTA123`);
+            if (!response.ok) throw new Error('Ошибка загрузки меню: ' + response.status);
+            const data = await response.json();
+
+            for (const category in data) {
+                data[category].forEach(item => {
+                    menuItems[item.id] = item;
+                });
             }
-        });
-        console.log('Ответ сервера:', response.status, response.statusText);
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Ошибка сервера:', errorText);
-            throw new Error(`Ошибка загрузки меню: ${response.status} - ${errorText}`);
+
+            return data;
+        } catch (error) {
+            console.error('Ошибка:', error);
+            showCustomAlert('Не удалось загрузить меню: ' + error.message);
+            return {};
         }
-        const data = await response.json();
-        console.log('Полученные данные:', data);
-        if (Object.keys(data).length === 0) {
-            console.warn('Меню пустое');
-            showCustomAlert('Меню пустое');
-        }
-        for (const category in data) {
-            data[category].forEach(item => {
-                menuItems[item.id] = item;
-            });
-        }
-        return data;
-    } catch (error) {
-        console.error('Ошибка:', error);
-        showCustomAlert('Не удалось загрузить меню: ' + error.message);
-        return {};
     }
-}
 
     // Обновление меню с проверкой изменений
     async function updateMenu() {
@@ -1650,7 +1635,7 @@ async function fetchMenu() {
         console.log('Отправляемые данные:', JSON.stringify(orderData, null, 2));
 
         try {
-            const url = `$https://buhtarest.onrender.com/api/order/BUHTA123`;
+            const url = `${window.location.origin}/api/order/BUHTA123`;
             console.log('Отправка запроса на:', url);
             const response = await fetch(url, {
                 method: 'POST',

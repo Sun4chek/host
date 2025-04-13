@@ -2,8 +2,9 @@ import json
 import os
 import sqlite3
 import logging
-from flask import Flask, jsonify, request
-from flask_socketio import SocketIO, emit
+import asyncio
+from flask import Flask, jsonify, request, send_from_directory
+from flask_socketio import SocketIO
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from aiogram.types import WebAppInfo
@@ -22,14 +23,14 @@ load_dotenv()
 # Конфигурация
 USER_BOT_TOKEN = os.getenv("USER_BOT_TOKEN")
 ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
-BASE_URL = os.getenv("BASE_URL", "https://buhtarest.onrender.com")
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:5001")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
-PORT = int(os.getenv("PORT", 10000))
+PORT = int(os.getenv("PORT", 443))  # По умолчанию 443 для Render
 
 # Инициализация Flask и SocketIO
-flask_app = Flask(__name__)
-socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*", logger=True, engineio_logger=True)
+flask_app = Flask(__name__, static_folder='static')
+socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*")
 
 # Инициализация ботов
 user_bot = Bot(token=USER_BOT_TOKEN)
@@ -45,7 +46,6 @@ def get_db_connection():
 
 # Функция для получения меню
 def fetch_menu_data(restaurant_id):
-    logger.debug(f"Получение данных меню для restaurant_id: {restaurant_id}")
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT id, name FROM MenuCategories WHERE restaurant_id = ?', (restaurant_id,))
@@ -77,29 +77,27 @@ def fetch_menu_data(restaurant_id):
 # Flask API маршруты
 @flask_app.route('/api/menu/<restaurant_code>', methods=['GET'])
 def get_menu(restaurant_code):
-    logger.debug(f"Flask: Запрос меню для ресторана: {restaurant_code}")
+    logger.debug(f"Запрос меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
-            logger.error(f"Ресторан с кодом {restaurant_code} не найден")
             conn.close()
             return jsonify({"error": "Ресторан не найден"}), 404
 
         restaurant_id = restaurant['id']
         menu_data = fetch_menu_data(restaurant_id)
         conn.close()
-        logger.debug(f"Flask: Возвращено меню: {menu_data}")
         return jsonify(menu_data)
     except Exception as e:
-        logger.error(f"Flask: Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>', methods=['POST'])
 def add_menu_item(restaurant_code):
-    logger.debug(f"Flask: Добавление позиции в меню для ресторана: {restaurant_code}")
+    logger.debug(f"Добавление позиции в меню для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -134,13 +132,13 @@ def add_menu_item(restaurant_code):
         conn.close()
         return jsonify({"status": "success"}), 201
     except Exception as e:
-        logger.error(f"Flask: Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['PUT'])
 def update_menu_item(restaurant_code, item_id):
-    logger.debug(f"Flask: Обновление позиции {item_id} для ресторана: {restaurant_code}")
+    logger.debug(f"Обновление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -182,13 +180,13 @@ def update_menu_item(restaurant_code, item_id):
         conn.close()
         return jsonify({"status": "success"}), 200
     except Exception as e:
-        logger.error(f"Flask: Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>/<int:item_id>', methods=['DELETE'])
 def delete_menu_item(restaurant_code, item_id):
-    logger.debug(f"Flask: Удаление позиции {item_id} для ресторана: {restaurant_code}")
+    logger.debug(f"Удаление позиции {item_id} для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -210,13 +208,13 @@ def delete_menu_item(restaurant_code, item_id):
         conn.close()
         return jsonify({"status": "success"}), 200
     except Exception as e:
-        logger.error(f"Flask: Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/orders/<restaurant_code>', methods=['GET'])
 def get_orders(restaurant_code):
-    logger.debug(f"Flask: Получение заказов для ресторана: {restaurant_code}")
+    logger.debug(f"Получение заказов для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -269,12 +267,12 @@ def get_orders(restaurant_code):
         conn.close()
         return jsonify(orders_data)
     except Exception as e:
-        logger.error(f"Flask: Ошибка: {e}")
+        logger.error(f"Ошибка: {e}")
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/order/<restaurant_code>', methods=['POST'])
-async def add_order(restaurant_code):
-    logger.debug(f"Flask: Добавление заказа для ресторана: {restaurant_code}")
+def add_order(restaurant_code):
+    logger.debug(f"Добавление заказа для ресторана: {restaurant_code}")
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -312,91 +310,43 @@ async def add_order(restaurant_code):
             ''', (order_id, item.get('item_id'), item['name'], float(item['price']), item['quantity'], item.get('isAlcohol', False)))
 
         conn.commit()
-
-        # Отправка уведомления админам
-        response = (
-            f"✅ Новый заказ #{order_id}!\n\n"
-            f"👤 Фамилия: {customer['lastName']}\n"
-            f"👤 Имя: {customer['firstName']}\n"
-            f"📱 Телефон: {customer['phone']}\n"
-            f"💳 Способ оплаты: {order_details['paymentMethod']}\n"
-            f"🚚 Способ получения: {order_details['deliveryMethod']}\n"
-            f"🏠 Номер комнаты: {customer['roomNumber']}\n\n"
-            f"🍽 Заказанные блюда:\n"
-        )
-        for item in order_details['items']:
-            response += f"- {item['name']} ({item['quantity']} шт.) - {item['price']}₽\n"
-        response += f"\n💸 Итого: {order_details['total']}₽\n"
-        if any(item.get('isAlcohol', False) for item in order_details['items']):
-            response += f"ℹ️ {order_details.get('alcoholNote', 'Алкоголь оплачивается отдельно')}"
-
-        for admin_id in ALLOWED_ADMINS:
-            try:
-                await admin_bot.send_message(admin_id, response)
-            except Exception as e:
-                logger.error(f"Ошибка отправки уведомления админу {admin_id}: {e}")
-
         conn.close()
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
-        logger.error(f"Flask: Ошибка преобразования данных: {ve}")
+        logger.error(f"Ошибка преобразования данных: {ve}")
         conn.close()
         return jsonify({"error": f"Ошибка данных: {ve}"}), 400
     except Exception as e:
-        logger.error(f"Flask: Ошибка при сохранении заказа: {e}")
+        logger.error(f"Ошибка при сохранении заказа: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 
-# Тестовый маршрут
-@flask_app.route('/test', methods=['GET'])
-def test_route():
-    logger.debug("Flask: Тестовый маршрут вызван")
-    return jsonify({"message": "Flask работает"})
-
-# Отладка базы данных
-@flask_app.route('/debug/db', methods=['GET'])
-def debug_db():
-    logger.debug("Flask: Проверка базы данных")
+@flask_app.route('/static/<path:path>', methods=['GET'])
+def serve_static(path):
+    logger.debug(f"Запрос статического файла: /static/{path}")
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM Restaurants')
-        restaurants = cursor.fetchall()
-        cursor.execute('SELECT * FROM MenuCategories')
-        categories = cursor.fetchall()
-        cursor.execute('SELECT * FROM MenuItems')
-        items = cursor.fetchall()
-        conn.close()
-        return jsonify({
-            "restaurants": [dict(row) for row in restaurants],
-            "categories": [dict(row) for row in categories],
-            "items": [dict(row) for row in items]
-        })
+        full_path = os.path.join(flask_app.static_folder, path)
+        logger.debug(f"Путь к файлу: {full_path}")
+        logger.debug(f"static_folder: {flask_app.static_folder}")
+        logger.debug(f"os.path.exists({full_path}): {os.path.exists(full_path)}")
+        if not os.path.exists(full_path):
+            logger.error(f"Файл не найден: {full_path}")
+            return jsonify({"error": f"Файл /static/{path} не найден"}), 404
+        logger.debug(f"Файл найден, отправляем: {full_path}")
+        return send_from_directory(flask_app.static_folder, path)
     except Exception as e:
-        logger.error(f"Flask: Ошибка проверки базы данных: {e}")
-        return jsonify({"error": str(e)}), 500
-
-# Aiohttp для статических файлов
-async def serve_static_aiohttp(request):
-    path = request.match_info['path']
-    full_path = os.path.join('static', path)
-    logger.debug(f"aiohttp: Запрос статического файла: /static/{path}")
-    if not os.path.exists(full_path):
-        logger.error(f"Файл не найден: {full_path}")
-        return web.json_response({"error": f"Файл /static/{path} не найден"}, status=404)
-    response = web.FileResponse(full_path)
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
+        logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
+        return jsonify({"error": f"Ошибка загрузки /static/{path}: {str(e)}"}), 404
 
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
-    logger.debug("Flask: Запрос списка статических файлов")
+    logger.debug("Запрос списка статических файлов")
     try:
-        files = os.listdir('static')
+        files = os.listdir(flask_app.static_folder)
         logger.debug(f"Статические файлы: {files}")
         return jsonify({"static_files": files})
     except Exception as e:
-        logger.error(f"Flask: Ошибка при получении списка файлов: {e}")
+        logger.error(f"Ошибка при получении списка файлов: {e}")
         return jsonify({"error": str(e)}), 500
 
 # Обработчики основного бота
@@ -515,6 +465,15 @@ async def on_startup(app):
     await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
     await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
     logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    logger.debug("Зарегистрированные маршруты aiohttp:")
+    for route in app.router.routes():
+        logger.debug(f"Маршрут: {route.method} {route.resource.canonical}")
+    # Проверка статических файлов
+    try:
+        static_files = os.listdir(flask_app.static_folder)
+        logger.debug(f"Статические файлы в {flask_app.static_folder}: {static_files}")
+    except Exception as e:
+        logger.error(f"Ошибка при проверке статических файлов: {e}")
 
 async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
@@ -533,10 +492,10 @@ admin_handler.register(aiohttp_app, path="/webhook/admin")
 setup_application(aiohttp_app, user_dp, bot=user_bot)
 setup_application(aiohttp_app, admin_dp, bot=admin_bot)
 
-# Маршруты aiohttp
+# Интеграция Flask с aiohttp
 flask_handler = WSGIHandler(flask_app)
-aiohttp_app.router.add_route('*', '/api/{path_info:.*}', flask_handler.handle_request)
-aiohttp_app.router.add_get('/static/{path:.*}', serve_static_aiohttp)
+aiohttp_app.router.add_route('*', '/api/{path:.*}', flask_handler)
+aiohttp_app.router.add_route('*', '/static/{path:.*}', flask_handler)
 aiohttp_app.router.add_get('/', lambda r: web.Response(text="BuhtaRest Server"))
 
 # Регистрация хуков
@@ -544,7 +503,14 @@ aiohttp_app.on_startup.append(on_startup)
 aiohttp_app.on_shutdown.append(on_shutdown)
 
 # Запуск сервера
+async def main():
+    logger.debug(f"Запуск aiohttp сервера на порту {PORT}")
+    runner = web.AppRunner(aiohttp_app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', PORT)
+    await site.start()
+    logger.debug("Сервер запущен")
+    await asyncio.Future()  # Держим сервер запущенным
+
 if __name__ == "__main__":
-    import eventlet
-    eventlet.monkey_patch()
-    socketio.run(flask_app, host="0.0.0.0", port=PORT, use_reloader=False)
+    asyncio.run(main())
