@@ -2,7 +2,8 @@ import json
 import os
 import sqlite3
 import logging
-from flask import Flask, jsonify, request, send_from_directory
+import requests
+from flask import Flask, jsonify, request, send_from_directory, Response
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -15,7 +16,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Конфигурация
-BASE_URL = os.getenv("BASE_URL", "https://buhtarest.onrender.com")
+BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://buhtarest-webhook.onrender.com")
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
 
 # Инициализация Flask и SocketIO
@@ -25,41 +27,49 @@ socketio = SocketIO(flask_app, async_mode='eventlet', cors_allowed_origins="*")
 
 # Подключение к базе данных
 def get_db_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        return conn
+    except Exception as e:
+        logger.error(f"Ошибка подключения к базе данных: {e}")
+        raise
 
 # Функция для получения меню
 def fetch_menu_data(restaurant_id):
     logger.debug(f"Получение меню для restaurant_id: {restaurant_id}")
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT id, name FROM MenuCategories WHERE restaurant_id = ?', (restaurant_id,))
-    categories = cursor.fetchall()
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, name FROM MenuCategories WHERE restaurant_id = ?', (restaurant_id,))
+        categories = cursor.fetchall()
 
-    menu_data = {}
-    for category in categories:
-        cursor.execute('''
-            SELECT id, name, portion_price, bottle_price, weight, image, description, is_alcohol, in_stop_list
-            FROM MenuItems WHERE category_id = ?
-        ''', (category['id'],))
-        items = cursor.fetchall()
-        menu_data[category['name']] = [
-            {
-                "id": item['id'],
-                "name": item['name'],
-                "portion_price": item['portion_price'],
-                "bottle_price": item['bottle_price'],
-                "weight": item['weight'],
-                "image": item['image'] or f"{BASE_URL}/static/images/placeholder.jpg",
-                "description": item['description'],
-                "is_alcohol": bool(item['is_alcohol']),
-                "in_stop_list": bool(item['in_stop_list'])
-            } for item in items
-        ]
-    conn.close()
-    logger.debug(f"Меню: {menu_data}")
-    return menu_data
+        menu_data = {}
+        for category in categories:
+            cursor.execute('''
+                SELECT id, name, portion_price, bottle_price, weight, image, description, is_alcohol, in_stop_list
+                FROM MenuItems WHERE category_id = ?
+            ''', (category['id'],))
+            items = cursor.fetchall()
+            menu_data[category['name']] = [
+                {
+                    "id": item['id'],
+                    "name": item['name'],
+                    "portion_price": item['portion_price'],
+                    "bottle_price": item['bottle_price'],
+                    "weight": item['weight'],
+                    "image": item['image'] or f"{BASE_URL}/static/images/placeholder.jpg",
+                    "description": item['description'],
+                    "is_alcohol": bool(item['is_alcohol']),
+                    "in_stop_list": bool(item['in_stop_list'])
+                } for item in items
+            ]
+        conn.close()
+        logger.debug(f"Меню: {menu_data}")
+        return menu_data
+    except Exception as e:
+        logger.error(f"Ошибка получения меню: {e}")
+        raise
 
 # Flask API маршруты
 @flask_app.route('/api/menu/<restaurant_code>', methods=['GET'])
@@ -73,6 +83,7 @@ def get_menu(restaurant_code):
         logger.debug(f"Ресторан: {restaurant}")
         if not restaurant:
             conn.close()
+            logger.warning(f"Ресторан не найден: {restaurant_code}")
             return jsonify({"error": "Ресторан не найден"}), 404
 
         restaurant_id = restaurant['id']
@@ -80,7 +91,7 @@ def get_menu(restaurant_code):
         conn.close()
         return jsonify(menu_data)
     except Exception as e:
-        logger.error(f"Ошибка: {e}")
+        logger.error(f"Ошибка обработки запроса меню: {e}")
         return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/api/menu/<restaurant_code>', methods=['POST'])
@@ -309,11 +320,27 @@ def add_order(restaurant_code):
         conn.close()
         return jsonify({"error": str(e)}), 500
 
-# Статические файлы через Flask
+# Статические файлы
 @flask_app.route('/static/<path:path>')
 def serve_static_flask(path):
     logger.debug(f"Запрос статического файла: /static/{path}")
-    return send_from_directory('static', path)
+    try:
+        return send_from_directory('static', path)
+    except Exception as e:
+        logger.error(f"Ошибка при загрузке файла /static/{path}: {e}")
+        return jsonify({"error": f"Файл не найден: {path}"}), 404
+
+# Прокси для вебхуков
+@flask_app.route('/webhook/<path:path>', methods=['POST'])
+def proxy_webhook(path):
+    logger.debug(f"Проксирование вебхука: /webhook/{path}")
+    try:
+        webhook_url = f"{WEBHOOK_URL}/webhook/{path}"
+        response = requests.post(webhook_url, json=request.get_json(), headers=request.headers)
+        return Response(response.content, response.status_code, response.headers.items())
+    except Exception as e:
+        logger.error(f"Ошибка проксирования вебхука: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @flask_app.route('/debug/files', methods=['GET'])
 def debug_files():
@@ -326,6 +353,22 @@ def debug_files():
         logger.error(f"Ошибка при получении списка файлов: {e}")
         return jsonify({"error": str(e)}), 500
 
+@flask_app.route('/debug/db', methods=['GET'])
+def debug_db():
+    logger.debug("Запрос проверки базы данных")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT unique_code FROM Restaurants')
+        restaurants = [row['unique_code'] for row in cursor.fetchall()]
+        conn.close()
+        logger.debug(f"Рестораны в базе: {restaurants}")
+        return jsonify({"restaurants": restaurants})
+    except Exception as e:
+        logger.error(f"Ошибка проверки базы данных: {e}")
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
+    logger.debug(f"Запуск Flask на порту {port}")
     socketio.run(flask_app, host="0.0.0.0", port=port)

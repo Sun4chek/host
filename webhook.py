@@ -18,7 +18,7 @@ load_dotenv()
 # Конфигурация
 USER_BOT_TOKEN = os.getenv("USER_BOT_TOKEN")
 ADMIN_BOT_TOKEN = os.getenv("ADMIN_BOT_TOKEN")
-BASE_URL = os.getenv("BASE_URL", "https://buhtarest.onrender.com")
+BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
 ALLOWED_ADMINS = set(os.getenv("ALLOWED_ADMINS", "").split(","))
 PORT = int(os.getenv("WEBHOOK_PORT", 8001))
 
@@ -141,18 +141,24 @@ async def on_startup(app):
     logger.debug(f"Запуск настройки вебхуков с BASE_URL: {BASE_URL}")
     webhook_path_user = "/webhook/user"
     webhook_path_admin = "/webhook/admin"
-    await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
-    await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
-    logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    try:
+        await user_bot.set_webhook(f"{BASE_URL}{webhook_path_user}")
+        await admin_bot.set_webhook(f"{BASE_URL}{webhook_path_admin}")
+        logger.debug(f"Webhooks установлены: {BASE_URL}{webhook_path_user}, {BASE_URL}{webhook_path_admin}")
+    except Exception as e:
+        logger.error(f"Ошибка установки вебхуков: {e}")
     logger.debug(f"Сервер запускается на порту: {PORT}")
 
 async def on_shutdown(app):
     logger.debug("Удаление вебхуков")
-    await user_bot.delete_webhook()
-    await admin_bot.delete_webhook()
-    await user_bot.session.close()
-    await admin_bot.session.close()
-    logger.debug("Webhooks удалены")
+    try:
+        await user_bot.delete_webhook()
+        await admin_bot.delete_webhook()
+        await user_bot.session.close()
+        await admin_bot.session.close()
+        logger.debug("Webhooks удалены")
+    except Exception as e:
+        logger.error(f"Ошибка удаления вебхуков: {e}")
 
 # Aiohttp приложение
 aiohttp_app = web.Application()
