@@ -1,10 +1,10 @@
 import json
 import os
-import sqlite3
+import psycopg2
 import logging
-import subprocess
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+from psycopg2.extras import RealDictCursor
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -16,57 +16,21 @@ load_dotenv()
 
 # Конфигурация
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
-DB_PATH = os.path.join(os.path.dirname(__file__), 'db', 'restaurant.db')
-REPO_DIR = os.path.dirname(__file__)
-GIT_TOKEN = os.getenv("GIT_TOKEN")
-REPO_URL = os.getenv("REPO_URL", "https://github.com/<your-username>/<your-repo>.git")  # Замените на ваш репозиторий
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Проверка GIT_TOKEN
-if not GIT_TOKEN:
-    logger.error("GIT_TOKEN не установлен в переменных окружения")
+# Проверка DATABASE_URL
+if not DATABASE_URL:
+    logger.error("DATABASE_URL не установлен в переменных окружения")
+    raise Exception("DATABASE_URL required")
 
 # Инициализация Flask
 flask_app = Flask(__name__)
 CORS(flask_app, resources={r"/api/*": {"origins": "*"}})
 
-# Функция для сохранения базы данных в репозиторий
-def save_db_to_repo():
-    logger.info("Попытка сохранения restaurant.db в репозиторий")
-    try:
-        os.chdir(REPO_DIR)
-        # Настраиваем Git
-        subprocess.run(["git", "config", "user.email", "render@buhtarest.com"], check=True)
-        subprocess.run(["git", "config", "user.name", "Render Bot"], check=True)
-        logger.debug("Git user.email и user.name настроены")
-
-        # Проверяем изменения в db/restaurant.db
-        result = subprocess.run(["git", "status", "--porcelain", "db/restaurant.db"], capture_output=True, text=True)
-        if not result.stdout:
-            logger.info("Нет изменений в restaurant.db для коммита")
-            return
-
-        # Добавляем файл
-        subprocess.run(["git", "add", "db/restaurant.db"], check=True)
-        logger.debug("Файл db/restaurant.db добавлен в git")
-
-        # Коммитим
-        subprocess.run(["git", "commit", "-m", "Update restaurant.db"], check=True)
-        logger.debug("Коммит создан")
-
-        # Push с использованием токена
-        auth_url = REPO_URL.replace("https://", f"https://{GIT_TOKEN}@")
-        subprocess.run(["git", "push", auth_url, "main"], check=True)
-        logger.info("База данных успешно сохранена в репозиторий")
-    except subprocess.CalledProcessError as e:
-        logger.error(f"Ошибка при выполнении git-команды: {e}, stderr: {e.stderr}")
-    except Exception as e:
-        logger.error(f"Неизвестная ошибка при сохранении базы данных: {e}")
-
 # Подключение к базе данных
 def get_db_connection():
     try:
-        conn = sqlite3.connect(DB_PATH)
-        conn.row_factory = sqlite3.Row
+        conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
         return conn
     except Exception as e:
         logger.error(f"Ошибка подключения к базе данных: {e}")
@@ -78,31 +42,31 @@ def fetch_menu_data(restaurant_id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id, name FROM MenuCategories WHERE restaurant_id = ?', (restaurant_id,))
+        cursor.execute('SELECT id, name FROM MenuCategories WHERE restaurant_id = %s', (restaurant_id,))
         categories = cursor.fetchall()
 
         menu_data = {}
         for category in categories:
             cursor.execute('''
                 SELECT id, name, portion_price, bottle_price, weight, image, description, is_alcohol, in_stop_list
-                FROM MenuItems WHERE category_id = ?
+                FROM MenuItems WHERE category_id = %s
             ''', (category['id'],))
             items = cursor.fetchall()
             menu_data[category['name']] = [
                 {
                     "id": item['id'],
                     "name": item['name'],
-                    "portion_price": item['portion_price'],
-                    "bottle_price": item['bottle_price'],
+                    "portion_price": float(item['portion_price']) if item['portion_price'] is not None else None,
+                    "bottle_price": float(item['bottle_price']) if item['bottle_price'] is not None else None,
                     "weight": item['weight'],
                     "image": item['image'] or f"{BASE_URL}/static/images/placeholder.jpg",
                     "description": item['description'],
-                    "is_alcohol": bool(item['is_alcohol']),
-                    "in_stop_list": bool(item['in_stop_list'])
+                    "is_alcohol": item['is_alcohol'],
+                    "in_stop_list": item['in_stop_list']
                 } for item in items
             ]
         conn.close()
-        logger.debug(f"Меню: {menu_data}")
+        logger.debug(f"Меню: {json.dumps(menu_data, ensure_ascii=False)}")
         return menu_data
     except Exception as e:
         logger.error(f"Ошибка получения меню: {e}")
@@ -115,7 +79,7 @@ def get_menu(restaurant_code):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         logger.debug(f"Ресторан: {restaurant}")
         if not restaurant:
@@ -137,7 +101,7 @@ def add_menu_item(restaurant_code):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
@@ -146,25 +110,24 @@ def add_menu_item(restaurant_code):
         restaurant_id = restaurant['id']
         data = request.get_json()
 
-        cursor.execute('SELECT id FROM MenuCategories WHERE name = ? AND restaurant_id = ?',
+        cursor.execute('SELECT id FROM MenuCategories WHERE name = %s AND restaurant_id = %s',
                        (data['category'], restaurant_id))
         category = cursor.fetchone()
         if not category:
-            cursor.execute('INSERT INTO MenuCategories (name, restaurant_id) VALUES (?, ?)',
+            cursor.execute('INSERT INTO MenuCategories (name, restaurant_id) VALUES (%s, %s) RETURNING id',
                            (data['category'], restaurant_id))
-            category_id = cursor.lastrowid
+            category_id = cursor.fetchone()['id']
         else:
             category_id = category['id']
 
         cursor.execute('''
             INSERT INTO MenuItems (category_id, name, portion_price, bottle_price, weight, image, description, is_alcohol, in_stop_list)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id
         ''', (category_id, data['name'], data['portion_price'], data['bottle_price'],
               data['weight'], data['image'], data['description'], data['is_alcohol'], data['in_stop_list']))
 
         conn.commit()
         conn.close()
-        save_db_to_repo()
         return jsonify({"status": "success"}), 201
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -177,7 +140,7 @@ def update_menu_item(restaurant_code, item_id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
@@ -186,21 +149,21 @@ def update_menu_item(restaurant_code, item_id):
         restaurant_id = restaurant['id']
         data = request.get_json()
 
-        cursor.execute('SELECT id FROM MenuCategories WHERE name = ? AND restaurant_id = ?',
+        cursor.execute('SELECT id FROM MenuCategories WHERE name = %s AND restaurant_id = %s',
                        (data['category'], restaurant_id))
         category = cursor.fetchone()
         if not category:
-            cursor.execute('INSERT INTO MenuCategories (name, restaurant_id) VALUES (?, ?)',
+            cursor.execute('INSERT INTO MenuCategories (name, restaurant_id) VALUES (%s, %s) RETURNING id',
                            (data['category'], restaurant_id))
-            category_id = cursor.lastrowid
+            category_id = cursor.fetchone()['id']
         else:
             category_id = category['id']
 
         cursor.execute('''
             UPDATE MenuItems 
-            SET category_id = ?, name = ?, portion_price = ?, bottle_price = ?, weight = ?, 
-                image = ?, description = ?, is_alcohol = ?, in_stop_list = ?
-            WHERE id = ?
+            SET category_id = %s, name = %s, portion_price = %s, bottle_price = %s, weight = %s, 
+                image = %s, description = %s, is_alcohol = %s, in_stop_list = %s
+            WHERE id = %s
         ''', (category_id, data['name'], data['portion_price'], data['bottle_price'],
               data['weight'], data['image'], data['description'], data['is_alcohol'],
               data['in_stop_list'], item_id))
@@ -211,7 +174,6 @@ def update_menu_item(restaurant_code, item_id):
 
         conn.commit()
         conn.close()
-        save_db_to_repo()
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -224,21 +186,19 @@ def delete_menu_item(restaurant_code, item_id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
             return jsonify({"error": "Ресторан не найден"}), 404
 
-        restaurant_id = restaurant['id']
-        cursor.execute('DELETE FROM MenuItems WHERE id = ?', (item_id,))
+        cursor.execute('DELETE FROM MenuItems WHERE id = %s', (item_id,))
         if cursor.rowcount == 0:
             conn.close()
             return jsonify({"error": "Позиция не найдена"}), 404
 
         conn.commit()
         conn.close()
-        save_db_to_repo()
         return jsonify({"status": "success"}), 200
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -251,7 +211,7 @@ def get_orders(restaurant_code):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
@@ -260,7 +220,7 @@ def get_orders(restaurant_code):
         restaurant_id = restaurant['id']
         cursor.execute('''
             SELECT id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp
-            FROM Orders WHERE restaurant_id = ?
+            FROM Orders WHERE restaurant_id = %s
             ORDER BY timestamp DESC
         ''', (restaurant_id,))
         orders = cursor.fetchall()
@@ -269,7 +229,7 @@ def get_orders(restaurant_code):
         for order in orders:
             cursor.execute('''
                 SELECT item_id, name, price, quantity, is_alcohol
-                FROM OrderItems WHERE order_id = ?
+                FROM OrderItems WHERE order_id = %s
             ''', (order['id'],))
             items = cursor.fetchall()
             orders_data.append({
@@ -287,13 +247,13 @@ def get_orders(restaurant_code):
                         {
                             "item_id": item['item_id'],
                             "name": item['name'],
-                            "price": item['price'],
+                            "price": float(item['price']),
                             "quantity": item['quantity'],
-                            "is_alcohol": bool(item['is_alcohol'])
+                            "is_alcohol": item['is_alcohol']
                         } for item in items
                     ],
-                    "total": order['total'],
-                    "timestamp": order['timestamp']
+                    "total": float(order['total']),
+                    "timestamp": order['timestamp'].isoformat()
                 }
             })
 
@@ -309,7 +269,7 @@ def add_order(restaurant_code):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = ?', (restaurant_code,))
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
         restaurant = cursor.fetchone()
         if not restaurant:
             logger.error(f"Ресторан с кодом {restaurant_code} не найден")
@@ -330,21 +290,20 @@ def add_order(restaurant_code):
         total = float(order_details['total'])
         cursor.execute('''
             INSERT INTO Orders (restaurant_id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id
         ''', (restaurant_id, customer['lastName'], customer['firstName'], customer['phone'],
               order_details['paymentMethod'], order_details['deliveryMethod'], customer['roomNumber'],
               total, data['timestamp']))
 
-        order_id = cursor.lastrowid
+        order_id = cursor.fetchone()['id']
         for item in order_details['items']:
             cursor.execute('''
                 INSERT INTO OrderItems (order_id, item_id, name, price, quantity, is_alcohol)
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES (%s, %s, %s, %s, %s, %s)
             ''', (order_id, item.get('item_id'), item['name'], float(item['price']), item['quantity'], item.get('isAlcohol', False)))
 
         conn.commit()
         conn.close()
-        save_db_to_repo()
         return jsonify({"status": "success", "order_id": order_id}), 200
     except ValueError as ve:
         logger.error(f"Ошибка преобразования данных: {ve}")
