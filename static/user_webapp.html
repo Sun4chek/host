@@ -24,13 +24,19 @@
             --border-color: #444;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: "Montserrat", sans-serif;
             padding: 20px;
-            margin: 0;
             padding-bottom: 100px;
             background-color: var(--background-color);
             color: var(--text-color);
+            overflow-x: hidden;
         }
 
         #header {
@@ -252,12 +258,6 @@
             background: rgba(255, 255, 255, 1);
         }
 
-        @media (max-width: 480px) {
-            .gallery-nav {
-                display: none;
-            }
-        }
-
         .close-gallery {
             position: absolute;
             top: 20px;
@@ -332,18 +332,71 @@
             padding: 10px 15px;
         }
 
-        @media (max-width: 768px) {
-            .social-link img {
-                width: 24px;
-                height: 24px;
-            }
-            .social-links {
-                gap: 5px;
-            }
+.category-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--item-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем содержимое */
+    padding: 10px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 50px;
+    display: none;
+}
+
+.category-header.active {
+    display: flex;
+}
+
+.category-header .back-button {
+    cursor: pointer;
+    position: absolute; /* Позиционируем кнопку "Назад" слева */
+    left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-header .back-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.category-header .category-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center; /* Убедимся, что текст центрируется */
+    flex-grow: 1; /* Заголовок занимает всё доступное пространство */
+}
+
+body.dark-theme .category-header {
+    background-color: #213040;
+}
+
+        .container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding-top: 60px;
+        }
+
+        .container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .container.no-header {
+            padding-top: 20px;
         }
 
         h2 {
             color: var(--text-color);
+            margin-bottom: 20px;
         }
 
         .category-grid {
@@ -380,48 +433,6 @@
         .category-item:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .container {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .container.active {
-            display: block;
-            opacity: 1;
-        }
-
-.back-button {
-    display: inline-block;
-    cursor: pointer;
-    padding: 10px;
-    transition: opacity 0.2s ease;
-    position: fixed;
-    top: 20px;
-    left: 10px;
-    z-index: 1000; /* Выше всех элементов */
-    background-color: var(--item-bg-color);
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.back-button:hover {
-    opacity: 0.8;
-}
-
-.back-button-fixed {
-    position: fixed;
-    top: 20px;
-    left: 10px;
-    z-index: 1000;
-}
-
-        .arrow-icon {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
         }
 
         .menu-item {
@@ -515,20 +526,20 @@
         }
 
         .mini-bar {
-            position: fixed !important;
-            bottom: 20px !important;
-            left: 10px !important;
-            right: 10px !important;
-            background: var(--item-bg-color, #ffffff) !important;
-            display: flex !important;
-            justify-content: space-around !important;
-            align-items: center !important;
-            padding: 10px !important;
-            border-radius: 15px !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
-            z-index: 1000 !important;
-            border: 1px solid var(--border-color) !important;
-            transition: background 0.3s ease !important;
+            position: fixed;
+            bottom: 20px;
+            left: 10px;
+            right: 10px;
+            background: var(--item-bg-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease;
         }
 
         .mini-bar button {
@@ -645,43 +656,35 @@
             transform: translateY(0);
         }
 
+        /* Стили для стоп-позиций */
+        .menu-item.stopped {
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
 
-        /* Стили для стоп-позиций в списке */
-.menu-item.stopped {
-    background-color: #e0e0e0; /* Серый фон */
-    cursor: pointer; /* Оставляем кликабельность */
-}
+        .menu-item.stopped .price {
+            background-color: transparent;
+            color: #666;
+        }
 
-.menu-item.stopped .price {
-    background-color: transparent; /* Убираем голубой фон у цены */
-    color: #666; /* Серый текст цены */
-}
+        body.dark-theme .menu-item.stopped {
+            background-color: #2a2a2a;
+        }
 
-.menu-item.stopped .price-and-button {
-    /* Убираем кнопку "Добавить в корзину" из отображения для стоп-позиций */
-    display: flex;
-    justify-content: flex-end;
-}
+        body.dark-theme .menu-item.stopped .price {
+            color: #aaa;
+        }
 
-body.dark-theme .menu-item.stopped {
-    background-color: #2a2a2a; /* Темно-серый для тёмной темы */
-}
+        .modal-buttons button.disabled {
+            background-color: #a0a0a0;
+            color: #fff;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
-body.dark-theme .menu-item.stopped .price {
-    color: #aaa; /* Светло-серый текст для тёмной темы */
-}
-
-/* Стили для некликабельных кнопок в модальном окне */
-.modal-buttons button.disabled {
-    background-color: #a0a0a0; /* Серая кнопка */
-    color: #fff;
-    cursor: not-allowed;
-    pointer-events: none; /* Отключаем кликабельность только в модальном окне */
-}
-
-body.dark-theme .modal-buttons button.disabled {
-    background-color: #666; /* Темно-серая кнопка в тёмной теме */
-}
+        body.dark-theme .modal-buttons button.disabled {
+            background-color: #666;
+        }
 
         .quantity-controls {
             display: flex;
@@ -760,19 +763,19 @@ body.dark-theme .modal-buttons button.disabled {
             bottom: -100%;
             left: 0;
             right: 0;
-            background: var(--item-bg-color, #ffffff) !important;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1) !important;
-            border-top-left-radius: 15px !important;
-            border-top-right-radius: 15px !important;
-            height: 80vh !important;
-            overflow-y: auto !important;
-            transition: bottom 0.3s ease !important;
-            z-index: 2000 !important;
-            padding: 20px !important;
+            background: var(--item-bg-color);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 80vh;
+            overflow-y: auto;
+            transition: bottom 0.3s ease;
+            z-index: 2000;
+            padding: 20px;
         }
 
         .modal.active {
-            bottom: 0 !important;
+            bottom: 0;
         }
 
         .modal-content {
@@ -908,10 +911,6 @@ body.dark-theme .modal-buttons button.disabled {
             60% { transform: rotate(10deg); }
             80% { transform: rotate(-10deg); }
             100% { transform: rotate(0deg); }
-        }
-
-        #cart-screen {
-            padding-bottom: 50px;
         }
 
         #cart-items .menu-item h3 {
@@ -1065,66 +1064,62 @@ body.dark-theme .modal-buttons button.disabled {
         }
 
         .menu-update-notification {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 5000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.menu-update-notification.active {
-    display: flex;
-    opacity: 1;
-}
+        .menu-update-notification.active {
+            display: flex;
+            opacity: 1;
+        }
 
-.notification-content {
-    background-color: var(--item-bg-color);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    max-width: 90%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+        .notification-content {
+            background-color: var(--item-bg-color);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-.notification-content h2 {
-    margin: 0 0 10px;
-    font-size: 24px;
-    color: var(--text-color);
-}
+        .notification-content h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            color: var(--text-color);
+        }
 
-.notification-content p {
-    margin: 0 0 20px;
-    font-size: 16px;
-    color: var(--secondary-text-color);
-}
+        .notification-content p {
+            margin: 0 0 20px;
+            font-size: 16px;
+            color: var(--secondary-text-color);
+        }
 
-#reload-button {
-    background-color: #2ea6ff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+        #reload-button {
+            background-color: #2ea6ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-#reload-button:hover {
-    background-color: #1e8fd1;
-}
+        #reload-button:hover {
+            background-color: #1e8fd1;
+        }
 
         @media (max-width: 480px) {
-            #header {
-                margin-bottom: 5px;
-            }
-
             .header-top {
                 flex-direction: column;
                 align-items: center;
@@ -1197,8 +1192,8 @@ body.dark-theme .modal-buttons button.disabled {
                 line-height: 1.5;
             }
 
-            .price-and-button {
-                gap: 5px;
+            .gallery-nav {
+                display: none;
             }
         }
     </style>
@@ -1218,7 +1213,14 @@ body.dark-theme .modal-buttons button.disabled {
 
     <div id="custom-alert" class="custom-alert"></div>
 
-    <div id="menu-screen" class="container active">
+    <div class="category-header" id="category-header">
+        <span class="back-button" id="header-back-button">
+            <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
+        </span>
+        <span class="category-title" id="category-title"></span>
+    </div>
+
+    <div id="menu-screen" class="container active no-header">
         <div id="header">
             <div class="header-top">
                 <div class="logo">
@@ -1294,941 +1296,879 @@ body.dark-theme .modal-buttons button.disabled {
             <div class="category-item" style="background-image: url('https://whogrill.ru/upload/resize_cache/webp/iblock/0aa/0aadb32c17da2cc609aaad04829c47fb.webp');" onclick="showScreen('seafood-screen')">Морепродукты</div>
             <div class="category-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpfGoKqjgIV3zt9epY7fVvM0_JE_CXnUyfA&s');" onclick="showScreen('main-screen')">Основные блюда</div>
             <div class="category-item" style="background-image: url('https://menunedeli.ru/wp-content/uploads/2023/09/01B15D4E-04C6-4AFE-8011-B2FCEFB5C30E-1200x900.jpeg');" onclick="showScreen('pasta-screen')">Пасты</div>
-                  <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
-        <div class="category-item" style="background-image: url('https://sotni.ru/wp-content/uploads/2023/08/alkogol-na-temnom-fone-3.webp');" onclick="showScreen('bar-screen')">Бар</div>
-    </div>
-</div>
-
-<!-- Контейнеры для категорий будут заполняться автоматически -->
-<div id="main-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Основные блюда</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<div id="soups-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Первые блюда</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<!-- Остальные экраны категорий -->
-<div id="salads-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Салаты</h2>
-</div>
-
-<div id="seafood-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Морепродукты</h2>
-</div>
-
-<div id="pasta-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Пасты</h2>
-</div>
-
-<div id="grill-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Мангал</h2>
-</div>
-
-<div id="bar-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Бар</h2>
-    <div class="category-grid">
-        <div class="category-item" style="background-image: url('https://www.eehealth.org/-/media/images/modules/blog/posts/hdmindsalcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>
-        <div class="category-item" style="background-image: url('/static/images/d3.png');" onclick="showScreen('drinks-screen')">Напитки</div>
-    </div>
-</div>
-
-<div id="drinks-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('bar-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Напитки</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<div id="alcohol-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('bar-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Алкоголь</h2>
-    <div class="category-grid">
-        <div class="category-item" style="background-image: url('https://pw.artfile.me/wallpaper/23-03-2014/627x470/eda-napitki--vino-fon-bokal-alkogol-812000.jpg');" onclick="showScreen('strong-screen')">Крепкий алкоголь</div>
-        <div class="category-item" style="background-image: url('https://kartinki.pics/uploads/posts/2021-07/thumbs/1626265354_33-kartinkin-com-p-vino-fon-krasivo-39.jpg');" onclick="showScreen('wine-screen')">Вино</div>
-        <div class="category-item" style="background-image: url('https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-1r64-p-zastavki-na-rabochii-stol-pivo-14.jpg');" onclick="showScreen('beer-screen')">Пиво</div>
-    </div>
-</div>
-
-<div id="strong-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Крепкий алкоголь</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<div id="wine-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Вино</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<div id="beer-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Пиво</h2>
-    <!-- Товары будут вставлены сюда через JS -->
-</div>
-
-<div id="cart-screen" class="container">
-    <span class="back-button back-button-fixed" onclick="showScreen('menu-screen')">
-        <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
-    </span>
-    <h2>Корзина</h2>
-    <div id="cart-items"></div>
-    <div class="empty-cart" id="empty-cart">
-        <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
-        <p>Корзина пока пустая</p>
-    </div>
-    <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
-    <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
-    <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
-</div>
-
-<!-- Модальное окно оформления заказа -->
-<div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
-<div id="checkout-modal" class="modal">
-    <div class="modal-content">
-        <h2>Оформление заказа</h2>
-        <form class="checkout-form" id="checkout-form">
-            <div class="form-group">
-                <label for="last-name">Фамилия</label>
-                <input type="text" id="last-name" placeholder="Введите фамилию" required>
-            </div>
-            <div class="form-group">
-                <label for="first-name">Имя</label>
-                <input type="text" id="first-name" placeholder="Введите имя" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Телефон</label>
-                <input type="tel" id="phone" placeholder="Введите номер телефона" required>
-            </div>
-            <div class="form-group">
-                <label for="payment-method">Способ оплаты</label>
-                <select id="payment-method" required>
-                    <option value="" disabled selected>Выберите способ оплаты</option>
-                    <option value="cash">Наличные</option>
-                    <option value="card">Карта</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="delivery-method">Способ получения</label>
-                <select id="delivery-method" required onchange="toggleRoomNumber()">
-                    <option value="" disabled selected>Выберите способ получения</option>
-                    <option value="delivery">Доставка</option>
-                    <option value="pickup">Самовынос</option>
-                </select>
-            </div>
-            <div class="form-group" id="room-number-container" style="display: none;">
-                <label for="room-number">Номер комнаты</label>
-                <input type="text" id="room-number" placeholder="Введите номер комнаты">
-            </div>
-            <div class="form-actions">
-                <button type="button" onclick="closeCheckoutModal()">Назад</button>
-                <button type="submit">Подтвердить</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Модальное окно товара -->
-<div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <img id="modal-image" class="modal-image" src="" alt="">
-        <div class="modal-info">
-            <div class="modal-title-price">
-                <h3 id="modal-title"></h3>
-                <div class="price" id="modal-price"></div>
-            </div>
-            <p id="modal-weight"></p>
-            <p id="modal-description"></p>
+            <div class="category-item" style="background-image: url('https://www.castle-dvin.ru/images/subgall/ak/57156346_2401166733437533_492047215813113038_n.jpg');" onclick="showScreen('grill-screen')">Мангал</div>
+            <div class="category-item" style="background-image: url('https://sotni.ru/wp-content/uploads/2023/08/alkogol-na-temnom-fone-3.webp');" onclick="showScreen('bar-screen')">Бар</div>
         </div>
-        <div class="modal-controls">
-            <div class="quantity-and-button">
-                <div class="quantity-controls">
-                    <button onclick="changeModalQuantity('portion', -1)">−</button>
-                    <span id="modal-quantity-portion">1</span>
-                    <button onclick="changeModalQuantity('portion', 1)">+</button>
+    </div>
+
+    <div id="main-screen" class="container">
+        <h2>Основные блюда</h2>
+    </div>
+
+    <div id="soups-screen" class="container">
+        <h2>Первые блюда</h2>
+    </div>
+
+    <div id="salads-screen" class="container">
+        <h2>Салаты</h2>
+    </div>
+
+    <div id="seafood-screen" class="container">
+        <h2>Морепродукты</h2>
+    </div>
+
+    <div id="pasta-screen" class="container">
+        <h2>Пасты</h2>
+    </div>
+
+    <div id="grill-screen" class="container">
+        <h2>Мангал</h2>
+    </div>
+
+    <div id="bar-screen" class="container">
+        <h2>Бар</h2>
+        <div class="category-grid">
+            <div class="category-item" style="background-image: url('https://www.eehealth.org/-/media/images/modules/blog/posts/hdmindsalcohol.jpg');" onclick="showScreen('alcohol-screen')">Алкоголь</div>
+            <div class="category-item" style="background-image: url('/static/images/d3.png');" onclick="showScreen('drinks-screen')">Напитки</div>
+        </div>
+    </div>
+
+    <div id="drinks-screen" class="container">
+        <h2>Напитки</h2>
+    </div>
+
+    <div id="alcohol-screen" class="container">
+        <h2>Алкоголь</h2>
+        <div class="category-grid">
+            <div class="category-item" style="background-image: url('https://pw.artfile.me/wallpaper/23-03-2014/627x470/eda-napitki--vino-fon-bokal-alkogol-812000.jpg');" onclick="showScreen('strong-screen')">Крепкий алкоголь</div>
+            <div class="category-item" style="background-image: url('https://kartinki.pics/uploads/posts/2021-07/thumbs/1626265354_33-kartinkin-com-p-vino-fon-krasivo-39.jpg');" onclick="showScreen('wine-screen')">Вино</div>
+            <div class="category-item" style="background-image: url('https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-1r64-p-zastavki-na-rabochii-stol-pivo-14.jpg');" onclick="showScreen('beer-screen')">Пиво</div>
+        </div>
+    </div>
+
+    <div id="strong-screen" class="container">
+        <h2>Крепкий алкоголь</h2>
+    </div>
+
+    <div id="wine-screen" class="container">
+        <h2>Вино</h2>
+    </div>
+
+    <div id="beer-screen" class="container">
+        <h2>Пиво</h2>
+    </div>
+
+    <div id="cart-screen" class="container no-header">
+        <h2>Корзина</h2>
+        <div id="cart-items"></div>
+        <div class="empty-cart" id="empty-cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/5335/5335317.png" alt="Пустая корзина">
+            <p>Корзина пока пустая</p>
+        </div>
+        <div style="font-weight: bold; margin-top: 20px;">Итого: <span id="total-price">0</span>₽</div>
+        <button style="margin-top: 20px; width: 100%; padding: 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="clearCart()">Очистить корзину</button>
+        <button style="margin-top: 10px; width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="openCheckoutModal()">Оформить заказ</button>
+    </div>
+
+    <div id="gallery-screen" class="container">
+        <button class="close-gallery" onclick="closeGallery()">×</button>
+        <div class="gallery-fullscreen">
+            <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
+            <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
+            <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
+        </div>
+        <div class="gallery-nav">
+            <button onclick="prevGalleryImage()">◄</button>
+            <button onclick="nextGalleryImage()">►</button>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-image" class="modal-image" src="" alt="">
+            <div class="modal-info">
+                <div class="modal-title-price">
+                    <h3 id="modal-title"></h3>
+                    <div class="price" id="modal-price"></div>
                 </div>
-                <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal('portion')">Добавить порцию</button>
+                <p id="modal-weight"></p>
+                <p id="modal-description"></p>
             </div>
-            <div class="quantity-and-button" id="bottle-quantity-and-button">
-                <div class="quantity-controls">
-                    <button onclick="changeModalQuantity('bottle', -1)">−</button>
-                    <span id="modal-quantity-bottle">1</span>
-                    <button onclick="changeModalQuantity('bottle', 1)">+</button>
+            <div class="modal-controls">
+                <div class="quantity-and-button">
+                    <div class="quantity-controls">
+                        <button onclick="changeModalQuantity('portion', -1)">−</button>
+                        <span id="modal-quantity-portion">1</span>
+                        <button onclick="changeModalQuantity('portion', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart" id="modal-add-to-cart" onclick="addToCartFromModal('portion')">Добавить порцию</button>
                 </div>
-                <button class="add-to-cart" id="modal-add-bottle" onclick="addToCartFromModal('bottle')">Добавить бутылку</button>
+                <div class="quantity-and-button" id="bottle-quantity-and-button">
+                    <div class="quantity-controls">
+                        <button onclick="changeModalQuantity('bottle', -1)">−</button>
+                        <span id="modal-quantity-bottle">1</span>
+                        <button onclick="changeModalQuantity('bottle', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart" id="modal-add-bottle" onclick="addToCartFromModal('bottle')">Добавить бутылку</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Галерея -->
-<div id="gallery-screen" class="container">
-    <button class="close-gallery" onclick="closeGallery()">×</button>
-    <div class="gallery-fullscreen">
-        <img src="https://avatars.mds.yandex.net/get-altay/10703420/2a0000018a46430357fdcdc2854e7fe79ec8/L" class="active">
-        <img src="https://avatars.mds.yandex.net/get-altay/934739/2a00000187d8953db3d2dce4edd6e4f7108c/L" alt="Фото 2">
-        <img src="https://avatars.mds.yandex.net/get-altay/11622009/2a000001903574717f87accac0edfe1c0355/XXXL" alt="Фото 3">
-    </div>
-    <div class="gallery-nav">
-        <button onclick="prevGalleryImage()">◄</button>
-        <button onclick="nextGalleryImage()">►</button>
-    </div>
-</div>
-
-<!-- Мини-бар -->
-<div class="mini-bar">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <button onclick="showScreen('menu-screen')" id="home-button">
-        <span class="material-symbols-outlined icon">home</span>
-        <span>Главная</span>
-    </button>
-    <button onclick="scrollToCategories()" id="menu-button">
-        <span class="material-symbols-outlined icon">menu_book</span>
-        <span>Меню</span>
-    </button>
-    <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
-        <div class="cart-icon-wrapper">
-            <span class="material-symbols-outlined icon">shopping_cart</span>
-            <div id="cart-counter" class="cart-counter">0</div>
+    <div id="checkout-modal-overlay" class="modal-overlay" onclick="closeCheckoutModal()"></div>
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <h2>Оформление заказа</h2>
+            <form class="checkout-form" id="checkout-form">
+                <div class="form-group">
+                    <label for="last-name">Фамилия</label>
+                    <input type="text" id="last-name" placeholder="Введите фамилию" required>
+                </div>
+                <div class="form-group">
+                    <label for="first-name">Имя</label>
+                    <input type="text" id="first-name" placeholder="Введите имя" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" placeholder="Введите номер телефона" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Способ оплаты</label>
+                    <select id="payment-method" required>
+                        <option value="" disabled selected>Выберите способ оплаты</option>
+                        <option value="cash">Наличные</option>
+                        <option value="card">Карта</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-method">Способ получения</label>
+                    <select id="delivery-method" required onchange="toggleRoomNumber()">
+                        <option value="" disabled selected>Выберите способ получения</option>
+                        <option value="delivery">Доставка</option>
+                        <option value="pickup">Самовынос</option>
+                    </select>
+                </div>
+                <div class="form-group" id="room-number-container" style="display: none;">
+                    <label for="room-number">Номер комнаты</label>
+                    <input type="text" id="room-number" placeholder="Введите номер комнаты">
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="closeCheckoutModal()">Назад</button>
+                    <button type="submit">Подтвердить</button>
+                </div>
+            </form>
         </div>
-        <span>Корзина</span>
-    </button>
-</div>
-<script>
-    let cart = [];
-    let tg = window.Telegram.WebApp;
-    let currentItem = null;
-    let portionQuantity = 1;
-    let bottleQuantity = 1;
-    let currentGalleryIndex = 0;
-    let menuItems = {};
-    let currentMenuData = null;
+    </div>
 
-    // Подключение к WebSocket
-    const socket = io(window.location.origin, {
-        transports: ['websocket']
-    });
+    <div class="mini-bar">
+        <button onclick="showScreen('menu-screen')" id="home-button">
+            <span class="material-symbols-outlined icon">home</span>
+            <span>Главная</span>
+        </button>
+        <button onclick="scrollToCategories()" id="menu-button">
+            <span class="material-symbols-outlined icon">menu_book</span>
+            <span>Меню</span>
+        </button>
+        <button class="cart-button" onclick="showScreen('cart-screen')" id="cart-button">
+            <div class="cart-icon-wrapper">
+                <span class="material-symbols-outlined icon">shopping_cart</span>
+                <div id="cart-counter" class="cart-counter">0</div>
+            </div>
+            <span>Корзина</span>
+        </button>
+    </div>
 
-    // Сохранение корзины в localStorage
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
+    <script>
+        let cart = [];
+        let tg = window.Telegram.WebApp;
+        let currentItem = null;
+        let portionQuantity = 1;
+        let bottleQuantity = 1;
+        let currentGalleryIndex = 0;
+        let menuItems = {};
+        let currentMenuData = null;
 
-    // Загрузка корзины из localStorage
-    function loadCart() {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-            cart = JSON.parse(savedCart);
-            updateCart();
-            updateCartCounter();
+        const socket = io(window.location.origin, { transports: ['websocket'] });
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
         }
-    }
 
-    // Загрузка меню с сервера
-    async function fetchMenu() {
-        try {
-            const response = await fetch(`${window.location.origin}/api/menu/BUHTA123`);
-            if (!response.ok) throw new Error('Ошибка загрузки меню: ' + response.status);
-            const data = await response.json();
-
-            for (const category in data) {
-                data[category].forEach(item => {
-                    menuItems[item.id] = item;
-                });
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+                updateCartCounter();
             }
-
-            return data;
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showCustomAlert('Не удалось загрузить меню: ' + error.message);
-            return {};
-        }
-    }
-
-    // Обновление меню с проверкой изменений
-    async function updateMenu() {
-        const newMenuData = await fetchMenu();
-        if (JSON.stringify(newMenuData) !== JSON.stringify(currentMenuData)) {
-            currentMenuData = newMenuData;
-            renderAllCategories(currentMenuData);
-            showMenuUpdateNotification();
-        }
-    }
-
-    // Инициализация при загрузке
-    document.addEventListener('DOMContentLoaded', async () => {
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            tg.expand();
-            tg.enableClosingConfirmation();
         }
 
-        applyTheme();
-        currentMenuData = await fetchMenu();
-        renderAllCategories(currentMenuData);
-        loadCart(); // Загружаем корзину
-        initGallery();
-
-        setInterval(updateMenu, 5000);
-
-        setTimeout(() => {
-            document.getElementById('loading-screen').classList.add('hide');
-        }, 2000);
-
-        // Обработчик кнопки перезагрузки
-        document.getElementById('reload-button').addEventListener('click', () => {
-            window.location.reload();
-        });
-
-        // Слушаем событие обновления меню через WebSocket
-        socket.on('menu_updated', (data) => {
-            console.log('Получено обновление меню через WebSocket:', data);
-            currentMenuData = data;
-            renderAllCategories(currentMenuData);
-            showMenuUpdateNotification();
-        });
-    });
-
-    // Отправка заказа
-    async function submitOrder(event) {
-        event.preventDefault();
-
-        const lastName = document.getElementById('last-name').value;
-        const firstName = document.getElementById('first-name').value;
-        const phone = document.getElementById('phone').value;
-        const paymentMethod = document.getElementById('payment-method').value;
-        const deliveryMethod = document.getElementById('delivery-method').value;
-        const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
-
-        if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
-            showCustomAlert('Пожалуйста, заполните все обязательные поля');
-            return;
-        }
-
-        const orderData = {
-            customer: {
-                lastName,
-                firstName,
-                phone,
-                roomNumber
-            },
-            orderDetails: {
-                paymentMethod,
-                deliveryMethod,
-                items: cart.map(item => ({
-                    item_id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    isAlcohol: item.isAlcohol || false
-                })),
-                total: parseFloat(document.getElementById('total-price').textContent),
-                alcoholNote: "Алкоголь оплачивается отдельно при получении"
-            },
-            timestamp: new Date().toISOString()
-        };
-
-        console.log('Отправляемые данные:', JSON.stringify(orderData, null, 2));
-
-        try {
-            const url = `${window.location.origin}/api/order/BUHTA123`;
-            console.log('Отправка запроса на:', url);
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(orderData)
-            });
-            console.log('Статус ответа:', response.status);
-            const responseBody = await response.text();
-            console.log('Тело ответа:', responseBody);
-
-            if (!response.ok) {
-                throw new Error(`Ошибка отправки заказа: ${response.status} - ${responseBody}`);
-            }
-
-            let result;
+        async function fetchMenu() {
             try {
-                result = JSON.parse(responseBody);
-                console.log('Заказ сохранён с ID:', result.order_id);
-            } catch (jsonError) {
-                throw new Error(`Ошибка разбора ответа сервера: ${jsonError.message}`);
+                const response = await fetch(`${window.location.origin}/api/menu/BUHTA123`);
+                if (!response.ok) throw new Error('Ошибка загрузки меню');
+                const data = await response.json();
+                for (const category in data) {
+                    data[category].forEach(item => {
+                        menuItems[item.id] = item;
+                    });
+                }
+                return data;
+            } catch (error) {
+                showCustomAlert('Не удалось загрузить меню');
+                return {};
+            }
+        }
+
+        async function updateMenu() {
+            const newMenuData = await fetchMenu();
+            if (JSON.stringify(newMenuData) !== JSON.stringify(currentMenuData)) {
+                currentMenuData = newMenuData;
+                renderAllCategories(currentMenuData);
+                showMenuUpdateNotification();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                tg.expand();
+                tg.enableClosingConfirmation();
             }
 
-            if (tg && tg.sendData) {
-                tg.sendData(JSON.stringify(orderData));
+            applyTheme();
+            currentMenuData = await fetchMenu();
+            renderAllCategories(currentMenuData);
+            loadCart();
+            initGallery();
+
+            setInterval(updateMenu, 5000);
+
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hide');
+            }, 2000);
+
+            document.getElementById('reload-button').addEventListener('click', () => {
+                window.location.reload();
+            });
+
+            socket.on('menu_updated', (data) => {
+                currentMenuData = data;
+                renderAllCategories(currentMenuData);
+                showMenuUpdateNotification();
+            });
+        });
+
+        async function submitOrder(event) {
+            event.preventDefault();
+
+            const lastName = document.getElementById('last-name').value;
+            const firstName = document.getElementById('first-name').value;
+            const phone = document.getElementById('phone').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const deliveryMethod = document.getElementById('delivery-method').value;
+            const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
+
+            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
+                showCustomAlert('Пожалуйста, заполните все обязательные поля');
+                return;
             }
 
-            showCustomAlert('Заказ успешно оформлен!');
-            clearCart(); // Очищаем корзину
-            closeCheckoutModal();
-            showScreen('menu-screen');
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showCustomAlert(`Не удалось отправить заказ: ${error.message}`);
-        }
-    }
+            const validCartItems = cart.filter(item => !menuItems[item.id]?.in_stop_list);
+            if (validCartItems.length === 0) {
+                showCustomAlert('В корзине нет доступных товаров');
+                return;
+            }
 
-    function showMenuUpdateNotification() {
-        const notification = document.getElementById('menu-update-notification');
-        notification.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+            const orderData = {
+                customer: {
+                    lastName,
+                    firstName,
+                    phone,
+                    roomNumber
+                },
+                orderDetails: {
+                    paymentMethod,
+                    deliveryMethod,
+                    items: validCartItems.map(item => ({
+                        item_id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        isAlcohol: item.isAlcohol || false
+                    })),
+                    total: parseFloat(document.getElementById('total-price').textContent),
+                    alcoholNote: "Алкоголь оплачивается отдельно при получении"
+                },
+                timestamp: new Date().toISOString()
+            };
 
-    function applyTheme() {
-        const body = document.body;
-        if (tg.colorScheme === 'dark') {
-            body.classList.add('dark-theme');
-        } else {
-            body.classList.remove('dark-theme');
-        }
-        updateArrowIcons();
-        updateAboutUsArrow();
-    }
-
-    function updateArrowIcons() {
-        const arrows = document.querySelectorAll('.arrow-icon');
-        const isDarkTheme = document.body.classList.contains('dark-theme');
-        arrows.forEach(arrow => {
-            arrow.src = isDarkTheme ? '/static/images/arrow-light.png' : '/static/images/arrow-dark.png';
-        });
-    }
-
-    function updateAboutUsArrow() {
-        const arrow = document.querySelector('.custom-arrow-about');
-        const isDarkTheme = document.body.classList.contains('dark-theme');
-        arrow.src = isDarkTheme ? '/static/images/arrow-right-dark.png' : '/static/images/arrow-right-light.png';
-    }
-
-    function toggleAboutUs() {
-        const aboutUs = document.querySelector('.about-us');
-        aboutUs.classList.toggle('expanded');
-    }
-
-    function renderAllCategories(menuData) {
-        for (const category in menuData) {
-            renderCategory(category, menuData);
-        }
-    }
-
-    function renderCategory(category, menuData) {
-        const categoryMap = {
-            "Основные блюда": "main-screen",
-            "Напитки": "drinks-screen",
-            "Первые блюда": "soups-screen",
-            "Салаты": "salads-screen",
-            "Морепродукты": "seafood-screen",
-            "Пасты": "pasta-screen",
-            "Мангал": "grill-screen",
-            "Алкоголь": "alcohol-screen",
-            "Крепкий алкоголь": "strong-screen",
-            "Вино": "wine-screen",
-            "Пиво": "beer-screen"
-        };
-
-        const containerId = categoryMap[category];
-        const container = document.getElementById(containerId);
-        if (!container || !menuData[category]) return;
-
-        const itemsContainer = document.createElement('div');
-        menuData[category].forEach(item => {
-            itemsContainer.innerHTML += createMenuItemHTML(item);
-        });
-
-        const existingContent = container.innerHTML.split('</h2>')[1] || '';
-        container.innerHTML = container.innerHTML.split('</h2>')[0] + '</h2>' + itemsContainer.outerHTML + existingContent;
-    }
-
-    function createMenuItemHTML(item) {
-        let priceText = '';
-        if (item.in_stop_list) {
-            priceText = 'Нет в наличии';
-        } else if (item.portion_price && item.bottle_price) {
-            priceText = `${item.portion_price}₽ / ${item.bottle_price}₽`;
-        } else if (item.portion_price) {
-            priceText = `${item.portion_price}₽`;
-        } else if (item.bottle_price) {
-            priceText = `${item.bottle_price}₽`;
-        } else {
-            priceText = 'Цена не указана';
+            try {
+                const response = await fetch(`${window.location.origin}/api/order/BUHTA123`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                if (!response.ok) throw new Error('Ошибка отправки заказа');
+                showCustomAlert('Заказ успешно оформлен!');
+                clearCart();
+                closeCheckoutModal();
+                showScreen('menu-screen');
+            } catch (error) {
+                showCustomAlert('Не удалось отправить заказ');
+            }
         }
 
-        return `
-            <div class="menu-item ${item.in_stop_list ? 'stopped' : ''}" onclick="openItemModal(${item.id})">
-                <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'">
-                <div class="info">
-                    <h3>${item.name}</h3>
-                    <p>${item.weight || 'Вес не указан'}</p>
-                </div>
-                <div class="price-and-button">
-                    <div class="price">${priceText}</div>
-                </div>
-            </div>
-        `;
-    }
-
-    function openItemModal(itemId) {
-        currentItem = menuItems[itemId];
-        if (!currentItem) {
-            console.error('Товар не найден:', itemId);
-            return;
+        function showMenuUpdateNotification() {
+            const notification = document.getElementById('menu-update-notification');
+            notification.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        portionQuantity = 1;
-        bottleQuantity = 1;
-
-        document.getElementById('modal-title').textContent = currentItem.name;
-        document.getElementById('modal-image').src = currentItem.image;
-        document.getElementById('modal-weight').textContent = currentItem.weight || 'Вес не указан';
-        document.getElementById('modal-description').textContent = currentItem.description || '';
-        document.getElementById('modal-quantity-portion').textContent = portionQuantity;
-        document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
-
-        const priceEl = document.getElementById('modal-price');
-        if (currentItem.in_stop_list) {
-            priceEl.textContent = 'Нет в наличии';
-        } else if (currentItem.portion_price && currentItem.bottle_price) {
-            priceEl.textContent = `${currentItem.portion_price}₽ / ${currentItem.bottle_price}₽`;
-        } else {
-            priceEl.textContent = `${currentItem.portion_price || currentItem.bottle_price}₽`;
+        function applyTheme() {
+            const body = document.body;
+            if (tg.colorScheme === 'dark') {
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+            }
+            updateArrowIcons();
+            updateAboutUsArrow();
         }
 
-        const bottleControls = document.getElementById('bottle-quantity-and-button');
-        const portionControls = document.querySelector('.quantity-and-button');
-        const addPortionButton = document.getElementById('modal-add-to-cart');
-        const addBottleButton = document.getElementById('modal-add-bottle');
-
-        if (currentItem.in_stop_list) {
-            portionControls.style.display = 'flex';
-            bottleControls.classList.remove('visible');
-            addPortionButton.textContent = 'Нет в наличии';
-            addPortionButton.classList.add('disabled');
-            addPortionButton.disabled = true;
-            addBottleButton.classList.add('disabled');
-            addBottleButton.disabled = true;
-        } else if (currentItem.portion_price && currentItem.bottle_price) {
-            portionControls.style.display = 'flex';
-            bottleControls.classList.add('visible');
-            addPortionButton.textContent = "Добавить порцию";
-            addPortionButton.classList.remove('disabled');
-            addPortionButton.disabled = false;
-            addBottleButton.textContent = "Добавить бутылку";
-            addBottleButton.classList.remove('disabled');
-            addBottleButton.disabled = false;
-        } else if (currentItem.portion_price) {
-            portionControls.style.display = 'flex';
-            bottleControls.classList.remove('visible');
-            addPortionButton.textContent = "Добавить в корзину";
-            addPortionButton.classList.remove('disabled');
-            addPortionButton.disabled = false;
-            addBottleButton.classList.remove('disabled');
-            addBottleButton.disabled = false;
-        } else if (currentItem.bottle_price) {
-            portionControls.style.display = 'none';
-            bottleControls.classList.add('visible');
-            addBottleButton.textContent = "Добавить в корзину";
-            addBottleButton.classList.remove('disabled');
-            addBottleButton.disabled = false;
-            addPortionButton.classList.remove('disabled');
-            addPortionButton.disabled = false;
-        }
-
-        document.getElementById('modal').classList.add('active');
-        document.getElementById('modal-overlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('modal').classList.remove('active');
-        document.getElementById('modal-overlay').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function changeModalQuantity(type, delta) {
-        if (type === 'portion') {
-            portionQuantity = Math.max(1, portionQuantity + delta);
-            document.getElementById('modal-quantity-portion').textContent = portionQuantity;
-        } else if (type === 'bottle') {
-            bottleQuantity = Math.max(1, bottleQuantity + delta);
-            document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
-        }
-    }
-
-    function addToCartFromModal(type) {
-        if (!currentItem || currentItem.in_stop_list) {
-            console.log('Попытка добавить стоп-позицию в корзину:', currentItem?.id);
-            return;
-        }
-
-        let itemName = currentItem.name;
-        let itemPrice, quantity;
-
-        if (type === 'bottle' && currentItem.bottle_price) {
-            itemName += ' (бутылка)';
-            itemPrice = currentItem.bottle_price;
-            quantity = bottleQuantity;
-        } else if (currentItem.portion_price) {
-            itemPrice = currentItem.portion_price;
-            quantity = portionQuantity;
-        } else if (currentItem.bottle_price) {
-            itemName += ' (бутылка)';
-            itemPrice = currentItem.bottle_price;
-            quantity = bottleQuantity;
-        } else {
-            return;
-        }
-
-        const existingItem = cart.find(item => item.name === itemName);
-        if (existingItem) {
-            existingItem.quantity += quantity;
-        } else {
-            cart.push({
-                id: currentItem.id,
-                name: itemName,
-                price: itemPrice,
-                quantity: quantity,
-                image: currentItem.image,
-                isAlcohol: currentItem.is_alcohol || false
+        function updateArrowIcons() {
+            const arrows = document.querySelectorAll('.arrow-icon');
+            const isDarkTheme = document.body.classList.contains('dark-theme');
+            arrows.forEach(arrow => {
+                arrow.src = isDarkTheme ? '/static/images/arrow-light.png' : '/static/images/arrow-dark.png';
             });
         }
 
-        updateCart();
-        updateCartCounter();
-        saveCart(); // Сохраняем корзину
-
-        const cartButton = document.querySelector('.mini-bar .cart-button');
-        cartButton.classList.add('animate');
-        setTimeout(() => cartButton.classList.remove('animate'), 500);
-
-        if (currentItem.is_alcohol) {
-            showAlcoholNotification();
-        } else {
-            showCustomAlert('Товар добавлен в корзину!');
+        function updateAboutUsArrow() {
+            const arrow = document.querySelector('.custom-arrow-about');
+            const isDarkTheme = document.body.classList.contains('dark-theme');
+            arrow.src = isDarkTheme ? '/static/images/arrow-right-dark.png' : '/static/images/arrow-right-light.png';
         }
 
-        closeModal();
-    }
+        function toggleAboutUs() {
+            const aboutUs = document.querySelector('.about-us');
+            aboutUs.classList.toggle('expanded');
+        }
 
-    function updateCart() {
-        const cartItems = document.getElementById('cart-items');
-        const totalPrice = document.getElementById('total-price');
-        const emptyCart = document.getElementById('empty-cart');
-        cartItems.innerHTML = '';
-        let total = 0;
+        function renderAllCategories(menuData) {
+            for (const category in menuData) {
+                renderCategory(category, menuData);
+            }
+        }
 
-        if (cart.length === 0) {
-            emptyCart.classList.add('active');
-            cartItems.style.display = 'none';
-        } else {
-            emptyCart.classList.remove('active');
-            cartItems.style.display = 'block';
+        function renderCategory(category, menuData) {
+            const categoryMap = {
+                "Основные блюда": "main-screen",
+                "Напитки": "drinks-screen",
+                "Первые блюда": "soups-screen",
+                "Салаты": "salads-screen",
+                "Морепродукты": "seafood-screen",
+                "Пасты": "pasta-screen",
+                "Мангал": "grill-screen",
+                "Крепкий алкоголь": "strong-screen",
+                "Вино": "wine-screen",
+                "Пиво": "beer-screen"
+            };
 
-            cart.forEach((item, index) => {
-                const isAlcohol = item.isAlcohol || false;
-                const displayPrice = isAlcohol ? 0 : item.price;
+            const containerId = categoryMap[category];
+            const container = document.getElementById(containerId);
+            if (!container || !menuData[category]) return;
 
-                const cartItem = document.createElement('div');
-                cartItem.className = 'menu-item';
-                cartItem.innerHTML = `
+            const itemsContainer = document.createElement('div');
+            menuData[category].forEach(item => {
+                itemsContainer.innerHTML += createMenuItemHTML(item);
+            });
+
+            const existingContent = container.innerHTML.split('</h2>')[1] || '';
+            container.innerHTML = container.innerHTML.split('</h2>')[0] + '</h2>' + itemsContainer.outerHTML + existingContent;
+        }
+
+        function createMenuItemHTML(item) {
+            let priceText = '';
+            if (item.in_stop_list) {
+                priceText = 'Нет в наличии';
+            } else if (item.portion_price && item.bottle_price) {
+                priceText = `${item.portion_price}₽ / ${item.bottle_price}₽`;
+            } else if (item.portion_price) {
+                priceText = `${item.portion_price}₽`;
+            } else if (item.bottle_price) {
+                priceText = `${item.bottle_price}₽`;
+            } else {
+                priceText = 'Цена не указана';
+            }
+
+            return `
+                <div class="menu-item ${item.in_stop_list ? 'stopped' : ''}" onclick="openItemModal(${item.id})">
                     <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'">
                     <div class="info">
                         <h3>${item.name}</h3>
-                        <p>${isAlcohol ? `${item.price}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
+                        <p>${item.weight || 'Вес не указан'}</p>
                     </div>
-                    <div class="quantity-controls">
-                        <button onclick="changeQuantity(${index}, -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, 1)">+</button>
+                    <div class="price-and-button">
+                        <div class="price">${priceText}</div>
                     </div>
-                `;
-                cartItems.appendChild(cartItem);
-
-                if (!isAlcohol) {
-                    total += item.price * item.quantity;
-                }
-            });
+                </div>
+            `;
         }
 
-        totalPrice.textContent = total;
-    }
+        function openItemModal(itemId) {
+            currentItem = menuItems[itemId];
+            if (!currentItem) return;
 
-    function changeQuantity(index, delta) {
-        const item = cart[index];
-        item.quantity += delta;
-        if (item.quantity <= 0) {
-            cart.splice(index, 1);
+            portionQuantity = 1;
+            bottleQuantity = 1;
+
+            document.getElementById('modal-title').textContent = currentItem.name;
+            document.getElementById('modal-image').src = currentItem.image;
+            document.getElementById('modal-weight').textContent = currentItem.weight || 'Вес не указан';
+            document.getElementById('modal-description').textContent = currentItem.description || '';
+            document.getElementById('modal-quantity-portion').textContent = portionQuantity;
+            document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
+
+            const priceEl = document.getElementById('modal-price');
+            if (currentItem.in_stop_list) {
+                priceEl.textContent = 'Нет в наличии';
+            } else if (currentItem.portion_price && currentItem.bottle_price) {
+                priceEl.textContent = `${currentItem.portion_price}₽ / ${currentItem.bottle_price}₽`;
+            } else {
+                priceEl.textContent = `${currentItem.portion_price || currentItem.bottle_price}₽`;
+            }
+
+            const bottleControls = document.getElementById('bottle-quantity-and-button');
+            const portionControls = document.querySelector('.quantity-and-button');
+            const addPortionButton = document.getElementById('modal-add-to-cart');
+            const addBottleButton = document.getElementById('modal-add-bottle');
+
+            if (currentItem.in_stop_list) {
+                portionControls.style.display = 'flex';
+                bottleControls.classList.remove('visible');
+                addPortionButton.textContent = 'Нет в наличии';
+                addPortionButton.classList.add('disabled');
+                addPortionButton.disabled = true;
+                addBottleButton.classList.add('disabled');
+                addBottleButton.disabled = true;
+            } else if (currentItem.portion_price && currentItem.bottle_price) {
+                portionControls.style.display = 'flex';
+                bottleControls.classList.add('visible');
+                addPortionButton.textContent = "Добавить порцию";
+                addPortionButton.classList.remove('disabled');
+                addPortionButton.disabled = false;
+                addBottleButton.textContent = "Добавить бутылку";
+                addBottleButton.classList.remove('disabled');
+                addBottleButton.disabled = false;
+            } else if (currentItem.portion_price) {
+                portionControls.style.display = 'flex';
+                bottleControls.classList.remove('visible');
+                addPortionButton.textContent = "Добавить в корзину";
+                addPortionButton.classList.remove('disabled');
+                addPortionButton.disabled = false;
+                addBottleButton.classList.add('disabled');
+                addBottleButton.disabled = true;
+            } else if (currentItem.bottle_price) {
+                portionControls.style.display = 'none';
+                bottleControls.classList.add('visible');
+                addBottleButton.textContent = "Добавить в корзину";
+                addBottleButton.classList.remove('disabled');
+                addBottleButton.disabled = false;
+                addPortionButton.classList.add('disabled');
+                addPortionButton.disabled = true;
+            }
+
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        updateCart();
-        updateCartCounter();
-        saveCart(); // Сохраняем корзину
-    }
 
-    function updateCartCounter() {
-        const cartCounter = document.getElementById('cart-counter');
-        cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    }
-
-    function clearCart() {
-        cart = [];
-        updateCart();
-        updateCartCounter();
-        saveCart(); // Сохраняем корзину
-        showCustomAlert('Корзина очищена');
-    }
-
-    function showCustomAlert(message) {
-        const alert = document.getElementById('custom-alert');
-        alert.textContent = message;
-        alert.classList.add('show');
-        setTimeout(() => alert.classList.remove('show'), 1500);
-    }
-
-    function showAlcoholNotification() {
-        if (tg && tg.showPopup) {
-            tg.showPopup({
-                title: 'Алкоголь',
-                message: 'Алкоголь оплачивается отдельно при получении',
-                buttons: [{ type: 'ok', text: 'Понятно' }]
-            });
-        } else {
-            showCustomAlert('Алкоголь добавлен (оплачивается отдельно)');
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = '';
         }
-    }
 
-    function showScreen(screenId) {
-        document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
+        function changeModalQuantity(type, delta) {
+            if (currentItem.in_stop_list) return;
+            if (type === 'portion') {
+                portionQuantity = Math.max(1, portionQuantity + delta);
+                document.getElementById('modal-quantity-portion').textContent = portionQuantity;
+            } else if (type === 'bottle') {
+                bottleQuantity = Math.max(1, bottleQuantity + delta);
+                document.getElementById('modal-quantity-bottle').textContent = bottleQuantity;
+            }
+        }
 
-        const homeButton = document.getElementById('home-button');
-        const menuButton = document.getElementById('menu-button');
-        const cartButton = document.getElementById('cart-button');
+        function addToCartFromModal(type) {
+            if (!currentItem || currentItem.in_stop_list) return;
 
-        homeButton.classList.remove('active');
-        menuButton.classList.remove('active');
-        cartButton.classList.remove('active');
+            let itemName = currentItem.name;
+            let itemPrice, quantity;
 
-        if (screenId === 'menu-screen') {
-            homeButton.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (screenId === 'cart-screen') {
-            cartButton.classList.add('active');
+            if (type === 'bottle' && currentItem.bottle_price) {
+                itemName += ' (бутылка)';
+                itemPrice = currentItem.bottle_price;
+                quantity = bottleQuantity;
+            } else if (currentItem.portion_price) {
+                itemPrice = currentItem.portion_price;
+                quantity = portionQuantity;
+            } else if (currentItem.bottle_price) {
+                itemName += ' (бутылка)';
+                itemPrice = currentItem.bottle_price;
+                quantity = bottleQuantity;
+            } else {
+                return;
+            }
+
+            const existingItem = cart.find(item => item.name === itemName && item.id === currentItem.id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: currentItem.id,
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: quantity,
+                    image: currentItem.image,
+                    isAlcohol: currentItem.is_alcohol || false
+                });
+            }
+
             updateCart();
-        } else {
-            menuButton.classList.add('active');
+            updateCartCounter();
+            saveCart();
+
+            const cartButton = document.querySelector('.mini-bar .cart-button');
+            cartButton.classList.add('animate');
+            setTimeout(() => cartButton.classList.remove('animate'), 500);
+
+            if (currentItem.is_alcohol) {
+                showAlcoholNotification();
+            } else {
+                showCustomAlert('Товар добавлен в корзину!');
+            }
+
+            closeModal();
         }
-    }
 
-    function scrollToCategories() {
-        showScreen('menu-screen');
-        const categoryGrid = document.getElementById('category-grid');
-        if (categoryGrid) {
-            categoryGrid.scrollIntoView({ behavior: 'smooth' });
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            const emptyCart = document.getElementById('empty-cart');
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                emptyCart.classList.add('active');
+                cartItems.style.display = 'none';
+            } else {
+                emptyCart.classList.remove('active');
+                cartItems.style.display = 'block';
+
+                cart.forEach((item, index) => {
+                    const isAlcohol = item.isAlcohol || false;
+                    const isStopped = menuItems[item.id]?.in_stop_list;
+                    const displayPrice = isAlcohol || isStopped ? 0 : item.price;
+
+                    const cartItem = document.createElement('div');
+                    cartItem.className = `menu-item ${isStopped ? 'stopped' : ''}`;
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'">
+                        <div class="info">
+                            <h3>${item.name}</h3>
+                            <p>${isStopped ? 'Нет в наличии' : isAlcohol ? `${item.price}₽ (оплачивается отдельно)` : `${displayPrice}₽ за шт.`}</p>
+                        </div>
+                        ${!isStopped ? `
+                        <div class="quantity-controls">
+                            <button onclick="changeQuantity(${index}, -1)">−</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)">+</button>
+                        </div>
+                        ` : ''}
+                    `;
+                    cartItems.appendChild(cartItem);
+
+                    if (!isAlcohol && !isStopped) {
+                        total += item.price * item.quantity;
+                    }
+                });
+            }
+
+            totalPrice.textContent = total;
         }
-    }
 
-    function initGallery() {
-        const images = document.querySelectorAll('.gallery-images img');
-        let currentIndex = 0;
+        function changeQuantity(index, delta) {
+            const item = cart[index];
+            if (menuItems[item.id]?.in_stop_list) {
+                showCustomAlert('Товар недоступен');
+                return;
+            }
 
-        function showImage(index) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCart();
+            updateCartCounter();
+            saveCart();
+        }
+
+        function updateCartCounter() {
+            const cartCounter = document.getElementById('cart-counter');
+            cartCounter.textContent = cart.reduce((sum, item) => sum + (menuItems[item.id]?.in_stop_list ? 0 : item.quantity), 0);
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCart();
+            updateCartCounter();
+            saveCart();
+            showCustomAlert('Корзина очищена');
+        }
+
+        function showCustomAlert(message) {
+            const alert = document.getElementById('custom-alert');
+            alert.textContent = message;
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 1500);
+        }
+
+        function showAlcoholNotification() {
+            if (tg && tg.showPopup) {
+                tg.showPopup({
+                    title: 'Алкоголь',
+                    message: 'Алкоголь оплачивается отдельно при получении',
+                    buttons: [{ type: 'ok', text: 'Понятно' }]
+                });
+            } else {
+                showCustomAlert('Алкоголь добавлен (оплачивается отдельно)');
+            }
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+
+            const homeButton = document.getElementById('home-button');
+            const menuButton = document.getElementById('menu-button');
+            const cartButton = document.getElementById('cart-button');
+
+            homeButton.classList.remove('active');
+            menuButton.classList.remove('active');
+            cartButton.classList.remove('active');
+
+            const categoryHeader = document.getElementById('category-header');
+            const categoryTitle = document.getElementById('category-title');
+            const headerBackButton = document.getElementById('header-back-button');
+
+            const menuScreens = {
+                'main-screen': {
+                    title: 'Основные блюда',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'soups-screen': {
+                    title: 'Первые блюда',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'salads-screen': {
+                    title: 'Салаты',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'seafood-screen': {
+                    title: 'Морепродукты',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'pasta-screen': {
+                    title: 'Пасты',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'grill-screen': {
+                    title: 'Мангал',
+                    backAction: () => showScreen('menu-screen')
+                },
+                'drinks-screen': {
+                    title: 'Напитки',
+                    backAction: () => showScreen('bar-screen')
+                },
+                'strong-screen': {
+                    title: 'Крепкий алкоголь',
+                    backAction: () => showScreen('alcohol-screen')
+                },
+                'wine-screen': {
+                    title: 'Вино',
+                    backAction: () => showScreen('alcohol-screen')
+                },
+                'beer-screen': {
+                    title: 'Пиво',
+                    backAction: () => showScreen('alcohol-screen')
+                }
+            };
+
+            if (menuScreens[screenId]) {
+                categoryHeader.classList.add('active');
+                categoryTitle.textContent = menuScreens[screenId].title;
+                const newBackButton = headerBackButton.cloneNode(true);
+                headerBackButton.parentNode.replaceChild(newBackButton, headerBackButton);
+                newBackButton.addEventListener('click', menuScreens[screenId].backAction);
+                menuButton.classList.add('active');
+            } else {
+                categoryHeader.classList.remove('active');
+                if (screenId === 'menu-screen') {
+                    homeButton.classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else if (screenId === 'cart-screen') {
+                    cartButton.classList.add('active');
+                    updateCart();
+                } else if (screenId === 'bar-screen') {
+                    menuButton.classList.add('active');
+                } else if (screenId === 'alcohol-screen') {
+                    menuButton.classList.add('active');
+                }
+            }
+        }
+
+        function scrollToCategories() {
+            showScreen('menu-screen');
+            const categoryGrid = document.getElementById('category-grid');
+            if (categoryGrid) {
+                categoryGrid.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function initGallery() {
+            const images = document.querySelectorAll('.gallery-images img');
+            let currentIndex = 0;
+
+            function showImage(index) {
+                images.forEach((img, i) => {
+                    img.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                showImage(currentIndex);
+            }
+
+            setInterval(nextImage, 5000);
+            document.querySelector('.gallery').addEventListener('click', openGallery);
+        }
+
+        function openGallery() {
+            document.getElementById('gallery-screen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentGalleryIndex = 0;
+            showGalleryImage(currentGalleryIndex);
+        }
+
+        function closeGallery() {
+            document.getElementById('gallery-screen').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showGalleryImage(index) {
+            const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
             images.forEach((img, i) => {
                 img.classList.toggle('active', i === index);
             });
+            currentGalleryIndex = index;
         }
 
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            showImage(currentIndex);
+        function nextGalleryImage() {
+            const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
+            currentGalleryIndex = (currentGalleryIndex + 1) % images.length;
+            showGalleryImage(currentGalleryIndex);
         }
 
-        setInterval(nextImage, 5000);
-        document.querySelector('.gallery').addEventListener('click', openGallery);
-    }
+        function prevGalleryImage() {
+            const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
+            currentGalleryIndex = (currentGalleryIndex - 1 + images.length) % images.length;
+            showGalleryImage(currentGalleryIndex);
+        }
 
-    function openGallery() {
-        document.getElementById('gallery-screen').classList.add('active');
-        document.body.style.overflow = 'hidden';
-        currentGalleryIndex = 0;
-        showGalleryImage(currentGalleryIndex);
-    }
+        let touchStartX = 0;
+        let touchCurrentX = 0;
 
-    function closeGallery() {
-        document.getElementById('gallery-screen').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function showGalleryImage(index) {
-        const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
-        images.forEach((img, i) => {
-            img.classList.toggle('active', i === index);
+        document.getElementById('gallery-screen').addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
         });
-        currentGalleryIndex = index;
-    }
 
-    function nextGalleryImage() {
-        const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
-        currentGalleryIndex = (currentGalleryIndex + 1) % images.length;
-        showGalleryImage(currentGalleryIndex);
-    }
+        document.getElementById('gallery-screen').addEventListener('touchmove', (e) => {
+            touchCurrentX = e.touches[0].clientX;
+        });
 
-    function prevGalleryImage() {
-        const images = document.querySelectorAll('#gallery-screen .gallery-fullscreen img');
-        currentGalleryIndex = (currentGalleryIndex - 1 + images.length) % images.length;
-        showGalleryImage(currentGalleryIndex);
-    }
+        document.getElementById('gallery-screen').addEventListener('touchend', () => {
+            const diff = touchStartX - touchCurrentX;
+            if (diff > 50) {
+                nextGalleryImage();
+            } else if (diff < -50) {
+                prevGalleryImage();
+            }
+        });
 
-    let touchStartX = 0;
-    let touchCurrentX = 0;
-
-    document.getElementById('gallery-screen').addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-    });
-
-    document.getElementById('gallery-screen').addEventListener('touchmove', (e) => {
-        touchCurrentX = e.touches[0].clientX;
-    });
-
-    document.getElementById('gallery-screen').addEventListener('touchend', () => {
-        const diff = touchStartX - touchCurrentX;
-        if (diff > 50) {
-            nextGalleryImage();
-        } else if (diff < -50) {
-            prevGalleryImage();
+        function openPhone() {
+            const phoneNumber = '+79785791270';
+            if (tg && tg.showPopup) {
+                tg.showPopup({
+                    title: 'Номер телефона',
+                    message: `Скопируйте номер для звонка: ${phoneNumber}`,
+                    buttons: [
+                        { id: 'copy', type: 'default', text: 'Скопировать' },
+                        { type: 'cancel', text: 'Отмена' }
+                    ]
+                }, (buttonId) => {
+                    if (buttonId === 'copy') {
+                        navigator.clipboard.writeText(phoneNumber).then(() => {
+                            showCustomAlert('Номер скопирован!');
+                        });
+                    }
+                });
+            } else {
+                window.location.href = `tel:${phoneNumber}`;
+            }
         }
-    });
 
-    function openPhone() {
-        const phoneNumber = '+79785791270';
-        if (tg && tg.showPopup) {
-            tg.showPopup({
-                title: 'Номер телефона',
-                message: `Скопируйте номер для звонка: ${phoneNumber}`,
-                buttons: [
-                    { id: 'copy', type: 'default', text: 'Скопировать' },
-                    { type: 'cancel', text: 'Отмена' }
-                ]
-            }, (buttonId) => {
-                if (buttonId === 'copy') {
-                    copyToClipboard(phoneNumber);
-                    tg.showPopup({
-                        message: 'Номер скопирован! Вставьте его в приложение телефона.'
-                    });
-                }
-            });
-        } else {
-            copyToClipboard(phoneNumber);
-            alert(`Номер ${phoneNumber} скопирован! Вставьте его в приложение телефона.`);
+        function openWebsite() {
+            if (tg && tg.openLink) {
+                tg.openLink('https://buhtahotel.ru');
+            } else {
+                window.open('https://buhtahotel.ru', '_blank');
+            }
         }
-    }
 
-    function copyToClipboard(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text);
-        } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showCustomAlert('Корзина пуста');
+                return;
+            }
+            if (cart.some(item => menuItems[item.id]?.in_stop_list)) {
+                showCustomAlert('В корзине есть недоступные товары');
+                return;
+            }
+            document.getElementById('checkout-modal').classList.add('active');
+            document.getElementById('checkout-modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-    }
 
-    function openWebsite() {
-        const url = 'https://buhtahotel.ru';
-        if (tg && tg.openLink) {
-            tg.openLink(url);
-        } else {
-            window.open(url, '_blank');
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.remove('active');
+            document.getElementById('checkout-modal-overlay').classList.remove('active');
+            document.body.style.overflow = '';
         }
-    }
 
-    function openCheckoutModal() {
-        if (cart.length === 0) {
-            showCustomAlert('Корзина пуста! Добавьте товары, чтобы оформить заказ');
-            return;
+        function toggleRoomNumber() {
+            const deliveryMethod = document.getElementById('delivery-method').value;
+            const roomNumberContainer = document.getElementById('room-number-container');
+            if (deliveryMethod === 'delivery') {
+                roomNumberContainer.style.display = 'block';
+            } else {
+                roomNumberContainer.style.display = 'none';
+            }
         }
-        document.getElementById('checkout-modal').classList.add('active');
-        document.getElementById('checkout-modal-overlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
 
-    function closeCheckoutModal() {
-        document.getElementById('checkout-modal').classList.remove('active');
-        document.getElementById('checkout-modal-overlay').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function toggleRoomNumber() {
-        const deliveryMethod = document.getElementById('delivery-method').value;
-        const roomNumberContainer = document.getElementById('room-number-container');
-        roomNumberContainer.style.display = deliveryMethod === 'delivery' ? 'block' : 'none';
-    }
-
-    document.getElementById('checkout-form').addEventListener('submit', submitOrder);
-
-    if (tg) {
-        tg.onEvent('themeChanged', applyTheme);
-    }
-
-    const modal = document.getElementById('modal');
-    let touchStartY = 0;
-    let touchCurrentY = 0;
-
-    modal.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    });
-
-    modal.addEventListener('touchmove', (e) => {
-        touchCurrentY = e.touches[0].clientY;
-        const diff = touchCurrentY - touchStartY;
-        if (diff > 0) {
-            modal.style.transform = `translateY(${diff}px)`;
-        }
-    });
-
-    modal.addEventListener('touchend', () => {
-        const diff = touchCurrentY - touchStartY;
-        if (diff > 100) {
-            closeModal();
-        } else {
-            modal.style.transform = 'translateY(0)';
-        }
-    });
-</script>
-  </body>
+        document.getElementById('checkout-form').addEventListener('submit', submitOrder);
+    </script>
+</body>
 </html>
