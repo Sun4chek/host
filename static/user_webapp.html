@@ -337,11 +337,11 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
-    background-color: var(--item-bg-color);
+    z-index: 900; /* Уменьшен z-index, чтобы не перекрывать уведомления */
+    background-color: var(--background-color); /* Фон как у приложения */
     display: flex;
     align-items: center;
-    justify-content: center; /* Центрируем содержимое */
+    justify-content: center;
     padding: 10px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 50px;
@@ -376,6 +376,24 @@
 
 body.dark-theme .category-header {
     background-color: #213040;
+}
+
+.subcategory-back {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 950; /* Выше контента, но ниже уведомлений */
+    cursor: pointer;
+    display: none;
+}
+
+.subcategory-back.active {
+    display: block;
+}
+
+.subcategory-back img {
+    width: 24px;
+    height: 24px;
 }
 
         .container {
@@ -1212,6 +1230,9 @@ body.dark-theme .category-header {
     </div>
 
     <div id="custom-alert" class="custom-alert"></div>
+    <div class="subcategory-back" id="subcategory-back">
+    <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
+</div>
 
     <div class="category-header" id="category-header">
         <span class="back-button" id="header-back-button">
@@ -1948,86 +1969,108 @@ body.dark-theme .category-header {
         }
 
         function showScreen(screenId) {
-            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+    document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
 
-            const homeButton = document.getElementById('home-button');
-            const menuButton = document.getElementById('menu-button');
-            const cartButton = document.getElementById('cart-button');
+    const homeButton = document.getElementById('home-button');
+    const menuButton = document.getElementById('menu-button');
+    const cartButton = document.getElementById('cart-button');
 
-            homeButton.classList.remove('active');
-            menuButton.classList.remove('active');
-            cartButton.classList.remove('active');
+    homeButton.classList.remove('active');
+    menuButton.classList.remove('active');
+    cartButton.classList.remove('active');
 
-            const categoryHeader = document.getElementById('category-header');
-            const categoryTitle = document.getElementById('category-title');
-            const headerBackButton = document.getElementById('header-back-button');
+    const categoryHeader = document.getElementById('category-header');
+    const categoryTitle = document.getElementById('category-title');
+    const headerBackButton = document.getElementById('header-back-button');
+    const subcategoryBack = document.getElementById('subcategory-back');
 
-            const menuScreens = {
-                'main-screen': {
-                    title: 'Основные блюда',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'soups-screen': {
-                    title: 'Первые блюда',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'salads-screen': {
-                    title: 'Салаты',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'seafood-screen': {
-                    title: 'Морепродукты',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'pasta-screen': {
-                    title: 'Пасты',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'grill-screen': {
-                    title: 'Мангал',
-                    backAction: () => showScreen('menu-screen')
-                },
-                'drinks-screen': {
-                    title: 'Напитки',
-                    backAction: () => showScreen('bar-screen')
-                },
-                'strong-screen': {
-                    title: 'Крепкий алкоголь',
-                    backAction: () => showScreen('alcohol-screen')
-                },
-                'wine-screen': {
-                    title: 'Вино',
-                    backAction: () => showScreen('alcohol-screen')
-                },
-                'beer-screen': {
-                    title: 'Пиво',
-                    backAction: () => showScreen('alcohol-screen')
-                }
-            };
-
-            if (menuScreens[screenId]) {
-                categoryHeader.classList.add('active');
-                categoryTitle.textContent = menuScreens[screenId].title;
-                const newBackButton = headerBackButton.cloneNode(true);
-                headerBackButton.parentNode.replaceChild(newBackButton, headerBackButton);
-                newBackButton.addEventListener('click', menuScreens[screenId].backAction);
-                menuButton.classList.add('active');
-            } else {
-                categoryHeader.classList.remove('active');
-                if (screenId === 'menu-screen') {
-                    homeButton.classList.add('active');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else if (screenId === 'cart-screen') {
-                    cartButton.classList.add('active');
-                    updateCart();
-                } else if (screenId === 'bar-screen') {
-                    menuButton.classList.add('active');
-                } else if (screenId === 'alcohol-screen') {
-                    menuButton.classList.add('active');
-                }
-            }
+    const menuScreens = {
+        'main-screen': {
+            title: 'Основные блюда',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'soups-screen': {
+            title: 'Первые блюда',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'salads-screen': {
+            title: 'Салаты',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'seafood-screen': {
+            title: 'Морепродукты',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'pasta-screen': {
+            title: 'Пасты',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'grill-screen': {
+            title: 'Мангал',
+            backAction: () => showScreen('menu-screen'),
+            isSubcategory: false
+        },
+        'drinks-screen': {
+            title: 'Напитки',
+            backAction: () => showScreen('bar-screen'),
+            isSubcategory: true
+        },
+        'strong-screen': {
+            title: 'Крепкий алкоголь',
+            backAction: () => showScreen('alcohol-screen'),
+            isSubcategory: true
+        },
+        'wine-screen': {
+            title: 'Вино',
+            backAction: () => showScreen('alcohol-screen'),
+            isSubcategory: true
+        },
+        'beer-screen': {
+            title: 'Пиво',
+            backAction: () => showScreen('alcohol-screen'),
+            isSubcategory: true
         }
+    };
+
+    subcategoryBack.classList.remove('active');
+    categoryHeader.classList.remove('active');
+
+    if (menuScreens[screenId]) {
+        if (menuScreens[screenId].isSubcategory) {
+            // Показываем только иконку назад для подкатегорий
+            subcategoryBack.classList.add('active');
+            const newSubBackButton = subcategoryBack.cloneNode(true);
+            subcategoryBack.parentNode.replaceChild(newSubBackButton, subcategoryBack);
+            newSubBackButton.addEventListener('click', menuScreens[screenId].backAction);
+        } else {
+            // Показываем полную панель для основных категорий
+            categoryHeader.classList.add('active');
+            categoryTitle.textContent = menuScreens[screenId].title;
+            const newBackButton = headerBackButton.cloneNode(true);
+            headerBackButton.parentNode.replaceChild(newBackButton, headerBackButton);
+            newBackButton.addEventListener('click', menuScreens[screenId].backAction);
+        }
+        menuButton.classList.add('active');
+    } else {
+        if (screenId === 'menu-screen') {
+            homeButton.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (screenId === 'cart-screen') {
+            cartButton.classList.add('active');
+            updateCart();
+        } else if (screenId === 'bar-screen') {
+            menuButton.classList.add('active');
+        } else if (screenId === 'alcohol-screen') {
+            menuButton.classList.add('active');
+        }
+    }
+}
 
         function scrollToCategories() {
             showScreen('menu-screen');
