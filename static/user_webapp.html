@@ -393,17 +393,30 @@
             opacity: 1;
         }
 
-        .back-button {
-            display: inline-block;
-            cursor: pointer;
-            padding: 5px;
-            margin-bottom: 10px;
-            transition: opacity 0.2s ease;
-        }
+.back-button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+    transition: opacity 0.2s ease;
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    z-index: 1000; /* Выше всех элементов */
+    background-color: var(--item-bg-color);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        .back-button:hover {
-            opacity: 0.8;
-        }
+.back-button:hover {
+    opacity: 0.8;
+}
+
+.back-button-fixed {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    z-index: 1000;
+}
 
         .arrow-icon {
             width: 24px;
@@ -1288,7 +1301,7 @@ body.dark-theme .modal-buttons button.disabled {
 
 <!-- Контейнеры для категорий будут заполняться автоматически -->
 <div id="main-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Основные блюда</h2>
@@ -1296,7 +1309,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="soups-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Первые блюда</h2>
@@ -1305,35 +1318,35 @@ body.dark-theme .modal-buttons button.disabled {
 
 <!-- Остальные экраны категорий -->
 <div id="salads-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Салаты</h2>
 </div>
 
 <div id="seafood-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Морепродукты</h2>
 </div>
 
 <div id="pasta-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Пасты</h2>
 </div>
 
 <div id="grill-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Мангал</h2>
 </div>
 
 <div id="bar-screen" class="container">
-    <span class="back-button" onclick="scrollToCategories()">
+    <span class="back-button back-button-fixed" onclick="scrollToCategories()">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Бар</h2>
@@ -1344,7 +1357,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="drinks-screen" class="container">
-    <span class="back-button" onclick="showScreen('bar-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('bar-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Напитки</h2>
@@ -1352,7 +1365,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="alcohol-screen" class="container">
-    <span class="back-button" onclick="showScreen('bar-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('bar-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Алкоголь</h2>
@@ -1364,7 +1377,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="strong-screen" class="container">
-    <span class="back-button" onclick="showScreen('alcohol-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Крепкий алкоголь</h2>
@@ -1372,7 +1385,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="wine-screen" class="container">
-    <span class="back-button" onclick="showScreen('alcohol-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Вино</h2>
@@ -1380,7 +1393,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="beer-screen" class="container">
-    <span class="back-button" onclick="showScreen('alcohol-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('alcohol-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Пиво</h2>
@@ -1388,7 +1401,7 @@ body.dark-theme .modal-buttons button.disabled {
 </div>
 
 <div id="cart-screen" class="container">
-    <span class="back-button" onclick="showScreen('menu-screen')">
+    <span class="back-button back-button-fixed" onclick="showScreen('menu-screen')">
         <img class="arrow-icon" src="/static/images/arrow-light.png" alt="Назад">
     </span>
     <h2>Корзина</h2>
@@ -1530,6 +1543,21 @@ body.dark-theme .modal-buttons button.disabled {
         transports: ['websocket']
     });
 
+    // Сохранение корзины в localStorage
+    function saveCart() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Загрузка корзины из localStorage
+    function loadCart() {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            cart = JSON.parse(savedCart);
+            updateCart();
+            updateCartCounter();
+        }
+    }
+
     // Загрузка меню с сервера
     async function fetchMenu() {
         try {
@@ -1571,6 +1599,7 @@ body.dark-theme .modal-buttons button.disabled {
         applyTheme();
         currentMenuData = await fetchMenu();
         renderAllCategories(currentMenuData);
+        loadCart(); // Загружаем корзину
         initGallery();
 
         setInterval(updateMenu, 5000);
@@ -1665,7 +1694,7 @@ body.dark-theme .modal-buttons button.disabled {
             }
 
             showCustomAlert('Заказ успешно оформлен!');
-            clearCart();
+            clearCart(); // Очищаем корзину
             closeCheckoutModal();
             showScreen('menu-screen');
         } catch (error) {
@@ -1674,7 +1703,6 @@ body.dark-theme .modal-buttons button.disabled {
         }
     }
 
-    // Остальной код остаётся без изменений
     function showMenuUpdateNotification() {
         const notification = document.getElementById('menu-update-notification');
         notification.classList.add('active');
@@ -1900,6 +1928,7 @@ body.dark-theme .modal-buttons button.disabled {
 
         updateCart();
         updateCartCounter();
+        saveCart(); // Сохраняем корзину
 
         const cartButton = document.querySelector('.mini-bar .cart-button');
         cartButton.classList.add('animate');
@@ -1965,6 +1994,7 @@ body.dark-theme .modal-buttons button.disabled {
         }
         updateCart();
         updateCartCounter();
+        saveCart(); // Сохраняем корзину
     }
 
     function updateCartCounter() {
@@ -1976,6 +2006,7 @@ body.dark-theme .modal-buttons button.disabled {
         cart = [];
         updateCart();
         updateCartCounter();
+        saveCart(); // Сохраняем корзину
         showCustomAlert('Корзина очищена');
     }
 
