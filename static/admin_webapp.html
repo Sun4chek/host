@@ -97,6 +97,11 @@
             box-sizing: border-box;
         }
 
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
         button {
             padding: 10px;
             background: #0088cc;
@@ -152,35 +157,53 @@
         }
 
         .orders-list {
-        margin-top: 10px;
-    }
-    .order-item {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        padding: 10px;
-        background-color: #f9f9f9;
-    }
-    .order-header {
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .order-header span {
-        color: #888;
-    }
-    .order-details {
-        margin-top: 10px;
-        padding-left: 10px;
-    }
-    .order-details ul {
-        list-style-type: none;
-        padding-left: 0;
-    }
-    .order-details li {
-        margin-bottom: 5px;
-    }
+            margin-top: 10px;
+        }
+
+        .order-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .order-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-header span {
+            color: #888;
+        }
+
+        .order-details {
+            margin-top: 10px;
+            padding-left: 10px;
+        }
+
+        .order-details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .order-details li {
+            margin-bottom: 5px;
+        }
+
+        .status-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .comment-textarea {
+            margin-top: 5px;
+        }
 
         @media (max-width: 600px) {
             .minibar-item {
@@ -194,6 +217,9 @@
                 height: 80px;
             }
             .dish-info {
+                font-size: 12px;
+            }
+            .status-select, .comment-textarea {
                 font-size: 12px;
             }
         }
@@ -224,385 +250,446 @@
             <span>Заказы</span>
         </div>
     </div>
-<script>
-    let tg = window.Telegram.WebApp;
-    let items = [];
-    let stopList = [];
-    let newlyAddedItems = [];
-    let orders = [];
-    let currentTab = 'add';
-    const restaurantCode = 'BUHTA123';
-    let apiUrl = `${window.location.origin}/api/menu/BUHTA123`;
-    let ordersApiUrl = `${window.location.origin}/api/orders/BUHTA123`;
 
-    // Инициализация
-    document.addEventListener('DOMContentLoaded', async () => {
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            tg.expand();
-            tg.enableClosingConfirmation();
-        }
-        await fetchMenu();
-        await fetchOrders();
-    });
+    <script>
+        let tg = window.Telegram.WebApp;
+        let items = [];
+        let stopList = [];
+        let newlyAddedItems = [];
+        let orders = [];
+        let currentTab = 'add';
+        const restaurantCode = 'BUHTA123';
+        let apiUrl = `${window.location.origin}/api/menu/BUHTA123`;
+        let ordersApiUrl = `${window.location.origin}/api/orders/BUHTA123`;
 
-    // Загрузка меню
-    async function fetchMenu() {
-        try {
-            console.log('Попытка загрузки меню с:', apiUrl);
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Ошибка загрузки меню: ${response.status} - ${errorText}`);
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                tg.expand();
+                tg.enableClosingConfirmation();
             }
-            const data = await response.json();
-            console.log('Полученные данные меню:', data);
-
-            items = [];
-            stopList = [];
-            for (const category in data) {
-                data[category].forEach(item => {
-                    items.push({ ...item, category });
-                    if (item.in_stop_list) stopList.push(item.id);
-                });
-            }
-            showTab(currentTab);
-        } catch (error) {
-            console.error('Ошибка загрузки меню:', error);
-            tg.showAlert(`Ошибка загрузки меню: ${error.message}`);
-        }
-    }
-
-    // Загрузка заказов
-    async function fetchOrders() {
-        try {
-            console.log('Попытка загрузки заказов с:', ordersApiUrl);
-            const response = await fetch(ordersApiUrl);
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Ошибка загрузки заказов: ${response.status} - ${errorText}`);
-            }
-            orders = await response.json();
-            console.log('Полученные заказы:', orders);
-            if (currentTab === 'history') showTab('history');
-        } catch (error) {
-            console.error('Ошибка загрузки заказов:', error);
-            tg.showAlert(`Ошибка загрузки заказов: ${error.message}`);
-        }
-    }
-
-    // Переключение вкладок
-    function showTab(tabName, event = null) {
-        const itemsEl = document.querySelectorAll('.minibar-item');
-        const content = document.getElementById('content');
-        itemsEl.forEach(item => item.classList.remove('active'));
-
-        if (event && event.currentTarget) {
-            event.currentTarget.classList.add('active');
-        } else {
-            const defaultActiveTab = document.querySelector(`.minibar-item[onclick="showTab('${tabName}')"]`);
-            if (defaultActiveTab) defaultActiveTab.classList.add('active');
-        }
-
-        currentTab = tabName;
-
-        switch(tabName) {
-            case 'add':
-                content.innerHTML = renderAddTab();
-                break;
-            case 'edit':
-                content.innerHTML = renderEditTab();
-                break;
-            case 'stop':
-                content.innerHTML = renderStopTab();
-                break;
-            case 'delete':
-                content.innerHTML = renderDeleteTab();
-                break;
-            case 'history':
-                content.innerHTML = renderHistoryTab();
-                break;
-        }
-        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-    }
-
-    function toggleForm(formId) {
-        const form = document.getElementById(formId);
-        form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    async function addDish() {
-        const dish = {
-            name: document.getElementById('dishName').value,
-            description: document.getElementById('dishDesc').value,
-            weight: document.getElementById('dishWeight').value,
-            image: document.getElementById('dishPhoto').value || null,
-            portion_price: document.getElementById('dishPricePortion').value || null,
-            bottle_price: document.getElementById('dishPriceBottle').value || null,
-            category: document.getElementById('dishCategory').value || null,
-            is_alcohol: document.getElementById('isAlcohol').checked,
-            in_stop_list: false
-        };
-
-        if (dish.name && dish.description && dish.weight) {
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(dish)
-                });
-                if (response.ok) {
-                    const addedDish = await response.json();
-                    newlyAddedItems.push({ ...dish, id: addedDish.id || Date.now() });
-                    await fetchMenu();
-                    toggleForm('addForm');
-                    showTab('add');
-                    window.Telegram.WebApp.sendData(JSON.stringify({ action: 'add', ...dish }));
-                    window.Telegram.WebApp.showAlert('Блюдо добавлено!');
-                } else {
-                    throw new Error(await response.text());
-                }
-            } catch (error) {
-                console.error('Ошибка добавления блюда:', error);
-                window.Telegram.WebApp.showAlert('Ошибка добавления блюда: ' + error.message);
-            }
-        } else {
-            window.Telegram.WebApp.showAlert('Заполните обязательные поля: название, описание, вес!');
-        }
-    }
-
-    function renderAddTab() {
-        return `
-            <button class="add-button" onclick="toggleForm('addForm')">Добавить блюдо</button>
-            <div class="form-container" id="addForm">
-                <input type="text" id="dishName" placeholder="Название блюда">
-                <textarea id="dishDesc" placeholder="Описание"></textarea>
-                <input type="text" id="dishWeight" placeholder="Вес (например, 450 мл или 500 гр)">
-                <input type="text" id="dishPhoto" placeholder="Ссылка на фото">
-                <input type="number" id="dishPricePortion" placeholder="Цена за порцию">
-                <input type="number" id="dishPriceBottle" placeholder="Цена за бутылку">
-                <select id="dishCategory">
-                    <option value="">Выберите категорию</option>
-                    ${Object.keys(fetchCategories()).map(cat => `<option value="${cat}">${cat}</option>`).join('')}
-                </select>
-                <label><input type="checkbox" id="isAlcohol"> Это алкоголь</label>
-                <button onclick="addDish()">Сохранить</button>
-            </div>
-            <div id="dishesList">
-                ${newlyAddedItems.length > 0 ? newlyAddedItems.map(item => `
-                    <div class="dish-item">
-                        <img src="${item.image || 'https://via.placeholder.com/100x100?text=No+Image'}" class="dish-image">
-                        <div class="dish-info">
-                            <strong>${item.name}</strong><br>
-                            ${item.category ? `Категория: ${item.category}<br>` : ''}
-                            ${item.description}<br>
-                            Вес: ${item.weight}<br>
-                            ${item.portion_price ? `Цена порции: ${item.portion_price}₽<br>` : ''}
-                            ${item.bottle_price ? `Цена бутылки: ${item.bottle_price}₽<br>` : ''}
-                            ${item.is_alcohol ? '<span>Алкоголь</span>' : ''}
-                        </div>
-                    </div>
-                `).join('') : '<p>Нет добавленных блюд в этой сессии</p>'}
-            </div>
-        `;
-    }
-
-    function fetchCategories() {
-        const categories = {};
-        items.forEach(item => {
-            if (item.category) categories[item.category] = true;
+            await fetchMenu();
+            await fetchOrders();
         });
-        return categories;
-    }
 
-    function showEditForm(id) {
-        const item = items.find(i => i.id === id);
-        const editForm = document.getElementById('editForm');
-        editForm.style.display = 'flex';
-        editForm.innerHTML = `
-            <input type="text" id="editDishName" value="${item.name}">
-            <textarea id="editDishDesc">${item.description}</textarea>
-            <input type="text" id="editDishWeight" value="${item.weight}">
-            <input type="text" id="editDishPhoto" value="${item.image || ''}">
-            <input type="number" id="editDishPricePortion" value="${item.portion_price || ''}">
-            <input type="number" id="editDishPriceBottle" value="${item.bottle_price || ''}">
-            <select id="editDishCategory">
-                <option value="">Выберите категорию</option>
-                ${Object.keys(fetchCategories()).map(cat => `<option value="${cat}" ${item.category === cat ? 'selected' : ''}>${cat}</option>`).join('')}
-            </select>
-            <label><input type="checkbox" id="editIsAlcohol" ${item.is_alcohol ? 'checked' : ''}> Это алкоголь</label>
-            <button onclick="saveEdit(${id})">Сохранить</button>
-        `;
-    }
+        // Загрузка меню
+        async function fetchMenu() {
+            try {
+                console.log('Попытка загрузки меню с:', apiUrl);
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Ошибка загрузки меню: ${response.status} - ${errorText}`);
+                }
+                const data = await response.json();
+                console.log('Полученные данные меню:', data);
 
-    async function saveEdit(id) {
-        const dish = {
-            name: document.getElementById('editDishName').value,
-            description: document.getElementById('editDishDesc').value,
-            weight: document.getElementById('editDishWeight').value,
-            image: document.getElementById('editDishPhoto').value || null,
-            portion_price: document.getElementById('editDishPricePortion').value || null,
-            bottle_price: document.getElementById('editDishPriceBottle').value || null,
-            category: document.getElementById('editDishCategory').value || null,
-            is_alcohol: document.getElementById('editIsAlcohol').checked,
-            in_stop_list: items.find(i => i.id === id).in_stop_list
-        };
+                items = [];
+                stopList = [];
+                for (const category in data) {
+                    data[category].forEach(item => {
+                        items.push({ ...item, category });
+                        if (item.in_stop_list) stopList.push(item.id);
+                    });
+                }
+                showTab(currentTab);
+            } catch (error) {
+                console.error('Ошибка загрузки меню:', error);
+                tg.showAlert(`Ошибка загрузки меню: ${error.message}`);
+            }
+        }
 
-        if (dish.name && dish.description && dish.weight) {
+        // Загрузка заказов
+        async function fetchOrders() {
+            try {
+                console.log('Попытка загрузки заказов с:', ordersApiUrl);
+                const response = await fetch(ordersApiUrl);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Ошибка загрузки заказов: ${response.status} - ${errorText}`);
+                }
+                orders = await response.json();
+                console.log('Полученные заказы:', orders);
+                if (currentTab === 'history') showTab('history');
+            } catch (error) {
+                console.error('Ошибка загрузки заказов:', error);
+                tg.showAlert(`Ошибка загрузки заказов: ${error.message}`);
+            }
+        }
+
+        // Обновление статуса заказа
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await fetch(`${window.location.origin}/api/order/BUHTA123/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Ошибка обновления статуса: ${errorText}`);
+                }
+                await fetchOrders(); // Обновляем список заказов
+                tg.showAlert('Статус заказа обновлён!');
+                tg.sendData(JSON.stringify({ action: 'update_status', order_id: orderId, status }));
+            } catch (error) {
+                console.error('Ошибка обновления статуса:', error);
+                tg.showAlert(`Ошибка обновления статуса: ${error.message}`);
+            }
+        }
+
+        // Обновление комментария заказа
+        async function updateOrderComment(orderId, comment) {
+            try {
+                const response = await fetch(`${window.location.origin}/api/order/BUHTA123/${orderId}/comment`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ comment })
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Ошибка обновления комментария: ${errorText}`);
+                }
+                await fetchOrders(); // Обновляем список заказов
+                tg.showAlert('Комментарий заказа обновлён!');
+                tg.sendData(JSON.stringify({ action: 'update_comment', order_id: orderId, comment }));
+            } catch (error) {
+                console.error('Ошибка обновления комментария:', error);
+                tg.showAlert(`Ошибка обновления комментария: ${error.message}`);
+            }
+        }
+
+        // Переключение вкладок
+        function showTab(tabName, event = null) {
+            const itemsEl = document.querySelectorAll('.minibar-item');
+            const content = document.getElementById('content');
+            itemsEl.forEach(item => item.classList.remove('active'));
+
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            } else {
+                const defaultActiveTab = document.querySelector(`.minibar-item[onclick="showTab('${tabName}')"]`);
+                if (defaultActiveTab) defaultActiveTab.classList.add('active');
+            }
+
+            currentTab = tabName;
+
+            switch(tabName) {
+                case 'add':
+                    content.innerHTML = renderAddTab();
+                    break;
+                case 'edit':
+                    content.innerHTML = renderEditTab();
+                    break;
+                case 'stop':
+                    content.innerHTML = renderStopTab();
+                    break;
+                case 'delete':
+                    content.innerHTML = renderDeleteTab();
+                    break;
+                case 'history':
+                    content.innerHTML = renderHistoryTab();
+                    break;
+            }
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        }
+
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        async function addDish() {
+            const dish = {
+                name: document.getElementById('dishName').value,
+                description: document.getElementById('dishDesc').value,
+                weight: document.getElementById('dishWeight').value,
+                image: document.getElementById('dishPhoto').value || null,
+                portion_price: document.getElementById('dishPricePortion').value || null,
+                bottle_price: document.getElementById('dishPriceBottle').value || null,
+                category: document.getElementById('dishCategory').value || null,
+                is_alcohol: document.getElementById('isAlcohol').checked,
+                in_stop_list: false
+            };
+
+            if (dish.name && dish.description && dish.weight) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dish)
+                    });
+                    if (response.ok) {
+                        const addedDish = await response.json();
+                        newlyAddedItems.push({ ...dish, id: addedDish.id || Date.now() });
+                        await fetchMenu();
+                        toggleForm('addForm');
+                        showTab('add');
+                        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'add', ...dish }));
+                        window.Telegram.WebApp.showAlert('Блюдо добавлено!');
+                    } else {
+                        throw new Error(await response.text());
+                    }
+                } catch (error) {
+                    console.error('Ошибка добавления блюда:', error);
+                    window.Telegram.WebApp.showAlert('Ошибка добавления блюда: ' + error.message);
+                }
+            } else {
+                window.Telegram.WebApp.showAlert('Заполните обязательные поля: название, описание, вес!');
+            }
+        }
+
+        function renderAddTab() {
+            return `
+                <button class="add-button" onclick="toggleForm('addForm')">Добавить блюдо</button>
+                <div class="form-container" id="addForm">
+                    <input type="text" id="dishName" placeholder="Название блюда">
+                    <textarea id="dishDesc" placeholder="Описание"></textarea>
+                    <input type="text" id="dishWeight" placeholder="Вес (например, 450 мл или 500 гр)">
+                    <input type="text" id="dishPhoto" placeholder="Ссылка на фото">
+                    <input type="number" id="dishPricePortion" placeholder="Цена за порцию">
+                    <input type="number" id="dishPriceBottle" placeholder="Цена за бутылку">
+                    <select id="dishCategory">
+                        <option value="">Выберите категорию</option>
+                        ${Object.keys(fetchCategories()).map(cat => `<option value="${cat}">${cat}</option>`).join('')}
+                    </select>
+                    <label><input type="checkbox" id="isAlcohol"> Это алкоголь</label>
+                    <button onclick="addDish()">Сохранить</button>
+                </div>
+                <div id="dishesList">
+                    ${newlyAddedItems.length > 0 ? newlyAddedItems.map(item => `
+                        <div class="dish-item">
+                            <img src="${item.image || 'https://via.placeholder.com/100x100?text=No+Image'}" class="dish-image">
+                            <div class="dish-info">
+                                <strong>${item.name}</strong><br>
+                                ${item.category ? `Категория: ${item.category}<br>` : ''}
+                                ${item.description}<br>
+                                Вес: ${item.weight}<br>
+                                ${item.portion_price ? `Цена порции: ${item.portion_price}₽<br>` : ''}
+                                ${item.bottle_price ? `Цена бутылки: ${item.bottle_price}₽<br>` : ''}
+                                ${item.is_alcohol ? '<span>Алкоголь</span>' : ''}
+                            </div>
+                        </div>
+                    `).join('') : '<p>Нет добавленных блюд в этой сессии</p>'}
+                </div>
+            `;
+        }
+
+        function fetchCategories() {
+            const categories = {};
+            items.forEach(item => {
+                if (item.category) categories[item.category] = true;
+            });
+            return categories;
+        }
+
+        function showEditForm(id) {
+            const item = items.find(i => i.id === id);
+            const editForm = document.getElementById('editForm');
+            editForm.style.display = 'flex';
+            editForm.innerHTML = `
+                <input type="text" id="editDishName" value="${item.name}">
+                <textarea id="editDishDesc">${item.description}</textarea>
+                <input type="text" id="editDishWeight" value="${item.weight}">
+                <input type="text" id="editDishPhoto" value="${item.image || ''}">
+                <input type="number" id="editDishPricePortion" value="${item.portion_price || ''}">
+                <input type="number" id="editDishPriceBottle" value="${item.bottle_price || ''}">
+                <select id="editDishCategory">
+                    <option value="">Выберите категорию</option>
+                    ${Object.keys(fetchCategories()).map(cat => `<option value="${cat}" ${item.category === cat ? 'selected' : ''}>${cat}</option>`).join('')}
+                </select>
+                <label><input type="checkbox" id="editIsAlcohol" ${item.is_alcohol ? 'checked' : ''}> Это алкоголь</label>
+                <button onclick="saveEdit(${id})">Сохранить</button>
+            `;
+        }
+
+        async function saveEdit(id) {
+            const dish = {
+                name: document.getElementById('editDishName').value,
+                description: document.getElementById('editDishDesc').value,
+                weight: document.getElementById('editDishWeight').value,
+                image: document.getElementById('editDishPhoto').value || null,
+                portion_price: document.getElementById('editDishPricePortion').value || null,
+                bottle_price: document.getElementById('editDishPriceBottle').value || null,
+                category: document.getElementById('editDishCategory').value || null,
+                is_alcohol: document.getElementById('editIsAlcohol').checked,
+                in_stop_list: items.find(i => i.id === id).in_stop_list
+            };
+
+            if (dish.name && dish.description && dish.weight) {
+                try {
+                    const response = await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(dish)
+                    });
+                    if (response.ok) {
+                        await fetchMenu();
+                        document.getElementById('editForm').style.display = 'none';
+                        window.Telegram.WebApp.sendData(JSON.stringify({ action: 'update', ...dish }));
+                        window.Telegram.WebApp.showAlert('Блюдо отредактировано!');
+                    } else {
+                        throw new Error(await response.text());
+                    }
+                } catch (error) {
+                    console.error('Ошибка редактирования блюда:', error);
+                    window.Telegram.WebApp.showAlert('Ошибка редактирования блюда');
+                }
+            } else {
+                window.Telegram.WebApp.showAlert('Заполните обязательные поля: название, описание, вес!');
+            }
+        }
+
+        async function toggleStop(id) {
+            const item = items.find(i => i.id === id);
+            const newStopListStatus = !item.in_stop_list;
             try {
                 const response = await fetch(`${apiUrl}/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(dish)
+                    body: JSON.stringify({ ...item, in_stop_list: newStopListStatus })
                 });
                 if (response.ok) {
                     await fetchMenu();
-                    document.getElementById('editForm').style.display = 'none';
-                    window.Telegram.WebApp.sendData(JSON.stringify({ action: 'update', ...dish }));
-                    window.Telegram.WebApp.showAlert('Блюдо отредактировано!');
+                    window.Telegram.WebApp.sendData(JSON.stringify({ action: 'stop_list', name: item.name }));
+                    window.Telegram.WebApp.showAlert(`Блюдо ${newStopListStatus ? 'добавлено в' : 'убрано из'} стоп-листа!`);
                 } else {
                     throw new Error(await response.text());
                 }
             } catch (error) {
-                console.error('Ошибка редактирования блюда:', error);
-                window.Telegram.WebApp.showAlert('Ошибка редактирования блюда');
+                console.error('Ошибка изменения стоп-листа:', error);
+                window.Telegram.WebApp.showAlert('Ошибка изменения стоп-листа');
             }
-        } else {
-            window.Telegram.WebApp.showAlert('Заполните обязательные поля: название, описание, вес!');
         }
-    }
 
-    async function toggleStop(id) {
-        const item = items.find(i => i.id === id);
-        const newStopListStatus = !item.in_stop_list;
-        try {
-            const response = await fetch(`${apiUrl}/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...item, in_stop_list: newStopListStatus })
-            });
-            if (response.ok) {
-                await fetchMenu();
-                window.Telegram.WebApp.sendData(JSON.stringify({ action: 'stop_list', name: item.name }));
-                window.Telegram.WebApp.showAlert(`Блюдо ${newStopListStatus ? 'добавлено в' : 'убрано из'} стоп-листа!`);
-            } else {
-                throw new Error(await response.text());
+        async function deleteDish(id) {
+            const item = items.find(i => i.id === id);
+            try {
+                const response = await fetch(`${apiUrl}/${id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    await fetchMenu();
+                    window.Telegram.WebApp.sendData(JSON.stringify({ action: 'delete', name: item.name }));
+                    window.Telegram.WebApp.showAlert('Блюдо удалено!');
+                } else {
+                    throw new Error(await response.text());
+                }
+            } catch (error) {
+                console.error('Ошибка удаления блюда:', error);
+                window.Telegram.WebApp.showAlert('Ошибка удаления блюда');
             }
-        } catch (error) {
-            console.error('Ошибка изменения стоп-листа:', error);
-            window.Telegram.WebApp.showAlert('Ошибка изменения стоп-листа');
         }
-    }
 
-    async function deleteDish(id) {
-        const item = items.find(i => i.id === id);
-        try {
-            const response = await fetch(`${apiUrl}/${id}`, {
-                method: 'DELETE'
-            });
-            if (response.ok) {
-                await fetchMenu();
-                window.Telegram.WebApp.sendData(JSON.stringify({ action: 'delete', name: item.name }));
-                window.Telegram.WebApp.showAlert('Блюдо удалено!');
-            } else {
-                throw new Error(await response.text());
-            }
-        } catch (error) {
-            console.error('Ошибка удаления блюда:', error);
-            window.Telegram.WebApp.showAlert('Ошибка удаления блюда');
-        }
-    }
-
-    function renderEditTab() {
-        return `
-            <button class="action-button" onclick="toggleForm('editList')">Редактировать</button>
-            <div class="list-container" id="editList">
-                ${items.length > 0 ? items.map((item) => `
-                    <div class="list-item">
-                        ${item.name}
-                        <button onclick="showEditForm(${item.id})">Изменить</button>
-                    </div>
-                `).join('') : '<p>Список пуст</p>'}
-            </div>
-            <div class="edit-form-container" id="editForm"></div>
-        `;
-    }
-
-    function renderStopTab() {
-        return `
-            <button class="action-button" onclick="toggleForm('stopList')">Добавить в стоп-лист</button>
-            <div class="list-container" id="stopList">
-                ${items.length > 0 ? items.map((item) => `
-                    <div class="list-item">
-                        ${item.name} ${item.in_stop_list ? '(в стоп-листе)' : ''}
-                        <button onclick="toggleStop(${item.id})">${item.in_stop_list ? 'Убрать' : 'Добавить'}</button>
-                    </div>
-                `).join('') : '<p>Список пуст</p>'}
-            </div>
-        `;
-    }
-
-    function renderDeleteTab() {
-        return `
-            <button class="action-button" onclick="toggleForm('deleteList')">Удалить</button>
-            <div class="list-container" id="deleteList">
-                ${items.length > 0 ? items.map((item) => `
-                    <div class="list-item">
-                        ${item.name}
-                        <button onclick="deleteDish(${item.id})">Удалить</button>
-                    </div>
-                `).join('') : '<p>Список пуст</p>'}
-            </div>
-        `;
-    }
-
-    function renderHistoryTab() {
-        return `
-            <h1>История заказов</h1>
-            <div class="orders-list">
-                ${orders.length > 0 ? orders.map(order => `
-                    <div class="order-item">
-                        <div class="order-header" onclick="toggleOrderDetails(${order.id})">
-                            <strong>Заказ #${order.id}</strong> от ${order.order_details.timestamp}
-                            <span>Сумма: ${order.order_details.total}₽</span>
+        function renderEditTab() {
+            return `
+                <button class="action-button" onclick="toggleForm('editList')">Редактировать</button>
+                <div class="list-container" id="editList">
+                    ${items.length > 0 ? items.map((item) => `
+                        <div class="list-item">
+                            ${item.name}
+                            <button onclick="showEditForm(${item.id})">Изменить</button>
                         </div>
-                        <div class="order-details" id="order-details-${order.id}" style="display: none;">
-                            <p><strong>Клиент:</strong> ${order.customer.last_name} ${order.customer.first_name}</p>
-                            <p><strong>Телефон:</strong> ${order.customer.phone}</p>
-                            <p><strong>Номер комнаты:</strong> ${order.customer.room_number || 'Не указан'}</p>
-                            <p><strong>Способ оплаты:</strong> ${order.order_details.payment_method}</p>
-                            <p><strong>Способ доставки:</strong> ${order.order_details.delivery_method}</p>
-                            <p><strong>Позиции:</strong></p>
-                            <ul>
-                                ${order.order_details.items.map(item => `
-                                    <li>${item.name} - ${item.quantity} шт. x ${item.price}₽ = ${item.quantity * item.price}₽ ${item.is_alcohol ? '(алкоголь)' : ''}</li>
-                                `).join('')}
-                            </ul>
+                    `).join('') : '<p>Список пуст</p>'}
+                </div>
+                <div class="edit-form-container" id="editForm"></div>
+            `;
+        }
+
+        function renderStopTab() {
+            return `
+                <button class="action-button" onclick="toggleForm('stopList')">Добавить в стоп-лист</button>
+                <div class="list-container" id="stopList">
+                    ${items.length > 0 ? items.map((item) => `
+                        <div class="list-item">
+                            ${item.name} ${item.in_stop_list ? '(в стоп-листе)' : ''}
+                            <button onclick="toggleStop(${item.id})">${item.in_stop_list ? 'Убрать' : 'Добавить'}</button>
                         </div>
-                    </div>
-                `).join('') : '<p>Заказов пока нет</p>'}
-            </div>
-        `;
-    }
+                    `).join('') : '<p>Список пуст</p>'}
+                </div>
+            `;
+        }
 
-    function toggleOrderDetails(orderId) {
-        const details = document.getElementById(`order-details-${orderId}`);
-        details.style.display = details.style.display === 'none' ? 'block' : 'none';
-        window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-    }
+        function renderDeleteTab() {
+            return `
+                <button class="action-button" onclick="toggleForm('deleteList')">Удалить</button>
+                <div class="list-container" id="deleteList">
+                    ${items.length > 0 ? items.map((item) => `
+                        <div class="list-item">
+                            ${item.name}
+                            <button onclick="deleteDish(${item.id})">Удалить</button>
+                        </div>
+                    `).join('') : '<p>Список пуст</p>'}
+                </div>
+            `;
+        }
 
-    function sendDishes() {
-        const dishesText = newlyAddedItems.map(item =>
-            `${item.name}\n` +
-            `${item.category ? `Категория: ${item.category}\n` : ''}` +
-            `${item.description}\nВес: ${item.weight}\n` +
-            `${item.portion_price ? `Цена порции: ${item.portion_price}₽\n` : ''}` +
-            `${item.bottle_price ? `Цена бутылки: ${item.bottle_price}₽\n` : ''}` +
-            `${item.is_alcohol ? 'Алкоголь\n' : ''}`
-        ).join('\n---\n');
-        window.Telegram.WebApp.showAlert('Добавленные блюда:\n' + dishesText);
-    }
-</script>
+        function renderHistoryTab() {
+            const statusLabels = {
+                pending: 'В ожидании',
+                confirmed: 'Подтверждён',
+                completed: 'Завершён',
+                cancelled: 'Отменён'
+            };
+
+            return `
+                <h1>История заказов</h1>
+                <div class="orders-list">
+                    ${orders.length > 0 ? orders.map(order => `
+                        <div class="order-item">
+                            <div class="order-header" onclick="toggleOrderDetails(${order.id})">
+                                <strong>Заказ #${order.id}</strong> от ${new Date(order.order_details.timestamp).toLocaleString('ru-RU')}
+                                <span>Сумма: ${order.order_details.total}₽</span>
+                            </div>
+                            <div class="order-details" id="order-details-${order.id}" style="display: none;">
+                                <p><strong>Клиент:</strong> ${order.customer.last_name} ${order.customer.first_name}</p>
+                                <p><strong>Телефон:</strong> ${order.customer.phone}</p>
+                                <p><strong>Номер комнаты:</strong> ${order.customer.room_number || 'Не указан'}</p>
+                                <p><strong>Способ оплаты:</strong> ${order.order_details.payment_method === 'cash' ? 'Наличные' : 'Карта'}</p>
+                                <p><strong>Способ доставки:</strong> ${order.order_details.delivery_method === 'delivery' ? 'Доставка' : 'Самовынос'}</p>
+                                <p><strong>Статус:</strong>
+                                    <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
+                                        <option value="pending" ${order.order_details.status === 'pending' ? 'selected' : ''}>В ожидании</option>
+                                        <option value="confirmed" ${order.order_details.status === 'confirmed' ? 'selected' : ''}>Подтверждён</option>
+                                        <option value="completed" ${order.order_details.status === 'completed' ? 'selected' : ''}>Завершён</option>
+                                        <option value="cancelled" ${order.order_details.status === 'cancelled' ? 'selected' : ''}>Отменён</option>
+                                    </select>
+                                </p>
+                                <p><strong>Комментарий:</strong></p>
+                                <textarea class="comment-textarea" id="comment-${order.id}" placeholder="Введите комментарий">${order.order_details.comment || ''}</textarea>
+                                <button onclick="updateOrderComment(${order.id}, document.getElementById('comment-${order.id}').value)">Сохранить комментарий</button>
+                                <p><strong>Позиции:</strong></p>
+                                <ul>
+                                    ${order.order_details.items.map(item => `
+                                        <li>${item.name} - ${item.quantity} шт. x ${item.price}₽ = ${item.quantity * item.price}₽ ${item.is_alcohol ? '(алкоголь)' : ''}</li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('') : '<p>Заказов пока нет</p>'}
+                </div>
+            `;
+        }
+
+        function toggleOrderDetails(orderId) {
+            const details = document.getElementById(`order-details-${orderId}`);
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        }
+
+        function sendDishes() {
+            const dishesText = newlyAddedItems.map(item =>
+                `${item.name}\n` +
+                `${item.category ? `Категория: ${item.category}\n` : ''}` +
+                `${item.description}\nВес: ${item.weight}\n` +
+                `${item.portion_price ? `Цена порции: ${item.portion_price}₽\n` : ''}` +
+                `${item.bottle_price ? `Цена бутылки: ${item.bottle_price}₽\n` : ''}` +
+                `${item.is_alcohol ? 'Алкоголь\n' : ''}`
+            ).join('\n---\n');
+            window.Telegram.WebApp.showAlert('Добавленные блюда:\n' + dishesText);
+        }
+    </script>
 </body>
 </html>

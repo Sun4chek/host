@@ -1,9 +1,9 @@
 venv/
-.env
+.env.main
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
-env/
+
 db/restaurant.db

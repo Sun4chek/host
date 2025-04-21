@@ -5,14 +5,14 @@ import logging
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Загрузка переменных окружения
-from dotenv import load_dotenv
-load_dotenv()
+load_dotenv('.env.main')
 
 # Конфигурация
 BASE_URL = os.getenv("BASE_URL", "https://buhtarest-api.onrender.com")
@@ -215,15 +215,17 @@ def get_orders(restaurant_code):
         restaurant = cursor.fetchone()
         if not restaurant:
             conn.close()
+            logger.warning(f"Ресторан не найден: {restaurant_code}")
             return jsonify({"error": "Ресторан не найден"}), 404
 
         restaurant_id = restaurant['id']
         cursor.execute('''
-            SELECT id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp
+            SELECT id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp, comment, status
             FROM Orders WHERE restaurant_id = %s
             ORDER BY timestamp DESC
         ''', (restaurant_id,))
         orders = cursor.fetchall()
+        logger.debug(f"Сырые данные заказов из базы: {json.dumps(orders, ensure_ascii=False, default=str)}")
 
         orders_data = []
         for order in orders:
@@ -232,32 +234,36 @@ def get_orders(restaurant_code):
                 FROM OrderItems WHERE order_id = %s
             ''', (order['id'],))
             items = cursor.fetchall()
+            logger.debug(f"Заказ {order['id']}: status={order['status']}, comment={order['comment']}")
             orders_data.append({
-                "id": order['id'],
+                "id": order['id'] or 0,
                 "customer": {
-                    "last_name": order['last_name'],
-                    "first_name": order['first_name'],
-                    "phone": order['phone'],
-                    "room_number": order['room_number']
+                    "last_name": order['last_name'] or '',
+                    "first_name": order['first_name'] or '',
+                    "phone": order['phone'] or '',
+                    "room_number": order['room_number'] or ''
                 },
                 "order_details": {
-                    "payment_method": order['payment_method'],
-                    "delivery_method": order['delivery_method'],
+                    "payment_method": order['payment_method'] or 'cash',
+                    "delivery_method": order['delivery_method'] or 'delivery',
                     "items": [
                         {
-                            "item_id": item['item_id'],
-                            "name": item['name'],
-                            "price": float(item['price']),
-                            "quantity": item['quantity'],
-                            "is_alcohol": item['is_alcohol']
+                            "item_id": item['item_id'] or 0,
+                            "name": item['name'] or 'Без названия',
+                            "price": float(item['price']) if item['price'] is not None else 0.0,
+                            "quantity": item['quantity'] or 0,
+                            "is_alcohol": item['is_alcohol'] or False
                         } for item in items
                     ],
-                    "total": float(order['total']),
-                    "timestamp": order['timestamp'].isoformat()
+                    "total": float(order['total']) if order['total'] is not None else 0.0,
+                    "timestamp": order['timestamp'].isoformat() if order['timestamp'] else '2025-01-01T00:00:00',
+                    "comment": order['comment'] or '',
+                    "status": order['status'] or 'pending'
                 }
             })
 
         conn.close()
+        logger.debug(f"Возвращено {len(orders_data)} заказов: {json.dumps(orders_data, ensure_ascii=False)}")
         return jsonify(orders_data)
     except Exception as e:
         logger.error(f"Ошибка: {e}")
@@ -286,14 +292,16 @@ def add_order(restaurant_code):
 
         customer = data['customer']
         order_details = data['orderDetails']
+        comment = data.get('comment', '')
+        status = 'pending'
 
         total = float(order_details['total'])
         cursor.execute('''
-            INSERT INTO Orders (restaurant_id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id
+            INSERT INTO Orders (restaurant_id, last_name, first_name, phone, payment_method, delivery_method, room_number, total, timestamp, comment, status)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id
         ''', (restaurant_id, customer['lastName'], customer['firstName'], customer['phone'],
               order_details['paymentMethod'], order_details['deliveryMethod'], customer['roomNumber'],
-              total, data['timestamp']))
+              total, data['timestamp'], comment, status))
 
         order_id = cursor.fetchone()['id']
         for item in order_details['items']:
@@ -311,6 +319,79 @@ def add_order(restaurant_code):
         return jsonify({"error": f"Ошибка данных: {ve}"}), 400
     except Exception as e:
         logger.error(f"Ошибка при сохранении заказа: {e}")
+        conn.close()
+        return jsonify({"error": str(e)}), 500
+
+@flask_app.route('/api/order/<restaurant_code>/<int:order_id>/status', methods=['PUT'])
+def update_order_status(restaurant_code, order_id):
+    logger.info(f"Обновление статуса заказа {order_id} для ресторана: {restaurant_code}")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
+        restaurant = cursor.fetchone()
+        if not restaurant:
+            conn.close()
+            return jsonify({"error": "Ресторан не найден"}), 404
+
+        data = request.get_json()
+        status = data.get('status')
+        logger.debug(f"Получен статус для заказа {order_id}: {status}")
+        if not status or status not in ['pending', 'confirmed', 'completed', 'cancelled']:
+            conn.close()
+            return jsonify({"error": "Некорректный статус"}), 400
+
+        cursor.execute('''
+            UPDATE Orders 
+            SET status = %s
+            WHERE id = %s AND restaurant_id = %s
+        ''', (status, order_id, restaurant['id']))
+
+        if cursor.rowcount == 0:
+            conn.close()
+            return jsonify({"error": "Заказ не найден"}), 404
+
+        conn.commit()
+        conn.close()
+        logger.debug(f"Статус заказа {order_id} обновлён на {status}")
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        logger.error(f"Ошибка: {e}")
+        conn.close()
+        return jsonify({"error": str(e)}), 500
+
+@flask_app.route('/api/order/<restaurant_code>/<int:order_id>/comment', methods=['PUT'])
+def update_order_comment(restaurant_code, order_id):
+    logger.info(f"Обновление комментария заказа {order_id} для ресторана: {restaurant_code}")
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id FROM Restaurants WHERE unique_code = %s', (restaurant_code,))
+        restaurant = cursor.fetchone()
+        if not restaurant:
+            conn.close()
+            return jsonify({"error": "Ресторан не найден"}), 404
+
+        data = request.get_json()
+        comment = data.get('comment', '')
+        logger.debug(f"Получен комментарий для заказа {order_id}: {comment}")
+
+        cursor.execute('''
+            UPDATE Orders 
+            SET comment = %s
+            WHERE id = %s AND restaurant_id = %s
+        ''', (comment, order_id, restaurant['id']))
+
+        if cursor.rowcount == 0:
+            conn.close()
+            return jsonify({"error": "Заказ не найден"}), 404
+
+        conn.commit()
+        conn.close()
+        logger.debug(f"Комментарий заказа {order_id} обновлён: {comment}")
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        logger.error(f"Ошибка: {e}")
         conn.close()
         return jsonify({"error": str(e)}), 500
 

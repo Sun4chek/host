@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Меню ресторана</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+   <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
@@ -1501,6 +1501,9 @@
         </button>
     </div>
 
+    <button onclick="testSendData()" style="margin: 10px; padding: 10px; background: #0088cc; color: white; border: none; cursor: pointer;">Тест отправки в Telegram</button>
+
+
     <script>
         let cart = [];
         let tg = window.Telegram.WebApp;
@@ -1516,6 +1519,17 @@
         function saveCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
+function testSendData() {
+        const testData = { test: "Тестовые данные" };
+        console.log('Тестовая отправка:', JSON.stringify(testData));
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.sendData(JSON.stringify(testData));
+            console.log('Тестовый sendData вызван');
+        } else {
+            console.error('Telegram.WebApp не доступен');
+            alert('Ошибка: откройте Web App через Telegram');
+        }
+    }
 
         function loadCart() {
             const savedCart = localStorage.getItem('cart');
@@ -1581,65 +1595,99 @@
             });
         });
 
-        async function submitOrder(event) {
-            event.preventDefault();
+async function submitOrder(event) {
+    event.preventDefault();
+    console.log('Начало submitOrder');
 
-            const lastName = document.getElementById('last-name').value;
-            const firstName = document.getElementById('first-name').value;
-            const phone = document.getElementById('phone').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const deliveryMethod = document.getElementById('delivery-method').value;
-            const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
+    const lastName = document.getElementById('last-name').value;
+    const firstName = document.getElementById('first-name').value;
+    const phone = document.getElementById('phone').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+    const deliveryMethod = document.getElementById('delivery-method').value;
+    const roomNumber = document.getElementById('room-number')?.value || 'Не указано';
 
-            if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
-                showCustomAlert('Пожалуйста, заполните все обязательные поля');
-                return;
-            }
+    console.log('Получены данные формы:', { lastName, firstName, phone, paymentMethod, deliveryMethod, roomNumber });
 
-            const validCartItems = cart.filter(item => !menuItems[item.id]?.in_stop_list);
-            if (validCartItems.length === 0) {
-                showCustomAlert('В корзине нет доступных товаров');
-                return;
-            }
+    if (!lastName || !firstName || !phone || !paymentMethod || !deliveryMethod) {
+        showCustomAlert('Пожалуйста, заполните все обязательные поля');
+        console.error('Ошибка: не все поля заполнены');
+        return;
+    }
 
-            const orderData = {
-                customer: {
-                    lastName,
-                    firstName,
-                    phone,
-                    roomNumber
-                },
-                orderDetails: {
-                    paymentMethod,
-                    deliveryMethod,
-                    items: validCartItems.map(item => ({
-                        item_id: item.id,
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                        isAlcohol: item.isAlcohol || false
-                    })),
-                    total: parseFloat(document.getElementById('total-price').textContent),
-                    alcoholNote: "Алкоголь оплачивается отдельно при получении"
-                },
-                timestamp: new Date().toISOString()
-            };
+    const validCartItems = cart.filter(item => !menuItems[item.id]?.in_stop_list);
+    if (validCartItems.length === 0) {
+        showCustomAlert('В корзине нет доступных товаров');
+        console.error('Ошибка: корзина пуста или товары в стоп-листе');
+        return;
+    }
 
-            try {
-                const response = await fetch(`${window.location.origin}/api/order/BUHTA123`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                });
-                if (!response.ok) throw new Error('Ошибка отправки заказа');
-                showCustomAlert('Заказ успешно оформлен!');
-                clearCart();
-                closeCheckoutModal();
-                showScreen('menu-screen');
-            } catch (error) {
-                showCustomAlert('Не удалось отправить заказ');
-            }
+    const orderData = {
+        customer: {
+            lastName,
+            firstName,
+            phone,
+            roomNumber
+        },
+        orderDetails: {
+            paymentMethod,
+            deliveryMethod,
+            items: validCartItems.map(item => ({
+                item_id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                isAlcohol: item.isAlcohol || false
+            })),
+            total: parseFloat(document.getElementById('total-price').textContent),
+            alcoholNote: "Алкоголь оплачивается отдельно при получении"
+        },
+        timestamp: new Date().toISOString()
+    };
+
+    console.log('Сформированы данные заказа:', JSON.stringify(orderData));
+
+    // Отправка в Telegram
+    try {
+        console.log('Проверка Telegram.WebApp:', window.Telegram?.WebApp);
+        if (!window.Telegram?.WebApp) {
+            console.error('Telegram.WebApp не инициализирован');
+            showCustomAlert('Ошибка: откройте Web App через Telegram');
+            return;
         }
+        console.log('Отправка заказа в Telegram:', JSON.stringify(orderData));
+        window.Telegram.WebApp.sendData(JSON.stringify(orderData));
+        console.log('sendData вызван успешно');
+    } catch (error) {
+        console.error('Ошибка при вызове sendData:', error);
+        showCustomAlert('Ошибка отправки в Telegram: ' + error.message);
+    }
+
+    // Отправка в базу данных
+    try {
+        console.log('Отправка заказа в базу данных:', JSON.stringify(orderData));
+        const response = await fetch(`${window.location.origin}/api/order/BUHTA123`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Ошибка отправки в базу: ${errorText}`);
+        }
+        console.log('Заказ успешно сохранён в базе данных');
+    } catch (error) {
+        console.error('Ошибка отправки в базу данных:', error);
+        showCustomAlert('Ошибка отправки в базу: ' + error.message);
+    }
+
+
+    clearCart();
+    showCustomAlert('Заказ успешно оформлен!');
+    closeCheckoutModal();
+    showScreen('menu-screen');
+}
+
+
 
         function showMenuUpdateNotification() {
             const notification = document.getElementById('menu-update-notification');
